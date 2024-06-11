@@ -12,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class JwtConfigurartions {
 	
+	
 	@Bean
 	public SecurityFilterChain config(HttpSecurity httpSecurity)throws Exception {
 		
@@ -24,6 +25,8 @@ public class JwtConfigurartions {
 				.build();
 	}
 	
+	
+	//this bean is for ModelMapper (convert Employee obj to EmployeeDto we used this)
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
