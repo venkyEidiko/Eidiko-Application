@@ -24,14 +24,17 @@ import lombok.Data;
 public class Employee {
 
 	
-	  @Id
+	 @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Integer id;
 	    
-	    private String username;
+	    private String firstName;
+	    private String lastName;
 	    private String password;
 	    private String email;
 	    
+	    private Integer employeeId;
+	    private String gender;
 	    @Enumerated(EnumType.STRING)
 	    private Role role;
 	    
