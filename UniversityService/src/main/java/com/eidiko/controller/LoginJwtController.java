@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eidiko.dto.JwtTokenReturnClass;
 import com.eidiko.entity.LoginEntity;
-import com.eidiko.userservice.LoginJwtService;
+import com.eidiko.serviceimplementation.LoginJwtService;
 
 @RestController
 public class LoginJwtController {
@@ -26,7 +26,7 @@ public class LoginJwtController {
 //	}
 	
 	@PostMapping("/login")
-    public ResponseEntity<JwtTokenReturnClass> loginMethod(@RequestBody LoginEntity loginEntity) {
+    public ResponseEntity<JwtTokenReturnClass> loginMethod(@RequestBody LoginEntity loginEntity) throws Exception {
 
         JwtTokenReturnClass tokenResponse = loginJwtService.loginMethod(loginEntity);
 

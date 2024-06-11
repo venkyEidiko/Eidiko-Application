@@ -16,7 +16,7 @@ public class JwtService {
 	
 	private static final String SECRET = "9a2f8c4e6b0d71f3e8b925a45747f894a3d6bc70fa8d5e21a15a6d8c3b9a0e7c";
 	
-	
+	//this method returns token as a string 
 	public String tokenGenarateMethod(UserDetails userDetails) {
 		
 		System.out.println("----------------------------JwtService-----------------");
@@ -31,6 +31,7 @@ public class JwtService {
 		
 	}
 	
+	//this is for secret key (this method called inside tokenGenaratorMethod() method)
 	private Key getSignInKey() {
 		 byte[] keyBytes = Decoders.BASE64.decode(SECRET);
 	        return Keys.hmacShaKeyFor(keyBytes);

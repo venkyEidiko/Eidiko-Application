@@ -2,6 +2,7 @@ package com.eidiko.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,8 +18,13 @@ import lombok.Data;
 @Entity
 @Table(name = "ADDRESS_TABLE")
 public class Address {
-	@Id
+
+
+	
+    @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer id;
     
     @JsonBackReference
@@ -32,4 +38,5 @@ public class Address {
     private String city;
     private String state;
     private int pincode;
+
 }

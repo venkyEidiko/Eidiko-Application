@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class JwtTokenReturnClass {
 	
-	@JsonProperty("jwt_token")
+	@JsonProperty("jwtToken")
 	private String jwtToken;
 
 	@JsonProperty("employee")
