@@ -17,7 +17,7 @@ import lombok.Data;
 @Entity
 @Table(name = "ADDRESS_TABLE")
 public class Address {
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
@@ -25,10 +25,11 @@ public class Address {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Employee employee;
-    
-    private String addressLine2;
+    private String doorNumber ;
+    private String streetName;
+    private String landmark;
+    private String area;
     private String city;
     private String state;
-
-    // Getters and Setters
+    private int pincode;
 }
