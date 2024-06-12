@@ -1,0 +1,58 @@
+.sidenav {
+    width: 100px;
+    background-color: #333d4e;
+  
+    position: fixed;
+    height: 100vh;
+    
+   
+    
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+   
+}
+ul li{
+    padding: 14px;
+}
+
+li {
+   
+    position: relative;
+}
+
+.icon-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    
+}
+
+.icon-text span {
+    display: block;
+  cursor: pointer;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.icon-text a {
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    color: A2A9B4;;
+}
+
+ul li:hover{
+    background-color:#4c5366;
+   
+}
+
+.active{
+    background-color: #4c5366;
+}
+
