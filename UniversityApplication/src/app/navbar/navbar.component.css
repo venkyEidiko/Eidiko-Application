@@ -12,6 +12,8 @@
   align-items: center;
   width: 100%;
   padding: 10px 20px; 
+  position: fixed;
+  z-index: 1000;
 }
 
 .navbar-brand span {
@@ -87,7 +89,7 @@
   display: block;
 }
 
-.footer {
+/* .footer {
   background-image: url('../../assets/partyimage-Photoroom.png');
   color: white;
   text-align: center;
@@ -95,7 +97,7 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-}
+} */
 
 img {
   width: 30px;
