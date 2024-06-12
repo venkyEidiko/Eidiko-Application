@@ -15,10 +15,10 @@ public class GlobalExceptionHandler {
 
 		ResponseModel<Object> res = new ResponseModel<>();
 		
-		res.setStatusCode(HttpStatus.CREATED.value());
+		res.setStatusCode(HttpStatus.BAD_REQUEST.value());
 		res.setStatus(ex.getMessage());
-
-		return ResponseEntity.ok(res);
+		res.setError(ex.getMessage());
+		return new ResponseEntity<>(res,HttpStatus.BAD_REQUEST);
 
 	}
 

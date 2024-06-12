@@ -6,8 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +20,25 @@ import lombok.Data;
 @Data
 @Table(name = "Employee_DETAILS_TABLE")
 public class Employee {
+
+
+//	 @Id
+//	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//	    private Integer id;
+//	    
+//	    private String firstName;
+//	    private String lastName;
+//	    private String password;
+//	    private String email;
+//	    
+//	    private Integer employeeId;
+//	    private String gender;
+//	    @Enumerated(EnumType.STRING)
+//	    private Role role;
+//	    
+//	    @JsonManagedReference
+//	    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	    private List<Address> addresses;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,4 +57,5 @@ public class Employee {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Address> addresses;
+
 }

@@ -1,10 +1,50 @@
 package com.eidiko.controller;
+//
+//<<<<<<< HEAD
+//import com.eidiko.entity.*;
+//import java.util.*;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RestController;
+//
+//
+//import com.eidiko.userservice.EmployeeService;
 
+//@RestController
+//public class EmployeeControllor {
+//	
+//	private static String mail="john.doe123@example.com";
+//	@Autowired
+//	private EmployeeService employeeService;
+//	
+//	@GetMapping("/get")
+//	public List<Employee> getMethod(){
+//		
+//		List<Employee> empList = employeeService.getMethod();
+//		
+//		return empList;
+//		
+//	}
+//	
+//	@PostMapping("/save")
+//	public Employee saveMethod(@RequestBody Employee emp) {
+//		
+//		return employeeService.saveMethod(emp);
+//	}
+//	@GetMapping("/getSpecific")
+//	public Employee getByEmail() {
+//		return employeeService.getByMailAdress(mail);
+//	}
+//	
+//	
+//=======
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,4 +114,5 @@ public class EmployeeControllor {
 		return null;
 		
 	}
+//>>>>>>> e23a7c1f3f12ad6d4b9c82c7c4c8a7abfc756b48
 }

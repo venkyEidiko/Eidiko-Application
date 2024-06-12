@@ -3,8 +3,13 @@ package com.eidiko.dto;
 import java.util.List;
 
 import com.eidiko.entity.Address;
+//<<<<<<< HEAD
+//import com.eidiko.entity.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+//=======
 
 import com.eidiko.entity.Roles;
+//>>>>>>> e23a7c1f3f12ad6d4b9c82c7c4c8a7abfc756b48
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -36,4 +41,17 @@ public class EmployeeDto {
     @JsonManagedReference
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Address> addresses;
+    
+    
+    
+
+    @JsonIgnore
+    public String getPassword() {
+    	return this.password;
+    }
+   
+    @JsonIgnore
+    public int getId() {
+    	return this.id;
+    }
 }
