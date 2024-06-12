@@ -22,4 +22,13 @@ public class GlobalExceptionHandler {
 
 	}
 
+	@ExceptionHandler(PasswordMismatchException.class)
+	public ResponseEntity<ResponseModel<Object>> handlePasswordMismatchException(PasswordMismatchException ex){
+		ResponseModel<Object> res=new ResponseModel<>();
+		res.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		res.setStatus(ex.getMessage());
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+	}
+
 }
