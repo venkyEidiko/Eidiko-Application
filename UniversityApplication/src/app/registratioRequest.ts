@@ -17,6 +17,7 @@ export interface Role {
     lastName: string;
     password: string;
     email: string;
+    phoneNu:string;
     employeeId: number;
     gender: string;
     role: Role;

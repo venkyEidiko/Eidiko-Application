@@ -87,6 +87,7 @@ onSingup() {
     lastName: formValues.lastName,
     password: formValues.password,
     email: formValues.email,
+    phoneNu: formValues.phoneNu,
     employeeId: formValues.employeeId,
     gender: formValues.gender,
     role: { roleName: formValues.role },
