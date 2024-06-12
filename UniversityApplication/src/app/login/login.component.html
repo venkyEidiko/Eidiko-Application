@@ -6,7 +6,7 @@
     <div class="left">
         <div class="left-container">
             <h2>Login to Eidiko Application</h2>
-            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+            <form formGroup="loginForm" (ngSubmit)="onLogin()">
                 <div class="form-data">
                     <div class="form-row">
                         <input type="text" formControlName="emailOrMobile" placeholder="Email or Mobile">

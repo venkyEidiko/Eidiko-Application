@@ -1,6 +1,6 @@
 <div class="page-content">
     <h1>Welcom to Eidiko Application</h1>
-    <form [formGroup]="registrationForm" (ngSubmit)="onSingup()">
+    <form formGroup="registrationForm" (ngSubmit)="onSingup()">
         <div class="form-container">
             <div class="left">
                 <h2>General Information</h2>
@@ -122,7 +122,7 @@
                         *ngIf="registrationForm.get('pincode')?.invalid && registrationForm.get('pincode')?.touched">*required</small>
                 </div>
                 <button class="btn-primary" type="submit" [disabled]="registrationForm.invalid">Register</button>
-                <button class="btn-primary" >Login</button>
+                <button class="btn-primary" (click) ="onLogin()" >Login</button>
             </div>
         </div>
     </form>
