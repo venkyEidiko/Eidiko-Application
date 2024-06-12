@@ -1,0 +1,10 @@
+.app-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 50px;
+    flex: 1;
+    margin: 0;
+}
+
+
