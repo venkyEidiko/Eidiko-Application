@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="image">
+        <img src="https://eidikosystems.keka.com/files/b5a6ae4c-7aa9-49ea-897f-72bcbd443efa/loginbackgroundimage/b6428543287b4b6496691f047a6ec92b.jpg" alt="Image">
+    </div>
+    <div class="content">
+       <h2>OTP</h2>
+       <form #otpForm="ngForm">
+           <input type="text" name="otp" [(ngModel)]="otp" #otpInput="ngModel" required minlength="4" maxlength="6">
+           <div *ngIf="otpInput.invalid && (otpInput.dirty || otpInput.touched)">
+               <p *ngIf="otpInput.errors?.['required']" class="size">
+                   OTP is required.
+               </p>
+               <p *ngIf="otpInput.errors?.['minlength']" class="size">
+                   OTP must be at least 4 characters long.
+               </p>
+               <p *ngIf="otpInput.errors?.['maxlength']" class="size">
+                   OTP cannot be more than 6 characters long.
+               </p>
+           </div>
+           <button [disabled]="otpForm.invalid" (click)="resetPwdPage()">Submit</button>
+       </form>
+    </div>
+</div>
