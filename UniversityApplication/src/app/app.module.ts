@@ -19,7 +19,7 @@ import { MyteamComponent } from './myteam/myteam.component';
 import { MyfinancesComponent } from './myfinances/myfinances.component';
 import { OrgComponent } from './org/org.component';
 import { ClockComponent } from './clock/clock.component';
-// import { DonutchartComponent } from './donutchart/donutchart.component';
+import { DonutchartComponent } from './donutchart/donutchart.component';
 import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
@@ -71,6 +71,7 @@ const approutes:Routes=[
           MyfinancesComponent,
           OrgComponent,
           ClockComponent,
+          DonutchartComponent
           
   ],
   imports: [
