@@ -68,7 +68,7 @@ public class ForgotPasswordService implements ForgotPasswordInterface {
 
 
 
-        
+
 
         Optional<Employee> userOptional = employeeRepository.findByEmail(forgotPassword.getEmail());
         if (userOptional.isPresent()) {
