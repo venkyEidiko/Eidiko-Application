@@ -25,7 +25,11 @@
               "src/assets"
             ],
             "styles": [
+<<<<<<< dev/shreya_12/06/24
               "src/custom-theme.scss",
+=======
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+>>>>>>> master
               "src/styles.css"
             ],
             "scripts": []
@@ -88,6 +92,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
