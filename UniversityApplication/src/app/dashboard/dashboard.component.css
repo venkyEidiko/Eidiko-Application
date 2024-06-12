@@ -1,0 +1,360 @@
+/* .dashboard-container {
+  display: flex;
+  gap: 20px;
+  padding: 15px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.quick-access, .org-div {
+  padding: 15px;
+}
+
+.quick-access {
+  flex: 1;
+}
+
+.org-div {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-row {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-item ,.card-item1,.card-item2 {
+  background-color: #333d4e;
+  border: 0.1px solid #525455;
+  height: 25vh;
+  border-radius: 2px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.card-item1{
+ 
+  background-color: #9275c9;
+}
+.card-item2 {
+  flex: 0 0 auto; 
+}
+
+.card-item2 .charts {
+  display: flex;
+  flex-direction: row;
+  gap: 10px; 
+}
+
+.card-item2 .charts app-donutchart {
+  width: 120px; 
+  height: 120px; 
+}
+
+
+mat-card {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.card-item span {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.inbox-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.inbox img {
+  height: 50px;
+  width: 50px;
+}
+
+.org-buttons {
+  display: flex;
+
+}
+
+.org-buttons :hover{
+  border:1px solid #9275c9;
+  background-color: #3a3042;
+}
+
+.org-buttons button {
+  padding: 12px;
+  background-color: #333d4e;
+  border: 0.1px solid #525455;
+  border-radius: 5%;
+  cursor: pointer;
+}
+
+.org-cards {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+.org-card, .org-card-short {
+  background-color: #333d4e;
+  border: 0.1px solid #525455;
+  width: 50vw;
+  border-radius: 2px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.org-card-short ul.nav-list {
+  display: flex;
+  flex-direction: row; 
+  list-style: none;
+  padding: 0;
+  gap: 10px;
+  border-bottom: 1px solid #A2A9B4;
+}
+
+.org-card-short ul.nav-list li {
+  display: flex;
+  align-items: center; 
+}
+
+.org-card-short ul.nav-list li i {
+  font-size: 10px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  background-color: #7f5ac4;
+  display: inline-block;
+  text-align: center;
+}
+
+.org-card-short ul.nav-list li a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.content {
+  margin-top: 10px;
+}
+
+.content-item {
+  display: none;
+}
+
+.content-item.active {
+  display: block;
+}
+
+
+.org-card-short ul.nav-list li a.active {
+  border-bottom: 3px solid #7f5ac4; 
+}
+
+
+.content {
+  margin-top: 10px;
+}
+
+.content-item{
+  display: none;
+}
+.content-item.active {
+  display: block;
+} 
+ */
+
+
+
+
+ .dashboard-container {
+  display: flex;
+  gap: 20px;
+  padding: 15px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.quick-access, .org-div {
+  padding: 15px;
+}
+
+.quick-access {
+  flex: 1;
+}
+
+.org-div {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-row {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-item, .card-item1, .card-item2 {
+  background-color: #333d4e;
+  border: 0.1px solid #525455;
+  height: 25vh;
+  border-radius: 2px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.card-item1 {
+  background-color: #9275c9;
+}
+
+.card-item2 {
+  flex: 0 0 auto; /* Prevent flex-grow and flex-shrink */
+}
+
+.card-item2 .charts {
+  display: flex;
+  flex-direction: row;
+  gap: 10px; /* Add some gap between the charts if needed */
+}
+
+.card-item2 .charts app-donutchart {
+  width: 120px; /* Set a fixed width for the donut chart */
+  height: 120px; /* Set a fixed height for the donut chart */
+}
+
+mat-card {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.card-item span {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.inbox-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.inbox img {
+  height: 50px;
+  width: 50px;
+}
+
+.org-buttons {
+  display: flex;
+}
+
+.org-buttons:hover {
+  border: 1px solid #9275c9;
+  background-color: #3a3042;
+}
+
+.org-buttons button {
+  padding: 12px;
+  background-color: #333d4e;
+  border: 0.1px solid #525455;
+  border-radius: 5%;
+  cursor: pointer;
+}
+
+.org-cards {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.org-card, .org-card-short {
+  background-color: #333d4e;
+  border: 0.1px solid #525455;
+  width: 50vw;
+  border-radius: 2px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.org-card-short ul.nav-list,
+.org-card ul.nav-list {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  padding: 0;
+  gap: 10px;
+  border-bottom: 1px solid #A2A9B4;
+}
+
+.org-card-short ul.nav-list li,
+.org-card ul.nav-list li {
+  display: flex;
+  align-items: center;
+}
+
+.org-card-short ul.nav-list li i {
+  font-size: 10px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  background: #C2C2C2;
+}
+
+.org-card-short ul.nav-list li a,
+.org-card ul.nav-list li a {
+  text-decoration: none;
+  padding: 10px;
+  color: #A2A9B4;
+  cursor: pointer;
+}
+
+.org-card-short ul.nav-list li a.active,
+.org-card ul.nav-list li a.active {
+  color: #FFFFFF;
+  border-bottom: 2px solid #9275c9;
+}
+
+.org-card-short .content,
+.org-card .org-content {
+  margin-top: 20px;
+}
+
+.org-card-short .content .content-item,
+.org-card .org-content .org-content-item {
+  display: none;
+}
+
+.org-card-short .content .content-item.active,
+.org-card .org-content .org-content-item.active {
+  display: block;
+}
