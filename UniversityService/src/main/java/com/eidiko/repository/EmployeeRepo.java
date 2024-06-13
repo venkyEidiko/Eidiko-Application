@@ -18,4 +18,6 @@ public interface EmployeeRepo extends JpaRepository<Employee, Integer>{
 	Optional<Employee> findByEmployeeId(int employeeId);
 //>>>>>>> e23a7c1f3f12ad6d4b9c82c7c4c8a7abfc756b48:UniversityService/src/main/java/com/eidiko/repository/EmployeeRepo.java
 
+	Optional<Employee> findByEmail(String email);
+
 }
