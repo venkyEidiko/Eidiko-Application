@@ -18,7 +18,7 @@ public class ForgotPasswordService implements ForgotPasswordInterface {
     private EmployeeRepo employeeRepository;
 
     @Override
-    public void updatePassword(ForgotPassword forgotPassword) throws UserNotFound {
+    public String updatePassword(ForgotPassword forgotPassword) throws UserNotFound {
         if (!forgotPassword.getNewPassword().equals(forgotPassword.getConfirmPassword())) {
             throw new PasswordMismatchException("Passwords do not match");
         }
@@ -28,6 +28,7 @@ public class ForgotPasswordService implements ForgotPasswordInterface {
             Employee employee = userOptional.get();
             employee.setPassword(forgotPassword.getNewPassword());
             employeeRepository.save(employee);
+            return forgotPassword.getNewPassword();
         } else {
             throw new UserNotFound("User not found with this emailID");
         }
