@@ -21,4 +21,5 @@ public class ResponseModel<T> {
 
     private String error;
 	 
+    private String email;
 }
