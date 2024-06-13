@@ -35,6 +35,7 @@ public class EmailTemplateControllor {
 	@Autowired
 	private EmailTemplateImp emailTemplateImp;
 
+	//template 
 	@GetMapping("/template/{name}")
 	public ResponseEntity<Object> getTemplate(@PathVariable String name) throws UserNotFoundException {
 		EmailTemplate template = templateInterface.getByTemplateName(name);
