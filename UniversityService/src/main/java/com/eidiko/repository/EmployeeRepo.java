@@ -10,5 +10,6 @@ import com.eidiko.entity.Employee;
 public interface EmployeeRepo extends JpaRepository<Employee, Integer>{
 	
 	Optional<Employee> findByEmployeeId(int employeeId);
+	Optional<Employee>findByEmail(String email);
 
 }

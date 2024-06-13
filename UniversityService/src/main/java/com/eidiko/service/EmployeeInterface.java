@@ -2,13 +2,15 @@ package com.eidiko.service;
 
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.Roles;
-import com.eidiko.exception_handler.UserNotFound;
+import com.eidiko.exception_handler.SaveFailureException;
+import com.eidiko.exception_handler.UserNotFoundException;
 
 public interface EmployeeInterface {
 	
-	public Employee saveEmployee(Employee employee);
+	public String saveEmployee(Employee employee)throws SaveFailureException;
 	
-	public Employee updateEmployee(int employeeId,Employee employee)throws UserNotFound;
+	public String updateEmployee(int employeeId,Employee employee)throws UserNotFoundException,SaveFailureException;
+	
 	
     
 }

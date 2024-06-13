@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your OTP</title>
+<style>
+  .container {
+        font-family: Arial, sans-serif;
+        margin: 0 auto;
+        padding: 20px;
+        max-width: 600px;
+        /* background-color: #f4f4f4; */
+        border-radius: 8px;
+        text-align: left;
+    }
+
+    .header {
+        background-color:#68A9E5;
+        color: white;
+        padding: 10px 0;
+        border-radius: 8px 8px 0 0;
+        text-align: center;
+    }
+
+    .content {
+        padding: 20px;
+        background-color: #FDFEFE;
+       
+    }
+
+    .otp {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin: 20px 0;
+    }
+
+    .footer {
+        background-color: #c1c4c1;
+        color: rgb(20, 20, 20);
+        padding: 10px 0;
+        border-radius: 0 0 8px 8px;
+        text-align: center;
+       
+    }
+</style>
+</head>
+<body>
+
+
+	<div class="content" th:utext="${body}"></div>
+	
+
+</body>
+</html>

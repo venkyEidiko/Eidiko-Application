@@ -1,6 +1,6 @@
 package com.eidiko.exception_handler;
 
-public class UserNotFound extends Exception {
+public class UserNotFoundException extends Exception {
 	
 	
 	/**
@@ -8,7 +8,7 @@ public class UserNotFound extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public UserNotFound(String message)
+	public UserNotFoundException(String message)
 	{
 		super(message);
 	}
