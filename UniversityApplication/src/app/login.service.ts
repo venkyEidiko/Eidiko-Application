@@ -7,8 +7,8 @@ import { Observable, ObservableInput } from 'rxjs';
 })
 export class LoginService {
 
-  url = "http://localhost:8081/api/save";
-  loginUrl = "http://localhost:8081/login";
+  url = "http://10.0.0.52:8080/api/save";
+  loginUrl = "http://10.0.0.52:8080/login1";
 
   constructor(private http:HttpClient) { }
 
@@ -16,6 +16,6 @@ export class LoginService {
     return this.http.post<any>(this.url,data);
   }
   login(data:any):Observable<any> {
-    return this.http.post<any>(this.url,data);
+    return this.http.post<any>(this.loginUrl,data);
   }
 }

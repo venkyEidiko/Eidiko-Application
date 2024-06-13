@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../login.service';
 import {  Router } from '@angular/router';
+import { loginRequest } from '../loginRequest';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import {  Router } from '@angular/router';
 export class LoginComponent implements OnInit{
   
   constructor(private formBuilder: FormBuilder,private loginService: LoginService,private router: Router){}
-
+ 
   loginForm: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
@@ -39,24 +40,33 @@ export class LoginComponent implements OnInit{
   }
 
   userDetails:any;
+  onLogin() {
+    console.log("login request sent", this.loginForm.value);
+    
 
-  onLogin(){
-    this.loginService.login(this.loginForm.value).subscribe(
-      (response:any) => {
-        localStorage.setItem('jwt-token',response.jwtToken);
+    const loginReq: loginRequest = {
+      email: this.loginForm.get('email')?.value,
+      password: this.loginForm.get('password')?.value
+    };
+
+    console.log("something ",loginReq);
+    console.log(typeof(loginReq.email));
+
+    this.loginService.login(loginReq).subscribe(
+      (response: any) => {
+        localStorage.setItem('jwt-token', response.jwtToken);
+        
         console.log(response.employee);
+        this.userDetails = response.employee;
         this.router.navigate(['/layout/home/dashboard']);
-        this.userDetails= response.employee;
-      }
-    ),(
-      (error:any) => {
+      },
+      (error: any) => {
         console.log(error);
       }
-    )
-  }
-  toForgotpassword(){
-    //console.log("route to forgot password");
-    this.router.navigate(['/forgotpassword']);
+    );
   }
 
+  toForgotpassword() {
+    this.router.navigate(['/forgotpassword']);
+  }
 }

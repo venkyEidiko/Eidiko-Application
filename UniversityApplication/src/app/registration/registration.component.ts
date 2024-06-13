@@ -89,7 +89,7 @@ export class RegistrationComponent implements OnInit {
     this.loginService.register(registrationData).subscribe(
       (response: any) => {
 
-        //console.log('Registration successful, route to login page', response);
+        console.log('Registration successful, route to login page', response);
         this.router.navigate(['/login'])
       },
       (error: any) => {
