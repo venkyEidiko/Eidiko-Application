@@ -1,10 +1,11 @@
 package com.eidiko.controller;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,62 +17,67 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.ResponseModel;
 
-import com.eidiko.entity.Roles;
-import com.eidiko.exception_handler.UserNotFound;
+import com.eidiko.exception_handler.SaveFailureException;
+import com.eidiko.exception_handler.UserNotFoundException;
 import com.eidiko.responce.CommonResponse;
+//import com.eidiko.responce.CommonResponse;
 import com.eidiko.service.EmployeeInterface;
 import com.eidiko.service.RoleInterface;
 import com.eidiko.serviceimplementation.EmployeeService;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmployeeControllor {
 
 	@Autowired
 	private EmployeeInterface employeeInterface;
-	
+
 	@Autowired
 	private RoleInterface roleInterface;
+	
+	@Autowired
+	private EmployeeService employeeService;
 
 	@PostMapping("/save")
-	public ResponseModel<Employee> saveUser(@RequestBody Employee employee) {
-		Employee saveEmployee = employeeInterface.saveEmployee(employee);
+	public ResponseEntity<ResponseModel<Object>> saveUser(@RequestBody Employee employee) throws SaveFailureException {
+
+		String saveEmployee = employeeInterface.saveEmployee(employee);
 		if (saveEmployee != null) {
-			return new CommonResponse<Employee>().prepareSuccessResponseObject(saveEmployee).getBody();
+
+			return new CommonResponse<>().prepareSuccessResponseObject(saveEmployee);
+
 		} else {
-			ResponseModel<Employee> responseModel = new ResponseModel<>();
-			responseModel.setStatus("FAILURE");
-			responseModel.setStatusCode(HttpStatus.BAD_REQUEST.value());
-			responseModel.setResult(null); // Or provide specific error message
-			return responseModel;
+			return new CommonResponse<>().prepareFailedResponse(saveEmployee);
 		}
+		// return null;
+
 	}
-	
-	
+
 	@PutMapping("/updateEmp/{empId}")
-	public Employee updateEmployee(@PathVariable("empId") int empID,@RequestBody Employee employee) throws UserNotFound{
-		
-		
-		Employee updateEmployee = employeeInterface.updateEmployee(empID, employee);
-		
-		return updateEmployee;
-		
-	}
-	
-	
-	@GetMapping("/getRoles")
-	public List<Roles> getRoles()
-	{
-		
-		List<Roles> allRoles = roleInterface.getAllRoles();
-		
-		if (allRoles!=null) {
-			
-			return allRoles;
-			
+	public ResponseEntity<ResponseModel<Object>> updateEmployee(@PathVariable("empId") int empID,
+			@RequestBody Employee employee) throws UserNotFoundException, SaveFailureException {
+
+		String updateEmployee = employeeInterface.updateEmployee(empID, employee);
+
+		if (updateEmployee != null) {
+
+			return new CommonResponse<>().prepareSuccessResponseObject(updateEmployee);
+		} else {
+			return new CommonResponse<>().prepareFailedResponse(updateEmployee);
 		}
-		
-		return null;
-		
+
 	}
+
+	
+	@GetMapping("/getByEmail/{email}")
+	public ResponseEntity<ResponseModel<Object>> getByEmail(@PathVariable String email) throws UserNotFoundException {
+	    Employee byEmail = employeeService.getByEmail(email);
+	    String email2 = byEmail.getEmail();
+	    // Prepare the success response using the common method
+	    return new CommonResponse<>().prepareSuccessResponseEmail(email2);
+	}
+
+
+	
 }

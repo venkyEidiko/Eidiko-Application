@@ -18,7 +18,9 @@ public class ResponseModel<T> {
     private  Integer statusCode;
 
     private List<T> result;
-
+    
     private String error;
+    private String email;
+
 	 
 }
