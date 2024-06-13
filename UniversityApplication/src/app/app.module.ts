@@ -37,11 +37,17 @@ import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './footer/footer.component';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { TableComponent } from './table/table.component';
+import { ErrorComponent } from './error/error.component';
 @NgModule({
   declarations: [
     AppComponent,
-
+    LoginComponent,
+   RegistrationComponent,
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
@@ -61,6 +67,8 @@ import { FooterComponent } from './footer/footer.component';
     OtpComponent,
     LayoutComponent,
     FooterComponent,
+    TableComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,10 +83,12 @@ import { FooterComponent } from './footer/footer.component';
     FormsModule,
     HttpClientModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    MatTableModule
   ],
 
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

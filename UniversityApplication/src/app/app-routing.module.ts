@@ -19,6 +19,7 @@ import { OrgComponent } from './org/org.component';
 import { MyfinancesComponent } from './myfinances/myfinances.component';
 
 import { LayoutComponent } from './layout/layout.component';
+import { ErrorComponent } from './error/error.component';
 const routes: Routes = [
   {path:'',component:RegistrationComponent},
   {path:'login',component:LoginComponent},
@@ -58,6 +59,7 @@ const routes: Routes = [
    }
     ]
   },
+  {path:'**', component:ErrorComponent}
 ]
 
 

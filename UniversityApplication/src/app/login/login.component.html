@@ -6,10 +6,10 @@
     <div class="left">
         <div class="left-container">
             <h2>Login to Eidiko Application</h2>
-            <form formGroup="loginForm" (ngSubmit)="onLogin()">
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
                 <div class="form-data">
                     <div class="form-row">
-                        <input type="text" formControlName="emailOrMobile" placeholder="Email or Mobile">
+                        <input type="text" formControlName="email" placeholder="Email or Mobile">
                         <small *ngIf = "loginForm.errors?.['invalidInput']  && loginForm.get('emailOrMobile')?.touched">Invalid email or mobile number</small>
                     </div>
                     <div class="form-row">
@@ -17,7 +17,7 @@
                         <small></small>
                     </div>
                     
-                    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+                    <button type="submit" >Login</button>
                     <div>
                         <a (click) ="toForgotpassword()">forgot password?</a>
                     </div>
