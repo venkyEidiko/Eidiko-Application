@@ -50,6 +50,7 @@ import { ErrorComponent } from './error/error.component';
     LoginComponent,
 
    
+    
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
