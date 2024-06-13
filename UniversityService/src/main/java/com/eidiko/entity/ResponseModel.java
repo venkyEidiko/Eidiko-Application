@@ -20,5 +20,7 @@ public class ResponseModel<T> {
     private List<T> result;
 
     private String error;
-	 
+
+    private T password;
+
 }
