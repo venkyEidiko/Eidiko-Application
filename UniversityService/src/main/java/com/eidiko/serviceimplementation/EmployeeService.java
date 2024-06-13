@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.eidiko.entity.Address;
 import com.eidiko.entity.Employee;
-import com.eidiko.entity.Role;
 import com.eidiko.entity.Roles;
 import com.eidiko.exception_handler.UserNotFound;
 import com.eidiko.repository.EmployeeRepo;
