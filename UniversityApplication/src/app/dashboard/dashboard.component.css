@@ -183,11 +183,16 @@ mat-card-content {
 
 
  .dashboard-container {
+  
   display: flex;
   gap: 20px;
   padding: 15px;
-  height: 100vh;
-  overflow-y: auto;
+  /* height: 100vh; */
+  height: 100%;
+  /* height: auto; */
+  overflow-y: scroll;
+  
+ 
 }
 
 .quick-access, .org-div {

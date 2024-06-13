@@ -9,6 +9,6 @@ export class EmailCheckService{
 
   checkEmail(email: string) {
   
-    return this.http.get<any>(`http://10.0.0.81:8080/api/getByEmail/nari.doe@example.com`);
+    return this.http.get<any>(`http://10.0.0.81:8080/api/getByEmail/${email}`);
   }
 }
