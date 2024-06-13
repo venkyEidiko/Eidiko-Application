@@ -53,7 +53,6 @@ import { MatTableModule } from '@angular/material/table';
     ForgotpasswordComponent,
     ResetpasswordComponent,
     ResetPasswordConfirmationComponent,
-
     DashboardComponent,
     WelcomeComponent,
     MeComponent,
