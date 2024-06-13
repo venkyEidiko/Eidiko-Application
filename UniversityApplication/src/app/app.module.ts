@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { MatIconModule } from '@angular/material/icon';
 
+
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { ResetPasswordConfirmationComponent } from './reset-password-confirmation/reset-password-confirmation.component';
@@ -37,16 +38,18 @@ import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './footer/footer.component';
-
-import { LeavesComponent } from './leaves/leaves.component';
-
+import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 @NgModule({
   declarations: [
     AppComponent,
-
+    LoginComponent,
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
+    RegistrationComponent,
     ForgotpasswordComponent,
     ResetpasswordComponent,
     ResetPasswordConfirmationComponent,
@@ -63,8 +66,6 @@ import { LeavesComponent } from './leaves/leaves.component';
     OtpComponent,
     LayoutComponent,
     FooterComponent,
-    
-    LeavesComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,10 +80,12 @@ import { LeavesComponent } from './leaves/leaves.component';
     FormsModule,
     HttpClientModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    MatTableModule
   ],
 
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
