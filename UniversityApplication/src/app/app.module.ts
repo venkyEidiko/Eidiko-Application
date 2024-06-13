@@ -38,6 +38,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './footer/footer.component';
 
+import { LeavesComponent } from './leaves/leaves.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +63,8 @@ import { FooterComponent } from './footer/footer.component';
     OtpComponent,
     LayoutComponent,
     FooterComponent,
+    
+    LeavesComponent,
   ],
   imports: [
     BrowserModule,
