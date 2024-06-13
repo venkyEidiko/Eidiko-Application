@@ -1,0 +1,129 @@
+<div class="page-content">
+    <h1>Welcom to Eidiko Application</h1>
+    <form formGroup="registrationForm" (ngSubmit)="onSingup()">
+        <div class="form-container">
+            <div class="left">
+                <h2>General Information</h2>
+                <div class="form-row">
+                    <input type="text" formControlName="firstName" id="firstName" class="input-text"
+                        placeholder="First Name">
+                    <small
+                        *ngIf="registrationForm.get('firstName')?.invalid && registrationForm.get('firstName')?.touched">Name
+                        required 3 characters</small>
+                </div>
+                <div class="form-row">
+                    <input type="text" formControlName="lastName" id="lastName" class="input-text"
+                        placeholder="Last Name">
+                </div>
+
+                <div class="form-row">
+                    <select formControlName="role" id="role" class="form-control">
+                        <option value="Employee">Employee</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Hr">Hr</option>
+                    </select>
+                    <small
+                        *ngIf="registrationForm.get('role')?.invalid && registrationForm.get('role')?.touched">*required</small>
+                </div>
+                <div class="form-row">
+                    <input type="number" formControlName="employeeId" id="employeeId" class="form-control"
+                        placeholder="Employee ID">
+                    <small
+                        *ngIf="registrationForm.get('employeeId')?.invalid && registrationForm.get('employeeId')?.touched">Employee
+                        id should be 4 digits long</small>
+                </div>
+                <div class="form-row">
+                    <input type="number" formControlName="phoneNu" id="phoneNu" class="form-control"
+                        placeholder="Mobile Number">
+                    <small
+                        *ngIf="registrationForm.get('phoneNu')?.invalid && registrationForm.get('phoneNu')?.touched">Mobile
+                        number should be 10 digits long and start with 9/8/7/6</small>
+                </div>
+                <div class="form-row">
+                    <input type="email" formControlName="email" id="email" class="form-control" placeholder="Email">
+                    <small
+                        *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">Invalid
+                        email format</small>
+                </div>
+                <div class="form-row">
+                    <select formControlName="gender" id="gender" class="form-control">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Non_binary">Non binary</option>
+                    </select>
+                    <small
+                        *ngIf="registrationForm.get('gender')?.invalid && registrationForm.get('gender')?.touched">*required</small>
+                </div>
+                <div class="form-row-password">
+
+                    <input [type]="showPassword ? 'text' : 'password'" formControlName="password" id="password" class="form-control"
+                        placeholder="Password" />
+                    <div class="input-group-append">
+                        <button type="button" class="password-btn" (click)="togglePasswordVisibility()">
+                            <!-- <i [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i> -->
+                             Visible
+                        </button>
+                    </div>
+                    
+                </div>
+                <small
+                        *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched">Password
+                        should contain 8 characters and one uppercase, lowercase, number, and special character</small>
+                <div class="form-row">
+
+                    <input type="password" formControlName="confirmPassword" id="confirmPassword" class="form-control"
+                        placeholder="Confirm Password">
+                    <small
+                        *ngIf="registrationForm.errors?.['passwordsNotMatching'] && registrationForm.get('confirmPassword')?.touched">Password
+                        and Confirm Password do not match</small>
+                </div>
+
+            </div>
+            <div class="right">
+
+                <h2>Address Details</h2>
+                <div class="form-row">
+                    <input type="text" formControlName="doorNu" id="doorNu" class="form-control"
+                        placeholder="Door Number">
+                    <small
+                        *ngIf="registrationForm.get('doorNu')?.invalid && registrationForm.get('doorNu')?.touched">*required</small>
+                </div>
+                <div class="form-row">
+                    <input type="text" formControlName="streetName" id="streetName" class="form-control"
+                        placeholder="Street Name + Number">
+                    <small
+                        *ngIf="registrationForm.get('streetName')?.invalid && registrationForm.get('streetName')?.touched">*required</small>
+                </div>
+                <div class="form-row">
+                    <input type="text" formControlName="area" id="area" class="form-control" placeholder="Area">
+                    <small
+                        *ngIf="registrationForm.get('area')?.invalid && registrationForm.get('area')?.touched">*required</small>
+                </div>
+                <div class="form-row">
+                    <input type="text" formControlName="landmark" id="landmark" class="form-control"
+                        placeholder="Landmark">
+                    <small
+                        *ngIf="registrationForm.get('landmark')?.invalid && registrationForm.get('landmark')?.touched">*required</small>
+                </div>
+                <div class="form-row">
+                    <input type="text" formControlName="city" id="city" class="form-control" placeholder="City">
+                    <small
+                        *ngIf="registrationForm.get('city')?.invalid && registrationForm.get('city')?.touched">*required</small>
+                </div>
+                <div class="form-row">
+                    <input type="text" formControlName="state" id="state" class="form-control" placeholder="State">
+                    <small
+                        *ngIf="registrationForm.get('state')?.invalid && registrationForm.get('state')?.touched">*required</small>
+                </div>
+                <div class="form-row">
+                    <input type="number" formControlName="pincode" id="pincode" class="form-control"
+                        placeholder="Pincode">
+                    <small
+                        *ngIf="registrationForm.get('pincode')?.invalid && registrationForm.get('pincode')?.touched">*required</small>
+                </div>
+                <button class="btn-primary" type="submit" [disabled]="registrationForm.invalid">Register</button>
+                <button class="btn-primary" (click) ="onLogin()" >Login</button>
+            </div>
+        </div>
+    </form>
+</div>

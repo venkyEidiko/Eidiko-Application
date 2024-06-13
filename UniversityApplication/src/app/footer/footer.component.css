@@ -1,0 +1,10 @@
+.footer {
+    background-image: url('../../assets/partyimage-Photoroom.png');
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
