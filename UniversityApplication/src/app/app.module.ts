@@ -9,6 +9,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { MatIconModule } from '@angular/material/icon';
+import { LoginComponent } from './login/login.component';
 
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
@@ -16,7 +17,7 @@ import { ResetPasswordConfirmationComponent } from './reset-password-confirmatio
 import { FormsModule } from '@angular/forms';
 import { OtpComponent } from './otp/otp.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { RegistrationComponent } from './registration/registration.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -41,10 +42,11 @@ import { FooterComponent } from './footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
-
+    LoginComponent,
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
+    RegistrationComponent,
     ForgotpasswordComponent,
     ResetpasswordComponent,
     ResetPasswordConfirmationComponent,
