@@ -19,6 +19,8 @@ import { OrgComponent } from './org/org.component';
 import { MyfinancesComponent } from './myfinances/myfinances.component';
 
 import { LayoutComponent } from './layout/layout.component';
+
+import { LeavesComponent } from './leaves/leaves.component';
 const routes: Routes = [
   {path:'',component:RegistrationComponent},
   {path:'login',component:LoginComponent},
@@ -42,7 +44,12 @@ const routes: Routes = [
     ]
    },
    {
-    path:'me',component:MeComponent
+    path:'me',component:MeComponent,
+    children:[
+      {
+       path:'leaves',component:LeavesComponent
+            }
+    ]
    },
    {
     path:'inbox',component:InboxComponent
