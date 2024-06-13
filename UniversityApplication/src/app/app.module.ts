@@ -9,7 +9,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { MatIconModule } from '@angular/material/icon';
-import { LoginComponent } from './login/login.component';
+
 
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
@@ -17,7 +17,7 @@ import { ResetPasswordConfirmationComponent } from './reset-password-confirmatio
 import { FormsModule } from '@angular/forms';
 import { OtpComponent } from './otp/otp.component';
 import { HttpClientModule } from '@angular/common/http';
-import { RegistrationComponent } from './registration/registration.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -38,11 +38,18 @@ import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './footer/footer.component';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { TableComponent } from './table/table.component';
+import { ErrorComponent } from './error/error.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+
+   
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
@@ -63,6 +70,8 @@ import { FooterComponent } from './footer/footer.component';
     OtpComponent,
     LayoutComponent,
     FooterComponent,
+    TableComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,10 +86,12 @@ import { FooterComponent } from './footer/footer.component';
     FormsModule,
     HttpClientModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    MatTableModule
   ],
 
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

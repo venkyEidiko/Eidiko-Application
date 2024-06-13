@@ -1,0 +1,12 @@
+.error-container{
+    background-color: rgb(247, 240, 231);
+    margin: 40px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 5px 10px 8px #888888 ;
+}
+.error-container button{
+    padding: 10px;
+    background-color: rgb(84, 84, 238);
+   
+}
