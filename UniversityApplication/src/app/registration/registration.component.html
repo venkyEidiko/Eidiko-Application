@@ -1,6 +1,6 @@
 <div class="page-content">
     <h1>Welcom to Eidiko Application</h1>
-    <form formGroup="registrationForm" (ngSubmit)="onSingup()">
+    <form [formGroup]="registrationForm" (ngSubmit)="onSingup()">
         <div class="form-container">
             <div class="left">
                 <h2>General Information</h2>
