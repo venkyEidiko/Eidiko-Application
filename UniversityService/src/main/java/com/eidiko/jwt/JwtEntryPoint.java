@@ -4,12 +4,11 @@ package com.eidiko.jwt;
 
 import java.io.PrintWriter;
 
-import javax.naming.AuthenticationException;
 
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
-import io.jsonwebtoken.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
