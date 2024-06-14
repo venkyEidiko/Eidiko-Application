@@ -31,6 +31,7 @@ public class Employee {
 	private String password;
 	private String email;
 	  private String phoneNu;
+	  //take as primary key
 	private Integer employeeId;
 	private String gender;
 	@ManyToOne(fetch = FetchType.EAGER)

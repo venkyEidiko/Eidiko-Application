@@ -2,6 +2,7 @@ package com.eidiko.serviceimplementation;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -45,38 +46,48 @@ public class EmailTemplateImp implements EmailTemplateInterface {
 		return template;
 	}
 
-	public String sendEmailWithOtp(String toMail, String otp)
+	public String sendEmailWithOtp(String toMail)
 			throws MessagingException, IOException, UserNotFoundException, RuntimeException {
 
 		String templateName1 = "otp";
+
+		String otp = this.generateOtp();
 
 		// Retrieve the email template from the database
 		EmailTemplate template = emailTemplateRepo.findByNameOfTemplate(templateName1)
 				.orElseThrow(() -> new UserNotFoundException("Template not found"));
 
-		Employee byEmail = employeeRepo.findByEmail(toMail)
-				.orElseThrow(() -> new UserNotFoundException("user not found"));
+//		Employee byEmail = employeeRepo.findByEmail(toMail)
+//				.orElseThrow(() -> new UserNotFoundException("user not found"));
 
-		String firstName = byEmail.getFirstName();
+		
+//		String firstName = byEmail.getFirstName();
 
-		String lastName = byEmail.getLastName();
-		String fullName = firstName + " " + lastName;
+//		String lastName = byEmail.getLastName();
+//		String fullName = firstName + " " + lastName;
+		String fullName="nari"+"Reddy";
 
 		// Convert Clob to String
 		String body2 = template.getBody();
-		
 
 		if (body2 == null || body2.isEmpty()) {
 			throw new IllegalArgumentException("Email body content is missing");
 		}
 
+		// String otp="200123";
 		String personalizedBody = body2.replace("{{otp}}", otp).replace("{{name}}", fullName);
 
-		 
 		// Send the email
 		sendEmail(toMail, template.getSubject(), personalizedBody);
 		return otp;
 
+	}
+
+	public String generateOtp() {
+		Random random = new Random();
+		int otpValue = 100000 + random.nextInt(900000);
+		String otp = String.valueOf(otpValue);
+		return otp;
 	}
 
 	private void sendEmail(String to, String subject, String body) throws MessagingException {
@@ -88,7 +99,7 @@ public class EmailTemplateImp implements EmailTemplateInterface {
 
 		Context context = new Context();
 		context.setVariable("body", body);
-		// if  template name not exit than throw a runtime error along with message
+		// if template name not exit than throw a runtime error along with message
 		String process = templateEngine.process("MailFormat-template.html", context);
 		mimeMessageHelper.setText(process, true);
 
