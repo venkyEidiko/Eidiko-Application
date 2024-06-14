@@ -37,13 +37,17 @@ public ResponseEntity<ResponseModel<T>> prepareSuccessResponseObject(T result, T
 	return new ResponseEntity<>(response, HttpStatus.OK);
 }
 
-	public <T> ResponseEntity<ResponseModel<T>> prepareErrorResponseObject(String message, HttpStatus status) {
+
+    public <T> ResponseEntity<ResponseModel<T>> prepareErrorResponseObject(String message, HttpStatus status) {
 		ResponseModel<T> response = new ResponseModel<>();
 		response.setStatus("FAILED");
 		response.setStatusCode(status.value());
+		response.setError(message);
 		response.setResult(List.of((T) message));
 		return new ResponseEntity<>(response, status);
-	}
+    }
+
+	
 
     
     
@@ -52,6 +56,7 @@ public ResponseEntity<ResponseModel<T>> prepareSuccessResponseObject(T result, T
 		
 		response.setStatusCode(HttpStatus.BAD_REQUEST.value());
 		response.setStatus(error);
+		response.setError(error);
 
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}

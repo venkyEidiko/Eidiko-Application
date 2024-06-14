@@ -2,6 +2,7 @@ package com.eidiko.dto;
 
 import com.eidiko.entity.Employee;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -32,4 +33,6 @@ public class AddressDto {
 	    private String city;
 	    private String state;
 	    private int pincode;
+	    
+	   
 }
