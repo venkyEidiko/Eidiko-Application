@@ -29,19 +29,29 @@ public class CommonResponse<T> {
     }
 
 // this is commonresponse
-    public ResponseEntity<ResponseModel<T>> prepareSuccessResponseObject(T result, T password) {
-        
-        response.setStatusCode(HttpStatus.OK.value());
-        response.setStatus("SUCCESS");
-        response.setPassword(password);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+public ResponseEntity<ResponseModel<T>> prepareSuccessResponseObject(T result, T password) {
+	ResponseModel<T> response = new ResponseModel<>();
+	response.setStatusCode(HttpStatus.OK.value());
+	response.setStatus("SUCCESS");
+	response.setPassword(password);
+	return new ResponseEntity<>(response, HttpStatus.OK);
+}
+
 
     public <T> ResponseEntity<ResponseModel<T>> prepareErrorResponseObject(String message, HttpStatus status) {
 		ResponseModel<T> response = new ResponseModel<>();
 		response.setStatus("FAILED");
 		response.setStatusCode(status.value());
 		response.setError(message);
+		response.setResult(List.of((T) message));
+		return new ResponseEntity<>(response, status);
+    }
+
+	public <T> ResponseEntity<ResponseModel<T>> prepareErrorResponseObject1(String message, HttpStatus status) {
+		ResponseModel<T> response = new ResponseModel<>();
+		response.setStatus("FAILED");
+		response.setStatusCode(status.value());
+
 		response.setResult(List.of((T) message));
 		return new ResponseEntity<>(response, status);
 	}
@@ -59,7 +69,7 @@ public class CommonResponse<T> {
 	}
 
 	public ResponseEntity<ResponseModel<T>> prepareSuccessResponseEmail(T result) {
-		
+
 		response.setStatusCode(HttpStatus.OK.value());
 		response.setStatus("SUCCESS");
 
@@ -71,11 +81,12 @@ public class CommonResponse<T> {
 			response.setResult(List.of(result));
 		}
 
+//		comment
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
-	
+
 	 public ResponseEntity<ResponseModel<T>> prepareFailedResponse1(String error) {
-	       
+
 	        response.setStatus("Failure");
 	        response.setStatusCode(HttpStatus.BAD_REQUEST.value());
 	        response.setResult(null);
@@ -85,7 +96,7 @@ public class CommonResponse<T> {
 	        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
 	    }
 	 public ResponseEntity<ResponseModel<T>> prepareFailedResponse2(String error) {
-	      
+
 	        response.setStatus("Failure");
 	        response.setStatusCode(HttpStatus.NOT_FOUND.value());
 	        response.setResult(null);

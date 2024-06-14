@@ -66,6 +66,8 @@ td {
     gap:10px;
  }
 .day{
+  height: 20px;
+  width: 20px;
     padding:10px;
     border:1px solid #dad8d8;
     border-radius: 50%;
