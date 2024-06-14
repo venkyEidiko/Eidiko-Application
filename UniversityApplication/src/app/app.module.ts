@@ -37,11 +37,19 @@ import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './footer/footer.component';
+import { CommonModule } from '@angular/common';
+import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { AttandanceComponent } from './attandance/attandance.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
     AppComponent,
-
+    LoginComponent,
+    RegistrationComponent,
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
@@ -61,6 +69,7 @@ import { FooterComponent } from './footer/footer.component';
     OtpComponent,
     LayoutComponent,
     FooterComponent,
+    AttandanceComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +84,11 @@ import { FooterComponent } from './footer/footer.component';
     FormsModule,
     HttpClientModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule,
+    MatProgressBarModule,
+    MatButtonModule,
+    MatMenuModule
   ],
 
   providers: [],

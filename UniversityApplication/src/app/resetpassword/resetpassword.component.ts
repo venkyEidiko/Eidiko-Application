@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-resetpassword',
   templateUrl: './resetpassword.component.html',
@@ -10,21 +10,17 @@ export class ResetpasswordComponent {
   password: string = '';
   confirmPassword: string = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private router:Router) { }
 
   resetPwdConfirmation() {
     if (this.password !== this.confirmPassword) {
       // Handle password mismatch error
       return;
     }
+    else{
+      this.router.navigate(['/resetPwdConfirmation'])
+    }
 
-    this.authService.resetPassword(this.password).subscribe({
-      next: (response) => {
-        console.log('Password reset successful');
-      },
-      // error: (error) => {
-      //   console.error('Password reset failed:', error);
-      // }
-    });
+    
   }
 }
