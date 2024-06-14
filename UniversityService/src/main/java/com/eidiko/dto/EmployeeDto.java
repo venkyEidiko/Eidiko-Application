@@ -32,7 +32,7 @@ public class EmployeeDto {
     private String lastName;
     private String password;
     private String email;
-    
+    private String phoneNu;
     private Integer employeeId;
     private String gender;
     @ManyToOne(fetch = FetchType.EAGER)

@@ -1,12 +1,12 @@
 package com.eidiko.exception_handler;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+
+
 import lombok.NoArgsConstructor;
 
-@Data
+
 @NoArgsConstructor
-public class UserNotFound extends Exception {
+public class UserNotFound extends RuntimeException {
 	
 	
 	

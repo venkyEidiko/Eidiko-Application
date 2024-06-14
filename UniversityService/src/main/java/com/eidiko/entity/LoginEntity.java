@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+//this entity for login purpose
 public class LoginEntity implements UserDetails {
 
 	private String email;
