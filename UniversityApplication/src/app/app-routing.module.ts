@@ -20,6 +20,9 @@ import { MyfinancesComponent } from './myfinances/myfinances.component';
 
 import { LayoutComponent } from './layout/layout.component';
 import { AttandanceComponent } from './attandance/attandance.component';
+import { LeavesComponent } from './leaves/leaves.component';
+import { ErrorComponent } from './error/error.component';
+
 const routes: Routes = [
   {path:'',component:RegistrationComponent},
   {path:'login',component:LoginComponent},
@@ -46,8 +49,12 @@ const routes: Routes = [
     path:'me',component:MeComponent,
     children:[
       {
+
         path: 'attandance', component: AttandanceComponent
-      }
+      },
+
+      { path:'leaves',component:LeavesComponent }
+
     ]
    },
    {
@@ -64,6 +71,7 @@ const routes: Routes = [
    }
     ]
   },
+  {path:'**', component:ErrorComponent}
 ]
 
 

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../login.service';
-import { Router } from '@angular/router';
-import { loginRequest } from '../loginrequest';
+import {  Router } from '@angular/router';
+import { loginRequest } from '../loginRequest';
 
 @Component({
   selector: 'app-login',
@@ -11,13 +11,9 @@ import { loginRequest } from '../loginrequest';
 })
 export class LoginComponent implements OnInit {
   
-  constructor(
-    private formBuilder: FormBuilder,
-    private loginService: LoginService,
-    private router: Router
-  ) {}
+  constructor(private formBuilder: FormBuilder,private loginService: LoginService,private router: Router){}
+  loginForm: FormGroup = new FormGroup({});
 
-  loginForm!: FormGroup; // Removed initialization here
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -39,8 +35,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
+
   userDetails: any;
   
+
   onLogin() {
     console.log("login request sent", this.loginForm.value);
     
@@ -49,16 +47,13 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value
     };
-
-    console.log(loginReq);
-    console.log(typeof(loginReq.email));
-
     this.loginService.login(loginReq).subscribe(
       (response: any) => {
         localStorage.setItem('jwt-token', response.jwtToken);
         this.router.navigate(['/layout/home/dashboard']);
         console.log(response.employee);
         this.userDetails = response.employee;
+
       },
       (error: any) => {
         console.log(error);

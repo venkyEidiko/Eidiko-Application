@@ -8,7 +8,6 @@ export class EmailCheckService{
   constructor(private http: HttpClient) { }
 
   checkEmail(email: string) {
-  
-    return this.http.get<any>(`http://10.0.0.81:8080/api/getByEmail/nalla.harshini@gmail.com`);
+  return this.http.get<any>(`http://10.0.0.81:8080/api/getByEmail/${email}`);
   }
 }
