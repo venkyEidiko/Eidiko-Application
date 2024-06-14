@@ -2,7 +2,7 @@
     width: 100px;
     background-color: #333d4e;
     margin-top:50px;
-  
+  /* overflow-y: scroll; */
     position: fixed;
     height: 100vh;
     
