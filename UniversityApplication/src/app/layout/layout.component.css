@@ -1,8 +1,16 @@
-.sidenav-space{
+.main-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.navbar-container {
+    
+}
+.sidenav-space {
     display: flex;
     flex-direction: row;
     gap: 50px;
-    /* height: 100%;
-    background-color: #151517; */
-    /* margin-top: 50px; */
+    margin-top: 50px;
+    
 }
