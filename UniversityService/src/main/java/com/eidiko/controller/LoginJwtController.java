@@ -42,6 +42,7 @@ public class LoginJwtController {
 	//normal genaral end point handled method
 	@GetMapping("/hello")
 	public ResponseEntity<String> check(){
+		System.out.println("--------hello ");
 		 return ResponseEntity.ok("This is a public endpoint");
 	}
 	

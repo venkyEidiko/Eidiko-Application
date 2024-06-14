@@ -11,17 +11,20 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.eidiko.exception_handler.UserNotFound;
 import com.eidiko.repository.EmployeeRepo;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -31,7 +34,8 @@ public class JwtConfigurartions {
 
 	@Autowired
 	public JwtService jwtService;
-	
+	@Autowired
+	private JwtEntryPoint jwtEntryPoint;
 	
 	@Bean
 	public JwtFilter jwtAuthenticationFilter() {
@@ -99,13 +103,18 @@ public class JwtConfigurartions {
 	
 	@Bean
 	public SecurityFilterChain config(HttpSecurity httpSecurity)throws Exception {
-		
+		log.info("http security");
 		return httpSecurity.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(req->
 				req.requestMatchers("/login1","/refresh/**","/api/save")
 				.permitAll()
 				.anyRequest()
 				.authenticated())
+				.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))
+				//.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authenticationProvider(authenticationProvider())
+				.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+				
 				.build();
 	}
 	
