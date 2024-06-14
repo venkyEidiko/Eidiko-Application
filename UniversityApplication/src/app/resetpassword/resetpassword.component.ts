@@ -17,6 +17,9 @@ export class ResetpasswordComponent {
     if (this.password !== this.confirmPassword) {
       return;
     }
+    else{
+      this.router.navigate(['/resetPwdConfirmation'])
+    }
 
     const requestBody = {
       newPassword: this.password,
@@ -34,5 +37,6 @@ export class ResetpasswordComponent {
       
       }
     });
+
   }
 }
