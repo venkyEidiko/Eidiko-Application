@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ import com.eidiko.serviceimplementation.EmployeeService;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmployeeControllor {
 
 	@Autowired
@@ -92,7 +94,9 @@ public class EmployeeControllor {
 	
 	@GetMapping("/getByEmail/{email}")
 	public ResponseEntity<ResponseModel<Object>> getByEmail(@PathVariable String email) throws UserNotFoundException {
-	    Employee byEmail = employeeService.getByEmail(email);
+	  
+		System.out.println("EMployee service :"+email);
+		Employee byEmail = employeeService.getByEmail(email);
 	    String email2 = byEmail.getEmail();
 	    // Prepare the success response using the common method
 	    return new CommonResponse<>().prepareSuccessResponseEmail(email2);
