@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eidiko.dto.JwtTokenReturnClass;
 import com.eidiko.entity.LoginEntity;
+import com.eidiko.entity.ResponseModel;
+import com.eidiko.responce.CommonResponse;
 import com.eidiko.serviceimplementation.LoginJwtService;
 
 
@@ -20,16 +22,22 @@ public class LoginJwtController {
 	
 	@Autowired
 	private LoginJwtService loginJwtService;
+	@Autowired
+	private   CommonResponse<JwtTokenReturnClass> commonResponse;
+	@Autowired
+	private   CommonResponse<String> commonResponse1;
 	
-
 	//this method is for login
 	@PostMapping("/login1")
-	public ResponseEntity<JwtTokenReturnClass> loginMethod1(@RequestBody LoginEntity loginEntity) throws Exception{
-	
-		JwtTokenReturnClass res = loginJwtService.loginMethod1(loginEntity);
-		return ResponseEntity.ok(res);
-		
-	}
+    public ResponseEntity<ResponseModel<JwtTokenReturnClass>> loginMethod1(@RequestBody LoginEntity loginEntity) {
+      
+		try {
+            JwtTokenReturnClass res = loginJwtService.loginMethod1(loginEntity);
+            return commonResponse.prepareSuccessResponseObject(res);
+        } catch (Exception e) {
+            return commonResponse.prepareFailedResponse(e.getMessage());
+        }
+    }
 	
 	//normal genaral end point handled method
 	@GetMapping("/hello")
@@ -37,14 +45,14 @@ public class LoginJwtController {
 		 return ResponseEntity.ok("This is a public endpoint");
 	}
 	
-	//this method is for to genarate refresh token
-	@PostMapping("/refresh/{token}")
-	public  ResponseEntity<String> refresh(@PathVariable String token){
-		String accessToken=loginJwtService.refreshTokenMethod(token);
-		
-		return ResponseEntity.ok(accessToken);
-		
-		
-	}
 
+	@PostMapping("/refresh/{token}")
+    public ResponseEntity<ResponseModel<String>> refresh(@PathVariable String token) {
+        try {
+            String accessToken = loginJwtService.refreshTokenMethod(token);
+            return commonResponse1.prepareSuccessResponseObject(accessToken);
+        } catch (Exception e) {
+            return commonResponse1.prepareFailedResponse(e.getMessage());
+        }
+    }
 }
