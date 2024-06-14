@@ -1,7 +1,7 @@
 package com.eidiko.serviceimplementation;
 
 import java.util.List;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +22,9 @@ public class EmployeeService implements EmployeeInterface {
 	
 	@Autowired
 	private RolesReposotory rolesReposotory;
+	
+
+	
 
 	// save the employee details
 	@Override
@@ -39,6 +42,8 @@ public class EmployeeService implements EmployeeInterface {
 	// Employee update method
 	@Override
 	public Employee updateEmployee(int employeeId, Employee employee) throws UserNotFound {
+		
+
 		
 		Employee byEmployeeId = employeeRepo.findByEmployeeId(employeeId)
 				.orElseThrow(()-> new UserNotFound("User not found in database"));

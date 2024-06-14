@@ -12,13 +12,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+//this dto class is for through this class token,employee details are showed in the response 
 public class JwtTokenReturnClass {
 	
 	@JsonProperty("jwtToken")
 	private String jwtToken;
+	
+
+	@JsonProperty("refreshToken")
+	private String refreshToken;
 
 	@JsonProperty("employee")
-//    private Employee employee;
-	
 	private EmployeeDto employeeDto;
+	
+	
 }
