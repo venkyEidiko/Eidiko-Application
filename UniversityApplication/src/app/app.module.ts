@@ -38,19 +38,14 @@ import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './footer/footer.component';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
-import { TableComponent } from './table/table.component';
-import { ErrorComponent } from './error/error.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-
-   
-    
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
@@ -58,7 +53,6 @@ import { ErrorComponent } from './error/error.component';
     ForgotpasswordComponent,
     ResetpasswordComponent,
     ResetPasswordConfirmationComponent,
-
     DashboardComponent,
     WelcomeComponent,
     MeComponent,
@@ -71,8 +65,6 @@ import { ErrorComponent } from './error/error.component';
     OtpComponent,
     LayoutComponent,
     FooterComponent,
-    TableComponent,
-    ErrorComponent,
   ],
   imports: [
     BrowserModule,

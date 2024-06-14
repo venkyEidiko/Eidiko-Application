@@ -6,9 +6,9 @@ import com.eidiko.exception_handler.UserNotFound;
 
 public interface ForgotPasswordInterface {
 
-    public void updatePassword(ForgotPassword forgotPassword) throws UserNotFound;
+//    public void updatePassword(ForgotPassword forgotPassword) throws UserNotFound;
 
-//    String updatePassword(ForgotPassword forgotPassword) throws UserNotFound;
+    String updatePassword(ForgotPassword forgotPassword) throws UserNotFound;
 
 }
 

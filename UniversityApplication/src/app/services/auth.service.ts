@@ -6,12 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private resetPasswordUrl = 'http://10.0.0.63:2000/password/forgotPassword'; 
+  private apiUrl = 'http://localhost:2000/password/forgotPassword';
 
   constructor(private http: HttpClient) { }
 
-  resetPassword(password: string): Observable<any> {
-   
-    return this.http.post<any>(this.resetPasswordUrl, { password });
+  resetPassword(requestBody: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}`, requestBody);
+    
   }
 }
