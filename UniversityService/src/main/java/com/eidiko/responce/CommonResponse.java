@@ -47,14 +47,7 @@ public ResponseEntity<ResponseModel<T>> prepareSuccessResponseObject(T result, T
 		return new ResponseEntity<>(response, status);
     }
 
-	public <T> ResponseEntity<ResponseModel<T>> prepareErrorResponseObject1(String message, HttpStatus status) {
-		ResponseModel<T> response = new ResponseModel<>();
-		response.setStatus("FAILED");
-		response.setStatusCode(status.value());
-
-		response.setResult(List.of((T) message));
-		return new ResponseEntity<>(response, status);
-	}
+	
 
     
     
