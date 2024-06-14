@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="right">
+        <img
+            src="https://eidikosystems.keka.com/files/b5a6ae4c-7aa9-49ea-897f-72bcbd443efa/loginbackgroundimage/b6428543287b4b6496691f047a6ec92b.jpg">
+    </div>
+    <div class="left">
+        
+        <div class="left-container">
+            <h2>Login to Eidiko Application</h2>
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+                <div class="form-data">
+                    <div class="form-row">
+                        <input type="text" formControlName="email" placeholder="Email or Mobile">
+                        <small *ngIf = "loginForm.errors?.['invalidInput']  && loginForm.get('emailOrMobile')?.touched">Invalid email or mobile number</small>
+                    </div>
+                    <div class="form-row">
+                        <input type="password" formControlName="password" placeholder="Password">
+                        <small></small>
+                    </div>
+                    
+
+                    <button type="submit" (click)="onLogin()" >Login</button>
+
+                    <button type="submit" >Login</button>
+
+                    <div>
+                        <a (click) ="toForgotpassword()">forgot password?</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
