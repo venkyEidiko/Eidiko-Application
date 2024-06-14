@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { MatIconModule } from '@angular/material/icon';
 
+
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { ResetPasswordConfirmationComponent } from './reset-password-confirmation/reset-password-confirmation.component';
@@ -38,25 +39,31 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './footer/footer.component';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
-import { RegistrationComponent } from './registration/registration.component';
 import { AttandanceComponent } from './attandance/attandance.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 
+import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+
     RegistrationComponent,
+
+
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
+    RegistrationComponent,
     ForgotpasswordComponent,
     ResetpasswordComponent,
     ResetPasswordConfirmationComponent,
-
     DashboardComponent,
     WelcomeComponent,
     MeComponent,
@@ -85,13 +92,17 @@ import {MatButtonModule} from '@angular/material/button';
     HttpClientModule,
     MatIconModule,
     ReactiveFormsModule,
+
     CommonModule,
     MatProgressBarModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatPaginatorModule,
+    MatTableModule
+
   ],
 
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
