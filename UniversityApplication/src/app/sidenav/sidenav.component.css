@@ -1,13 +1,10 @@
 .sidenav {
     width: 100px;
     background-color: #333d4e;
-    /* margin-top:50px; */
-  
+     overflow-y: auto;
     position: fixed;
     height: 100vh;
-    
    
-    
 }
 
 ul {
