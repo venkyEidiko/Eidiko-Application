@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+
 import { Router } from '@angular/router';
+
 import { EmailCheckService } from '../services/email-check.service';
 
 @Component({
@@ -9,6 +11,7 @@ import { EmailCheckService } from '../services/email-check.service';
 })
 export class ForgotpasswordComponent {
   email: string = '';
+
   isEmailMatch: boolean = false;
   errorMessage: string = '';
 
@@ -16,6 +19,7 @@ export class ForgotpasswordComponent {
 
   Otppage() {
     this.router.navigate(['/otp']);
+
   }
 
   onSubmit() {
@@ -23,6 +27,7 @@ export class ForgotpasswordComponent {
 
     this.apiService.checkEmail(this.email).subscribe({
       next: (response: any) => {
+
         const backendEmail = response.email; 
         if (backendEmail === this.email) {
           console.log('Email matches');
@@ -31,6 +36,7 @@ export class ForgotpasswordComponent {
         } else {
           console.log('Email does not match');
           this.errorMessage = 'Email does not match';
+
         }
       },
       error: (error) => {
@@ -39,6 +45,8 @@ export class ForgotpasswordComponent {
     console.log('Backend Error Message:', error.error.error);
           this.errorMessage = error.error.error; 
        
+        
+
       }
     });
   }

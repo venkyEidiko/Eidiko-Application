@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./leaves.component.css']
 })
 export class LeavesComponent {
+
     data = [
     { label: 'Mon', value: 50 },
     { label: 'Tue', value: 80 },
@@ -42,5 +43,6 @@ export class LeavesComponent {
 
   
  
+
 
 }

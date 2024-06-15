@@ -21,6 +21,9 @@ import { MyfinancesComponent } from './myfinances/myfinances.component';
 import { LayoutComponent } from './layout/layout.component';
 
 
+
+
+import { AttandanceComponent } from './attandance/attandance.component';
 import { LeavesComponent } from './leaves/leaves.component';
 
 import { ErrorComponent } from './error/error.component';
@@ -51,8 +54,17 @@ const routes: Routes = [
     path:'me',component:MeComponent,
     children:[
       {
+
        path:'leaves',component:LeavesComponent
-            }
+            },
+
+
+        {path: 'attandance', component: AttandanceComponent
+      },
+
+
+
+
     ]
    },
    {

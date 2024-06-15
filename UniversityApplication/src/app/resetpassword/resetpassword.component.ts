@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./resetpassword.component.css']
 })
 export class ResetpasswordComponent {
+
   
   email: string = '';
   password: string = '';
@@ -31,7 +32,7 @@ export class ResetpasswordComponent {
     this.authService.resetPassword(requestBody).subscribe({
       next: (response) => {
         console.log('Password reset successful');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/resetPwdConfirmation']);
       },
       error: (error) => {
         if (typeof error === 'string' && error === 'Password updated successfully') {

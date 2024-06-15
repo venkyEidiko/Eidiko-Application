@@ -26,7 +26,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { RouterModule, Routes } from '@angular/router';
+
 import {MatCardModule} from '@angular/material/card'
+
+
 import { MeComponent } from './me/me.component';
 import { InboxComponent } from './inbox/inbox.component';
 import { MyteamComponent } from './myteam/myteam.component';
@@ -38,24 +41,39 @@ import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './footer/footer.component';
+
+import { CommonModule } from '@angular/common';
+import { AttandanceComponent } from './attandance/attandance.component';
+import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
+
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+
 import { LeavesComponent } from './leaves/leaves.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import {MatMenuModule} from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
+
 
 import { BarchartComponent } from './barchart/barchart.component';
-import { Donutchart1Component } from './donutchart1/donutchart1.component';
+
 import { NgChartsModule } from 'ng2-charts';
 
+
+
+
 @NgModule({
-    declarations: [
+  declarations: [
     AppComponent,
     LoginComponent,
+
+
+
+
+
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
@@ -76,24 +94,29 @@ import { NgChartsModule } from 'ng2-charts';
     OtpComponent,
     LayoutComponent,
     FooterComponent,
+
     LeavesComponent,
     
     BarchartComponent,
-    Donutchart1Component
+    
         
     
+
+    AttandanceComponent,
+
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatTabsModule,
     MatGridListModule,
+  MatProgressBarModule,
     MatMenuModule,
     RouterModule,
     NgChartsModule,
     NgApexchartsModule,
     AppRoutingModule,
-    NgxChartsModule,
+
     MatToolbarModule,
     FormsModule,
   
@@ -104,6 +127,7 @@ import { NgChartsModule } from 'ng2-charts';
     MatTableModule,
     MatCardModule,
      MatButtonModule
+
   ],
 
   providers: [],
