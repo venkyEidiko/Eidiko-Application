@@ -8,7 +8,10 @@ describe('EmailCheckService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(EmailCheckService);
+
     
+
+
   });
 
   it('should be created', () => {

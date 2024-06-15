@@ -51,6 +51,7 @@ button {
   border: none;
   cursor: pointer;
   margin-bottom: 20px;
+
 }
 
 button:hover {
@@ -69,7 +70,9 @@ button:hover {
       flex-direction: column;
   }
 
- .content {
+
+  .content {
+
       margin-top: 0;
       margin-left: 0; 
   }

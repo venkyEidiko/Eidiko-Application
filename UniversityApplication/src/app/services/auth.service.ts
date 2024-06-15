@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -7,11 +8,15 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
+
   private apiUrl = 'http://10.0.0.81:8082/password/forgotPassword';
+
+  
 
   constructor(private http: HttpClient) { }
 
   resetPassword(requestBody: any): Observable<any> {
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -37,5 +42,9 @@ export class AuthService {
         return throwError(errorMessage);
       })
     );
+
+    
+    
+
   }
 }

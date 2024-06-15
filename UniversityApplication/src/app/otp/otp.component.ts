@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { OtpService } from '../services/otp.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { OtpService } from '../services/otp.service';
 })
 export class OtpComponent {
   otp: string = '';
+
   errorMessage: string = '';
   toEmail: string = 'nalla.harshini@gmail.com';
   generatedOtp: string = '';
@@ -43,4 +45,7 @@ export class OtpComponent {
       this.errorMessage = 'Invalid OTP. Please try again.';
     }
   }
+
+  
+
 }
