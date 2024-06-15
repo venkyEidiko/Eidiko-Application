@@ -48,15 +48,22 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { TableComponent } from './table/table.component';
+import { CalenderComponent } from './calender/calender.component';
+
+// import { FlatpickrModule } from 'angularx-flatpickr';
+//import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-
     RegistrationComponent,
-
-
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
@@ -77,6 +84,10 @@ import { MatTableModule } from '@angular/material/table';
     LayoutComponent,
     FooterComponent,
     AttandanceComponent,
+    TableComponent,
+    //CalenderComponent
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -92,14 +103,22 @@ import { MatTableModule } from '@angular/material/table';
     HttpClientModule,
     MatIconModule,
     ReactiveFormsModule,
-
     CommonModule,
     MatProgressBarModule,
     MatButtonModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
 
+    CommonModule,
+    FormsModule,
+    // NgbModalModule,
+    // // FlatpickrModule.forRoot(),
+    // CalendarModule.forRoot({
+    //   provide: DateAdapter,
+    //   useFactory: adapterFactory
+    // })
+    
   ],
 
   providers: [],
