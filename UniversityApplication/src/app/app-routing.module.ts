@@ -22,11 +22,12 @@ import { LayoutComponent } from './layout/layout.component';
 import { AttandanceComponent } from './attandance/attandance.component';
 import { LeavesComponent } from './leaves/leaves.component';
 import { ErrorComponent } from './error/error.component';
+import { CalenderComponent } from './calender/calender.component';
 
 const routes: Routes = [
   {path:'',component:RegistrationComponent},
   {path:'login',component:LoginComponent},
-  
+  {path:'cal',component:CalenderComponent},
   { path: 'forgotpassword', component: ForgotpasswordComponent },
   { path: 'reset', component: ResetpasswordComponent },
   { path: 'resetPwdConfirmation', component: ResetPasswordConfirmationComponent },
