@@ -26,7 +26,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { RouterModule, Routes } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
+
+import {MatCardModule} from '@angular/material/card'
+
+
 import { MeComponent } from './me/me.component';
 import { InboxComponent } from './inbox/inbox.component';
 import { MyteamComponent } from './myteam/myteam.component';
@@ -38,9 +41,10 @@ import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './footer/footer.component';
+
 import { CommonModule } from '@angular/common';
 import { AttandanceComponent } from './attandance/attandance.component';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 
@@ -49,12 +53,25 @@ import { RegistrationComponent } from './registration/registration.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 
+import { LeavesComponent } from './leaves/leaves.component';
+
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+
+import { BarchartComponent } from './barchart/barchart.component';
+
+import { NgChartsModule } from 'ng2-charts';
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
 
-    RegistrationComponent,
+
+
 
 
     SidenavComponent,
@@ -69,6 +86,7 @@ import { MatTableModule } from '@angular/material/table';
     MeComponent,
     InboxComponent,
     MyteamComponent,
+   
     MyfinancesComponent,
     OrgComponent,
     ClockComponent,
@@ -76,29 +94,39 @@ import { MatTableModule } from '@angular/material/table';
     OtpComponent,
     LayoutComponent,
     FooterComponent,
+
+    LeavesComponent,
+    
+    BarchartComponent,
+    
+        
+    
+
     AttandanceComponent,
+
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatTabsModule,
     MatGridListModule,
-    MatCardModule,
+  MatProgressBarModule,
+    MatMenuModule,
     RouterModule,
+    NgChartsModule,
     NgApexchartsModule,
     AppRoutingModule,
+
     MatToolbarModule,
     FormsModule,
+  
     HttpClientModule,
     MatIconModule,
     ReactiveFormsModule,
-
-    CommonModule,
-    MatProgressBarModule,
-    MatButtonModule,
-    MatMenuModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatCardModule,
+     MatButtonModule
 
   ],
 

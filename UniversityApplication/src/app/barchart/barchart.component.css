@@ -1,0 +1,33 @@
+
+  
+  .chart-container {
+    display: flex;
+    align-items: flex-end;
+    height: 40px;
+    width:200px;
+    margin-left:0;
+
+  }
+  
+  .bar {
+    background-color:rgb(193, 160, 224);
+    margin-right: 5px;
+    padding: 13px;
+    border-radius: 2px;
+    transition: height 0.5s;
+  }
+  .x-axis-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+  }
+  
+  .x-axis-label {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .bar-label {
+    color: rgb(139, 66, 66);
+  }
+  
