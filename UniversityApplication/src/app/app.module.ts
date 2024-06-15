@@ -26,7 +26,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { RouterModule, Routes } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
+
+import {MatCardModule} from '@angular/material/card'
+
+
 import { MeComponent } from './me/me.component';
 import { InboxComponent } from './inbox/inbox.component';
 import { MyteamComponent } from './myteam/myteam.component';
@@ -38,9 +41,10 @@ import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './footer/footer.component';
+
 import { CommonModule } from '@angular/common';
 import { AttandanceComponent } from './attandance/attandance.component';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 
@@ -59,11 +63,23 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
+import { LeavesComponent } from './leaves/leaves.component';
+
+
+
+
+import { BarchartComponent } from './barchart/barchart.component';
+
+
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegistrationComponent,
+
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
@@ -76,6 +92,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     MeComponent,
     InboxComponent,
     MyteamComponent,
+   
     MyfinancesComponent,
     OrgComponent,
     ClockComponent,
@@ -83,23 +100,36 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     OtpComponent,
     LayoutComponent,
     FooterComponent,
+
+    LeavesComponent,
+    
+    BarchartComponent,
+    
+        
+    
+
     AttandanceComponent,
+
     TableComponent,
     //CalenderComponent
     
-    
+
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatTabsModule,
     MatGridListModule,
-    MatCardModule,
+  MatProgressBarModule,
+    MatMenuModule,
     RouterModule,
     NgApexchartsModule,
+    NgApexchartsModule,
     AppRoutingModule,
+
     MatToolbarModule,
     FormsModule,
+  
     HttpClientModule,
     MatIconModule,
     ReactiveFormsModule,
@@ -109,9 +139,9 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     MatMenuModule,
     MatPaginatorModule,
     MatTableModule,
-
     CommonModule,
     FormsModule,
+    MatCardModule
     // NgbModalModule,
     // // FlatpickrModule.forRoot(),
     // CalendarModule.forRoot({

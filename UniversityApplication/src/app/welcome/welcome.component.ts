@@ -6,12 +6,14 @@ import { LoginService } from '../login.service';
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.css']
 })
-export class WelcomeComponent {
-  constructor(private loginservice:LoginService){
-    
+export class WelcomeComponent  {
+  employee: any = null;
 
-    
+  constructor(private loginService: LoginService) {}
 
+  ngOnInit(): void {
+    this.employee = this.loginService.getEmployeeData();
+    console.log('Employee data:', this.employee);
   }
-
+  
 }

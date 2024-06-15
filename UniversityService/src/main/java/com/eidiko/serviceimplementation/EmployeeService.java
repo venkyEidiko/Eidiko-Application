@@ -1,7 +1,11 @@
 package com.eidiko.serviceimplementation;
 
 import java.util.List;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +30,9 @@ public class EmployeeService implements EmployeeInterface {
 
 	@Autowired
 	private RolesReposotory rolesReposotory;
+	
+
+	
 
 	// save the employee details
 	@Override
@@ -36,6 +43,7 @@ public class EmployeeService implements EmployeeInterface {
 
 		Employee save = employeeRepo.save(employee);
 
+
 		if (save != null && save.getId() != 0) {
 			return "User record has been successfully created.";
 		} else {
@@ -44,6 +52,7 @@ public class EmployeeService implements EmployeeInterface {
 		}
 
 	}
+
 
 	@Override
 	public String updateEmployee(int employeeId, Employee employee) throws UserNotFoundException, SaveFailureException {

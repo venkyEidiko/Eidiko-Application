@@ -4,8 +4,8 @@ import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
   let service: AuthService;
+ beforeEach(() => {
 
-  beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(AuthService);
   });
