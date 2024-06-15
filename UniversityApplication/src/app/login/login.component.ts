@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
-import { loginRequest } from '../loginrequest';
+import { loginRequest } from '../loginRequest';
 
 @Component({
   selector: 'app-login',
@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
         console.log(response);
         this.loginService.setJwtToken(response.jwtToken);
         this.loginService.setEmployeeData(response.employee);
-        this.router.navigate(['/layout/home/dashboard']);
+        
         localStorage.setItem('jwt-token', response.jwtToken);
         this.router.navigate(['/layout/home/dashboard']);
         console.log(response.employee);
