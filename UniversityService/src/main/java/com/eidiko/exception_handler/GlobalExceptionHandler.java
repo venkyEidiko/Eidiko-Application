@@ -6,11 +6,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.eidiko.entity.ResponseModel;
 
+//<<<<<<< HEAD
+//@RestControllerAdvice
+//=======
 import com.eidiko.entity.Error;
 @ControllerAdvice
+
 public class GlobalExceptionHandler {
 
 	@Autowired
@@ -21,10 +26,10 @@ public class GlobalExceptionHandler {
 
 		ResponseModel<Object> res = new ResponseModel<>();
 		
-		res.setStatusCode(HttpStatus.CREATED.value());
+		res.setStatusCode(HttpStatus.BAD_REQUEST.value());
 		res.setStatus(ex.getMessage());
-
-		return ResponseEntity.ok(res);
+		res.setError(ex.getMessage());
+		return new ResponseEntity<>(res,HttpStatus.BAD_REQUEST);
 
 	}
 

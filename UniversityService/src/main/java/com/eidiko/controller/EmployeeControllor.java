@@ -1,10 +1,11 @@
 package com.eidiko.controller;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ import com.eidiko.serviceimplementation.EmployeeService;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class EmployeeControllor {
 
 	@Autowired
@@ -34,6 +36,9 @@ public class EmployeeControllor {
 	
 	@Autowired
 	private RoleInterface roleInterface;
+	
+	@Autowired
+	private  PasswordEncoder passwordEncoder;
 
 
 	@Autowired
@@ -57,6 +62,7 @@ public class EmployeeControllor {
 		return null;
 		
 	}
+
 	
 	
 	@PostMapping("/save")
@@ -97,5 +103,6 @@ public class EmployeeControllor {
 	    // Prepare the success response using the common method
 	    return new CommonResponse<>().prepareSuccessResponseEmail(email2);
 	}
+
 
 }

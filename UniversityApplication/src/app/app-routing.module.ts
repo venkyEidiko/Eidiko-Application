@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from './navbar/navbar.component';
+
 
 import { RouterModule, Routes } from '@angular/router';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
@@ -19,8 +19,13 @@ import { OrgComponent } from './org/org.component';
 import { MyfinancesComponent } from './myfinances/myfinances.component';
 
 import { LayoutComponent } from './layout/layout.component';
+
+
+
+
 import { AttandanceComponent } from './attandance/attandance.component';
 import { LeavesComponent } from './leaves/leaves.component';
+
 import { ErrorComponent } from './error/error.component';
 import { CalenderComponent } from './calender/calender.component';
 
@@ -51,10 +56,15 @@ const routes: Routes = [
     children:[
       {
 
-        path: 'attandance', component: AttandanceComponent
+       path:'leaves',component:LeavesComponent
+            },
+
+
+        {path: 'attandance', component: AttandanceComponent
       },
 
-      { path:'leaves',component:LeavesComponent }
+
+
 
     ]
    },
