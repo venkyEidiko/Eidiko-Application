@@ -52,15 +52,25 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { TableComponent } from './table/table.component';
+import { CalenderComponent } from './calender/calender.component';
+
+// import { FlatpickrModule } from 'angularx-flatpickr';
+//import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 import { LeavesComponent } from './leaves/leaves.component';
 
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 
 
 import { BarchartComponent } from './barchart/barchart.component';
 
-import { NgChartsModule } from 'ng2-charts';
+
 
 
 
@@ -69,10 +79,6 @@ import { NgChartsModule } from 'ng2-charts';
   declarations: [
     AppComponent,
     LoginComponent,
-
-
-
-
 
     SidenavComponent,
     NavbarComponent,
@@ -104,6 +110,10 @@ import { NgChartsModule } from 'ng2-charts';
 
     AttandanceComponent,
 
+    TableComponent,
+    //CalenderComponent
+    
+
   ],
   imports: [
     BrowserModule,
@@ -113,7 +123,7 @@ import { NgChartsModule } from 'ng2-charts';
   MatProgressBarModule,
     MatMenuModule,
     RouterModule,
-    NgChartsModule,
+    NgApexchartsModule,
     NgApexchartsModule,
     AppRoutingModule,
 
@@ -123,11 +133,22 @@ import { NgChartsModule } from 'ng2-charts';
     HttpClientModule,
     MatIconModule,
     ReactiveFormsModule,
+    CommonModule,
+    MatProgressBarModule,
+    MatButtonModule,
+    MatMenuModule,
     MatPaginatorModule,
     MatTableModule,
-    MatCardModule,
-     MatButtonModule
-
+    CommonModule,
+    FormsModule,
+    MatCardModule
+    // NgbModalModule,
+    // // FlatpickrModule.forRoot(),
+    // CalendarModule.forRoot({
+    //   provide: DateAdapter,
+    //   useFactory: adapterFactory
+    // })
+    
   ],
 
   providers: [],

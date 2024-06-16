@@ -16,7 +16,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><i class="fa-solid fa-user"></i>Me</td>
+                                <td>Me</td>
                                 <td>9h 28m</td>
                                 <td>100%</td>
                             </tr>
@@ -38,7 +38,7 @@
                 <mat-card-content>
                     <div class="days">
                         <div class="day" *ngFor="let day of weekdata; let i = index"
-                            [style.background-color]="i === time.getDay() ? '#64CED3' : ''">{{day.charAt(0)}}</div>
+                            [class.highlight]="i==time.getDay()">{{day.charAt(0)}}</div>
                     </div>
                     <div class="bar">
                         <span class="shift-time">Today (10:00 AM - 7:00 PM)</span>
@@ -84,10 +84,11 @@
         </div>
         <div class="display-data">
             <ng-container *ngIf="attandanceLog">
-                <h1>Table-content for Attandance Log</h1>
+                <h1>Attandance Log</h1>
+                <div class="table-content"><app-table [dataSource]="data"></app-table></div>
             </ng-container>
             <ng-container *ngIf="shiftSehedule">
-                <h1>Table-content for Shift Schedule</h1>
+                <h1>Shift Schedule</h1>
             </ng-container>
         </div>
     </div>

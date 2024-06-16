@@ -1,5 +1,6 @@
 .container{
     margin:2%;
+    font-family: "Proxima Nova";
 }
 .upper-container{
     display: flex;
@@ -27,6 +28,10 @@ td{
 td {
     padding-left: 12px;
     padding-bottom: 12px;
+  }
+  .highlight {
+    background-color: #64CED3;
+    color: black; /* Add any additional styles here */
   }
 
 .card-item, .card-item1, .card-item2 {
@@ -75,6 +80,10 @@ td {
 .bar{
     margin-top: 30px;
 }
+.bar-pipe {
+  font-size: 25px;
+
+}
 
   .shift-timr{
     font-size: 10px;
@@ -98,5 +107,11 @@ td {
   }
   .display-data{
     margin-top: 20px;
+  }
+  
+  .table-content{
+    
+    width:90%;
+    
   }
 
