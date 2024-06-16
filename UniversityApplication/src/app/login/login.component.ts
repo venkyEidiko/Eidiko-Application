@@ -56,14 +56,20 @@ export class LoginComponent implements OnInit {
     this.loginService.login(loginReq).subscribe(
       (response: any) => {
         console.log(response);
-        this.loginService.setJwtToken(response.jwtToken);
-        this.loginService.setEmployeeData(response.employee);
+        if(response.error==null){
+        this.loginService.setJwtToken(response.result[0].jwtToken);
+        this.loginService.setEmployeeData(response.result[0].employee);
         
-        localStorage.setItem('jwt-token', response.jwtToken);
+        localStorage.setItem('jwt-token', response.result[0].jwtToken);
+        localStorage.setItem('refresh-token', response.result[0].refreshToken);
         this.router.navigate(['/layout/home/dashboard']);
         console.log(response.employee);
         this.userDetails = response.employee;
-
+        }
+        else{
+          console.log(response.error);
+          
+        }
 
       },
       (error: any) => {
