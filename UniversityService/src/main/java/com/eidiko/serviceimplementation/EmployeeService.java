@@ -22,6 +22,8 @@ import com.eidiko.repository.EmployeeRepo;
 import com.eidiko.repository.RolesReposotory;
 import com.eidiko.service.EmployeeInterface;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class EmployeeService implements EmployeeInterface {
 
@@ -56,6 +58,9 @@ public class EmployeeService implements EmployeeInterface {
 
 	@Override
 	public String updateEmployee(int employeeId, Employee employee) throws UserNotFoundException, SaveFailureException {
+		log.info("Employee id :{}",employeeId);
+		
+//		log.info("Employee : {}",employee.toString());
 		Employee byEmployeeId = employeeRepo.findByEmployeeId(employeeId)
 				.orElseThrow(() -> new UserNotFoundException("User not found in database"));
 
