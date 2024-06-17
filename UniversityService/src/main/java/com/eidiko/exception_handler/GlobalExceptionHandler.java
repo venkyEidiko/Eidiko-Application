@@ -53,4 +53,15 @@ public class GlobalExceptionHandler {
 	        error.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 	        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
+
+
+	@ExceptionHandler(FileUploadException.class)
+	public ResponseEntity<ResponseModel<Object>> handleFileUploadException(FileUploadException ex) {
+		return commonResponse.prepareErrorResponseObject(ex.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(InvalidFileException.class)
+	public ResponseEntity<ResponseModel<Object>> handleInvalidFileException(InvalidFileException ex) {
+		return commonResponse.prepareErrorResponseObject(ex.getMessage(), HttpStatus.BAD_REQUEST);
+	}
 }

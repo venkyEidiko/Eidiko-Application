@@ -8,11 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Error {
-	
-	
-	
-	private String error;
 
-	private Integer statusCode;
+
+    private String error;
+
+    private Integer statusCode;
 
 }
