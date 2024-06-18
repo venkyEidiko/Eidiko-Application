@@ -1,0 +1,7 @@
+.wallactivity-container{
+    padding: 20px;
+    height: 100%;
+}
+.wallactivity-container mat-card{
+    background-color: #333d4e;
+}
