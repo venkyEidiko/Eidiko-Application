@@ -48,6 +48,14 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileAboutComponent } from './profile-about/profile-about.component';
+import { ProfileJobComponent } from './profile-job/profile-job.component';
+import { ProfilePrflComponent } from './profile-prfl/profile-prfl.component';
+import { ProfileDocComponent } from './profile-doc/profile-doc.component';
+import { AboutSummaryComponent } from './about-summary/about-summary.component';
+import { AboutTimelineComponent } from './about-timeline/about-timeline.component';
+import { AboutWallactivityComponent } from './about-wallactivity/about-wallactivity.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +85,14 @@ import { MatTableModule } from '@angular/material/table';
     LayoutComponent,
     FooterComponent,
     AttandanceComponent,
+    ProfileComponent,
+    ProfileAboutComponent,
+    ProfileJobComponent,
+    ProfilePrflComponent,
+    ProfileDocComponent,
+    AboutSummaryComponent,
+    AboutTimelineComponent,
+    AboutWallactivityComponent,
   ],
   imports: [
     BrowserModule,

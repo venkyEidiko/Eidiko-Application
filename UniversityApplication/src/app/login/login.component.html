@@ -7,7 +7,7 @@
         
         <div class="left-container">
             <h2>Login to Eidiko Application</h2>
-            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+            <form [formGroup]="loginForm" >
 
                 <div class="form-data">
                     <div class="form-row">
@@ -20,9 +20,9 @@
                     </div>
                     
 
-                    <button type="submit" (click)="onLogin()" >Login</button>
+                    <button  (click)="onLogin()" >Login</button>
 
-                    <button type="submit" >Login</button>
+                   
 
                     <div>
                         <a (click) ="toForgotpassword()">forgot password?</a>

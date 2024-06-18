@@ -51,23 +51,27 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value
     };
+    console.log("my request sent to backend- ",loginReq);
 
 
     this.loginService.login(loginReq).subscribe(
       (response: any) => {
-        console.log(response);
-        this.loginService.setJwtToken(response.jwtToken);
-        this.loginService.setEmployeeData(response.employee);
+        if(response.error == null){
+        console.log("response from backend-",response);
+        this.loginService.setJwtToken(response.result[0].jwtToken);
+        this.loginService.setEmployeeData(response.result[0].employee);
+        localStorage.setItem('jwt-token', response.result[0].jwtToken);
+        
+        console.log(response.result[0].employee);
+        this.userDetails = response.result[0].employee;
         this.router.navigate(['/layout/home/dashboard']);
-        localStorage.setItem('jwt-token', response.jwtToken);
-        this.router.navigate(['/layout/home/dashboard']);
-        console.log(response.employee);
-        this.userDetails = response.employee;
-
-
+        }
+        else{
+          console.log(response.error);
+        }
       },
       (error: any) => {
-        console.log(error);
+        
       }
     );
   }
