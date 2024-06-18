@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-
-// Import your components
-import { NavbarComponent } from './navbar/navbar.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { ResetPasswordConfirmationComponent } from './reset-password-confirmation/reset-password-confirmation.component';
@@ -30,10 +27,12 @@ import { ProfileDocComponent } from './profile-doc/profile-doc.component';
 import { AboutSummaryComponent } from './about-summary/about-summary.component';
 import { AboutTimelineComponent } from './about-timeline/about-timeline.component';
 import { AboutWallactivityComponent } from './about-wallactivity/about-wallactivity.component';
+import { CalenderComponent } from './calender/calender.component';
 
 const routes: Routes = [
   { path: '', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'cal', component: CalenderComponent },
   { path: 'forgotpassword', component: ForgotpasswordComponent },
   { path: 'reset', component: ResetpasswordComponent },
   { path: 'resetPwdConfirmation', component: ResetPasswordConfirmationComponent },
@@ -60,7 +59,7 @@ const routes: Routes = [
       {
         path: 'home', component: HomeComponent,
         children: [
-          {path:'',redirectTo:'dashboard',pathMatch:'full'},
+          { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
           { path: 'dashboard', component: DashboardComponent },
           { path: 'welcome', component: WelcomeComponent }
         ]

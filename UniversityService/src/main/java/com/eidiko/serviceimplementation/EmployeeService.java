@@ -1,7 +1,11 @@
 package com.eidiko.serviceimplementation;
 
 import java.util.List;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +22,8 @@ import com.eidiko.repository.EmployeeRepo;
 import com.eidiko.repository.RolesReposotory;
 import com.eidiko.service.EmployeeInterface;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class EmployeeService implements EmployeeInterface {
 
@@ -26,6 +32,9 @@ public class EmployeeService implements EmployeeInterface {
 
 	@Autowired
 	private RolesReposotory rolesReposotory;
+	
+
+	
 
 	// save the employee details
 	@Override
@@ -36,6 +45,7 @@ public class EmployeeService implements EmployeeInterface {
 
 		Employee save = employeeRepo.save(employee);
 
+
 		if (save != null && save.getId() != 0) {
 			return "User record has been successfully created.";
 		} else {
@@ -45,8 +55,12 @@ public class EmployeeService implements EmployeeInterface {
 
 	}
 
+
 	@Override
 	public String updateEmployee(int employeeId, Employee employee) throws UserNotFoundException, SaveFailureException {
+		log.info("Employee id :{}",employeeId);
+		
+//		log.info("Employee : {}",employee.toString());
 		Employee byEmployeeId = employeeRepo.findByEmployeeId(employeeId)
 				.orElseThrow(() -> new UserNotFoundException("User not found in database"));
 

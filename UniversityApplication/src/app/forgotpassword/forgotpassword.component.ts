@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'; 
+
+import { Router } from '@angular/router';
+
 import { EmailCheckService } from '../services/email-check.service';
 
 @Component({
@@ -9,13 +11,15 @@ import { EmailCheckService } from '../services/email-check.service';
 })
 export class ForgotpasswordComponent {
   email: string = '';
-  isEmailMatch: boolean = false; 
+
+  isEmailMatch: boolean = false;
   errorMessage: string = '';
 
-  constructor(private router: Router, private apiService: EmailCheckService) { } 
+  constructor(private router: Router, private apiService: EmailCheckService) { }
 
   Otppage() {
-    this.router.navigate(['/otp']); 
+    this.router.navigate(['/otp']);
+
   }
 
   onSubmit() {
@@ -23,27 +27,26 @@ export class ForgotpasswordComponent {
 
     this.apiService.checkEmail(this.email).subscribe({
       next: (response: any) => {
-        const backendEmail = response.email;
+
+        const backendEmail = response.email; 
         if (backendEmail === this.email) {
           console.log('Email matches');
           this.Otppage();
+          
         } else {
           console.log('Email does not match');
-        
-          this.errorMessage = '';
+          this.errorMessage = 'Email does not match';
+
         }
       },
       error: (error) => {
         console.error('Error:', error);
-        if (error.error && error.error.message) {
-          console.log('Backend Error Message:', error.error.message);
-          
-          this.errorMessage = error.error.message;
-        } else {
-          
-          console.log('Unknown Error');
-          this.errorMessage = 'An unknown error occurred.';
-        }
+       
+    console.log('Backend Error Message:', error.error.error);
+          this.errorMessage = error.error.error; 
+       
+        
+
       }
     });
   }

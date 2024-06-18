@@ -1,17 +1,50 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:2000/password/forgotPassword';
+
+  private apiUrl = 'http://10.0.0.81:8082/password/forgotPassword';
+
+  
 
   constructor(private http: HttpClient) { }
 
   resetPassword(requestBody: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, requestBody);
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(this.apiUrl, requestBody, httpOptions).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = 'Failed to reset password. Please try again later.';
+        if (error.error instanceof ErrorEvent) {
+
+          errorMessage = `An error occurred: ${error.error.message}`;
+        } else {
+          
+          if (error.status === 200 && error.statusText === 'OK') {
+            
+          
+            return throwError('Password updated successfully');
+          } else {
+            console.error(`Server returned error code ${error.status}, message: ${error.error}`);
+          }
+        }
+        return throwError(errorMessage);
+      })
+    );
+
     
+    
+
   }
 }
