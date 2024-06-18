@@ -23,4 +23,7 @@ public class ResponseModel<T> {
 
 	private String email;
 
+    private List<String> fileName;
+
+
 }
