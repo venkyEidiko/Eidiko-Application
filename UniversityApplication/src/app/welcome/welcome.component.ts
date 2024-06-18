@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, } from '@angular/core';
 import { LoginService } from '../login.service';
 
 @Component({
@@ -7,13 +7,18 @@ import { LoginService } from '../login.service';
   styleUrls: ['./welcome.component.css']
 })
 export class WelcomeComponent  {
-  employee: any = null;
+  user: any = null;
+  
 
   constructor(private loginService: LoginService) {}
 
   ngOnInit(): void {
-    this.employee = this.loginService.getEmployeeData();
-    console.log('Employee data:', this.employee);
+    this.user = this.loginService.getEmployeeData();
+    console.log('Employee data:', this.user);
   }
+
+
   
+ 
 }
+
