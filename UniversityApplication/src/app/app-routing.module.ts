@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
 import { RouterModule, Routes } from '@angular/router';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
@@ -17,22 +15,19 @@ import { InboxComponent } from './inbox/inbox.component';
 import { MyteamComponent } from './myteam/myteam.component';
 import { OrgComponent } from './org/org.component';
 import { MyfinancesComponent } from './myfinances/myfinances.component';
-
 import { LayoutComponent } from './layout/layout.component';
-
-
-
-
 import { AttandanceComponent } from './attandance/attandance.component';
 import { LeavesComponent } from './leaves/leaves.component';
 
 import { ErrorComponent } from './error/error.component';
-import { CalenderComponent } from './calender/calender.component';
+import { Dialog1Component } from './dialog1/dialog1.component';
+//import { CalenderComponent } from './calender/calender.component';
 
 const routes: Routes = [
   {path:'',component:RegistrationComponent},
   {path:'login',component:LoginComponent},
-  {path:'cal',component:CalenderComponent},
+  {path:'dialog1',component:Dialog1Component},
+  //{path:'cal',component:CalenderComponent},
   { path: 'forgotpassword', component: ForgotpasswordComponent },
   { path: 'reset', component: ResetpasswordComponent },
   { path: 'resetPwdConfirmation', component: ResetPasswordConfirmationComponent },
@@ -58,6 +53,7 @@ const routes: Routes = [
 
        path:'leaves',component:LeavesComponent
             },
+            
 
 
         {path: 'attandance', component: AttandanceComponent
@@ -74,15 +70,18 @@ const routes: Routes = [
    ,{
     path:'myteam',component:MyteamComponent
    },
+   
    {
     path:'myfinance',component:MyfinancesComponent
    }
    ,{
     path:'org',component:OrgComponent
-   }
+   },
+  
     ]
   },
   {path:'**', component:ErrorComponent}
+  
 ]
 
 

@@ -1,0 +1,27 @@
+.dropdown {
+    position: relative;
+    display: inline-block;
+    
+   
+    
+  }
+  
+  .checkbox-list {
+    height: 300px;
+    overflow-y: auto; 
+    display:block;
+    width:350px;
+  }
+  mat-checkbox
+  {
+    display: block;
+  }
+  .search
+  {
+    width:180px;
+    height:30px;
+    margin-left:10px;
+  }
+  button{
+    width:170px;
+  }
