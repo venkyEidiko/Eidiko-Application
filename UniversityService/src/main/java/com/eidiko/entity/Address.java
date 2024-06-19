@@ -32,6 +32,7 @@ public class Address {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Employee employee;
+    private String addressType;
     private String doorNumber ;
     private String streetName;
     private String landmark;

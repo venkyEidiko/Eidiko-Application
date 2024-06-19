@@ -1,5 +1,4 @@
 package com.eidiko.serviceimplementation;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -8,7 +7,7 @@ import com.eidiko.dto.EmployeeDto;
 import com.eidiko.dto.JwtTokenReturnClass;
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.LoginEntity;
-import com.eidiko.exception_handler.UserNotFound;
+import com.eidiko.exception_handler.BadRequestException;
 import com.eidiko.jwt.JwtService;
 import com.eidiko.mapping.ModelMapperClass;
 import com.eidiko.repository.EmployeeRepo;
@@ -52,12 +51,12 @@ public class LoginJwtService {
 	        // Check if the username is an email or phoneNumber and fetch the user accordingly
 	        if (isEmail1(username)) {
 	            employee = employeeRepo.findByEmail(username)
-	                .orElseThrow(() -> new UserNotFound("Employee Not Found With this Email: " + username));
+	                .orElseThrow(() -> new BadRequestException("Employee Not Found With this Email: " + username));
 	        } else if (isPhoneNumber1(username)) {
 	            employee = employeeRepo.findByPhoneNu(username)
-	                .orElseThrow(() -> new UserNotFound("Employee Not Found With this Phone Number: " + username));
+	                .orElseThrow(() -> new BadRequestException("Employee Not Found With this Phone Number: " + username));
 	        } else {
-	            throw new UserNotFound("Invalid username format: " + username);
+	            throw new BadRequestException("Invalid username format: " + username);
 	        }
 	        
 	        // Convert Employee object to EmployeeDto
@@ -108,7 +107,7 @@ public class LoginJwtService {
 	        } 
 	        else {
 	            // Throw TokenNotValidException if token is invalid
-	            throw new UserNotFound("The provided token is not valid.");
+	            throw new BadRequestException("The provided token is not valid.");
 	        }
 	    
 }}
