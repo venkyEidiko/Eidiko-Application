@@ -1,0 +1,42 @@
+.summary-container {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.summary-container div mat-card {
+    width: 650px;
+    background-color: #333d4e;
+    border: 0.5px solid #4c4c5c;
+}
+
+.summary-container h3 {
+    margin: 10px 0 5px 0; 
+    color: #ebe8ed;
+}
+
+.primary-details, .contact-details, .relation-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    column-gap: 50px; 
+    row-gap: 10px; 
+}
+.primary-details , .contact-details, .relation-details span{
+    font-size: 10px;
+}
+.primary-details p , .contact-details p ,.relation-details p{
+    font-size: 14px;
+    font-weight: 100;
+    color: #ebe8ed;
+}
+
+.summary-container button {
+    display: block;
+    margin: 5px 0; 
+    height: 30px;
+    border: 1px solid #7e5991;
+    border-radius: 5px;
+    background-color: #333d4e;
+}

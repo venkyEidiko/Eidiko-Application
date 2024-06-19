@@ -1,0 +1,108 @@
+
+<div class="container">
+    <div class="display-items">
+        <h1 class="heading">Pending Leave Requests</h1>
+        <select class="dropdown">
+            <option value="Jan 2024-Dec 2024">Jan 2024-Dec 2024</option>
+        </select>
+    </div>
+
+    <div class="cards">
+        <mat-card class="card1">
+            <mat-card-content>
+                 <div class="image-content">
+                    <img class="elephantimg" src="../../assets/elephant.png" alt="elephantimage">
+                    <p>Nothing here!<br/>Working hard yeah??Request time off on right>>></p>
+                 </div>
+               
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="card2">
+            <mat-card-content>
+                <button mat-flat-button color="primary">RequestLeave</button>
+                <div class="comp-off">
+                    Request Credit for compensatory off
+                </div>
+                <div class="leave-policy">
+                    Leave policy Explanation
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div>
+        <h2>My Leave Stats</h2>
+        <div class="leave-cards">
+            <mat-card class="card3">
+                <mat-card-content>
+                 
+                        Weekly Pattern
+                        <mat-icon class="info-icon" >info</mat-icon>
+                        <div class="barchart2">
+                        <app-barchart   [chartData]="data"></app-barchart>
+                        </div>
+                  
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="card4">
+                <mat-card-content>
+                 
+                        Consumed Leave Types
+                        <mat-icon class="info-icon">info</mat-icon>
+                      
+                    
+
+                        
+                      
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="card5">
+                <mat-card-content>Monthly Stats</mat-card-content>
+                <app-barchart class="barchart1" [chartData]="data1"></app-barchart>
+            </mat-card>
+        </div>
+    </div>
+
+
+    <div>
+        <h2>My Leave balances</h2>
+        <div class="leave-balance">
+            <mat-card class="card6">
+                <mat-card-content>
+                    <div>
+                        Comp Offs 
+                        View details
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="card7">
+                <mat-card-content>Simple card</mat-card-content>
+            </mat-card>
+            <mat-card class="card8">
+                <mat-card-content>Simple card</mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+    <div   class="typeofleave" >
+        
+            <mat-card>
+                <mat-card-content>Simple card</mat-card-content>
+            </mat-card>
+           
+        </div>
+    
+   
+       
+            <div>
+                <h2>Leave History</h2>
+                <div class="table-card">
+                    <mat-card>
+                        <mat-card-content>
+                         sample Card
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        
+        </div>

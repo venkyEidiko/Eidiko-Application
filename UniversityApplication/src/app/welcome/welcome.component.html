@@ -1,1 +1,200 @@
-<p>welcome works!</p>
+<div class="welcome-container">
+  <div class="welcome-cards1">
+    <mat-card class="welcome-cards11" *ngIf="user; else loading">
+      <mat-card-content>
+        <div class="welcom-profile">
+          
+          <div>
+            <img src="../../assets/profileimage.png" />
+          </div>
+          <div>
+            <div class="wlcm-prfl-child1">
+              <h1>{{user.firstName}}</h1>
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </div>
+            <div class="wlcm-prfl-child">
+              <span>Trainee Software Engineer</span>
+              <span>{{user.addresses[0].city}}</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="welcome-cards12">
+      <mat-card-content>
+        <div class="intro-card">
+
+            <div class="intro-card1">
+            <div>
+              <h4>Introduce yourself</h4>
+              <span>We would love to know more about yourself</span>
+            </div>
+            <div>
+              <p>0/3</p>
+            </div>
+        </div>
+        <div class="intro-mat-cards">
+          <mat-card>
+            <mat-card-content class="int">
+     
+                <p>About</p>
+                <p class="p-div">Add Response</p>
+    
+            </mat-card-content>
+          </mat-card>
+          <mat-card>
+            <mat-card-content>
+              
+                <p>What I love about my job?</p>
+                <p class="p-div">Add Response</p>
+    
+            </mat-card-content>
+          </mat-card>
+          <mat-card>
+            <mat-card-content>
+   
+                <p>My interests and hobbies</p>
+                <p class="p-div">Add Response</p>
+        
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content>
+        <div class="intro-mat-cards2">
+          <div>
+            <h4>Explore Eidiko</h4>
+            <span>Explore all things you can do in Eidiko</span>
+          </div>
+          <div class="intro-mat-child-cards2">
+            <mat-card>
+              <mat-card-content>
+                <div class="explore-cards"> 
+                    <i class="fa-solid fa-dollar-sign"></i>
+                    <p>Finance</p>
+                    <span>Find your salary, payslips and tax settings all in one place</span>
+                </div>
+               
+              </mat-card-content>
+            </mat-card>
+            <mat-card>
+              <mat-card-content>
+               <div class="explore-cards">
+                <i class="fa-solid fa-plane-departure"></i>
+                <p>Leaves</p>
+                <span>Check your time-off policy, balances and apply for your time off</span>
+               </div>
+              </mat-card-content>
+            </mat-card>
+            <mat-card>
+              <mat-card-content>
+               <div class="explore-cards">
+                <i class="fa-solid fa-hand"></i>
+                <p>Attendance</p>
+                <span>Log your attendance , view stats and attendance policy</span>
+               </div>
+              </mat-card-content>
+            </mat-card>
+            <mat-card>
+              <mat-card-content>
+               <div class="explore-cards">
+                <i class="fa-solid fa-inbox"></i>
+                <p>Inbox</p>
+                <span>Take on action on tasks assigned to you</span>
+               </div>
+              </mat-card-content>
+            </mat-card>
+            <mat-card>
+              <mat-card-content>
+                <div class="explore-cards">
+                  <i class="fa-solid fa-file"></i>
+                  <p>Documents</p>
+                  <span>Read up on all policies that EIDIKOSYSTEM INTEGRATORS follows</span>
+                </div>
+              </mat-card-content>
+            </mat-card>
+            <mat-card>
+              <mat-card-content>
+                <div class="explore-cards">
+                  <i class="fa-solid fa-money-check-dollar"></i>
+                  <p>Expenses</p>
+                  <span>Any expenses done on your end for official purpose show here</span>
+                </div>
+              </mat-card-content>
+            </mat-card>
+            <mat-card>
+              <mat-card-content>
+                <div class="explore-cards">
+                  <i class="fa-solid fa-volume-high"></i>
+                  <p>Engage</p>
+                  <span>Be in-sync with all activities and announcements</span>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <ng-template #loading>
+      <p>Loading employee details...</p>
+    </ng-template>
+  </div>
+  <div class="welcome-cards2">
+    
+      <mat-card class="welcome-cards21">
+        <mat-card-content>
+          <div class="prfl-cmpltn">
+            <div>
+              100%
+            </div>
+          <div>
+            <h4>Profile completion</h4>
+            <p>Profile completed successfully</p>
+          </div>
+        </div>
+        <div class="go-prfl"  routerLink="/layout/myprofile" >
+          <mat-card>
+            <mat-card-content>
+             
+                <span style="color:#c29be8; text-decoration: none;">Go to my profile</span>
+               <i class="fa-solid fa-chevron-right"></i>
+       
+            </mat-card-content>
+          </mat-card>
+        </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="welcome-cards22">
+        <mat-card-content>
+          <div>
+            <h4>We're here to assist you</h4>
+            <div class="hr-cntnt">
+              <div>
+                <img class="hr-img" src="../../assets/profileimage.png"/>
+              </div>
+            <div class="hr-details">
+              <p style="color:#c29be8;">Hr name</p>
+             <span>Hr Executive</span>
+          </div>
+        </div>
+        <div class="contact-details">
+          <div class="contact-item">
+            <i class="fa-solid fa-phone"></i>
+            <p>9999999999</p>
+          </div>
+          <div class="contact-item">
+            <i class="fa-regular fa-envelope"></i>
+            <p>abc eidiko-india.com</p>
+          </div>
+        </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+ 
+    </div>
+</div> 
+
+

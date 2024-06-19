@@ -1,0 +1,81 @@
+<div class="profile-container">
+    <mat-card>
+        <mat-card-content>
+            <div class="profile-card">
+                <div>
+                    <img class="profile-img" src="../../assets/profileimage.png"/>
+                </div>
+                <div class="profile-details">
+                    <h2>Shreya</h2>
+                    <div class="profile-details1"> 
+                        <div>
+                            <i class="fa-solid fa-briefcase"></i>
+                            <span>Trainee Software Engineer</span>
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-envelope"></i>
+                            <span style="color: #7e5991;">shreya.suddala eidiko-india.com</span>
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-phone"></i>
+                            <span>9390309464</span>
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Hyderabad</span>
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-hashtag"></i>
+                            <span>1069</span>
+                        </div>
+                        <div>
+                            <button class="prfl-btn">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <hr class="profile-divider"> 
+                    <div class="departments">
+                        <h5>DEPARTMENT</h5>
+                        <h5>SUB-DEPARTMENT</h5>
+                        <h5>REPORTING MANAGER</h5>
+                    </div>
+                    <div class="departments-child">
+                        <span>Technical</span>
+                        <span>Java</span>
+                        <span>
+                            <img class="manager" src="../../assets/profileimage.png"/>
+                            <a style="text-decoration: none; color:#7e5991;" href="#">Srinivasa rao Pilli</a>
+                        </span>
+                    </div>
+                   
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card >
+        <mat-card-content>
+            <ul class="nav-list">
+                <li>
+                    <a routerLinkActive="active" routerLink="/layout/myprofile/about">ABOUT</a>
+                </li>
+                <li>
+                    <a routerLinkActive="active" routerLink="/layout/myprofile/profile">PROFILE</a>
+                </li>
+                <li>
+                    <a  routerLinkActive="active" routerLink="/layout/myprofile/job">JOB</a>
+                </li>
+                <li>
+                    <a  routerLinkActive="active" routerLink="/layout/myprofile/documents">DOCUMENTS</a>
+                </li>
+            </ul>
+            
+            
+            
+        </mat-card-content>
+    </mat-card>
+    <ng-template #loading>
+        <p>Loading employee details...</p>
+    </ng-template>
+</div>
+<router-outlet> </router-outlet>

@@ -39,7 +39,7 @@ public class EmpLeaveController {
 		if (empLeaveDto != null) {
 			return new CommonResponse<>().prepareSuccessResponseObject(saveEmpLeaveDto);
 		} else {
-			return new CommonResponse<>().badRequestException("Invalid Request! Please try again.");
+			return new CommonResponse<>().prepareFailedResponse("Invalid Request! Please try again.");
 		}
 
 	}
@@ -58,7 +58,7 @@ public class EmpLeaveController {
 		if (savedEmpLeaveDto != null) {
 			return new CommonResponse<>().prepareSuccessResponseObject(savedEmpLeaveDto);
 		} else {
-			return new CommonResponse<>().badRequestException("Invalid Request! Please try again.");
+			return new CommonResponse<>().prepareFailedResponse("Invalid Request! Please try again.");
 		}
 	}
 	@PutMapping("/updateLeaveByApprover/{leaveId}/{actionTakenBy}")
@@ -70,7 +70,7 @@ public class EmpLeaveController {
 		if (savedEmpLeaveDto != null) {
 			return new CommonResponse<>().prepareSuccessResponseObject(savedEmpLeaveDto);
 		} else {
-			return new CommonResponse<>().badRequestException("Invalid Request! Please try again.");
+			return new CommonResponse<>().prepareFailedResponse("Invalid Request! Please try again.");
 		}
 	}
 	
@@ -80,7 +80,7 @@ public class EmpLeaveController {
 		if (empLeaveDto != null) {
 			return new CommonResponse<>().prepareSuccessResponseObject(empLeaveDto);
 		} else {
-			return new CommonResponse<>().badRequestException("Invalid Request! Please try again.");
+			return new CommonResponse<>().prepareFailedResponse("Invalid Request! Please try again.");
 		}
 	}
 
@@ -94,7 +94,7 @@ public class EmpLeaveController {
 		if (empLeaveDto != null) {
 			return new CommonResponse<>().prepareSuccessResponseObject(empLeaveDto);
 		} else {
-			return new CommonResponse<>().badRequestException("Invalid Request! Please try again.");
+			return new CommonResponse<>().prepareFailedResponse("Invalid Request! Please try again.");
 		}
 		
 	}
@@ -105,7 +105,7 @@ public class EmpLeaveController {
 		if (leaveSummary != null) {
 			return new CommonResponse<>().prepareSuccessResponseObject(leaveSummary);
 		} else {
-			return new CommonResponse<>().badRequestException("Invalid Request! Please try again.");
+			return new CommonResponse<>().prepareFailedResponse("Invalid Request! Please try again.");
 		}
 	}
 }

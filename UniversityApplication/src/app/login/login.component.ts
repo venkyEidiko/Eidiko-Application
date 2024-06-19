@@ -1,67 +1,95 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../login.service';
-import {  Router } from '@angular/router';
-import { loginRequest } from '../loginRequest';
+import { Router } from '@angular/router';
+import { loginRequest } from '../loginrequest';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit{
-  
-  constructor(private formBuilder: FormBuilder,private loginService: LoginService,private router: Router){}
- 
+export class LoginComponent implements OnInit {
+
+
+  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) { }
+
   loginForm: FormGroup = new FormGroup({});
+
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      email:['',Validators.required],
-      password:['',Validators.required]
-    },{
+
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+
+    }, {
       validators: this.EmailOrMobileValidator
     });
   }
 
-
   EmailOrMobileValidator(form: FormGroup) {
     const input = form.get('email')?.value;
-    const emailPattern: RegExp = /^[a-zA-Z0-9._%+-]+@eidiko-india\.com$/;
     const mobilePattern: RegExp = /^[6-9]\d{9}$/;
-    const validEmail = emailPattern.test(input);
-    const validMobile = mobilePattern.test(input); 
-    if(validEmail || validMobile){
-      return null;
-    }
-    else{
-      return {invalidInput:true};
-    }
-  }
 
-  userDetails:any;
+    const validMobile = mobilePattern.test(input);
+    if (validMobile) {
+        return null;
+      } else {
+        return { invalidInput: true };
+      }
+    }
+  
+
+
+  userDetails: any;
+
+
+
   onLogin() {
-    console.log("login request sent", this.loginForm.value);
-    
-
     const loginReq: loginRequest = {
       email: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value
     };
+    console.log("my request sent to backend- ",loginReq);
 
-    console.log("something ",loginReq);
-    console.log(typeof(loginReq.email));
 
     this.loginService.login(loginReq).subscribe(
       (response: any) => {
-        localStorage.setItem('jwt-token', response.jwtToken);
+
+        if(response.error == null){
+        console.log("response from backend-",response);
+        this.loginService.setJwtToken(response.result[0].jwtToken);
+        this.loginService.setEmployeeData(response.result[0].employee);
+        localStorage.setItem('jwt-token', response.result[0].jwtToken);
         
+        console.log(response.result[0].employee);
+        this.userDetails = response.result[0].employee;
+        this.router.navigate(['/layout/home/dashboard']);
+        }
+        else{
+          console.log(response.error);
+        }
+
+        console.log(response);
+        if(response.error==null){
+        this.loginService.setJwtToken(response.result[0].jwtToken);
+        this.loginService.setEmployeeData(response.result[0].employee);
+        
+        localStorage.setItem('jwt-token', response.result[0].jwtToken);
+        localStorage.setItem('refresh-token', response.result[0].refreshToken);
+        this.router.navigate(['/layout/home/dashboard']);
         console.log(response.employee);
         this.userDetails = response.employee;
-        this.router.navigate(['/layout/home/dashboard']);
+        }
+        else{
+          console.log(response.error);
+          
+        }
+
       },
       (error: any) => {
-        console.log(error);
+        
       }
     );
   }
@@ -70,3 +98,4 @@ export class LoginComponent implements OnInit{
     this.router.navigate(['/forgotpassword']);
   }
 }
+  

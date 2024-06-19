@@ -1,28 +1,110 @@
 package com.eidiko.serviceimplementation;
 
+import java.io.IOException;
+import java.util.Optional;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.eidiko.entity.EmailTemplate;
-import com.eidiko.repository.EmailTemplateRepo;
-import com.eidiko.service.EmailTemplateInterface;
-@Service
-public class EmailTemplateImp implements EmailTemplateInterface{
+import com.eidiko.entity.Employee;
 
-	  @Autowired
-	  private EmailTemplateRepo emailTemplateRepo;
+import com.eidiko.exception_handler.UserNotFoundException;
+import com.eidiko.repository.EmailTemplateRepo;
+import com.eidiko.repository.EmployeeRepo;
+import com.eidiko.service.EmailTemplateInterface;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+@Service
+public class EmailTemplateImp implements EmailTemplateInterface {
+
+	@Autowired
+	private EmailTemplateRepo emailTemplateRepo;
+	@Autowired
+	private JavaMailSender javaMailSender;
+	@Autowired
+	private TemplateEngine templateEngine;
+
+	@Autowired
+	private EmployeeRepo employeeRepo;
+
 	@Override
-	public String saveEmailTemplate(EmailTemplate emailTemplate) {
-		// TODO Auto-generated method stub
+	public EmailTemplate getByTemplateName(String templateName) throws UserNotFoundException {
+
+		EmailTemplate template = emailTemplateRepo.findByNameOfTemplate(templateName)
+				.orElseThrow(() -> new UserNotFoundException("User not found"));
+
+		return template;
+	}
+
+	public String sendEmailWithOtp(String toMail)
+			throws MessagingException, IOException, UserNotFoundException, RuntimeException {
+
+		String templateName1 = "otp";
+
+		String otp = this.generateOtp();
+
+		// Retrieve the email template from the database
+		EmailTemplate template = emailTemplateRepo.findByNameOfTemplate(templateName1)
+				.orElseThrow(() -> new UserNotFoundException("Template not found"));
+
+//		Employee byEmail = employeeRepo.findByEmail(toMail)
+//				.orElseThrow(() -> new UserNotFoundException("user not found"));
+
 		
-		EmailTemplate save = emailTemplateRepo.save(emailTemplate);
-		if (save!=null) {
-			
-			return "Email template is saved....!";
-		} else {
-			return "Email template is not created....X";
+//		String firstName = byEmail.getFirstName();
+
+//		String lastName = byEmail.getLastName();
+//		String fullName = firstName + " " + lastName;
+		String fullName="nari"+"Reddy";
+
+		// Convert Clob to String
+		String body2 = template.getBody();
+
+		if (body2 == null || body2.isEmpty()) {
+			throw new IllegalArgumentException("Email body content is missing");
 		}
-		
+
+		// String otp="200123";
+		String personalizedBody = body2.replace("{{otp}}", otp).replace("{{name}}", fullName);
+
+		// Send the email
+		sendEmail(toMail, template.getSubject(), personalizedBody);
+		return otp;
+
+	}
+
+	public String generateOtp() {
+		Random random = new Random();
+		int otpValue = 100000 + random.nextInt(900000);
+		String otp = String.valueOf(otpValue);
+		return otp;
+	}
+
+	private void sendEmail(String to, String subject, String body) throws MessagingException {
+		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+		mimeMessageHelper.setTo(to);
+		mimeMessageHelper.setSubject(subject);
+
+		Context context = new Context();
+		context.setVariable("body", body);
+		// if template name not exit than throw a runtime error along with message
+		String process = templateEngine.process("MailFormat-template.html", context);
+		mimeMessageHelper.setText(process, true);
+
+		javaMailSender.send(mimeMessage);
+
 	}
 
 }

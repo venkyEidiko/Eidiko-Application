@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-import com.eidiko.entity.LeaveAttachment;
+import com.eidiko.entity.Attachment;
 
 import lombok.Data;
 
@@ -24,6 +24,6 @@ public class EmpLeaveDto {
 	private String rejectionReason;
 	private Long employeeId;
 	private String customDayStatus;
-	private List<LeaveAttachment> leaveAttachment; 
+	private List<Attachment> leaveAttachment; 
 	private double durationInDays; 
 }

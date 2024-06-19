@@ -1,13 +1,36 @@
 package com.eidiko.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eidiko.service.EmailTemplateInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.eidiko.entity.EmailTemplate;
+import com.eidiko.entity.ResponseModel;
+import com.eidiko.exception_handler.UserNotFoundException;
+import com.eidiko.responce.CommonResponse;
+import com.eidiko.service.EmailTemplateInterface;
+import com.eidiko.serviceimplementation.EmailTemplateImp;
+
+import jakarta.mail.MessagingException;
 @RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmailTemplateControllor {
 
 	
@@ -18,5 +41,45 @@ public class EmailTemplateControllor {
 	public ResponseEntity<String>template(){
 		
 		return null; 
+	}
+	
+
+
+	@Autowired
+	private EmailTemplateImp emailTemplateImp;
+
+	@GetMapping("/template/{name}")
+	public ResponseEntity<Object> getTemplate(@PathVariable String name) throws UserNotFoundException {
+		EmailTemplate template = templateInterface.getByTemplateName(name);
+
+		if (template == null) {
+			// Template not found
+			return new ResponseEntity<>(template, HttpStatus.NOT_FOUND);
+		}
+
+		// Template found, return it with a 200 OK status
+		return new ResponseEntity<>(template, HttpStatus.OK);
+	}
+
+	@GetMapping("/sendMail")
+	public ResponseEntity<ResponseModel<Object>> sendMail(@RequestParam("toMail") String to)
+		
+	{
+		System.out.println("email :"+to);
+		try {
+			//,otp
+			String sendEmailWithOtp = emailTemplateImp.sendEmailWithOtp(to);
+
+			System.out.println(sendEmailWithOtp);
+			return new CommonResponse<>().prepareSuccessResponseObject(sendEmailWithOtp);
+		} catch (UserNotFoundException e) {
+			return new CommonResponse<>().prepareFailedResponse2( e.getMessage());
+		} catch (IllegalArgumentException e) {
+			return new CommonResponse<>().prepareFailedResponse1("Invalid input: " + e.getMessage());
+		} catch (MessagingException | IOException e) {
+			return new CommonResponse<>().prepareFailedResponse1("Internal Server Error: " + e.getMessage());
+		} catch (RuntimeException e) {
+			return new CommonResponse<>().prepareFailedResponse1("Unexpected Error: " + e.getMessage());
+		}
 	}
 }

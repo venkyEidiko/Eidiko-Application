@@ -2,9 +2,14 @@ package com.eidiko.service;
 
 import com.eidiko.entity.EmailTemplate;
 
+import com.eidiko.exception_handler.UserNotFoundException;
+
 public interface EmailTemplateInterface {
 	
 	
-	public String saveEmailTemplate(EmailTemplate emailTemplate);
+	
+	
+	public EmailTemplate getByTemplateName(String templateName)throws  UserNotFoundException;
+	
 
 }
