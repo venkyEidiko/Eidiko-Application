@@ -32,11 +32,17 @@ export class LoginService {
     if (!this.employeeData) {
       const storedData = localStorage.getItem('employee-data');
       if (storedData) {
-        this.employeeData = JSON.parse(storedData);
-      }
-    }
-    return this.employeeData;
+        try {
+          this.employeeData = JSON.parse(storedData);
+        } catch (error) {
+          console.error('Error parsing employee data from localStorage:', error);
+          
+        }
+        }
+        }
+      return this.employeeData;
   }
+  
 
   setJwtToken(token: string) {
     this.jwtToken = token;

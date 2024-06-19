@@ -11,14 +11,13 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.eidiko.exception_handler.UserNotFound;
+import com.eidiko.exception_handler.BadRequestException;
 import com.eidiko.repository.EmployeeRepo;
 
 import lombok.RequiredArgsConstructor;
@@ -62,12 +61,12 @@ public class JwtConfigurartions {
 	        return username -> {
 	            if (isEmail(username)) {
 	                return employeeRepo.findByEmail(username)
-	                    .orElseThrow(() -> new UserNotFound("User Not Found With This Email: " + username));
+	                    .orElseThrow(() -> new BadRequestException("User Not Found With This Email: " + username));
 	            } else if (isPhoneNumber(username)) {
 	                return employeeRepo.findByPhoneNu(username)
-	                    .orElseThrow(() -> new UserNotFound("User Not Found With This Phone Number: " + username));
+	                    .orElseThrow(() -> new BadRequestException("User Not Found With This Phone Number: " + username));
 	            } else {
-	                throw new UserNotFound("Invalid user : " + username);
+	                throw new BadRequestException("Invalid user : " + username);
 	            }
 	        };
 	    }
@@ -106,11 +105,11 @@ public class JwtConfigurartions {
 		log.info("http security");
 		return httpSecurity.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(req->
-				req.requestMatchers("/login1","/refresh/**","/api/save")
+				req.requestMatchers("/login1","/refresh/**","/api/**","/api/leave/**","/leave/**")
 				.permitAll()
 				.anyRequest()
 				.authenticated())
-				.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))
+//				.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))
 				//.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
