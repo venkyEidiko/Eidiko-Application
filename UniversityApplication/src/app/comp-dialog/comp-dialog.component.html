@@ -1,0 +1,38 @@
+
+
+<div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
+    <div class="req">
+      <p mat-dialog-title>Request Credit for Compensatory Off</p>
+      <div class="close-icon">
+        <mat-icon (click)="closeDialog()">close</mat-icon>
+      </div>
+    </div>
+   <div mat-dialog-content class="custom-dialog-content">
+    <div class="compoff-data">
+        Choose the date on which you have worked for to avail Compensatory Off
+    </div>
+    <div class="compoff-data">
+        Compensatory Off Dates
+    </div>
+       <div class="icons">
+          <input matInput name="dates" class="note1" >
+          <mat-icon class="cal" matSuffix>calendar_today</mat-icon>
+       </div>
+       <div class="notelabel">
+        Note
+       </div>
+       <div>
+        <input matInput name="note" class="note2" >
+       </div>
+      <div class="att">
+        <mat-icon> attachment</mat-icon>
+        <mat-label>Upload Files</mat-label>
+      </div>
+    </div>
+    
+    <div mat-dialog-actions class="custom-dialog-actions">
+      <button mat-button (click)="closeDialog()">Cancel</button>
+      <button mat-button class="confirm">Confirm</button>
+    </div>
+  </div>
+  

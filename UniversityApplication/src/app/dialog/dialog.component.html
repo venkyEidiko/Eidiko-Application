@@ -1,0 +1,44 @@
+
+
+<div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
+    <div class="req">
+      <p mat-dialog-title>Request leave</p>
+      <div class="close-icon">
+        <mat-icon (click)="closeDialog()">close</mat-icon>
+      </div>
+    </div>
+   <div mat-dialog-content class="custom-dialog-content">
+    
+    <div class="firstrow">
+    <div>
+    
+        <span>From</span><br/>
+        <span> Select Date</span>
+    </div>
+        <p class="days">0 day</p> 
+    <div>
+        <span>To</span><br/>
+        <span>Select Date</span>
+    </div>
+    </div>
+      <div class="typeofleave">
+     <p>Select type of leave you want to apply</p>
+      <app-dropdown></app-dropdown>
+     </div>
+     <div>
+            <p class="note">Note </p>
+            <input matInput placeholder="Type Here" value="Type Here">
+           
+     </div>
+     <div>
+      <p class="note1">Notify</p>
+      <input class="input1" matInput placeholder="Search Employee" value="Search Employee">
+     </div>
+    </div>
+    
+    <div mat-dialog-actions class="custom-dialog-actions">
+      <button mat-button (click)="closeDialog()">Cancel</button>
+      <button mat-button class="request">Request</button>
+    </div>
+  </div>
+  

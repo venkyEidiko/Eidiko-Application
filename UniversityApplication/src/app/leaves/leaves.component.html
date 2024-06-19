@@ -19,8 +19,8 @@
         </mat-card>
         <mat-card class="card2">
             <mat-card-content>
-                <button mat-flat-button color="primary">RequestLeave</button>
-                <div class="comp-off">
+                <button mat-flat-button color="primary" (click)="openDialog()">RequestLeave</button>
+                <div class="comp-off" (click)="openDialog2()">
                     Request Credit for compensatory off
                 </div>
                 <div class="leave-policy">
@@ -49,6 +49,9 @@
                  
                         Consumed Leave Types
                         <mat-icon class="info-icon">info</mat-icon>
+                    <div class="donut1">
+                    <app-donut1  [chartOptions]="chartOptions"></app-donut1>
+                   </div>
                       
                     
 
@@ -69,40 +72,128 @@
         <div class="leave-balance">
             <mat-card class="card6">
                 <mat-card-content>
-                    <div>
+                    <div class="compoffs">
                         Comp Offs 
-                        View details
+                     <span (click)="openDialog1()">View details</span>
                     </div>
+                   
+                   <div class="balance-line1"> <hr/></div>
+                    
+                    <div class="compoff-leaves">
+                      
+                       <div class="available">
+                       
+                        Available <br/>
+                        0 Day  
+
+                      </div>
+                      <div class="line"></div> 
+                      <div class="consumed">
+                      Consumed <br/>
+                       0 day
+                      </div>
+                       </div>
+                       <hr class="line-break">
+                       <div class="annual quota">
+                        Annual Quota <br/>  0 Day
+                       </div>
                 </mat-card-content>
             </mat-card>
             <mat-card class="card7">
-                <mat-card-content>Simple card</mat-card-content>
+                <mat-card-content>
+                    <div class="compoffs">
+                        Paid Leave
+                      <span (click)="openDialog1()" >  View details</span>
+                    </div>
+                    <div class="donut-container">
+                        <div class="donut-text">3 Days Available</div>
+                        <app-donut1 [chartOptions]="chartOptions1">
+                        </app-donut1>
+                    </div>   
+                   <div class="balance-line"> <hr/></div>
+                    
+                    <div class="compoff-leaves">
+                      
+                       <div class="available">
+                       
+                        Available <br/>
+                        3 days  
+
+                      </div>
+                      <div class="line"></div> 
+                      <div class="consumed">
+                      Consumed <br/>
+                       7 days
+                      </div>
+                       </div>
+                       <hr class="line-break">
+                       <div class="annual quota">
+                        Annual Quota <br/>  10 days
+                       </div>
+
+
+                </mat-card-content>
             </mat-card>
             <mat-card class="card8">
-                <mat-card-content>Simple card</mat-card-content>
-            </mat-card>
+                <mat-card-content>
+                    <div class="compoffs1">
+                      Unpaid Leave
+                    <span (click)="openDialog1()">View details</span>
+                    </div>
+                    <div class="donut-container">
+                        <div class="donut-text">  ∞ Days Available</div>
+                        <app-donut1 [chartOptions]="chartOptions2">
+                        </app-donut1>
+                    </div>   
+                   <div class="balance-line"> <hr/></div>
+                    
+                    <div class="compoff-leaves">
+                      
+                       <div class="available">
+                       
+                        Available <br/>
+                        ∞  
+
+                      </div>
+                      <div class="line"></div> 
+                      <div class="consumed">
+                      Consumed <br/>
+                       1 day
+                      </div>
+                       </div>
+                       <hr class="line-break">
+                       <div class="annual quota">
+                        Annual Quota <br/>  ∞  
+                       </div>
+                 </mat-card-content>
+                </mat-card>
         </div>
     </div>
 
     <div   class="typeofleave" >
         
             <mat-card>
-                <mat-card-content>Simple card</mat-card-content>
+                <mat-card-content>
+                    Other Leave Types Available:Maternity Leave,Optional Leave
+                </mat-card-content>
             </mat-card>
            
         </div>
-    
-   
-       
-            <div>
+        <div>
                 <h2>Leave History</h2>
-                <div class="table-card">
-                    <mat-card>
+                <div >
+                    <mat-card class="table-card">
                         <mat-card-content>
-                         sample Card
+                         
+                            <app-dropdowntable></app-dropdowntable>
+                            <app-statusdrop></app-statusdrop>
+                            <input class="search1" type="text" matInput placeholder="Search">
+                           
+                           
                         </mat-card-content>
                     </mat-card>
+                    <app-table class="tdata" [dataSource]="datatable"></app-table>
                 </div>
-            </div>
-        
-        </div>
+               </div>
+              
+                </div>
