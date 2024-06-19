@@ -2,6 +2,7 @@ package com.eidiko.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,20 +13,26 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
-
+import lombok.ToString;
+@ToString
 @Data
 @Entity
 @Table(name = "ADDRESS_TABLE")
 public class Address {
+
+
 	
     @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer id;
-    
+    @ToString.Exclude
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Employee employee;
+    private String addressType;
     private String doorNumber ;
     private String streetName;
     private String landmark;
@@ -34,5 +41,4 @@ public class Address {
     private String state;
     private int pincode;
 
-    // Getters and Setters
 }

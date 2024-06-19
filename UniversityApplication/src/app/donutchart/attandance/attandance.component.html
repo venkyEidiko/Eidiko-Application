@@ -1,0 +1,94 @@
+<div class="container">
+    <div class="upper-container">
+        <div class="attandance-stats">
+            <h2>Attandance Stats</h2>
+            <mat-card class="card-item">
+                <mat-card-content>
+                    <span>Last Week</span>
+                    <table class="att-det">
+
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>AVG HR/DAY</th>
+                                <th>ON THIME ARRIVAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><i class="fa-solid fa-user"></i>Me</td>
+                                <td>9h 28m</td>
+                                <td>100%</td>
+                            </tr>
+
+                            <tr>
+                                <td>My Team</td>
+                                <td>9h 28m</td>
+                                <td>100%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="attandance-stats">
+            <h2>Timings</h2>
+            <mat-card class="card-item">
+                <mat-card-content>
+                    <div class="days">
+                        <div class="day" *ngFor="let day of weekdata; let i = index"
+                            [style.background-color]="i === time.getDay() ? '#64CED3' : ''">{{day.charAt(0)}}</div>
+                    </div>
+                    <div class="bar">
+                        <span class="shift-time">Today (10:00 AM - 7:00 PM)</span>
+                        <mat-progress-bar class="bar-pipe" mode="determinate" [value]="progress" [color]="getColor()"
+                            height="25px"></mat-progress-bar>
+                        <div class="under-bar">
+                            <small>Duration: {{duty_duration}}h </small>
+                            <small>Break: 0h</small>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="attandance-stats">
+            <h2>Actions</h2>
+            <mat-card class="card-item">
+                <mat-card-content>
+                    <div class="actions-card">
+                        <div class="left">
+                            <div class="clock">
+                                <span>{{ time | date: 'hh' }}</span>:<span>{{ time | date: 'mm' }}</span>:<span>{{ time
+                                    | date: 'ss a' }}</span>
+                            </div>
+                            <div class="date">{{ currentDate | date:'EEE dd, MMM yyyy' }}</div>
+                        </div>
+                        <div class="right">
+                            <a>Web Clock-In</a>
+                            <a>Work From Home</a>
+                            <a>On Duty</a>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="lower-container">
+        <h2>Logs & Requests</h2>
+        <div class="menu-bar">
+            <button mat-button (click)="toggleAttandanceLogMenu()">Attandance Log</button>
+
+            <button mat-button (click)="toggleShiftSeheduleMenu()">Shift Schedule</button>
+
+        </div>
+        <div class="display-data">
+            <ng-container *ngIf="attandanceLog">
+                <h1>Table-content for Attandance Log</h1>
+            </ng-container>
+            <ng-container *ngIf="shiftSehedule">
+                <h1>Table-content for Shift Schedule</h1>
+            </ng-container>
+        </div>
+    </div>
+</div>

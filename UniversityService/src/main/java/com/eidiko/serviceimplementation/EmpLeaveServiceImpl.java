@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.eidiko.dto.EmpLeaveDto;
@@ -35,7 +36,9 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 	@Override
 	public EmpLeaveDto saveEmpLeave(EmpLeaveDto empLeaveDto) {
 		EmpLeave empLeave = mapper.empLeaveDtoToEmpLeave(empLeaveDto);
+		
 		empLeave.setStatus("Pending");
+		empLeave.setLeaveDates(LocalDate.now());
 		  if (empLeave.getFromDate() != null && empLeave.getToDate() != null) {
 	            empLeave.setDurationInDays(1 + ChronoUnit.DAYS.between(empLeave.getFromDate(), empLeave.getToDate()));
 	        } else {
@@ -48,8 +51,8 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 
 	@Override
 	public EmpLeaveDto updateLeaveByEmployee(Long leaveId,EmpLeaveDto empLeaveDto) {
-		EmpLeave empLeave = empLeaveRepo.findById(leaveId).orElseThrow(null);
-		if(empLeave!=null) {
+		EmpLeave empLeave = empLeaveRepo.findById(leaveId).orElseThrow(()-> new UsernameNotFoundException("This Leave Id is not available !"));
+	
 			
 			empLeave.setStatus("Pending");
 			empLeave.setFromDate(empLeaveDto.getFromDate());
@@ -59,16 +62,13 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 			empLeave.setNotifyTo(empLeaveDto.getNotifyTo());
 			
 			empLeaveRepo.save(empLeave);
-			return mapper.empLeaveToEmpLeaveDto(empLeave);
-		}else {
-			return null;
-		}
+			return mapper.empLeaveToEmpLeaveDto(empLeave); 
 		
 	}
 	
 	@Override
 	public EmpLeaveDto updateLeaveByApprover(Long leaveid, EmpLeaveDto empLeaveDto,String actionTakenBy) {
-		EmpLeave empLeave = empLeaveRepo.findById(leaveid).orElseThrow(null);
+		EmpLeave empLeave = empLeaveRepo.findById(leaveid).orElseThrow(()-> new UsernameNotFoundException("This Leave Id is not available !"));
 		empLeave.setStatus(empLeaveDto.getStatus());
 		empLeave.setActionTakenBy(actionTakenBy);
 		empLeave.setRejectionReason(empLeaveDto.getRejectionReason());
@@ -77,7 +77,7 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 
 	@Override
 	public EmpLeaveDto getEmpLeaveById(Long leaveId) {
-		EmpLeave empLeave = empLeaveRepo.findById(leaveId).orElseThrow(null);
+		EmpLeave empLeave = empLeaveRepo.findById(leaveId).orElseThrow(()-> new UsernameNotFoundException("This Leave Id is not available !"));;
 		return mapper.empLeaveToEmpLeaveDto(empLeave);
 	}
 

@@ -1,0 +1,160 @@
+.container {
+    overflow-y: scroll; 
+    height: 100%;
+}
+
+.display-items {
+    position: relative;
+}
+
+.heading {
+    margin-top: 15px;
+}
+
+.dropdown {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 10%; 
+    width: 160px;
+    height: 40px;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10%;
+}
+
+.card1 {
+    flex: 1;
+    min-width: 250px; 
+    max-width: 680px;
+    height: 150px;
+    margin-left: 12px;
+    margin-bottom:20px
+}
+
+.card2 {
+    flex: 1; 
+    min-width: 250px; 
+    max-width: 300px;
+    height: 150px;
+    margin-left:12px;
+}
+
+.leave-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10%;
+    margin-left: 10px;
+}
+.info-icon
+{
+    
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        padding:10px
+    
+    
+}
+
+.card3, .card4 {
+    flex: 1;
+    min-width: 230px; 
+    max-width: 240px;
+    height: 140px;
+    margin-bottom:20px;
+}
+
+.card5 {
+    flex: 1;
+    min-width: 250px; 
+    max-width: 430px;
+    height: 140px;
+}
+.barchart1
+{
+    margin-left:12px;
+    padding:22px;
+
+}
+.barchart2
+{
+    margin-top:18px;
+}
+
+
+.leave-balance {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10%;
+    margin-left: 10px;
+}
+.table-card
+{
+    margin-left:10px;
+    width: 1165px;
+    height:120px
+}
+.card6, .card7, .card8 {
+    flex: 1;
+    min-width: 250px; 
+    max-width: 300px;
+    height: 220px;
+    margin-bottom: 20px;
+}
+.elephantimg
+{
+    width:90px;
+    height:100px;
+}
+.image-content
+{
+  display:flex;
+
+}
+.comp-off,.leave-policy
+{
+    margin-top:12px;
+    color:deepskyblue
+}
+.image-content p{
+    margin:20px;
+}
+.table-content
+{
+    width:120px;
+    height:30px;
+}
+.typeofleave
+{
+    width:1165px;
+    margin-left:10px;
+}
+
+@media (max-width: 768px) {
+    .cards {
+        flex-direction: column; 
+        margin-bottom:20px
+     
+    }
+    .leave-cards {
+        flex-direction: column;
+    }
+    .card3, .card4, .card5 {
+        min-width: 100%; 
+        max-width: 100%; 
+        height: auto; 
+        margin-bottom:20px
+        
+    }
+    .card6, .card7, .card8 {
+        min-width: 100%;
+        max-width: 100%; 
+        height: auto;
+        margin-bottom: 20px;
+          }
+}

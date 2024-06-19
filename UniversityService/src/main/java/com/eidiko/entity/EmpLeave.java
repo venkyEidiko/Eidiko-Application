@@ -1,18 +1,12 @@
 package com.eidiko.entity;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
-import org.springframework.aot.generate.Generated;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Data
@@ -34,8 +28,8 @@ public class EmpLeave {
 	private String rejectionReason;
 	private Long employeeId;
 	private String customDayStatus;
-	@OneToMany(mappedBy = "empLeave", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<LeaveAttachment> leaveAttachment; 
+//	@OneToMany(mappedBy = "empLeave", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+//    private List<Attachment> leaveAttachment; 
 	private double durationInDays; 
 
 	

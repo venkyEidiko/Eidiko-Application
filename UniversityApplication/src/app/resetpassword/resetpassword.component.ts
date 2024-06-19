@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -7,24 +8,46 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./resetpassword.component.css']
 })
 export class ResetpasswordComponent {
+
+  
+  email: string = '';
   password: string = '';
   confirmPassword: string = '';
+  errorMessage: string = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
-  resetPwdConfirmation() {
+  onSubmit() {
     if (this.password !== this.confirmPassword) {
-      // Handle password mismatch error
+      this.errorMessage = 'Passwords do not match';
       return;
     }
-
-    this.authService.resetPassword(this.password).subscribe({
+  
+    const requestBody = {
+      email: this.email,
+      newPassword: this.password,
+      confirmPassword: this.confirmPassword
+    };
+  
+    this.authService.resetPassword(requestBody).subscribe({
       next: (response) => {
         console.log('Password reset successful');
+        this.router.navigate(['/resetPwdConfirmation']);
       },
-      // error: (error) => {
-      //   console.error('Password reset failed:', error);
-      // }
+      error: (error) => {
+        if (typeof error === 'string' && error === 'Password updated successfully') {
+        
+          console.log('Password reset successful');
+          this.router.navigate(['/resetPwdConfirmation']);
+        } else {
+          console.error('Password reset failed:', error);
+          if (error.status === 400 && error.error && error.error.status === 'Passwords do not match') {
+            this.errorMessage = 'Passwords do not match. Please try again.';
+          } else {
+            this.errorMessage = 'Failed to reset password. Please try again later.';
+          }
+        }
+      }
     });
   }
-}
+}  

@@ -3,7 +3,7 @@ package com.eidiko.serviceimplementation;
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.ForgotPassword;
 import com.eidiko.exception_handler.PasswordMismatchException;
-import com.eidiko.exception_handler.UserNotFound;
+import com.eidiko.exception_handler.BadRequestException;
 import com.eidiko.repository.EmployeeRepo;
 import com.eidiko.service.ForgotPasswordInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class ForgotPasswordService implements ForgotPasswordInterface {
     private EmployeeRepo employeeRepository;
 
     @Override
-    public void updatePassword(ForgotPassword forgotPassword) throws UserNotFound {
+    public String updatePassword(ForgotPassword forgotPassword) throws BadRequestException {
         if (!forgotPassword.getNewPassword().equals(forgotPassword.getConfirmPassword())) {
             throw new PasswordMismatchException("Passwords do not match");
         }
@@ -28,10 +28,12 @@ public class ForgotPasswordService implements ForgotPasswordInterface {
             Employee employee = userOptional.get();
             employee.setPassword(forgotPassword.getNewPassword());
             employeeRepository.save(employee);
+            return forgotPassword.getNewPassword();
         } else {
-            throw new UserNotFound("User not found with this emailID");
+            throw new BadRequestException("User not found with this emailID");
         }
     }
+
 
 
 

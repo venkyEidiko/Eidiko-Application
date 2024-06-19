@@ -7,10 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import com.eidiko.entity.Employee;
 @Repository
-public interface EmployeeRepo extends JpaRepository<Employee, Integer>{
-	
-	Optional<Employee> findByEmployeeId(int employeeId);
+public interface EmployeeRepo extends JpaRepository<Employee, Long>{
 
 	Optional<Employee> findByEmail(String email);
+
+	Optional<Employee> findByEmployeeId(Long employeeId);
+	
+	Optional<Employee> findByPhoneNu(String username);
+
 
 }
