@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.eidiko.exception_handler.UserNotFound;
+import com.eidiko.exception_handler.BadRequestException;
 import com.eidiko.repository.EmployeeRepo;
 
 import lombok.RequiredArgsConstructor;
@@ -61,12 +61,12 @@ public class JwtConfigurartions {
 	        return username -> {
 	            if (isEmail(username)) {
 	                return employeeRepo.findByEmail(username)
-	                    .orElseThrow(() -> new UserNotFound("User Not Found With This Email: " + username));
+	                    .orElseThrow(() -> new BadRequestException("User Not Found With This Email: " + username));
 	            } else if (isPhoneNumber(username)) {
 	                return employeeRepo.findByPhoneNu(username)
-	                    .orElseThrow(() -> new UserNotFound("User Not Found With This Phone Number: " + username));
+	                    .orElseThrow(() -> new BadRequestException("User Not Found With This Phone Number: " + username));
 	            } else {
-	                throw new UserNotFound("Invalid user : " + username);
+	                throw new BadRequestException("Invalid user : " + username);
 	            }
 	        };
 	    }
@@ -105,7 +105,7 @@ public class JwtConfigurartions {
 		log.info("http security");
 		return httpSecurity.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(req->
-				req.requestMatchers("/login1","/refresh/**","/api/**")
+				req.requestMatchers("/login1","/refresh/**","/api/**","/api/leave/**","/leave/**")
 				.permitAll()
 				.anyRequest()
 				.authenticated())

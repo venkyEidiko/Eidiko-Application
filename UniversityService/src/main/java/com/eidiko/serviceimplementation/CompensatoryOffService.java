@@ -1,44 +1,51 @@
 package com.eidiko.serviceimplementation;
 
-import com.eidiko.dto.ImageUtils;
-import com.eidiko.entity.Attachment;
-import com.eidiko.entity.Leave;
-import com.eidiko.repository.AttachmentRepository;
-import com.eidiko.repository.LeaveRepo;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+
+import javax.sql.rowset.serial.SerialBlob;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.sql.rowset.serial.SerialBlob;
-import java.io.IOException;
-import java.sql.Blob;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
+import com.eidiko.dto.ImageUtils;
+import com.eidiko.entity.Attachment;
+import com.eidiko.entity.EmpLeave;
+import com.eidiko.mapper.Mapper;
+import com.eidiko.repository.AttachmentRepository;
+import com.eidiko.repository.EmpLeaveRepo;
+import com.eidiko.service.EmpLeaveService;
 
 @Service
 public class CompensatoryOffService {
 
     @Autowired
-    private LeaveRepo leaveRepository;
+    private EmpLeaveService empLeaveService;
 
+    @Autowired
+	private Mapper mapper;
+    
     @Autowired
     private AttachmentRepository attachmentRepository;
 
-    public List<String> requestLeave(String compensatoryOffDate, String note, List<MultipartFile> files, Long employeeId) throws IOException, SQLException {
-        String[] dates = compensatoryOffDate.split(" - ");
-        String fromDate = dates[0];
-        String toDate = dates[1];
+    public List<String> requestLeave(LocalDate fromDate,LocalDate toDate, String note, List<MultipartFile> files, Long employeeId) throws IOException, SQLException {
+        
 
-        Leave leave = new Leave();
+        EmpLeave leave = new EmpLeave();
         leave.setFromDate(fromDate);
         leave.setToDate(toDate);
         leave.setLeaveNote(note);
         leave.setEmployeeId(employeeId);
         leave.setStatus("Pending");
         leave.setLeaveType("comp offs");
-        leaveRepository.save(leave);
+        leave.setCustomDayStatus("Full Day");
+        empLeaveService.saveEmpLeave(mapper.empLeaveToEmpLeaveDto (leave));
 
         List<String> imageResponses = new ArrayList<>();
 

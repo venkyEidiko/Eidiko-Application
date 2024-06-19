@@ -15,8 +15,8 @@ public class GlobalExceptionHandler {
 	@Autowired
 	private CommonResponse commonResponse;
 
-	@ExceptionHandler(UserNotFound.class)
-	public ResponseEntity<ResponseModel<Object>> response(UserNotFound ex) {
+	@ExceptionHandler(BadRequestException.class)
+	public ResponseEntity<ResponseModel<Object>> response(BadRequestException ex) {
 
 		ResponseModel<Object> res = new ResponseModel<>();
 
