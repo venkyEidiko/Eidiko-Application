@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -123,39 +124,6 @@ public class CompensatoryOffController {
         }
     }
 
-
- //THIS IS FOR DOWNLOAD U CAN DELETE IT NOT WORKING
-    //this method is used for downloading the files
-//    @GetMapping("/downloadattachments/{id}")
-//    public ResponseEntity<byte[]> getAttachment(@PathVariable Long id) {
-//        try {
-//            Attachment attachment = compensatoryService.getAttachment(id);
-//            if (attachment != null) {
-//                String contentType = "application/octet-stream";
-//                if (attachment.getFileExtension().equalsIgnoreCase("jpg") || attachment.getFileExtension().equalsIgnoreCase("jpeg")) {
-//                    contentType = "image/jpeg";
-//                } else if (attachment.getFileExtension().equalsIgnoreCase("png")) {
-//                    contentType = "image/png";
-//                } else if (attachment.getFileExtension().equalsIgnoreCase("pdf")) {
-//                    contentType = "application/pdf";
-//                } else if (attachment.getFileExtension().equalsIgnoreCase("doc") || attachment.getFileExtension().equalsIgnoreCase("docx")) {
-//                    contentType = "application/msword";
-//                }
-//
-//                byte[] fileContent = attachment.getFileContent();
-//                String fileName = attachment.getAttachmentFileName();
-//
-//                return ResponseEntity.ok()
-//                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
-//                        .header(HttpHeaders.CONTENT_TYPE, contentType)
-//                        .body(fileContent);
-//            } else {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
-//    }
 }
+
 

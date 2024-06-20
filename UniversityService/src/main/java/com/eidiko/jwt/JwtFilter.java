@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.eidiko.exception_handler.UserNotFound;
+import com.eidiko.exception_handler.BadRequestException;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -60,7 +60,7 @@ public class JwtFilter  extends OncePerRequestFilter{
 			
 			//check email null then raise exception
 			if (emailId == null) {
-				throw new UserNotFound("User not found" + emailId);
+				throw new BadRequestException("User not found" + emailId);
 			}
 			System.out.println("User name after if :" + emailId);
 
@@ -77,7 +77,7 @@ public class JwtFilter  extends OncePerRequestFilter{
 		} catch (Exception e) {
 			log.error("Error occurred in JwtAuthenticationFilter", e);
 			//throw new ServletException(e+"---------------------------------------");
-			throw new UserNotFound("sorry");
+			throw new BadRequestException("sorry");
 		}
 
 	}
