@@ -23,6 +23,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
 @ToString
 @Entity
 @Data
@@ -45,8 +46,8 @@ public class Employee implements UserDetails {
 	private Integer employeeId;
 	private String gender;
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Roles role;
-	 @ToString.Exclude
+	private Roles_Table role;
+	@ToString.Exclude
 	@JsonManagedReference
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Address> addresses;

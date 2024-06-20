@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.ResponseModel;
-import com.eidiko.entity.Roles;
+import com.eidiko.entity.Roles_Table;
+//import com.eidiko.entity.Roles;
 import com.eidiko.exception_handler.SaveFailureException;
 import com.eidiko.exception_handler.UserNotFoundException;
 import com.eidiko.responce.CommonResponse;
@@ -39,9 +40,9 @@ public class EmployeeControllor {
 	private EmployeeService employeeService;
 
 	@GetMapping("/getRoles")
-	public List<Roles> getRoles() {
+	public List<Roles_Table> getRoles() {
 
-		List<Roles> allRoles = roleInterface.getAllRoles();
+		List<Roles_Table> allRoles = roleInterface.getAllRoles();
 
 		if (allRoles != null) {
 
@@ -54,30 +55,32 @@ public class EmployeeControllor {
 	}
 
 	@PostMapping("/save")
-	public ResponseEntity<ResponseModel<Object>> saveUser(@RequestBody Employee employee) throws SaveFailureException {
+	public ResponseEntity<ResponseModel<Object>> saveUser(@RequestBody Employee employee) throws SaveFailureException, UserNotFoundException {
 
-		String saveEmployee = employeeInterface.saveEmployee(employee);
-		if (saveEmployee != null) {
+		String saveEmployee;
+		
+			saveEmployee = employeeInterface.saveEmployee(employee);
+			if (saveEmployee != null) {
 
-			return new CommonResponse<>().prepareSuccessResponseObject(saveEmployee);
+				return new CommonResponse<>().prepareSuccessResponseObject(saveEmployee);
 
-		} else {
-			return new CommonResponse<>().prepareFailedResponse(saveEmployee);
-		}
+			} else {
+				return new CommonResponse<>().prepareFailedResponse(saveEmployee);
+			}
 		// return null;
 
 	}
 
 	@PutMapping("/updateEmp/{empId}")
 	public ResponseEntity<ResponseModel<Object>> updateEmployee(@PathVariable("empId") int empID,
-			@RequestBody Employee employee) throws SaveFailureException, UserNotFoundException   {
+			@RequestBody Employee employee) throws SaveFailureException, UserNotFoundException {
 
 		String updateEmployee = employeeInterface.updateEmployee(empID, employee);
 
 		if (updateEmployee != null) {
 
 			return new CommonResponse<>().prepareSuccessResponseObject(updateEmployee);
-		} 
+		}
 //		else {
 //			return new CommonResponse<>().prepareFailedResponse(updateEmployee);
 //		}
