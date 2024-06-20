@@ -6,7 +6,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.eidiko.entity.Address;
 import com.eidiko.entity.Employee;
-
-import com.eidiko.entity.Roles;
+import com.eidiko.entity.Roles_Table;
+//import com.eidiko.entity.Roles;
 import com.eidiko.exception_handler.SaveFailureException;
 import com.eidiko.exception_handler.UserNotFoundException;
 import com.eidiko.repository.EmployeeRepo;
@@ -23,6 +22,7 @@ import com.eidiko.repository.RolesReposotory;
 import com.eidiko.service.EmployeeInterface;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Service
 public class EmployeeService implements EmployeeInterface {
@@ -32,17 +32,29 @@ public class EmployeeService implements EmployeeInterface {
 
 	@Autowired
 	private RolesReposotory rolesReposotory;
-	
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	
 
 	// save the employee details
 	@Override
 	public String saveEmployee(Employee employee) throws SaveFailureException {
+		
+//		Roles_Table role = employee.getRole();
 
-		Roles save2 = rolesReposotory.save(employee.getRole());
-		employee.setRole(save2);
+	                 Optional<Roles_Table> byRoleId = rolesReposotory.findByRoleId(employee.getRole().getRoleId());
+	                 
+	                 Integer roleId = byRoleId.get().getRoleId();
+	                 if (employee.getRole().getRoleId()==roleId) {
+	                	 Roles_Table save2 = rolesReposotory.save(employee.getRole());
+	             		employee.setRole(save2);
 
+					}
+		String encode = passwordEncoder.encode(employee.getPassword());
+		log.info("Encode password :{}", encode);
+		employee.setPassword(encode);
 		Employee save = employeeRepo.save(employee);
 
 
@@ -55,11 +67,12 @@ public class EmployeeService implements EmployeeInterface {
 
 	}
 
+	
 
 	@Override
 	public String updateEmployee(int employeeId, Employee employee) throws UserNotFoundException, SaveFailureException {
-		log.info("Employee id :{}",employeeId);
-		
+		log.info("Employee id :{}", employeeId);
+
 //		log.info("Employee : {}",employee.toString());
 		Employee byEmployeeId = employeeRepo.findByEmployeeId(employeeId)
 				.orElseThrow(() -> new UserNotFoundException("User not found in database"));

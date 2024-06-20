@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
 @EnableWebSecurity
+
 @RequiredArgsConstructor
 //this class consist all configurations beans required for security
 public class JwtConfigurartions {
@@ -37,7 +38,7 @@ public class JwtConfigurartions {
 	private JwtEntryPoint jwtEntryPoint;
 	
 	@Bean
-	public JwtFilter jwtAuthenticationFilter() {
+	public JwtFilter jwtAuthenticationFilter()  {
 
 		return new JwtFilter(jwtService, userDetailsService());
 
@@ -57,9 +58,9 @@ public class JwtConfigurartions {
 
 	//for fetch user details from db and also checks username is phonNum or mail
 	  @Bean
-	    public UserDetailsService userDetailsService() {
+	    public UserDetailsService userDetailsService()  {
 	        return username -> {
-	            if (isEmail(username)) {
+	            if (this.isEmail(username)) {
 	                return employeeRepo.findByEmail(username)
 	                    .orElseThrow(() -> new UserNotFound("User Not Found With This Email: " + username));
 	            } else if (isPhoneNumber(username)) {
@@ -71,6 +72,11 @@ public class JwtConfigurartions {
 	        };
 	    }
 	  
+	
+	
+	
+	
+	
 	  
 	// Helper methods to check if the username is an email or phone number
 	    private boolean isEmail(String username) {
