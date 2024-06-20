@@ -50,14 +50,16 @@ public class CompensatoryOffService {
             String fileExtension = getFileExtension(file.getOriginalFilename());
             attachment.setFileExtension(fileExtension);
 
-            byte[] fileData = file.getBytes();
-            byte[] compressedData = ImageUtils.compressImage(fileData);
-            Blob imageData = new SerialBlob(compressedData);
-            attachment.setImageData(imageData);
-
             if (isImageFile(fileExtension)) {
+                byte[] fileData = file.getBytes();
+                byte[] compressedData = ImageUtils.compressImage(fileData);
+                attachment.setImageData(new SerialBlob(compressedData));
+
                 String base64Image = Base64.getEncoder().encodeToString(fileData);
                 imageResponses.add("data:image/" + fileExtension + ";base64," + base64Image);
+            } else if (isPdfOrDocFile(fileExtension)) {
+                byte[] fileData = file.getBytes();
+                attachment.setFileContent(fileData);
             }
 
             attachmentRepository.save(attachment);
@@ -70,6 +72,10 @@ public class CompensatoryOffService {
         return extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg") || extension.equalsIgnoreCase("jpeg");
     }
 
+    public boolean isPdfOrDocFile(String extension) {
+        return extension.equalsIgnoreCase("pdf") || extension.equalsIgnoreCase("doc") || extension.equalsIgnoreCase("docx");
+    }
+
     public String getFileExtension(String fileName) {
         if (fileName == null) {
             return null;
@@ -79,12 +85,14 @@ public class CompensatoryOffService {
     }
 
     public boolean isAllowedFileType(String extension) {
-        return extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg") ||
-                extension.equalsIgnoreCase("jpeg") || extension.equalsIgnoreCase("doc") ||
-                extension.equalsIgnoreCase("docx") || extension.equalsIgnoreCase("pdf");
+        return isImageFile(extension) || isPdfOrDocFile(extension);
     }
 
     public Attachment getAttachment(Long id) {
         return attachmentRepository.findById(id).orElse(null);
+    }
+
+    public List<Attachment> getAllAttachments() {
+        return attachmentRepository.findAll();
     }
 }

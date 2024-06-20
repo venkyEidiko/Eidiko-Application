@@ -23,5 +23,4 @@ public interface EmployeeRepo extends JpaRepository<Employee, Integer>{
 
 	Optional<Employee> findByPhoneNu(String username);
 
-
 }
