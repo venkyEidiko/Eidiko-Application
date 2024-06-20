@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eidiko.entity.ForgotPassword;
 import com.eidiko.exception_handler.PasswordMismatchException;
-import com.eidiko.exception_handler.UserNotFound;
+import com.eidiko.exception_handler.BadRequestException;
 import com.eidiko.responce.CommonResponse;
 import com.eidiko.serviceimplementation.ForgotPasswordService;
 
@@ -31,7 +31,7 @@ public class ForgotPasswordController {
         try {
             String newPassword = forgotPasswordService.updatePassword(forgotPassword);
             return new CommonResponse<>().prepareSuccessResponseObject("Password updated successfully", newPassword);
-        } catch (UserNotFound | PasswordMismatchException e) {
+        } catch (BadRequestException | PasswordMismatchException e) {
             return new CommonResponse<>().prepareErrorResponseObject(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

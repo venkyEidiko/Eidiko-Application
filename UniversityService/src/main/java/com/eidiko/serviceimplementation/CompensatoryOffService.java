@@ -2,9 +2,10 @@ package com.eidiko.serviceimplementation;
 
 import com.eidiko.dto.ImageUtils;
 import com.eidiko.entity.Attachment;
-import com.eidiko.entity.Leave;
+import com.eidiko.entity.EmpLeave;
+import com.eidiko.entity.EmpLeave;
 import com.eidiko.repository.AttachmentRepository;
-import com.eidiko.repository.LeaveRepo;
+import com.eidiko.repository.EmpLeaveRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +14,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.List;
 public class CompensatoryOffService {
 
     @Autowired
-    private LeaveRepo leaveRepository;
+    private EmpLeaveRepo leaveRepository;
 
     @Autowired
     private AttachmentRepository attachmentRepository;
@@ -31,9 +33,9 @@ public class CompensatoryOffService {
         String fromDate = dates[0];
         String toDate = dates[1];
 
-        Leave leave = new Leave();
-        leave.setFromDate(fromDate);
-        leave.setToDate(toDate);
+        EmpLeave leave = new EmpLeave();
+        leave.setFromDate(LocalDate.parse(fromDate));
+        leave.setToDate(LocalDate.parse(toDate));
         leave.setLeaveNote(note);
         leave.setEmployeeId(employeeId);
         leave.setStatus("Pending");

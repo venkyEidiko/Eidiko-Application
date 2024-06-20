@@ -52,28 +52,18 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileAboutComponent } from './profile-about/profile-about.component';
+import { ProfileJobComponent } from './profile-job/profile-job.component';
+import { ProfilePrflComponent } from './profile-prfl/profile-prfl.component';
+import { ProfileDocComponent } from './profile-doc/profile-doc.component';
+import { AboutSummaryComponent } from './about-summary/about-summary.component';
+import { AboutTimelineComponent } from './about-timeline/about-timeline.component';
+import { AboutWallactivityComponent } from './about-wallactivity/about-wallactivity.component';
 import { TableComponent } from './table/table.component';
-import { CalenderComponent } from './calender/calender.component';
-
-// import { FlatpickrModule } from 'angularx-flatpickr';
-//import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-// import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-
-
-
 import { LeavesComponent } from './leaves/leaves.component';
-
-
-
-
 import { BarchartComponent } from './barchart/barchart.component';
-
-
-
-
-
 
 @NgModule({
   declarations: [
@@ -92,28 +82,26 @@ import { BarchartComponent } from './barchart/barchart.component';
     MeComponent,
     InboxComponent,
     MyteamComponent,
-   
-    MyfinancesComponent,
+      MyfinancesComponent,
     OrgComponent,
     ClockComponent,
     DonutchartComponent,
     OtpComponent,
     LayoutComponent,
     FooterComponent,
-
     LeavesComponent,
-    
     BarchartComponent,
-    
-        
-    
-
     AttandanceComponent,
-
+    ProfileComponent,
+    ProfileAboutComponent,
+    ProfileJobComponent,
+    ProfilePrflComponent,
+    ProfileDocComponent,
+    AboutSummaryComponent,
+    AboutTimelineComponent,
+    AboutWallactivityComponent,
     TableComponent,
-    //CalenderComponent
     
-
   ],
   imports: [
     BrowserModule,

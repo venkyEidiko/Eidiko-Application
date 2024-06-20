@@ -1,65 +1,57 @@
 package com.eidiko.serviceimplementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Optional;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.eidiko.entity.Address;
 import com.eidiko.entity.Employee;
-
 import com.eidiko.entity.Roles;
-import com.eidiko.exception_handler.SaveFailureException;
+import com.eidiko.exception_handler.BadRequestException;
 import com.eidiko.exception_handler.UserNotFoundException;
+import com.eidiko.repository.AddressRepo;
 import com.eidiko.repository.EmployeeRepo;
 import com.eidiko.repository.RolesReposotory;
 import com.eidiko.service.EmployeeInterface;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Service
 public class EmployeeService implements EmployeeInterface {
 
 	@Autowired
 	private EmployeeRepo employeeRepo;
+	@Autowired
+	private AddressRepo addressRepo;
 
 	@Autowired
 	private RolesReposotory rolesReposotory;
-	
-
-	
 
 	// save the employee details
 	@Override
-	public String saveEmployee(Employee employee) throws SaveFailureException {
+	public String saveEmployee(Employee employee) {
 
 		Roles save2 = rolesReposotory.save(employee.getRole());
 		employee.setRole(save2);
 
 		Employee save = employeeRepo.save(employee);
 
-
-		if (save != null && save.getId() != 0) {
-			return "User record has been successfully created.";
+		if (save != null && save.getEmployeeId() != 0) {
+			return "200";
 		} else {
-			//throw new SaveFailureException("Failed to create user record.");
-			return "Failed to create user record";
+			// throw new SaveFailureException("Failed to create user record.");
+			throw new BadRequestException("Failed to create User");
 		}
 
 	}
 
-
 	@Override
-	public String updateEmployee(int employeeId, Employee employee) throws UserNotFoundException, SaveFailureException {
-		log.info("Employee id :{}",employeeId);
-		
+	public String updateEmployee(Long employeeId, Employee employee) throws UserNotFoundException {
+		log.info("Employee id :{}", employeeId);
+
 //		log.info("Employee : {}",employee.toString());
 		Employee byEmployeeId = employeeRepo.findByEmployeeId(employeeId)
 				.orElseThrow(() -> new UserNotFoundException("User not found in database"));
@@ -68,24 +60,42 @@ public class EmployeeService implements EmployeeInterface {
 		byEmployeeId.setFirstName(employee.getFirstName());
 		byEmployeeId.setGender(employee.getGender());
 		byEmployeeId.setLastName(employee.getLastName());
-		byEmployeeId.setRole(employee.getRole());
+		// byEmployeeId.setRole(employee.getRole());
 
 		// Update addresses
 		List<Address> addresses = employee.getAddresses();
 		if (addresses != null) {
 			// Update existing addresses or add new addresses
-			for (Address address : addresses) {
-				address.setEmployee(byEmployeeId);
-			}
-			byEmployeeId.setAddresses(addresses);
-		}
+			List<Address> updatedAddress = new ArrayList<>();
 
+			// address.setEmployee(byEmployeeId);
+
+			for (Address address1 : byEmployeeId.getAddresses()) {
+				for (Address address : addresses) {
+					if (address1.getAddressType().equalsIgnoreCase(address.getAddressType())) {
+
+						address1.setAddressType(address.getAddressType());
+						address1.setArea(address.getArea());
+						address1.setCity(address.getCity());
+						address1.setDoorNumber(address.getDoorNumber());
+						address1.setLandmark(address.getLandmark());
+						address1.setPincode(address.getPincode());
+						address1.setState(address.getState());
+						address1.setStreetName(address.getStreetName());
+						updatedAddress.add(address1);
+					} else {
+						address.setEmployee(byEmployeeId);
+						updatedAddress.add(address);
+
+					}
+				}
+				byEmployeeId.setAddresses(updatedAddress);
+			}
+		}
 		Employee updatedEmployee = employeeRepo.save(byEmployeeId);
 
-		if (updatedEmployee.getId() != 0) {
-
+		if (updatedEmployee.getEmployeeId() != 0) {
 			return "User record has been updated ";
-
 		} else {
 			return "Failed to save the updated employee record";
 		}
@@ -98,6 +108,115 @@ public class EmployeeService implements EmployeeInterface {
 
 		return emp;
 
+	}
+
+	@Override
+	public String updateEmployeeContactDetails(Long empLoyeeId, Employee employee) throws UserNotFoundException {
+		Employee employee1 = employeeRepo.findById(empLoyeeId)
+				.orElseThrow(() -> new UserNotFoundException(empLoyeeId + "is not available ! please signup !!"));
+		employee1.setWorkEmail(employee.getWorkEmail());
+		employee1.setPersonalEmail(employee.getPersonalEmail());
+		employee1.setWorkNumber(employee.getWorkNumber());
+		employee1.setResidenceNumber(employee.getResidenceNumber());
+		employee1.setSkype(employee.getSkype());
+		employee1.setEmergencyContactNumber(employee.getEmergencyContactNumber());
+		Employee updatedEmployee = employeeRepo.save(employee1);
+
+		if (updatedEmployee.getEmployeeId() != 0) {
+			return "User record has been updated ! ";
+		} else {
+			throw new BadRequestException("User record has not been updated !");
+		}
+
+	}
+
+	@Override
+	public String updateEmployeePrimaryDetails(Long empLoyeeId, Employee employee) throws UserNotFoundException {
+		Employee employee1 = employeeRepo.findById(empLoyeeId)
+				.orElseThrow(() -> new UserNotFoundException(empLoyeeId + "is not available ! please signup !!"));
+		employee1.setDateOfBirth(employee.getDateOfBirth());
+		employee1.setMaritalStatus(employee.getMaritalStatus());
+		employee1.setBloodGroup(employee.getBloodGroup());
+		employee1.setPhysicallyHandicapped(employee.getPhysicallyHandicapped());
+		employee1.setNationality(employee.getNationality());
+		Employee updatedEmployee = employeeRepo.save(employee1);
+
+		if (updatedEmployee.getEmployeeId() != 0) {
+			return "User record has been updated ";
+		} else {
+			throw new BadRequestException("User record has not been updated !");
+		}
+
+	}
+
+	@Override
+	public String updateEmployeeJobDetails(Long empLoyeeId, Employee employee) throws UserNotFoundException {
+		Employee employee1 = employeeRepo.findById(empLoyeeId)
+				.orElseThrow(() -> new UserNotFoundException(empLoyeeId + "is not available ! please signup !!"));
+		employee1.setDateOfJoining(employee.getDateOfJoining());
+		employee1.setJobTitlePrimary(employee.getJobTitlePrimary());
+		employee1.setJobTitleSecondry(employee.getJobTitleSecondry());
+		employee1.setWorkerType(employee.getWorkerType());
+		employee1.setTimeType(employee.getTimeType());
+		employee1.setNoticePeriod(employee.getNoticePeriod());
+		employee1.setPayBand(employee.getPayBand());
+		employee1.setPayGrade(employee.getPayGrade());
+		employee1.setContractStatus(employee.getContractStatus());
+		employee1.setInProbation(employee.getInProbation());
+		Employee updatedEmployee = employeeRepo.save(employee1);
+
+		if (updatedEmployee.getEmployeeId() != 0) {
+			return "User record has been updated ";
+		} else {
+			throw new BadRequestException("User record has not been updated !");
+		}
+	}
+
+	@Override
+	public String updateEmployeeTimeDetails(Long empLoyeeId, Employee employee) throws UserNotFoundException {
+		Employee employee1 = employeeRepo.findById(empLoyeeId)
+				.orElseThrow(() -> new UserNotFoundException(empLoyeeId + "is not available ! please signup !!"));
+		employee1.setShift(employee.getShift());
+		employee1.setWeeklyOffPolicy(employee.getWeeklyOffPolicy());
+		employee1.setLeavePlan(employee.getLeavePlan());
+		employee1.setHolidayCalendar(employee.getHolidayCalendar());
+		employee1.setAttendanceCaptureScheme(employee.getAttendanceCaptureScheme());
+		employee1.setAttendanceNumber(employee.getAttendanceNumber());
+		employee1.setAttendancePenalisationPolicy(employee.getAttendancePenalisationPolicy());
+		employee1.setShiftweeklyOffRule(employee.getShiftweeklyOffRule());
+		employee1.setShiftAllowancePolicy(employee.getShiftAllowancePolicy());
+
+		Employee updatedEmployee = employeeRepo.save(employee1);
+
+		if (updatedEmployee.getEmployeeId() != 0) {
+			return "User record has been updated ";
+		} else {
+			throw new BadRequestException("User record has not been updated !");
+		}
+
+	}
+
+	@Override
+	public String updateEmployeeOrganizationDetails(Long empLoyeeId, Employee employee) throws UserNotFoundException {
+		Employee employee1 = employeeRepo.findById(empLoyeeId)
+				.orElseThrow(() -> new UserNotFoundException(empLoyeeId + "is not available ! please signup !!"));
+		employee1.setBusinessUnit(employee.getBusinessUnit());
+		employee1.setDepartment(employee.getDepartment());
+		employee1.setLocation(employee.getLocation());
+		employee1.setCostCenter(employee.getCostCenter());
+		employee1.setLegalEntity(employee.getLegalEntity());
+		employee1.setDottedLineManager(employee.getDottedLineManager());
+		employee1.setReportsTo(employee.getReportsTo());
+		employee1.setManagerOfManager(employee.getManagerOfManager());
+		employee1.setShiftAllowancePolicy(employee.getShiftAllowancePolicy());
+
+		Employee updatedEmployee = employeeRepo.save(employee1);
+
+		if (updatedEmployee.getEmployeeId() != 0) {
+			return "User record has been updated ";
+		} else {
+			throw new BadRequestException("User record has not been updated !");
+		}
 	}
 
 }

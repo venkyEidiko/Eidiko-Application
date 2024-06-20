@@ -2,15 +2,17 @@ package com.eidiko.responce;
 
 import java.util.List;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
 import com.eidiko.entity.ResponseModel;
 import com.eidiko.exception_handler.SaveFailureException;
 import com.eidiko.exception_handler.UserNotFoundException;
 
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 @Component
 public class CommonResponse<T> {
@@ -36,7 +38,7 @@ public class CommonResponse<T> {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	public <T> ResponseEntity<ResponseModel<T>> prepareErrorResponseObject(String message, HttpStatus status) {
+	public ResponseEntity<ResponseModel<T>> prepareErrorResponseObject(String message, HttpStatus status) {
 		ResponseModel<T> response = new ResponseModel<>();
 		response.setStatus("FAILED");
 		response.setStatusCode(status.value());
@@ -59,15 +61,12 @@ public class CommonResponse<T> {
 		response.setStatusCode(HttpStatus.OK.value());
 		response.setStatus("SUCCESS");
 
-		response.setEmail((String) result);
+//		response.setEmail((String) result);
 		if (result instanceof List<?>) {
 			response.setResult((List<T>) result);
 		} else {
-
 			response.setResult(List.of(result));
 		}
-
-//		comment
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
@@ -97,23 +96,35 @@ public class CommonResponse<T> {
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<ResponseModel<T>> handleUserNotFoundException(UserNotFoundException ex) {
 		ResponseModel<T> response = new ResponseModel<>();
-		
+
 		response.setEmail(null);
 		response.setError(ex.getMessage());
 		response.setResult(null);
 		response.setStatusCode(HttpStatus.NOT_FOUND.value());
-       response.setStatus("FAILED");
+		response.setStatus("FAILED");
 		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(BadRequestException.class)
+	public ResponseEntity<ResponseModel<T>> handleBadRequestException(T ex) {
+		ResponseModel<T> response = new ResponseModel<>();
+
+		response.setEmail(null);
+		response.setError(ex.toString());
+		response.setResult(null);
+		response.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		response.setStatus("FAILED");
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(SaveFailureException.class)
 	public ResponseEntity<ResponseModel<T>> handleSaveFailureException(SaveFailureException ex) {
 		ResponseModel<T> response = new ResponseModel<>();
-		
+
 		response.setError(ex.getMessage());
 		response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		response.setResult(null);
-		
+
 		response.setStatus("FAILED");
 		return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
