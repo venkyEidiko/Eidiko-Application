@@ -5,7 +5,10 @@ package com.eidiko.responce;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+
+import com.eidiko.entity.Posts;
 import com.eidiko.entity.ResponseModel;
 import org.springframework.stereotype.Component;
 
@@ -55,7 +58,7 @@ public ResponseEntity<ResponseModel<T>> prepareSuccessResponseObject(T result, T
 	public ResponseEntity<ResponseModel<T>> prepareFailedResponse(String error) {
 		
 		response.setStatusCode(HttpStatus.BAD_REQUEST.value());
-		response.setStatus(error);
+		response.setStatus("FAILURE");
 		response.setError(error);
 
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -98,5 +101,7 @@ public ResponseEntity<ResponseModel<T>> prepareSuccessResponseObject(T result, T
 
 	        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
 	    }
+
+	
 
 }

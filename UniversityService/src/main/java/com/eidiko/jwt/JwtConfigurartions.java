@@ -106,12 +106,13 @@ public class JwtConfigurartions {
 		log.info("http security");
 		return httpSecurity.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(req->
-				req.requestMatchers("/login1","/refresh/**","/api/save")
+				req.requestMatchers("/login1","/refresh/**","/api/save","/leave/**","/posts/**")
 				.permitAll()
 				.anyRequest()
+				//.permitAll())
 				.authenticated())
-				.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))
-				//.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//		    	.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))
+			    //.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 				
