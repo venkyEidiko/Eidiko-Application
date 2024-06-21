@@ -61,14 +61,16 @@ public class EmailTemplateControllor {
 		return new ResponseEntity<>(template, HttpStatus.OK);
 	}
 
-	@PostMapping("/sendMail")
-	public ResponseEntity<ResponseModel<Object>> sendMail(@RequestParam("toMail") String to,
-			@RequestParam("otp") String otp) {
+	@GetMapping("/sendMail")
+	public ResponseEntity<ResponseModel<Object>> sendMail(@RequestParam("toMail") String to)
+		
+	{
+		System.out.println("email :"+to);
 		try {
-			
-			String sendEmailWithOtp = emailTemplateImp.sendEmailWithOtp(to, otp);
+			//,otp
+			String sendEmailWithOtp = emailTemplateImp.sendEmailWithOtp(to);
 
-			
+			System.out.println(sendEmailWithOtp);
 			return new CommonResponse<>().prepareSuccessResponseObject(sendEmailWithOtp);
 		} catch (UserNotFoundException e) {
 			return new CommonResponse<>().prepareFailedResponse2( e.getMessage());

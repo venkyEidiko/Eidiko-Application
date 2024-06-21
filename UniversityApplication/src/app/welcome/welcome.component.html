@@ -1,6 +1,6 @@
 <div class="welcome-container">
   <div class="welcome-cards1">
-    <mat-card class="welcome-cards11" *ngIf="employee; else loading">
+    <mat-card class="welcome-cards11" *ngIf="user; else loading">
       <mat-card-content>
         <div class="welcom-profile">
           
@@ -9,12 +9,12 @@
           </div>
           <div>
             <div class="wlcm-prfl-child1">
-              <h1>{{employee.firstName}}</h1>
+              <h1>{{user.firstName}}</h1>
               <i class="fa-solid fa-arrow-up-right-from-square"></i>
             </div>
             <div class="wlcm-prfl-child">
               <span>Trainee Software Engineer</span>
-              <span>{{employee.addresses[0].city}}</span>
+              <span>{{user.addresses[0].city}}</span>
             </div>
           </div>
         </div>
@@ -36,26 +36,26 @@
         <div class="intro-mat-cards">
           <mat-card>
             <mat-card-content class="int">
-              <!-- <div class="intro-mat-child-cards"> -->
+     
                 <p>About</p>
                 <p class="p-div">Add Response</p>
-              <!-- </div> -->
+    
             </mat-card-content>
           </mat-card>
           <mat-card>
             <mat-card-content>
-              <!-- <div class="intro-mat-child-cards"> -->
+              
                 <p>What I love about my job?</p>
                 <p class="p-div">Add Response</p>
-              <!-- </div> -->
+    
             </mat-card-content>
           </mat-card>
           <mat-card>
             <mat-card-content>
-              <!-- <div class="intro-mat-child-cards"> -->
+   
                 <p>My interests and hobbies</p>
                 <p class="p-div">Add Response</p>
-              <!-- </div> -->
+        
             </mat-card-content>
           </mat-card>
         </div>
@@ -155,13 +155,13 @@
             <p>Profile completed successfully</p>
           </div>
         </div>
-        <div class="go-prfl">
+        <div class="go-prfl"  routerLink="/layout/myprofile" >
           <mat-card>
             <mat-card-content>
-              <!-- <div class="prfl-cmpltn1"> -->
-                <span style="color:#c29be8;">Go to my profile</span>
+             
+                <span style="color:#c29be8; text-decoration: none;">Go to my profile</span>
                <i class="fa-solid fa-chevron-right"></i>
-              <!-- </div> -->
+       
             </mat-card-content>
           </mat-card>
         </div>
@@ -194,6 +194,7 @@
         </mat-card-content>
       </mat-card>
  
-   
-  </div>
-</div>
+    </div>
+</div> 
+
+
