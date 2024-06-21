@@ -2,8 +2,10 @@ package com.eidiko.serviceimplementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.eidiko.entity.Address;
@@ -25,6 +27,8 @@ public class EmployeeService implements EmployeeInterface {
 	@Autowired
 	private EmployeeRepo employeeRepo;
 	@Autowired
+	private PasswordEncoder encoder;
+	@Autowired
 	private AddressRepo addressRepo;
 
 	@Autowired
@@ -36,7 +40,9 @@ public class EmployeeService implements EmployeeInterface {
 
 		Roles save2 = rolesReposotory.save(employee.getRole());
 		employee.setRole(save2);
-
+		String encode = encoder.encode(employee.getPassword());
+		employee.setPassword(encode);
+		
 		Employee save = employeeRepo.save(employee);
 
 		if (save != null && save.getEmployeeId() != 0) {
@@ -86,7 +92,6 @@ public class EmployeeService implements EmployeeInterface {
 					} else {
 						address.setEmployee(byEmployeeId);
 						updatedAddress.add(address);
-
 					}
 				}
 				byEmployeeId.setAddresses(updatedAddress);
@@ -217,6 +222,12 @@ public class EmployeeService implements EmployeeInterface {
 		} else {
 			throw new BadRequestException("User record has not been updated !");
 		}
+	}
+
+	@Override
+	public Optional<List<Employee>> searchByKeywords(String keywords) {
+		Optional<List<Employee>> employeeList = employeeRepo.searchByFirstNameOrLastNameOrEmployeeId(keywords);
+		return employeeList;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/leave")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmpLeaveController {
 
 	@Autowired
@@ -87,8 +89,10 @@ public class EmpLeaveController {
 
 	@GetMapping("/getAllEmpLeave")
 	public ResponseEntity<ResponseModel<Object>> getAllEmpLeave(@RequestParam("employeeId")Long employeeId,
-			@RequestParam(value = "5", defaultValue = "5", required = false) Integer pageSize,
-			@RequestParam(value = "0", defaultValue = "0", required = false) Integer pageNumber
+			@RequestParam("status") String status,
+			@RequestParam("leaveType") String leaveType,
+			@RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
+			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber
 			){
 		List<EmpLeaveDto> empLeaveDto=leaveService.getAllEmpLeaveByEmpId(pageNumber, pageSize, employeeId);
 		if (empLeaveDto != null) {

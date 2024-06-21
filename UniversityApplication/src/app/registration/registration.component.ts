@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '../login.service';
+import { LoginService } from '../services/login.service';
 import { Address, RegistrationForm } from '../registratioRequest';
 import { Router } from '@angular/router';
 
@@ -21,6 +21,7 @@ export class RegistrationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.fetchGroupNames();
     this.registrationForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       lastName: [''],
@@ -48,6 +49,19 @@ export class RegistrationComponent implements OnInit {
     }, { validators: this.passwordMatchValidator });
   }
 
+  fetchGroupNames() {
+    this.loginService.getGroupNames().subscribe(
+      (data) => {
+        // Handle successful response here
+        console.log('Group names:', data);
+      },
+      (error) => {
+        // Handle error
+        console.error('Error fetching group names:', error);
+        // Optionally show an error message to the user
+      }
+    );
+  }
   passwordMatchValidator(form: FormGroup) {
     const password = form.get('password')?.value;
     const confirmPassword = form.get('confirmPassword')?.value;

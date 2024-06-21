@@ -116,8 +116,13 @@ public class EmployeeControllor {
 				.prepareSuccessResponseObject(employeeInterface.updateEmployeeOrganizationDetails(empID, employee));
 	}
 
-	
-
+	@GetMapping("searchByKeyword/{keywords}")
+	public ResponseEntity<ResponseModel<Object>> searchEmployeeByKeyword(
+			@PathVariable("keywords") String keywords)
+			throws SaveFailureException, UserNotFoundException {
+		return new CommonResponse<>()
+				.prepareSuccessResponseObject(employeeInterface.searchByKeywords(keywords));
+	}
 	
 
 }
