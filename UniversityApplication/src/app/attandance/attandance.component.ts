@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 
+
 @Component({
   selector: 'app-attandance',
   templateUrl: './attandance.component.html',
@@ -58,5 +59,61 @@ export class AttandanceComponent {
     this.attandanceLog=false;
     this.shiftSehedule = !this.shiftSehedule;
   }
+  data:any = [
+    {
+      s_nu:1,
+      name: "junaid",
+      login_time:"9:45 AM",
+      logout_time:"7:45",
+      effective_hour:"10h",
+      gross_hour:"10h",
+      onTime:"yes"
+    },
+    {
+      s_nu:2,
+      name: "junaid",
+      login_time:"9:45 AM",
+      logout_time:"7:45",
+      effective_hour:"10h",
+      gross_hour:"10h",
+      onTime:"yes"
+    },
+    {
+      s_nu:3,
+      name: "junaid",
+      login_time:"9:45 AM",
+      logout_time:"7:45",
+      effective_hour:"10h",
+      gross_hour:"10h",
+      onTime:"yes"
+    },
+    {
+      s_nu:4,
+      name: "junaid",
+      login_time:"9:45 AM",
+      logout_time:"7:45",
+      effective_hour:"10h",
+      gross_hour:"10h",
+      onTime:"yes"
+    },
+    {
+      s_nu:5,
+      name: "junaid",
+      login_time:"9:45 AM",
+      logout_time:"7:45",
+      effective_hour:"10h",
+      gross_hour:"10h",
+      onTime:"yes"
+    },
+    {
+      s_nu:6,
+      name: "junaid",
+      login_time:"9:45 AM",
+      logout_time:"7:45",
+      effective_hour:"10h",
+      gross_hour:"10h",
+      onTime:"yes"
+    }
+  ]
 
 }
