@@ -146,6 +146,19 @@ List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.map
 		return leaveSummaries;
 	}
 
-	
+
+
+	@Override
+	public List<EmpLeaveDto> getEmployeesOnLeaveToday() {
+		LocalDate today = LocalDate.now();
+		List<EmpLeave> empLeaveList = empLeaveRepo.findByLeaveTypeAndFromDateLessThanEqualAndToDateGreaterThanEqual("Leave", today, today);
+		return empLeaveList.stream().map(empLeave -> this.mapper.empLeaveToEmpLeaveDto(empLeave)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<EmpLeaveDto> getEmployeeDetailsByRequestType(String leaveType) {
+		List<EmpLeave> empLeaveList = empLeaveRepo.findByLeaveType(leaveType);
+		return empLeaveList.stream().map(empLeave -> this.mapper.empLeaveToEmpLeaveDto(empLeave)).collect(Collectors.toList());
+	}
 
 }

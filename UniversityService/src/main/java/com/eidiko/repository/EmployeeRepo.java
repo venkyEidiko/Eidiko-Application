@@ -15,4 +15,12 @@ public interface EmployeeRepo extends JpaRepository<Employee, Long>{
 	
 	Optional<Employee> findByPhoneNu(String username);
 
+
+//	Optional<Employee> findByPhoneNu(String phoneNu);
+
+	Optional<Employee> findByFirstName(String firstName);
+
+	Optional<Employee> findByLastName(String lastName);
+
+
 }

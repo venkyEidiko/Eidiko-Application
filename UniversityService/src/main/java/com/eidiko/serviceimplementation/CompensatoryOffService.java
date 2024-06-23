@@ -9,12 +9,18 @@ import com.eidiko.repository.EmpLeaveRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import javax.sql.rowset.serial.SerialBlob;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -28,14 +34,17 @@ public class CompensatoryOffService {
     @Autowired
     private AttachmentRepository attachmentRepository;
 
+
     public List<String> requestLeave(String compensatoryOffDate, String note, List<MultipartFile> files, Long employeeId) throws IOException, SQLException {
         String[] dates = compensatoryOffDate.split(" - ");
-        String fromDate = dates[0];
-        String toDate = dates[1];
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        LocalDate fromDate = LocalDate.parse(dates[0], formatter);
+        LocalDate toDate = LocalDate.parse(dates[1], formatter);
 
         EmpLeave leave = new EmpLeave();
-        leave.setFromDate(LocalDate.parse(fromDate));
-        leave.setToDate(LocalDate.parse(toDate));
+        leave.setFromDate(fromDate);
+        leave.setToDate(toDate);
         leave.setLeaveNote(note);
         leave.setEmployeeId(employeeId);
         leave.setStatus("Pending");
@@ -55,7 +64,8 @@ public class CompensatoryOffService {
             if (isImageFile(fileExtension)) {
                 byte[] fileData = file.getBytes();
                 byte[] compressedData = ImageUtils.compressImage(fileData);
-                attachment.setImageData(new SerialBlob(compressedData));
+                Blob imageData = new SerialBlob(compressedData);
+                attachment.setImageData(imageData);
 
                 String base64Image = Base64.getEncoder().encodeToString(fileData);
                 imageResponses.add("data:image/" + fileExtension + ";base64," + base64Image);
@@ -78,6 +88,43 @@ public class CompensatoryOffService {
         return extension.equalsIgnoreCase("pdf") || extension.equalsIgnoreCase("doc") || extension.equalsIgnoreCase("docx");
     }
 
+    private String extractContentFromPdf(byte[] fileContent) throws IOException {
+        try (PDDocument document = PDDocument.load(fileContent)) {
+            PDFTextStripper pdfStripper = new PDFTextStripper();
+            return pdfStripper.getText(document);
+        }
+    }
+
+    private String extractContentFromDocx(byte[] fileContent) throws IOException {
+        try (XWPFDocument document = new XWPFDocument(new ByteArrayInputStream(fileContent))) {
+            XWPFWordExtractor extractor = new XWPFWordExtractor(document);
+            return extractor.getText();
+        }
+    }
+
+    public Attachment getAttachment(Long id) {
+        return attachmentRepository.findById(id).orElse(null);
+    }
+
+    public String getAttachmentTextContent(Long id) throws IOException {
+        Attachment attachment = getAttachment(id);
+        if (attachment == null) {
+            return null;
+        }
+        if (isPdfOrDocFile(attachment.getFileExtension())) {
+            if (attachment.getFileExtension().equalsIgnoreCase("pdf")) {
+                return extractContentFromPdf(attachment.getFileContent());
+            } else if (attachment.getFileExtension().equalsIgnoreCase("docx")) {
+                return extractContentFromDocx(attachment.getFileContent());
+            }
+        }
+        return null;
+    }
+
+    public List<Attachment> getAllAttachments() {
+        return attachmentRepository.findAll();
+    }
+
     public String getFileExtension(String fileName) {
         if (fileName == null) {
             return null;
@@ -85,16 +132,10 @@ public class CompensatoryOffService {
         int dotIndex = fileName.lastIndexOf('.');
         return (dotIndex == -1) ? "" : fileName.substring(dotIndex + 1);
     }
-
     public boolean isAllowedFileType(String extension) {
         return isImageFile(extension) || isPdfOrDocFile(extension);
     }
 
-    public Attachment getAttachment(Long id) {
-        return attachmentRepository.findById(id).orElse(null);
-    }
 
-    public List<Attachment> getAllAttachments() {
-        return attachmentRepository.findAll();
-    }
+
 }
