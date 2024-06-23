@@ -1,14 +1,19 @@
-<div class="dropdown">
-    <button mat-button [matMenuTriggerFor]="menu">Leave Type</button>
-    <mat-menu #menu="matMenu">
-        <input class="search" matInput type="text" placeholder="Search">
-      <div class="checkbox-list">
-        <mat-checkbox *ngFor="let option of options"
-                      [(ngModel)]="option.checked"
-                      (change)="onOptionChange()">
-          {{ option.name }}
-        </mat-checkbox>
-      </div>
-    </mat-menu>
+<div class="checkbox-dropdown">
+  <div class="dropdown-toggle" (click)="toggleDropdown()">
+    <span>Filter by Leave Type</span>
+    <mat-icon>{{ isOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
   </div>
-  
+  <div class="dropdown-options" *ngIf="isOpen">
+    <mat-checkbox
+      *ngFor="let option of options; let i = index; trackBy: trackByFn"
+      [checked]="selectedOptions.has(option)"
+      (change)="toggleOption(option)"
+    >
+      {{ option }}
+    </mat-checkbox>
+    <div class="dropdown-actions">
+      <button mat-flat-button color="primary" (click)="clearSelection()">Clear</button>
+      <button mat-flat-button color="accent" (click)="toggleDropdown()">Apply</button>
+    </div>
+  </div>
+</div>

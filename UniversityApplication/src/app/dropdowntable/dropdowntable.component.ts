@@ -1,32 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-interface Option {
-  name: string;
-  checked: boolean;
-}
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
 @Component({
   selector: 'app-dropdowntable',
   templateUrl: './dropdowntable.component.html',
   styleUrls: ['./dropdowntable.component.css']
 })
 export class DropdowntableComponent {
-  options: Option[] = [
-    { name: 'Select All', checked: false },
-    { name: 'Comp offs', checked: false },
-    { name: 'Maternity Leave', checked: false },
-    { name: 'Paid Leave', checked: false },
-    { name: 'Unpaid Leave', checked: false },
-    { name: 'Optional Leave', checked: false },
 
-  ];
+  @Input() options: string[] = [];
+  @Input() selectedOptions: Set<string> = new Set<string>();
+  @Output() selectionChange = new EventEmitter<Set<string>>();
 
-  constructor() { }
+  isOpen = false;
 
-  onOptionChange(): void {
-    // Handle checkbox change logic here
-    console.log(this.options);
- 
+  toggleDropdown(): void {
+    this.isOpen = !this.isOpen;
   }
 
+  toggleOption(option: string): void {
+    if (this.selectedOptions.has(option)) {
+      this.selectedOptions.delete(option);
+    } else {
+      this.selectedOptions.add(option);
+    }
+    this.selectionChange.emit(this.selectedOptions);
+  }
 
+  clearSelection(): void {
+    this.selectedOptions.clear();
+    this.selectionChange.emit(this.selectedOptions);
+  }
+
+  trackByFn(index: number, item: string): string {
+    return item;
+  }
 }

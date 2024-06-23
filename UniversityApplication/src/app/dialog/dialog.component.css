@@ -4,17 +4,21 @@
     position: fixed;
     top: 0;
     right: 0;
-    width: 400px;
+    width: 450px;
     height: 100%; 
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     
 }
 
-
-
-
-
+.customwidth
+{
+  width:70px;
+}
+.calen 
+{
+  display: flex;
+}
 
 
 

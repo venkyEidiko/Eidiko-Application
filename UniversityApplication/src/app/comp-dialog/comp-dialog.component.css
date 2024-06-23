@@ -53,6 +53,7 @@
 .icons 
 {
     display:flex;
+    
  
 }
 .note2
@@ -90,4 +91,12 @@ mat-icon
     margin-left: 230px;
     margin-bottom:12px;
     margin-top:4px;
+}
+.compoff-in
+{
+    width:120px;
+}
+.files
+{
+    margin-top:15px;
 }

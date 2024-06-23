@@ -63,6 +63,18 @@ public class EmployeeControllor {
 		}
 
 	}
+	@GetMapping("/searchByKeyword/{keywords}")
+	public ResponseEntity<ResponseModel<Object>> searchEmployeeByKeyword(
+			@PathVariable("keywords") String keywords)
+			throws SaveFailureException, UserNotFoundException {
+		
+		log.info("Search by key id {}",keywords);
+		
+			return new CommonResponse<>()
+					.prepareSuccessResponseObject(employeeInterface.searchByKeywords(keywords));
+		
+		
+	}
 
 	@PutMapping("/updateEmp/{empId}")
 	public ResponseEntity<ResponseModel<Object>> updateEmployee(@PathVariable("empId") Long empID,

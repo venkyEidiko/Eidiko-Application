@@ -67,6 +67,7 @@ const routes: Routes = [
       {
         path: 'me', component: MeComponent,
         children: [
+          {path:'',redirectTo:'leaves',pathMatch:'full'},
           { path: 'attandance', component: AttandanceComponent },
           { path: 'leaves', component: LeavesComponent }
         ]

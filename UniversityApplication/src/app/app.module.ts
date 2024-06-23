@@ -8,7 +8,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { MatIconModule } from '@angular/material/icon';
+
 
 
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
@@ -71,14 +71,15 @@ import { TableComponent } from './table/table.component';
 // import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { Donut1Component } from './donut1/donut1.component';
-import { DropdownComponent } from './dropdown/dropdown.component';
+
 import { DialogComponent } from './dialog/dialog.component';
-import {MatDatepickerModule} from '@angular/material/datepicker'
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatNativeDateModule} from '@angular/material/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
+
 import { Dialog1Component } from './dialog1/dialog1.component';
 import { CompDialogComponent } from './comp-dialog/comp-dialog.component';
 import { CompoffComponent } from './compoff/compoff.component';
@@ -86,9 +87,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { DropdowntableComponent } from './dropdowntable/dropdowntable.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { StatusdropComponent } from './statusdrop/statusdrop.component';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { LeavesComponent } from './leaves/leaves.component';
 import { BarchartComponent } from './barchart/barchart.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -128,7 +130,7 @@ import { BarchartComponent } from './barchart/barchart.component';
     TableComponent,
 
       Donut1Component,
-      DropdownComponent,
+    
       DialogComponent,
       Dialog1Component,
       CompDialogComponent,
@@ -169,6 +171,8 @@ import { BarchartComponent } from './barchart/barchart.component';
     FormsModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     MatCardModule
     // NgbModalModule,
     // // FlatpickrModule.forRoot(),

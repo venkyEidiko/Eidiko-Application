@@ -50,7 +50,7 @@
                         Consumed Leave Types
                         <mat-icon class="info-icon">info</mat-icon>
                     <div class="donut1">
-                    <app-donut1  [chartOptions]="chartOptions"></app-donut1>
+                    <app-donut1  [chartOptions]="chartOptions3"></app-donut1>
                    </div>
                       
                     
@@ -61,7 +61,7 @@
             </mat-card>
             <mat-card class="card5">
                 <mat-card-content>Monthly Stats</mat-card-content>
-                <app-barchart class="barchart1" [chartData]="data1"></app-barchart>
+                <app-barchart class="barchart1" [chartData]="monthlyChartData"></app-barchart>
             </mat-card>
         </div>
     </div>
@@ -106,8 +106,8 @@
                       <span (click)="openDialog1()" >  View details</span>
                     </div>
                     <div class="donut-container">
-                        <div class="donut-text">3 Days Available</div>
-                        <app-donut1 [chartOptions]="chartOptions1">
+                        <div class="donut-text">{{this.availableLeaves}} Days Available</div>
+                        <app-donut1  [chartOptions]="chartOptions1">
                         </app-donut1>
                     </div>   
                    <div class="balance-line"> <hr/></div>
@@ -117,18 +117,18 @@
                        <div class="available">
                        
                         Available <br/>
-                        3 days  
+                        {{availableLeaves}} days
 
                       </div>
                       <div class="line"></div> 
                       <div class="consumed">
                       Consumed <br/>
-                       7 days
+                    {{consumedLeaves}} days
                       </div>
                        </div>
                        <hr class="line-break">
                        <div class="annual quota">
-                        Annual Quota <br/>  10 days
+                        Annual Quota <br/>  12 days
                        </div>
 
 
@@ -158,7 +158,7 @@
                       <div class="line"></div> 
                       <div class="consumed">
                       Consumed <br/>
-                       1 day
+                       {{this.consumedLeaves}} days
                       </div>
                        </div>
                        <hr class="line-break">
@@ -184,15 +184,56 @@
                 <div >
                     <mat-card class="table-card">
                         <mat-card-content>
-                         
-                            <app-dropdowntable></app-dropdowntable>
+                            <app-dropdowntable
+                            [options]="leaveTypeOptions"
+                            [selectedOptions]="selectedLeaveTypes"
+                            (selectionChange)="applyFilter()"
+                          ></app-dropdowntable>
                             <app-statusdrop></app-statusdrop>
                             <input class="search1" type="text" matInput placeholder="Search">
-                           
-                           
-                        </mat-card-content>
+
+                     </mat-card-content>
                     </mat-card>
-                    <app-table class="tdata" [dataSource]="datatable"></app-table>
+                    <mat-card>
+                        <mat-card-content> 
+                    <mat-table class="tdata" [dataSource]="dataSource">
+        
+                        <!-- Define columns for mat-table -->
+                        <ng-container matColumnDef="leaveDates">
+                          <mat-header-cell *matHeaderCellDef> Leave Date </mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.leaveDates}} </mat-cell>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="leaveType">
+                          <mat-header-cell *matHeaderCellDef> Leave Type </mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.leaveType}} </mat-cell>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="status">
+                          <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="requestedBy">
+                          <mat-header-cell *matHeaderCellDef> Requested By </mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.requestedBy}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="leaveNote">
+                            <mat-header-cell *matHeaderCellDef> Leave Note </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.leaveNote}} </mat-cell>
+                          </ng-container>
+                
+                        
+                
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                      </mat-table>
+
+                      <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange($event)" showFirstLastButtons></mat-paginator>
+
+               </mat-card-content>
+               </mat-card>
+
                 </div>
                </div>
               
