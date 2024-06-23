@@ -91,6 +91,14 @@ public class CommonResponse<T> {
 
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
+
+	public ResponseEntity<ResponseModel<T>> prepareSuccessResponseObject(List<T> result) {
+		ResponseModel<T> response = new ResponseModel<>();
+		response.setStatusCode(HttpStatus.OK.value());
+		response.setStatus("SUCCESS");
+		response.setResult(result);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 	// Globalexceptionhadler
 
 	@ExceptionHandler(UserNotFoundException.class)

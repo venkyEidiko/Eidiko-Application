@@ -24,6 +24,8 @@ public class Attachment {
 
 	    private Long empId;
 	    private String attachmentFileName;
+	@Lob
+	@Column(name = "fileContent")
 	    private byte[] fileContent;
 	    private String fileExtension;
 	    @Lob
