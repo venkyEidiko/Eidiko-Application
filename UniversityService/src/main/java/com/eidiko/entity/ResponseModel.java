@@ -20,7 +20,7 @@ public class ResponseModel<T> {
 	private String error;
 
 	private T password;
-
-	private String email;
+	 
+    private String email;
 
 }

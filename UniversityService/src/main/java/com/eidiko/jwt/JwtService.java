@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.eidiko.exception_handler.UserNotFound;
+import com.eidiko.exception_handler.BadRequestException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -94,7 +94,7 @@ public class JwtService {
 	            return true; // Token is valid
 		 } catch (Exception e) {
 	            log.error("Invalid JWT token: {}", e.getMessage());
-	            throw new UserNotFound("Invalid JWT token.");
+	            throw new BadRequestException("Invalid JWT token.");
 	        }
     }
 	
