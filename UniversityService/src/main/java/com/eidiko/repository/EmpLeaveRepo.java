@@ -1,5 +1,6 @@
 package com.eidiko.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,5 +14,13 @@ public interface EmpLeaveRepo extends JpaRepository<EmpLeave, Long> {
 	Optional<EmpLeave> findByleaveIdAndStatus(Long leaveId, String status);
 
 	List<EmpLeave> findAllByEmployeeId(Long employeeId);
+
+
+
+
+
+	List<EmpLeave> findByLeaveTypeAndFromDateLessThanEqualAndToDateGreaterThanEqual(String leaveType, LocalDate fromDate, LocalDate toDate);
+
+	List<EmpLeave> findByLeaveType(String leaveType);
 
 }
