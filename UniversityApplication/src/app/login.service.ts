@@ -11,8 +11,8 @@ export class LoginService {
   private employeeData: any = null; 
   private jwtToken: string | null = null;
 
-  url = "http://127.0.0.1:8080/api/save";
-  loginUrl = "http://127.0.0.1:8080/login1";
+  url = "http://10.0.0.52:8080/api/save";
+  loginUrl = "http://10.0.0.52:8080/login1";
 
   constructor(private http: HttpClient) {}
   register(data: any): Observable<any> {

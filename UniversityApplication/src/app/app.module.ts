@@ -64,11 +64,10 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { LeavesComponent } from './leaves/leaves.component';
-
-
-
-
 import { BarchartComponent } from './barchart/barchart.component';
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { SummaryComponent } from './summary/summary.component';
 
 
 
@@ -79,7 +78,7 @@ import { BarchartComponent } from './barchart/barchart.component';
   declarations: [
     AppComponent,
     LoginComponent,
-
+    CalenderComponent,
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
@@ -111,6 +110,8 @@ import { BarchartComponent } from './barchart/barchart.component';
     AttandanceComponent,
 
     TableComponent,
+      SummaryComponent,
+
     //CalenderComponent
     
 
@@ -141,13 +142,16 @@ import { BarchartComponent } from './barchart/barchart.component';
     MatTableModule,
     CommonModule,
     FormsModule,
-    MatCardModule
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule
     // NgbModalModule,
     // // FlatpickrModule.forRoot(),
     // CalendarModule.forRoot({
     //   provide: DateAdapter,
     //   useFactory: adapterFactory
     // })
+  
     
   ],
 

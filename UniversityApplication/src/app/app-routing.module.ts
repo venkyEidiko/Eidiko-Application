@@ -28,9 +28,11 @@ import { LeavesComponent } from './leaves/leaves.component';
 
 import { ErrorComponent } from './error/error.component';
 import { CalenderComponent } from './calender/calender.component';
+import { SummaryComponent } from './summary/summary.component';
 
 const routes: Routes = [
   {path:'',component:RegistrationComponent},
+  {path:'calender',component:CalenderComponent},
   {path:'login',component:LoginComponent},
   {path:'cal',component:CalenderComponent},
   { path: 'forgotpassword', component: ForgotpasswordComponent },
@@ -62,17 +64,16 @@ const routes: Routes = [
 
         {path: 'attandance', component: AttandanceComponent
       },
-
-
-
-
     ]
    },
    {
     path:'inbox',component:InboxComponent
    }
    ,{
-    path:'myteam',component:MyteamComponent
+    path:'myteam',component:MyteamComponent,
+    children:[
+      {path:'summary',component:SummaryComponent}
+    ]
    },
    {
     path:'myfinance',component:MyfinancesComponent
