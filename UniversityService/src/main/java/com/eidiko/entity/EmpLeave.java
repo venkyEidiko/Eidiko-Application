@@ -30,7 +30,6 @@ public class EmpLeave {
 	private String customDayStatus;
 //	@OneToMany(mappedBy = "empLeave", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 //    private List<Attachment> leaveAttachment; 
-	private double durationInDays; 
-
+	private double durationInDays;
 	
 }
