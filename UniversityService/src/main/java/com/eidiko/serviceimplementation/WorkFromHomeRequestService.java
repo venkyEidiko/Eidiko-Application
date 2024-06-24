@@ -20,17 +20,11 @@ public class WorkFromHomeRequestService {
     @Autowired
     private EmployeeRepo employeeRepo;
 
-//    public WorkFromHomeRequest createRequest(WorkFromHomeRequest request) {
-//        request.setStatus("PENDING");
-//        return repository.save(request);
-//    }
 
     public List<WorkFromHomeRequest> getApprovedRequestsForToday() {
         LocalDate today = LocalDate.now();
         return repository.findByStatusAndToDateGreaterThanEqual("APPROVED", today);
     }
-
-
 
 
 

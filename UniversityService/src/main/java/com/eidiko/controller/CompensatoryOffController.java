@@ -31,38 +31,53 @@ public class CompensatoryOffController {
     @Autowired
     private CommonResponse<String> commonResponse;
 
+
     @PostMapping("/requestCompensatory")
-    public ResponseEntity<ResponseModel<String>> requestCompensatory(
-            @RequestParam String compensatoryOffDate,
-            @RequestParam String note,
-            @RequestParam("files") List<MultipartFile> files,
-            @RequestParam Long employeeId) {
+    public ResponseEntity<ResponseModel<String>> requestCompensatory(@RequestParam LocalDate fromDate,
+                                                                     @RequestParam LocalDate toDate, @RequestParam String note, @RequestParam("files") List<MultipartFile> files,
+                                                                     @RequestParam Long employeeId) {
 
-        if (files.size() > 5) {
-            return commonResponse.prepareErrorResponseObject("You can only upload up to 5 files.", HttpStatus.BAD_REQUEST);
-        }
-
-        List<String> fileNames = new ArrayList<>();
-        for (MultipartFile file : files) {
-            if (file.getSize() > 20 * 1024 * 1024) { // 20MB in bytes
-                return commonResponse.prepareErrorResponseObject("File size should not exceed 20MB.", HttpStatus.BAD_REQUEST);
-            }
-
-            String fileExtension = compensatoryService.getFileExtension(file.getOriginalFilename());
-            if (!compensatoryService.isAllowedFileType(fileExtension)) {
-                return commonResponse.prepareErrorResponseObject("Invalid file type.", HttpStatus.BAD_REQUEST);
-            }
-            fileNames.add(file.getOriginalFilename());
-        }
+        ResponseModel<String> responseModel = new ResponseModel<>();
 
         try {
-            List<String> imageResponses = compensatoryService.requestLeave(compensatoryOffDate, note, files, employeeId);
-            return commonResponse.prepareSuccessResponseObject("Compensatory leave requested successfully");
+            if (files.size() > 5) {
+                throw new FileUploadException("You can only upload up to 5 files.");
+            }
+            List<String> fileNames = new ArrayList<>();
+
+            for (MultipartFile file : files) {
+                if (file.getSize() > 20 * 1024 * 1024) { // 20MB in bytes
+                    throw new FileUploadException("File size should not exceed 20MB.");
+                }
+
+                String fileExtension = compensatoryService.getFileExtension(file.getOriginalFilename());
+                if (!compensatoryService.isAllowedFileType(fileExtension)) {
+                    throw new FileUploadException("Invalid file type.");
+                }
+                fileNames.add(file.getOriginalFilename());
+            }
+
+            List<String> imageResponses = compensatoryService.requestLeave(fromDate, toDate, note, files, employeeId);
+
+            responseModel.setStatus("SUCCESS");
+            responseModel.setStatusCode(200);
+            responseModel.setResult(imageResponses);
+            responseModel.setResult(Collections.singletonList("Compensatory leave requested successfully"));
+
+            return ResponseEntity.ok(responseModel);
+
         } catch (IOException | SQLException e) {
             e.printStackTrace();
-            return commonResponse.prepareErrorResponseObject("Error processing files", HttpStatus.INTERNAL_SERVER_ERROR);
+            responseModel.setError("Error processing files");
+            responseModel.setStatus("FAILED");
+            return ResponseEntity.status(500).body(responseModel);
+        } catch (FileUploadException e) {
+            responseModel.setError(e.getMessage());
+            responseModel.setStatus("FAILED");
+            return ResponseEntity.status(400).body(responseModel);
         }
     }
+
 
 
     //this method is used to get the image from db
@@ -89,15 +104,15 @@ public class CompensatoryOffController {
     @GetMapping("/attachments/text/{id}")
     public ResponseEntity<ResponseModel<String>> getAttachmentText(@PathVariable Long id) {
         try {
-            Attachment attachment = compensatoryService.getAttachment(id);
-            if (attachment != null && attachment.getFileContent() != null) {
-                return commonResponse.prepareSuccessResponseObject(Arrays.toString(attachment.getFileContent()));
+            String textContent = compensatoryService.getAttachmentTextContent(id);
+            if (textContent != null) {
+                return commonResponse.prepareSuccessResponseObject("Text content extracted successfully", textContent);
             } else {
-                return commonResponse.prepareErrorResponseObject("Attachment not found or no text content available", HttpStatus.NOT_FOUND);
+                return commonResponse.prepareErrorResponseObject("Attachment not found or unsupported file type", null);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            return commonResponse.prepareErrorResponseObject("Error retrieving text content", HttpStatus.INTERNAL_SERVER_ERROR);
+            return commonResponse.prepareErrorResponseObject("Error extracting text content", null);
         }
     }
 
@@ -123,5 +138,7 @@ public class CompensatoryOffController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+
 
 }
