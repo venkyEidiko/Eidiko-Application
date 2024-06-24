@@ -1,11 +1,12 @@
 package com.eidiko.entity;
 
 
+
 import java.util.List;
 
-import com.eidiko.dto.ByteArrayToBase64Serializer;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -36,6 +37,7 @@ public class Posts {
 	@Lob
 	//@JsonSerialize(using = ByteArrayToBase64Serializer.class)
 	private byte[] image;
+	//private Clob image;
 	
 	//content of post
 	private String description;
