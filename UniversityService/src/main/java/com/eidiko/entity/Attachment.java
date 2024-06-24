@@ -24,10 +24,12 @@ public class Attachment {
 
 	    private Long empId;
 	    private String attachmentFileName;
+	@Lob
+	@Column(name = "fileContent",columnDefinition = "LONGBLOB")
 	    private byte[] fileContent;
 	    private String fileExtension;
 	    @Lob
-	    @Column(name = "imagedata",columnDefinition = "BLOB")
+	    @Column(name = "imagedata",columnDefinition = "LONGBLOB")
 	    private Blob imageData;
 //	    @ManyToOne
 //	    private EmpLeave empLeave;
