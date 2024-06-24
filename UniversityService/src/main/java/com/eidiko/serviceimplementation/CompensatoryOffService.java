@@ -4,8 +4,10 @@ import com.eidiko.dto.ImageUtils;
 import com.eidiko.entity.Attachment;
 import com.eidiko.entity.EmpLeave;
 import com.eidiko.entity.EmpLeave;
+import com.eidiko.mapper.Mapper;
 import com.eidiko.repository.AttachmentRepository;
 import com.eidiko.repository.EmpLeaveRepo;
+import com.eidiko.service.EmpLeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,13 +36,16 @@ public class CompensatoryOffService {
     @Autowired
     private AttachmentRepository attachmentRepository;
 
+    @Autowired
+    private Mapper mapper;
 
-    public List<String> requestLeave(String compensatoryOffDate, String note, List<MultipartFile> files, Long employeeId) throws IOException, SQLException {
-        String[] dates = compensatoryOffDate.split(" - ");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    @Autowired
+    private EmpLeaveService empLeaveService;
 
-        LocalDate fromDate = LocalDate.parse(dates[0], formatter);
-        LocalDate toDate = LocalDate.parse(dates[1], formatter);
+
+
+    public List<String> requestLeave(LocalDate fromDate,LocalDate toDate, String note, List<MultipartFile> files, Long employeeId) throws IOException, SQLException {
+
 
         EmpLeave leave = new EmpLeave();
         leave.setFromDate(fromDate);
@@ -49,7 +54,9 @@ public class CompensatoryOffService {
         leave.setEmployeeId(employeeId);
         leave.setStatus("Pending");
         leave.setLeaveType("comp offs");
-        leaveRepository.save(leave);
+        leave.setCustomDayStatus("Full Day");
+        empLeaveService.saveEmpLeave(mapper.empLeaveToEmpLeaveDto (leave));
+//        leaveRepository.save(leave);
 
         List<String> imageResponses = new ArrayList<>();
 
@@ -132,10 +139,8 @@ public class CompensatoryOffService {
         int dotIndex = fileName.lastIndexOf('.');
         return (dotIndex == -1) ? "" : fileName.substring(dotIndex + 1);
     }
+
     public boolean isAllowedFileType(String extension) {
         return isImageFile(extension) || isPdfOrDocFile(extension);
     }
-
-
-
 }

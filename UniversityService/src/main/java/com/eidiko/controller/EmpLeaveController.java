@@ -116,7 +116,7 @@ public class EmpLeaveController {
 	@Autowired
 	private CommonResponse<EmpLeaveDto> commonResponse;
 
-	@GetMapping("/onLeaveToday")
+	@GetMapping("/empOnLeaveToday")
 	public ResponseEntity<?> getEmployeesOnLeaveToday() {
 		List<EmpLeaveDto> employeeDetails = leaveService.getEmployeesOnLeaveToday();
 
@@ -137,4 +137,6 @@ public class EmpLeaveController {
 			return commonResponse.prepareSuccessResponseObject(employeeDetails);
 		}
 	}
+
+
 }

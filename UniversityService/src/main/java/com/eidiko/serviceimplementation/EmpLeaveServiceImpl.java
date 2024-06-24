@@ -151,6 +151,7 @@ List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.map
 	@Override
 	public List<EmpLeaveDto> getEmployeesOnLeaveToday() {
 		LocalDate today = LocalDate.now();
+		System.out.println("Today date *******  "+today);
 		List<EmpLeave> empLeaveList = empLeaveRepo.findByLeaveTypeAndFromDateLessThanEqualAndToDateGreaterThanEqual("Leave", today, today);
 		return empLeaveList.stream().map(empLeave -> this.mapper.empLeaveToEmpLeaveDto(empLeave)).collect(Collectors.toList());
 	}
