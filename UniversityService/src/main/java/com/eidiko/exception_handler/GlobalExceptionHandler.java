@@ -1,6 +1,7 @@
 package com.eidiko.exception_handler;
 
 import com.eidiko.responce.CommonResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,8 +12,11 @@ import com.eidiko.entity.ResponseModel;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler(UserNotFound.class)
-	public ResponseEntity<ResponseModel<Object>> response(UserNotFound ex) {
+	@Autowired
+	private CommonResponse commonResponse;
+
+	@ExceptionHandler(BadRequestException.class)
+	public ResponseEntity<ResponseModel<Object>> response(BadRequestException ex) {
 
 		ResponseModel<Object> res = new ResponseModel<>();
 
@@ -28,6 +32,25 @@ public class GlobalExceptionHandler {
 		return new CommonResponse<>().prepareErrorResponseObject(ex.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
+	 @ExceptionHandler(SaveFailureException.class)
+	    public ResponseEntity<com.eidiko.entity.Error> handleSaveFailureException(SaveFailureException ex) {
+//	        Error error = new Error();
+		 com.eidiko.entity.Error error = new com.eidiko.entity.Error();
+		 error.setError(ex.getMessage());
+	        error.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+	        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+
+
+	@ExceptionHandler(FileUploadException.class)
+	public ResponseEntity<ResponseModel<Object>> handleFileUploadException(FileUploadException ex) {
+		return commonResponse.prepareErrorResponseObject(ex.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(InvalidFileException.class)
+	public ResponseEntity<ResponseModel<Object>> handleInvalidFileException(InvalidFileException ex) {
+		return commonResponse.prepareErrorResponseObject(ex.getMessage(), HttpStatus.BAD_REQUEST);
+	}
 //	 @ExceptionHandler(UserNotFoundException.class)
 //	    public ResponseEntity<ResponseModel<Object>> handleUserNotFoundException(UserNotFoundException ex) {
 //	        ResponseModel<Object> response = new ResponseModel<>();
