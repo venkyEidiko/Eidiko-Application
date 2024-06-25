@@ -23,7 +23,7 @@ public class JwtTokenReturnClass {
 	private String refreshToken;
 
 	@JsonProperty("employee")
-	private EmployeeDto employeeDto;
+	private Employee employeeDto;
 	
 	
 }
