@@ -25,5 +25,9 @@ export class LeavetypeService {
   fetchMonthlyLeaveData(employeeId:number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${employeeId}`);
   }
+  getEmployeeLeaveData(employeeId: number): Observable<any> {
+    
+    return this.http.get<any>(`${this.apiUrl}/${employeeId}`);
+  }
 
 }

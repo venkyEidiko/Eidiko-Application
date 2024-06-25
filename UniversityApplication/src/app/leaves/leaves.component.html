@@ -10,9 +10,12 @@
     <div class="cards">
         <mat-card class="card1">
             <mat-card-content>
-                 <div class="image-content">
-                    <img class="elephantimg" src="../../assets/elephant.png" alt="elephantimage">
-                    <p>Nothing here!<br/>Working hard yeah??Request time off on right>>></p>
+                 <div >
+
+                    <div class="image-content">
+                        <img class="elephantimg" src="../../assets/elephant.png" alt="elephantimage">
+                        <p>Nothing here!<br/>Working hard yeah??Request time off on right>>></p>
+                     </div>
                  </div>
                
             </mat-card-content>
@@ -182,8 +185,7 @@
                         <mat-card-content>
                             <app-dropdowntable
                             [options]="leaveTypeOptions"
-                            [selectedOptions]="selectedLeaveTypes"
-                            (selectionChange)="applyFilter()" 
+                            [selectedOptions]="selectedLeaveTypes"                           
                           ></app-dropdowntable>
                             <app-statusdrop></app-statusdrop>
                             <input class="search1" type="text" matInput placeholder="Search">

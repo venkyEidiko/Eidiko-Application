@@ -28,8 +28,8 @@ interface MonthlyLeaveData {
   styleUrls: ['./leaves.component.css']
 })
 export class LeavesComponent implements OnInit {
-
-  datatable: PendingLeave[] = [];
+  daysOfWeek: string[] = [];
+  pendingLeaves:PendingLeave[]|null =null;
   dataSource!: MatTableDataSource<PendingLeave>;
   displayedColumns: string[] = [
     'leaveDates',
@@ -43,7 +43,7 @@ export class LeavesComponent implements OnInit {
 
   leaveTypeOptions: string[] = [];
   selectedLeaveTypes: Set<string> = new Set<string>();
-
+  
   consumedLeaves = 0;
   availableLeaves = 0;
   totalLeave = 12;
@@ -98,7 +98,6 @@ export class LeavesComponent implements OnInit {
     }
   };
 
-
   fetchLeaveData(employeeId: number, pageIndex: number, pageSize: number): void {
     const pageNumber = pageIndex + 1;
 
@@ -117,16 +116,12 @@ export class LeavesComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           this.paginator.length = response.totalCount;
             console.log(this.paginator.length) 
-            
-      
         } else {
-          console.error('Failed to fetch leave data or no data available');
-          
+          console.error('Failed to fetch leave data or no data available'); 
         }
       },
       error => {
         console.error('Error fetching leave data:', error);
-      
       }
     );
   }
@@ -139,23 +134,14 @@ export class LeavesComponent implements OnInit {
     this.fetchLeaveData(employeeId, pageIndex, pageSize);
   }
 
-  applyFilter(): void {
-    const filteredData = this.datatable.filter(item => {
-      if (this.selectedLeaveTypes.size === 0) {
-        return true;
-      }
-      return this.selectedLeaveTypes.has(item.leaveType || '');
-    });
-
-    this.dataSource = new MatTableDataSource<PendingLeave>(filteredData);
-    this.dataSource.paginator = this.paginator;
-  }
-
-  fetchLeaveBalance(employeeId: number): void {
+    fetchLeaveBalance(employeeId: number): void {
     this.leavetypeService.fetchLeaveBalance(employeeId).subscribe(
       (response: any) => {
+        console.log("fetchLeaveBalance method Response Data : ",response)
         if (response.status === 'SUCCESS' && response.result.length > 0) {
           const result = response.result[0];
+          console.log("fetchLeaveBalance method Data : ",result)
+          this.pendingLeaves=result.
           console.log(result);
           this.consumedLeaves = result.consumedLeave;
           this.availableLeaves = 12 - result.consumedLeave;

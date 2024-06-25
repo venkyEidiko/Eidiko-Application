@@ -108,4 +108,35 @@ public class EmpLeaveController {
 			return new CommonResponse<>().prepareFailedResponse("Invalid Request! Please try again.");
 		}
 	}
+
+
+
+
+
+	@Autowired
+	private CommonResponse<EmpLeaveDto> commonResponse;
+
+	@GetMapping("/empOnLeaveToday")
+	public ResponseEntity<?> getEmployeesOnLeaveToday() {
+		List<EmpLeaveDto> employeeDetails = leaveService.getEmployeesOnLeaveToday();
+
+		if (employeeDetails.isEmpty()) {
+			return commonResponse.prepareFailedResponse("No employees on leave today.");
+		} else {
+			return commonResponse.prepareSuccessResponseObject(employeeDetails);
+		}
+	}
+
+	@GetMapping("/getEmployeeDetailsByRequestType")
+	public ResponseEntity<?> getEmployeeDetailsByRequestType(@RequestParam String leaveType) {
+		List<EmpLeaveDto> employeeDetails = leaveService.getEmployeeDetailsByRequestType(leaveType);
+
+		if (employeeDetails.isEmpty()) {
+			return commonResponse.prepareFailedResponse("No employees found with leave type: " + leaveType);
+		} else {
+			return commonResponse.prepareSuccessResponseObject(employeeDetails);
+		}
+	}
+
+
 }

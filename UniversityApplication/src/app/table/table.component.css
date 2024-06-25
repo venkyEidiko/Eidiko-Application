@@ -1,8 +1,6 @@
 .table-container {
     overflow-x: auto;
-    /* margin-left: 100px;
-    width: 100%; */
-    box-shadow: 0 4px 8px rgba(12, 12, 12, 0.1); /* Add box shadow */
+    box-shadow: 0 4px 8px rgba(12, 12, 12, 0.1); 
   }
  
   .table-container th{

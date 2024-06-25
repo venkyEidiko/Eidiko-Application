@@ -92,6 +92,7 @@ import { LeavesComponent } from './leaves/leaves.component';
 import { BarchartComponent } from './barchart/barchart.component';
 import { MatIconModule } from '@angular/material/icon';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -136,7 +137,8 @@ import { MatIconModule } from '@angular/material/icon';
       CompDialogComponent,
       CompoffComponent,
       DropdowntableComponent,
-      StatusdropComponent
+      StatusdropComponent,
+      
     
     
   ],
