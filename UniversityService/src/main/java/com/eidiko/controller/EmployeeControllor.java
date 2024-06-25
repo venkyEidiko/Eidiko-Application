@@ -96,7 +96,29 @@ public class EmployeeControllor {
 			return new CommonResponse<>().prepareFailedResponse(updateEmployee);
 		}
 
+	
+
+
+
+
+
+
+
+	
+
+	@GetMapping("/searchByKeyword/{keywords}")
+	public ResponseEntity<ResponseModel<Object>> searchEmployeeByKeyword(
+			@PathVariable("keywords") String keywords)
+			throws SaveFailureException, UserNotFoundException {
+		
+		log.info("Search by key id {}",keywords);
+		
+			return new CommonResponse<>()
+					.prepareSuccessResponseObject(employeeInterface.searchByKeywords(keywords));
+		
+		
 	}
+
 
 	@GetMapping("/getByEmail/{email}")
 	public ResponseEntity<ResponseModel<Object>> getByEmail(@PathVariable String email) throws UserNotFoundException {

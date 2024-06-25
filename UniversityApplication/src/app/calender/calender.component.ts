@@ -53,7 +53,6 @@
 //   CalendarView = CalendarView;
 
 //   viewDate: Date = new Date();
-
 //   // modalData: {
 //   //   action: string;
 //   //   event: CalendarEvent;

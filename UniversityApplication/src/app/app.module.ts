@@ -63,7 +63,6 @@ import { AboutTimelineComponent } from './about-timeline/about-timeline.componen
 import { AboutWallactivityComponent } from './about-wallactivity/about-wallactivity.component';
 import { TableComponent } from './table/table.component';
 
-
 //import { CalenderComponent } from './calender/calender.component';
 // import { FlatpickrModule } from 'angularx-flatpickr';
 //import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -76,13 +75,10 @@ import { Donut1Component } from './donut1/donut1.component';
 import { DialogComponent } from './dialog/dialog.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
-
 import { MatAccordion } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
-
-
 
 import { Dialog1Component } from './dialog1/dialog1.component';
 import { CompDialogComponent } from './comp-dialog/comp-dialog.component';
@@ -91,11 +87,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { DropdowntableComponent } from './dropdowntable/dropdowntable.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { StatusdropComponent } from './statusdrop/statusdrop.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { LeavesComponent } from './leaves/leaves.component';
 import { BarchartComponent } from './barchart/barchart.component';
-import {MatIconModule} from '@angular/material/icon';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -135,11 +130,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     AboutWallactivityComponent,
     TableComponent,
 
-
-
       Donut1Component,
     
-
       DialogComponent,
       Dialog1Component,
       CompDialogComponent,
@@ -148,8 +140,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
       StatusdropComponent,
       
     
-
-
     
   ],
   imports: [
@@ -183,11 +173,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     FormsModule,
     MatSelectModule,
     MatFormFieldModule,
-
     MatNativeDateModule,
     MatDatepickerModule,
-
-
     MatCardModule
     // NgbModalModule,
     // // FlatpickrModule.forRoot(),
@@ -195,6 +182,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     //   provide: DateAdapter,
     //   useFactory: adapterFactory
     // })
+  
   ],
 
   providers: [],

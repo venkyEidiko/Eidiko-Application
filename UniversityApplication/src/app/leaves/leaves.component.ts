@@ -27,6 +27,7 @@ interface MonthlyLeaveData {
   templateUrl: './leaves.component.html',
   styleUrls: ['./leaves.component.css']
 })
+
 export class LeavesComponent implements OnInit {
   daysOfWeek: string[] = [];
   pendingLeaves:PendingLeave[]|null =null;
@@ -37,6 +38,8 @@ export class LeavesComponent implements OnInit {
     'status',
     'requestedBy',
     'leaveNote'
+
+
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -370,4 +373,10 @@ export class LeavesComponent implements OnInit {
   data = [
   
   ]
+
+
+  
+ 
+
+
 }
