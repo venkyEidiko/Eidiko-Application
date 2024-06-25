@@ -1,5 +1,7 @@
 package com.eidiko.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +30,12 @@ public class CommentController {
 	//Save comments to particular post based on postId
 	@PostMapping("/saveComment/{postId}")
 	public ResponseEntity<ResponseModel<Object>> savecomments(@RequestBody Comments comments,@PathVariable Long postId) {
+		
 		try {
-		Comments commentSave=commentService.saveCommentsByPost(comments, postId);
+			LocalDate today = LocalDate.now();
+	        System.out.println("Date format:****** " + today);
+		
+	    Comments commentSave=commentService.saveCommentsByPost(comments, postId);
 		return new CommonResponse<>().prepareSuccessResponseObject(commentSave);
 		}
 		catch (RuntimeException e) {
