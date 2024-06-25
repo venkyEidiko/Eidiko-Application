@@ -82,35 +82,19 @@ public class EmployeeControllor {
 
 
 	}
-	@GetMapping("/searchByKeyword/{keywords}")
-	public ResponseEntity<ResponseModel<Object>> searchEmployeeByKeyword(
-			@PathVariable("keywords") String keywords)
-			throws SaveFailureException, UserNotFoundException {
-		
-		log.info("Search by key id {}",keywords);
-		
-			return new CommonResponse<>()
-					.prepareSuccessResponseObject(employeeInterface.searchByKeywords(keywords));
-		
-		
-	}
 
-	@GetMapping("/searchByKeyword/{keywords}")
-	public ResponseEntity<ResponseModel<Object>> searchEmployeeByKeyword(
-			@PathVariable("keywords") String keywords)
-			throws SaveFailureException, UserNotFoundException {
-		
-		log.info("Search by key id {}",keywords);
-		
-			return new CommonResponse<>()
-					.prepareSuccessResponseObject(employeeInterface.searchByKeywords(keywords));
-		
-		
-	}
-	@PutMapping("/updateEmployee/{empId}")
-	public ResponseEntity<ResponseModel<Object>> updateEmployee(@PathVariable("empId") Long empID,
-			@RequestBody Employee employee) throws UserNotFoundException {
-		return new CommonResponse<>().prepareSuccessResponseObject(employeeInterface.updateEmployee(empID, employee));
+	@PutMapping("/updateEmp/{empId}")
+	public ResponseEntity<ResponseModel<Object>> updateEmployee(@PathVariable("empId") int empID,
+			@RequestBody Employee employee) throws UserNotFoundException, SaveFailureException {
+
+		String updateEmployee = employeeInterface.updateEmployee(empID, employee);
+
+		if (updateEmployee != null) {
+
+			return new CommonResponse<>().prepareSuccessResponseObject(updateEmployee);
+		} else {
+			return new CommonResponse<>().prepareFailedResponse(updateEmployee);
+		}
 
 	}
 

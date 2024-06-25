@@ -31,13 +31,16 @@ td {
   }
   .highlight {
     background-color: #64CED3;
+
     color: black;
+
   }
 
 .card-item, .card-item1, .card-item2 {
     background-color: #333d4e;
     border: 0.1px solid #525455;
     height: 30vh;
+
     border-radius: 2px;
     padding: 10px;
     box-sizing: border-box;

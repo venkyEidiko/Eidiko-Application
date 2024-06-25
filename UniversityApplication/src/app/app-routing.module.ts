@@ -29,12 +29,11 @@ import { AboutTimelineComponent } from './about-timeline/about-timeline.componen
 import { AboutWallactivityComponent } from './about-wallactivity/about-wallactivity.component';
 
 
-
 const routes: Routes = [
   { path: '', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
-
   
+
 
   { path: 'forgotpassword', component: ForgotpasswordComponent },
   { path: 'reset', component: ResetpasswordComponent },
@@ -70,7 +69,9 @@ const routes: Routes = [
       {
         path: 'me', component: MeComponent,
         children: [
+
           {path:'',redirectTo:'leaves',pathMatch:'full'},
+
           { path: 'attandance', component: AttandanceComponent },
           { path: 'leaves', component: LeavesComponent }
         ]

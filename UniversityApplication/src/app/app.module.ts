@@ -48,6 +48,8 @@ import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-b
 import {MatMenuModule} from '@angular/material/menu';
 
 
+
+
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -62,6 +64,7 @@ import { AboutSummaryComponent } from './about-summary/about-summary.component';
 import { AboutTimelineComponent } from './about-timeline/about-timeline.component';
 import { AboutWallactivityComponent } from './about-wallactivity/about-wallactivity.component';
 import { TableComponent } from './table/table.component';
+
 
 //import { CalenderComponent } from './calender/calender.component';
 // import { FlatpickrModule } from 'angularx-flatpickr';
@@ -91,6 +94,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { LeavesComponent } from './leaves/leaves.component';
 import { BarchartComponent } from './barchart/barchart.component';
 import { MatIconModule } from '@angular/material/icon';
+
 
 
 @NgModule({
@@ -130,6 +134,7 @@ import { MatIconModule } from '@angular/material/icon';
     AboutWallactivityComponent,
     TableComponent,
 
+
       Donut1Component,
     
       DialogComponent,
@@ -140,6 +145,7 @@ import { MatIconModule } from '@angular/material/icon';
       StatusdropComponent,
       
     
+
     
   ],
   imports: [
@@ -151,11 +157,13 @@ import { MatIconModule } from '@angular/material/icon';
     MatTabsModule,
     MatGridListModule,
     MatProgressBarModule,
+
     MatMenuModule,
     RouterModule,
     NgApexchartsModule,
     NgApexchartsModule,
     AppRoutingModule,
+
     MatToolbarModule,
     FormsModule,
     HttpClientModule,
@@ -175,6 +183,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatNativeDateModule,
     MatDatepickerModule,
+
     MatCardModule
     // NgbModalModule,
     // // FlatpickrModule.forRoot(),
@@ -182,7 +191,7 @@ import { MatIconModule } from '@angular/material/icon';
     //   provide: DateAdapter,
     //   useFactory: adapterFactory
     // })
-  
+
   ],
 
   providers: [],
