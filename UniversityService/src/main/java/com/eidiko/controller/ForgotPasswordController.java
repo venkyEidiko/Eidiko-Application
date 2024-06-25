@@ -19,14 +19,14 @@ import com.eidiko.serviceimplementation.ForgotPasswordService;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/password")
+@RequestMapping("/api")
 public class ForgotPasswordController {
 
     @Autowired
     private ForgotPasswordService forgotPasswordService;
 
 
-    @PostMapping("/forgotPassword")
+    @PostMapping("/password/forgotPassword")
     public ResponseEntity<?> forgotPassword(@RequestBody ForgotPassword forgotPassword) {
         try {
             String newPassword = forgotPasswordService.updatePassword(forgotPassword);

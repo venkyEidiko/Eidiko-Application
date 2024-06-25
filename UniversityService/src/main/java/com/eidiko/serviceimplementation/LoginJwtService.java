@@ -71,7 +71,7 @@ public class LoginJwtService {
 	        return JwtTokenReturnClass
 	        		.builder()
 	        		.jwtToken(jwtToken)
-	        		.employeeDto(employeeDto)
+	        		.employeeDto(employee)  // changed here employeedto to employee
 	        		.refreshToken(refreshToken).build();
 	    }
 	    

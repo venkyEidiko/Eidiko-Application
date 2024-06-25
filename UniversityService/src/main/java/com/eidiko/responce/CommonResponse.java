@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.eidiko.entity.ResponseModel;
+import com.eidiko.exception_handler.FileExtensionNotFound;
+import com.eidiko.exception_handler.FormatMismatchException;
 import com.eidiko.exception_handler.SaveFailureException;
 import com.eidiko.exception_handler.UserNotFoundException;
 
@@ -70,15 +72,15 @@ public class CommonResponse<T> {
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
-	public ResponseEntity<ResponseModel<T>> prepareFailedResponse1(String error) {
+	public ResponseEntity<ResponseModel<T>> prepareFailedResponse1(T error) {
 		ResponseModel<T> response = new ResponseModel<>();
 		response.setStatus("FAILED");
-		response.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		response.setStatusCode(HttpStatus.NOT_FOUND.value());
 		response.setResult(null);
-		response.setError(error);
+		response.setError(error.toString());
 		response.setEmail(null);
 
-		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
 
 	public ResponseEntity<ResponseModel<T>> prepareFailedResponse2(String error) {
@@ -124,7 +126,7 @@ public class CommonResponse<T> {
 		response.setStatus("FAILED");
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@ExceptionHandler(SaveFailureException.class)
 	public ResponseEntity<ResponseModel<T>> handleSaveFailureException(SaveFailureException ex) {
 		ResponseModel<T> response = new ResponseModel<>();
@@ -137,6 +139,28 @@ public class CommonResponse<T> {
 		return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	
+	@ExceptionHandler(FileExtensionNotFound.class)
+	public ResponseEntity<ResponseModel<T>> handleFileExtensionNotFound(FileExtensionNotFound ex) {
+		ResponseModel<T> response = new ResponseModel<>();
+
+		response.setEmail(null);
+		response.setError(ex.getMessage());
+		response.setResult(null);
+		response.setStatusCode(HttpStatus.NOT_FOUND.value());
+		response.setStatus("FAILED");
+		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(FormatMismatchException.class)
+	public ResponseEntity<ResponseModel<T>> handleFormatMismatchException(String ex) {
+		ResponseModel<T> response = new ResponseModel<>();
+
+		response.setEmail(null);
+		response.setError(ex);
+		response.setResult(null);
+		response.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		response.setStatus("FAILED");
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
 
 }
