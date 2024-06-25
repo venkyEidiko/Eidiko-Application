@@ -10,18 +10,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
 @ToString
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Roles {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonIgnore
-	private Integer id;
-	
-	private String roleName;
+public class Roles_Table {
 
+	@Id
+	private Integer roleId;
+	private String name;
+
+	public Roles_Table() {
+	}
+
+	public Roles_Table(Integer roleId, String name) {
+		this.name = name;
+		this.roleId = roleId;
+	}
 }
