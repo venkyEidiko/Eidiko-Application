@@ -2,6 +2,7 @@ package com.eidiko.repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -14,5 +15,12 @@ public interface EmpAttendanceRepository extends CrudRepository<EmployeeAttendan
 	
 	List<EmployeeAttendance>findByEmployeeId(Long employeeId);
 	
-	List<EmployeeAttendance> findByEmployeeIdAndDateBetween(Long employeeId, LocalDate startDate, LocalDate endDate);
+
+	 List<EmployeeAttendance> findByEmployeeIdAndDateBetween(Long empId, LocalDate startDate, LocalDate endDate);
+
+
+	 List<EmployeeAttendance> findAllByEmployeeId(Long empId);
+
+	 
+	 
 }

@@ -26,7 +26,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { RouterModule, Routes } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
+
+import {MatCardModule} from '@angular/material/card'
+
+
 import { MeComponent } from './me/me.component';
 import { InboxComponent } from './inbox/inbox.component';
 import { MyteamComponent } from './myteam/myteam.component';
@@ -38,9 +41,10 @@ import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './footer/footer.component';
+
 import { CommonModule } from '@angular/common';
 import { AttandanceComponent } from './attandance/attandance.component';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 
@@ -49,13 +53,22 @@ import { RegistrationComponent } from './registration/registration.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileAboutComponent } from './profile-about/profile-about.component';
+import { ProfileJobComponent } from './profile-job/profile-job.component';
+import { ProfilePrflComponent } from './profile-prfl/profile-prfl.component';
+import { ProfileDocComponent } from './profile-doc/profile-doc.component';
+import { AboutSummaryComponent } from './about-summary/about-summary.component';
+import { AboutTimelineComponent } from './about-timeline/about-timeline.component';
+import { AboutWallactivityComponent } from './about-wallactivity/about-wallactivity.component';
+import { TableComponent } from './table/table.component';
+import { LeavesComponent } from './leaves/leaves.component';
+import { BarchartComponent } from './barchart/barchart.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-
-    RegistrationComponent,
-
 
     SidenavComponent,
     NavbarComponent,
@@ -69,37 +82,61 @@ import { MatTableModule } from '@angular/material/table';
     MeComponent,
     InboxComponent,
     MyteamComponent,
-    MyfinancesComponent,
+      MyfinancesComponent,
     OrgComponent,
     ClockComponent,
     DonutchartComponent,
     OtpComponent,
     LayoutComponent,
     FooterComponent,
+    LeavesComponent,
+    BarchartComponent,
     AttandanceComponent,
+    ProfileComponent,
+    ProfileAboutComponent,
+    ProfileJobComponent,
+    ProfilePrflComponent,
+    ProfileDocComponent,
+    AboutSummaryComponent,
+    AboutTimelineComponent,
+    AboutWallactivityComponent,
+    TableComponent,
+    
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatTabsModule,
     MatGridListModule,
-    MatCardModule,
+  MatProgressBarModule,
+    MatMenuModule,
     RouterModule,
     NgApexchartsModule,
+    NgApexchartsModule,
     AppRoutingModule,
+
     MatToolbarModule,
     FormsModule,
+  
     HttpClientModule,
     MatIconModule,
     ReactiveFormsModule,
-
     CommonModule,
     MatProgressBarModule,
     MatButtonModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatTableModule
-
+    MatTableModule,
+    CommonModule,
+    FormsModule,
+    MatCardModule
+    // NgbModalModule,
+    // // FlatpickrModule.forRoot(),
+    // CalendarModule.forRoot({
+    //   provide: DateAdapter,
+    //   useFactory: adapterFactory
+    // })
+    
   ],
 
   providers: [],

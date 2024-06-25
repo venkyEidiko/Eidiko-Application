@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.eidiko.dto.AvgHourDto;
+import com.eidiko.dto.AvgHoursAndOnTimeArrivalDto;
 import com.eidiko.dto.EmployeeAttendanceDTO;
-import com.eidiko.entity.EmployeeAttendance;
 import com.eidiko.entity.ResponseModel;
 import com.eidiko.exception_handler.FileExtensionNotFound;
+import com.eidiko.exception_handler.FormatMismatchException;
 import com.eidiko.exception_handler.UserNotFoundException;
 import com.eidiko.responce.CommonResponse;
 import com.eidiko.serviceimplementation.EmpAttendanceService;
@@ -37,7 +37,7 @@ public class EmpAttendanceControllor {
 	@Autowired
 	private EmpAttendanceService empAttendanceService;
 
-	@PostMapping("/upload")
+	@PostMapping("/attendanceSheet")
 	public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file)
 			throws IOException, FileExtensionNotFound, ParseException {
 		log.info("Attachment file name  : {}", file.getOriginalFilename());
@@ -52,35 +52,44 @@ public class EmpAttendanceControllor {
 			}
 		} catch (FileExtensionNotFound ex) {
 			return new CommonResponse<>().handleFileExtensionNotFound(ex);
-		} catch (IllegalArgumentException e) {
+		} catch (FormatMismatchException e) {
 
-			return new CommonResponse<>().prepareFailedResponse1(e.getMessage());
+			return new CommonResponse<>().handleFormatMismatchException(e.getMessage());
+		} catch (RuntimeException ex) {
+			return new CommonResponse<>().prepareFailedResponse(ex.getMessage());
 		}
 
 	}
 
-	@GetMapping("/getById/{empid}")
+	@GetMapping("/getByEmployeeid/{empid}")
 	public ResponseEntity<ResponseModel<Object>> getByEmpid(@PathVariable("empid") Long empid) {
 		log.info("emp id {}", empid);
 		try {
-			List<EmployeeAttendanceDTO> byEmpId = empAttendanceService.getByEmpId(empid);
+			List<EmployeeAttendanceDTO> byEmpId = empAttendanceService.getByEmployeeId(empid);
 			log.info("entity {}", byEmpId);
 			return new CommonResponse<>().prepareSuccessResponseObject(byEmpId);
 		} catch (UserNotFoundException ex) {
 			log.error("Error occurred: {}", ex.getMessage());
-			return new CommonResponse<>().prepareFailedResponse1(ex.getMessage());
+			return new CommonResponse<>().handleUserNotFoundException(ex);
 		}
 	}
-	
-	@GetMapping("/avgHours/{employeeId}/{staratDate}/{endDate}")
-	 public ResponseEntity<List<AvgHourDto>>getAverageHours(@PathVariable("employeeId") Long employeeId,
-			 @PathVariable("staratDate") LocalDate staratDate,
-			 @PathVariable("endDate") LocalDate endDate)
-	 {
-		 List<AvgHourDto> averageRange = 
-				 empAttendanceService.getAverageRange(employeeId, staratDate, endDate);
-		 
-		 return new ResponseEntity<>(averageRange, HttpStatus.OK);
-	 }
+
+	@GetMapping("/AvgPerDayAndOntimeArrival/{employeeId}/{staratDate}/{endDate}/{reportsTo}")
+	public ResponseEntity<ResponseModel<Object>> getAverageHours(@PathVariable("employeeId") Long employeeId,
+			@PathVariable("staratDate") LocalDate staratDate, @PathVariable("endDate") LocalDate endDate,
+			
+			@PathVariable("reportsTo") Long reportsTo) {
+
+		List<AvgHoursAndOnTimeArrivalDto> averageRange;
+		try {
+			averageRange = empAttendanceService.AvgPerDayAndOntimeArrival(employeeId, staratDate, endDate,reportsTo);
+
+			return new CommonResponse<>().prepareSuccessResponseObject(averageRange);
+		} catch (UserNotFoundException e) {
+			
+			return new CommonResponse<>().handleUserNotFoundException(e);
+		}
+
+	}
 
 }
