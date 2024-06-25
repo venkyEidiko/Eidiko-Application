@@ -3,12 +3,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppComponent } from './app.component';
 
+
 import { SidenavComponent } from './sidenav/sidenav.component';
+
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module';
 
+
 import { MatIconModule } from '@angular/material/icon';
+
+
 
 
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
@@ -17,6 +22,7 @@ import { ResetPasswordConfirmationComponent } from './reset-password-confirmatio
 import { FormsModule } from '@angular/forms';
 import { OtpComponent } from './otp/otp.component';
 import { HttpClientModule } from '@angular/common/http';
+
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -27,7 +33,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { RouterModule, Routes } from '@angular/router';
 
+
 import {MatCardModule} from '@angular/material/card'
+
+
 
 
 import { MeComponent } from './me/me.component';
@@ -42,16 +51,19 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './footer/footer.component';
 
+
 import { CommonModule } from '@angular/common';
 import { AttandanceComponent } from './attandance/attandance.component';
 import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 
+
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+
 
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileAboutComponent } from './profile-about/profile-about.component';
@@ -64,12 +76,25 @@ import { AboutWallactivityComponent } from './about-wallactivity/about-wallactiv
 import { TableComponent } from './table/table.component';
 import { LeavesComponent } from './leaves/leaves.component';
 import { BarchartComponent } from './barchart/barchart.component';
+import { CalenderComponent } from './calender/calender.component';
+import { ShiftRequestFormComponent } from './shift-request-form/shift-request-form.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+
+
+
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-
+CalenderComponent,
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
@@ -101,12 +126,20 @@ import { BarchartComponent } from './barchart/barchart.component';
     AboutTimelineComponent,
     AboutWallactivityComponent,
     TableComponent,
+    ShiftRequestFormComponent,
+
     
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatTabsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatInputModule,
+    MatDatepickerModule,
     MatGridListModule,
   MatProgressBarModule,
     MatMenuModule,

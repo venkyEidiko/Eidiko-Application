@@ -3,12 +3,13 @@
       <span>EIDIKO SYSTEM INTEGRATORS</span>
       <span class="navbar-search">
         <mat-icon>search</mat-icon>
-        <input type="text" placeholder="Search for employees ...">
-      </span>
+        <!-- Pending -->
+        <input type="text" placeholder="Search for employees ..." [(ngModel)]="search" (ngModelChange)="onChange($event)">
+  </span>
     </div>
     <div class="navbar-profile">
       <div class="dropdown">
-        <span class="dropdown-toggle">Nalla Harshini</span>
+        <span class="dropdown-toggle">{{empName}}</span>
         <div class="dropdown-menu">
           <a routerLink="/layout/myprofile">
             <mat-icon>search</mat-icon>Profile
@@ -26,5 +27,14 @@
       </div>
     </div>
   </nav>
-
+  
+  <!-- Displaying Search Results -->
+<!-- <div *ngIf="searchData.length > 0" class="search-results">
+  <h3>Search Results</h3>
+  <ul>
+    <li *ngFor="let employee of searchData">
+      {{ employee.firstName +" "+employee.lastName}} - ID: {{ employee.employeeId }}
+    </li>
+  </ul>
+</div> -->
   

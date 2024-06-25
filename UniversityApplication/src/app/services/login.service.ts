@@ -4,6 +4,7 @@ import { throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
+import { Employee } from './employee';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class LoginService {
   private employeeData: any = null; 
   private jwtToken: string | null = null;
 
-  url = "http://localhost:3000/";
+  url = "http://10.0.0.81:8082/";
 
   constructor(private http: HttpClient) {}
   register(data: any): Observable<any> {
@@ -22,23 +23,14 @@ export class LoginService {
   login(data: any): Observable<any> {
     return this.http.post<any>(this.url+"login1", data);
   }
-  getGroupNames(): Observable<any[]> {
-    const url = `http://10.0.0.28:8889/fcr-query-service/getgroupnames`;
-    console.log('Calling URL:', url); // Check the constructed URL
-    return this.http.get<any[]>(url).pipe(
-      tap(data => console.log('Response:', data)), // Log the response
-      catchError((error) => {
-        console.error('Error fetching group names:', error);
-        return throwError('Something went wrong; please try again later.');
-      })
-    );
-  }
 
   setEmployeeData(data: any) {
     this.employeeData = data;
     localStorage.setItem('employee-data', JSON.stringify(data));
   }
-
+searchEmployee(search:any):Observable<any[]>{
+  return this.http.get<any[]>(this.url+"api/searchByKeyword/"+search)
+};
   getEmployeeData(): any {
     if (!this.employeeData) {
       const storedData = localStorage.getItem('employee-data');
