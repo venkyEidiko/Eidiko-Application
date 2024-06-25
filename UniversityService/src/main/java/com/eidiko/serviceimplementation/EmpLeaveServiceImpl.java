@@ -23,7 +23,12 @@ import com.eidiko.entity.ResponseModel;
 import com.eidiko.mapper.Mapper;
 import com.eidiko.repository.EmpLeaveRepo;
 import com.eidiko.service.EmpLeaveService;
+
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.data.domain.Sort;
 @Service
+@Slf4j
 public class EmpLeaveServiceImpl implements EmpLeaveService {
 
 	@Autowired
@@ -94,7 +99,8 @@ List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.map
 
 	@Override
 	public List<LeaveSummary> getEmpLeaveSummaryByEmpId(Long employeeId) {
-		List<EmpLeave> empLeaveList=empLeaveRepo.findAll();
+		log.info("Id :{}",employeeId);
+		List<EmpLeave> empLeaveList=empLeaveRepo.findAllByEmployeeId(employeeId);
 
 		List<EmpLeave> pendingLeaveList = empLeaveList.stream().filter(leave->leave.getStatus().equals("Pending")).collect(Collectors.toList());
 		List<EmpLeave> approvedLeaveList = empLeaveList.stream().filter(leave->leave.getStatus().equals("Approved")).collect(Collectors.toList());
@@ -145,6 +151,19 @@ List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.map
 
 		return leaveSummaries;
 	}
+	
+	
+  
+	@Override
+	public Page<EmpLeave> findByLeaveTypesAndStatuses(List<String> leaveTypes, List<String> statuses, Pageable pageable) {
+        log.info("Fetching records with leaveTypes: {} and statuses: {}", leaveTypes, statuses);
+
+        Page<EmpLeave> leaves = empLeaveRepo.findByLeaveTypeInAndStatusIn(leaveTypes, statuses, pageable);
+        List<EmpLeave> content = leaves.getContent();
+        leaves.getTotalElements();
+        log.info("Fetched records: {}", leaves);
+        return leaves;
+    }
 
 
 

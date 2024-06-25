@@ -46,6 +46,9 @@ public class EmailTemplateImp implements EmailTemplateInterface {
 		return template;
 	}
 
+	
+	
+	// sending mail along with otp
 	public String sendEmailWithOtp(String toMail)
 			throws MessagingException, IOException, UserNotFoundException, RuntimeException {
 
@@ -57,16 +60,15 @@ public class EmailTemplateImp implements EmailTemplateInterface {
 		EmailTemplate template = emailTemplateRepo.findByNameOfTemplate(templateName1)
 				.orElseThrow(() -> new UserNotFoundException("Template not found"));
 
-//		Employee byEmail = employeeRepo.findByEmail(toMail)
-//				.orElseThrow(() -> new UserNotFoundException("user not found"));
+		Employee byEmail = employeeRepo.findByEmail(toMail)
+				.orElseThrow(() -> new UserNotFoundException("user not found"));
 
 		
-//		String firstName = byEmail.getFirstName();
+		String firstName = byEmail.getFirstName();
 
-//		String lastName = byEmail.getLastName();
-//		String fullName = firstName + " " + lastName;
-		String fullName="nari"+"Reddy";
-
+		String lastName = byEmail.getLastName();
+		String fullName = firstName + " " + lastName;
+	
 		// Convert Clob to String
 		String body2 = template.getBody();
 
@@ -74,7 +76,7 @@ public class EmailTemplateImp implements EmailTemplateInterface {
 			throw new IllegalArgumentException("Email body content is missing");
 		}
 
-		// String otp="200123";
+		
 		String personalizedBody = body2.replace("{{otp}}", otp).replace("{{name}}", fullName);
 
 		// Send the email
@@ -83,6 +85,7 @@ public class EmailTemplateImp implements EmailTemplateInterface {
 
 	}
 
+	// random otp generation
 	public String generateOtp() {
 		Random random = new Random();
 		int otpValue = 100000 + random.nextInt(900000);
@@ -90,6 +93,7 @@ public class EmailTemplateImp implements EmailTemplateInterface {
 		return otp;
 	}
 
+	// send mail method
 	private void sendEmail(String to, String subject, String body) throws MessagingException {
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);

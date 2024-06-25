@@ -28,58 +28,52 @@ import com.eidiko.service.EmailTemplateInterface;
 import com.eidiko.serviceimplementation.EmailTemplateImp;
 
 import jakarta.mail.MessagingException;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmailTemplateControllor {
 
-	
 	@Autowired
 	private EmailTemplateInterface templateInterface;
-	
-	
-	public ResponseEntity<String>template(){
-		
-		return null; 
-	}
-	
 
+	public ResponseEntity<String> template() {
+
+		return null;
+	}
 
 	@Autowired
 	private EmailTemplateImp emailTemplateImp;
 
+	// this method is for the template verification
 	@GetMapping("/template/{name}")
-	public ResponseEntity<Object> getTemplate(@PathVariable String name) throws UserNotFoundException {
-		EmailTemplate template = templateInterface.getByTemplateName(name);
+	public ResponseEntity<ResponseModel<Object>> getTemplate(@PathVariable("name") String name) {
 
-		if (template == null) {
-			// Template not found
-			return new ResponseEntity<>(template, HttpStatus.NOT_FOUND);
+		try {
+			EmailTemplate template = templateInterface.getByTemplateName(name);
+
+			return new CommonResponse<>().prepareSuccessResponseObject(template);
+		} catch (UserNotFoundException message) {
+			return new CommonResponse<>().handleUserNotFoundException(message);
 		}
 
-		// Template found, return it with a 200 OK status
-		return new ResponseEntity<>(template, HttpStatus.OK);
 	}
 
+	// This is for sending mail to registered user mail
 	@GetMapping("/sendMail")
-	public ResponseEntity<ResponseModel<Object>> sendMail(@RequestParam("toMail") String to)
-		
-	{
-		System.out.println("email :"+to);
-		try {
-			//,otp
-			String sendEmailWithOtp = emailTemplateImp.sendEmailWithOtp(to);
+	public ResponseEntity<ResponseModel<Object>> sendMail(@RequestParam("toMail") String to) {
 
-			System.out.println(sendEmailWithOtp);
+		try {
+			String sendEmailWithOtp = emailTemplateImp.sendEmailWithOtp(to);
 			return new CommonResponse<>().prepareSuccessResponseObject(sendEmailWithOtp);
-		} catch (UserNotFoundException e) {
-			return new CommonResponse<>().prepareFailedResponse2( e.getMessage());
-		} catch (IllegalArgumentException e) {
-			return new CommonResponse<>().prepareFailedResponse1("Invalid input: " + e.getMessage());
-		} catch (MessagingException | IOException e) {
-			return new CommonResponse<>().prepareFailedResponse1("Internal Server Error: " + e.getMessage());
-		} catch (RuntimeException e) {
-			return new CommonResponse<>().prepareFailedResponse1("Unexpected Error: " + e.getMessage());
+		} catch (UserNotFoundException message) {
+			return new CommonResponse<>().handleUserNotFoundException(message);
+		} catch (IllegalArgumentException message) {
+			return new CommonResponse<>().prepareFailedResponse1("Invalid input: " + message);
+		} catch (MessagingException | IOException message) {
+			return new CommonResponse<>().prepareFailedResponse1("Internal Server Error: " + message);
+		} catch (RuntimeException message) {
+			return new CommonResponse<>().prepareFailedResponse1("Unexpected Error: " + message);
 		}
 	}
 }

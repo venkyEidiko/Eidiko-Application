@@ -37,11 +37,12 @@ public class Employee implements UserDetails {
 	private String lastName;
 	private String password;
 	private String email;
-
 	private String phoneNu;
 	private String gender;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Roles role;
+	private Roles_Table role;
+
 	@ToString.Exclude
 	@JsonManagedReference
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
