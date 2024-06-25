@@ -1,11 +1,15 @@
 package com.eidiko.serviceimplementation;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eidiko.dto.BirtdayAndanniversaryDto;
 import com.eidiko.entity.Address;
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.Roles;
@@ -219,4 +223,18 @@ public class EmployeeService implements EmployeeInterface {
 		}
 	}
 
+//for birthdays and anniversaries giving 
+@Override
+public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date) {	
+	List<BirtdayAndanniversaryDto>employeesDataOfBirthList= employeeRepo.findBydateOfBirth(date.getMonthValue(),date.getDayOfMonth());
+	 List<BirtdayAndanniversaryDto> employeesDateOfJoiningList = employeeRepo.findByDateOfJoining(date.getMonthValue(), date.getDayOfMonth());
+	
+	 Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
+	  result.put("BirthDay Today ", employeesDataOfBirthList);
+      result.put("Work Anniversaries ", employeesDateOfJoiningList);
+      
+	 return result;
+
+}
+	
 }

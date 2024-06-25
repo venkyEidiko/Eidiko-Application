@@ -17,6 +17,7 @@ public class WorkFromHomeRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String employeeName;
     private Long employeeID;
     private LocalDate fromDate;
     private LocalDate toDate;
