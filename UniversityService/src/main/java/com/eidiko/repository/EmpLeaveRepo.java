@@ -19,7 +19,8 @@ public interface EmpLeaveRepo extends JpaRepository<EmpLeave, Long> {
 
 
 
-	List<EmpLeave> findByLeaveTypeAndFromDateLessThanEqualAndToDateGreaterThanEqual(String leaveType, LocalDate fromDate, LocalDate toDate);
+	List<EmpLeave> findByFromDateLessThanEqualAndToDateGreaterThanEqual(LocalDate fromDate, LocalDate toDate);
+
 
 	List<EmpLeave> findByLeaveType(String leaveType);
 

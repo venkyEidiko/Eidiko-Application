@@ -23,4 +23,6 @@ public interface EmpLeaveService {
 	public List<EmpLeaveDto> getEmployeesOnLeaveToday();
 
 	public List<EmpLeaveDto> getEmployeeDetailsByRequestType(String leaveType);
+
+
 }

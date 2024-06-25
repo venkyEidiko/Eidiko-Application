@@ -148,18 +148,30 @@ List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.map
 
 
 
-	@Override
-	public List<EmpLeaveDto> getEmployeesOnLeaveToday() {
-		LocalDate today = LocalDate.now();
-		System.out.println("Today date *******  "+today);
-		List<EmpLeave> empLeaveList = empLeaveRepo.findByLeaveTypeAndFromDateLessThanEqualAndToDateGreaterThanEqual("Leave", today, today);
-		return empLeaveList.stream().map(empLeave -> this.mapper.empLeaveToEmpLeaveDto(empLeave)).collect(Collectors.toList());
-	}
+@Override
+public List<EmpLeaveDto> getEmployeesOnLeaveToday() {
+	LocalDate today = LocalDate.now();
+	List<EmpLeave> empLeaveList = empLeaveRepo.findByFromDateLessThanEqualAndToDateGreaterThanEqual(today, today);
+	return empLeaveList.stream()
+			.map(empLeave -> {
+				try {
+					return mapper.empLeaveToEmpLeaveDto(empLeave);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
+			})
+			.filter(dto -> dto != null)
+			.collect(Collectors.toList());
+}
+
 
 	@Override
 	public List<EmpLeaveDto> getEmployeeDetailsByRequestType(String leaveType) {
 		List<EmpLeave> empLeaveList = empLeaveRepo.findByLeaveType(leaveType);
 		return empLeaveList.stream().map(empLeave -> this.mapper.empLeaveToEmpLeaveDto(empLeave)).collect(Collectors.toList());
 	}
+
+
 
 }
