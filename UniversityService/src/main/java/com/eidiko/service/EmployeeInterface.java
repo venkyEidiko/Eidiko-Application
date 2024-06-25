@@ -1,11 +1,24 @@
 package com.eidiko.service;
 
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+
+import com.eidiko.dto.BirtdayAndanniversaryDto;
+
+import java.util.List;
+import java.util.Optional;
+
+
 import com.eidiko.entity.Employee;
 import com.eidiko.exception_handler.UserNotFoundException;
 
 public interface EmployeeInterface {
 	
 	public String saveEmployee(Employee employee);
+	
+	public  Optional<List<Employee>> searchByKeywords(String keywords) ;
 	
 	public String updateEmployee(Long employeeId,Employee employee) throws UserNotFoundException;
 	
@@ -18,5 +31,5 @@ public interface EmployeeInterface {
 	public String updateEmployeeTimeDetails(Long empLoyeeId,Employee employee)throws UserNotFoundException;
 	
 	public String updateEmployeeOrganizationDetails(Long empLoyeeId,Employee employee)throws UserNotFoundException;
-    
-}
+	Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date);
+} 
