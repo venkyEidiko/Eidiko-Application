@@ -12,7 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 public class CompensatoryOffRequest {
 
-    private String compensatoryOffDate; 
+    private String fromDate;
+    private String toDate;
     private String note;
     private List<MultipartFile> files;
 }

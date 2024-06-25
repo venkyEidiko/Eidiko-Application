@@ -20,8 +20,18 @@ public interface EmpLeaveService {
 	 public List<EmpLeaveDto> getAllEmpLeaveByEmpId(Integer pageNumber, Integer pageSize,Long employeeId);
 	 
 	 public List<LeaveSummary> getEmpLeaveSummaryByEmpId(Long employeeId);
+
 	 
 	 
 	 
 	 public Page<EmpLeave> findByLeaveTypesAndStatuses(List<String> leaveTypes, List<String> statuses, Pageable pageable);
+
+
+
+
+
+	public List<EmpLeaveDto> getEmployeesOnLeaveToday();
+
+	public List<EmpLeaveDto> getEmployeeDetailsByRequestType(String leaveType);
+
 }
