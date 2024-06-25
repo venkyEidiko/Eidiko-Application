@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ShiftRequestService } from '../services/shift-request.service';
 import { format } from 'date-fns';
@@ -36,8 +37,6 @@ onlyMonth=this.currentDate.getMonth();
     ];
     return monthNames[monthIndex];
   }
-
-
   generateCalendar() {
     const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
     let currentDate = new Date(startDate);
@@ -47,12 +46,10 @@ onlyMonth=this.currentDate.getMonth();
     this.weeks = [];
     let week: any[] = new Array(7).fill(null).map(() => ({}));
 
-
     // Adjust starting date to the previous Monday
     while (currentDate.getDay() !== 1) {
       currentDate.setDate(currentDate.getDate() - 1);
     }
-
 
     while (currentDate <= endDate || currentDate.getDay() !== 1) {
       const day = {
@@ -61,10 +58,8 @@ onlyMonth=this.currentDate.getMonth();
         wOff: currentDate.getDay() === 0 || currentDate.getDay() === 6 // Sunday or Saturday
       };
 
-
       const dayIndex = (currentDate.getDay() + 6) % 7; // Adjust day index to start from Monday
       week[dayIndex] = day;
-
 
       if (dayIndex === 6) {
         this.weeks.push(week);
@@ -77,12 +72,10 @@ onlyMonth=this.currentDate.getMonth();
     }
   }
 
-
   getShift(date: Date): string {
     const shifts = ['10:00 AM - 7:00 PM'];
     return date.getDay() !== 0 && date.getDay() !== 6 ? shifts[0] : '';
   }
-
 
   prevMonth() {
     this.currentDate.setMonth(this.currentDate.getMonth() - 1);
@@ -97,7 +90,6 @@ onlyMonth=this.currentDate.getMonth();
     this.currentYear = this.currentDate.getFullYear();
     this.generateCalendar();
   }
-
 
   goToToday() {
     this.currentDate = new Date();
