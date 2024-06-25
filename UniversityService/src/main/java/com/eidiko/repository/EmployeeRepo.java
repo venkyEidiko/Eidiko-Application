@@ -27,4 +27,11 @@ public interface EmployeeRepo extends JpaRepository<Employee, Long>{
 	 @Query("SELECT e.employeeId FROM Employee e WHERE e.reportsTo = :reportsTo")
 	    Optional<List<Long>> findEmployeeIdByReportsTo(@Param("reportsTo") Long reportsTo);
 
+//	Optional<Employee> findByPhoneNu(String phoneNu);
+
+	Optional<Employee> findByFirstName(String firstName);
+
+	Optional<Employee> findByLastName(String lastName);
+
+
 }
