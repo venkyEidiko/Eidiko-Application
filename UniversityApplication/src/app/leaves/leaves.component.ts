@@ -37,8 +37,6 @@ export class LeavesComponent implements OnInit {
     'status',
     'requestedBy',
     'leaveNote'
-
-
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -372,5 +370,4 @@ export class LeavesComponent implements OnInit {
   data = [
   
   ]
-
 }

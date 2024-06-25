@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -15,11 +16,13 @@ interface Employee {
   email: string;
 }
 
+
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.css']
 })
+
 export class DialogComponent implements OnInit {
   isOpen: boolean = true;
   fromDate!: Date;
@@ -120,3 +123,4 @@ export class DialogComponent implements OnInit {
     this.searchResults = [];
   }
 }
+

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+
 import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
@@ -14,6 +15,7 @@ export class CompDialogComponent {
   closeDialog(): void {
     this.dialogRef.close();
 }
+
 onFileSelected(event: any): void {
   const file: File = event.target.files[0];
   if (file) {
@@ -35,5 +37,6 @@ readonly range = new FormGroup({
 
 
 }
+
 
 

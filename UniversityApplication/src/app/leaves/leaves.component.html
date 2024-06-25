@@ -51,7 +51,9 @@
                 <mat-card-content>
                     Consumed Leave Types
                         <mat-icon class="info-icon">info</mat-icon>
+
                         <app-donut1 [chartOptions]="chartOptions3"></app-donut1>
+
                       
                     
                 
@@ -104,8 +106,11 @@
                       <span (click)="openDialog1()" >  View details</span>
                     </div>
                     <div class="donut-container">
+
                         <div class="donut-text">{{this.availableLeaves}} Days Available</div>
                         <app-donut1  [chartOptions]="chartOptions1">
+
+
                         </app-donut1>
                     </div>   
                    <div class="balance-line"> <hr/></div>
@@ -115,18 +120,24 @@
                        <div class="available">
                        
                         Available <br/>
+
                         {{availableLeaves}} days
+
 
                       </div>
                       <div class="line"></div> 
                       <div class="consumed">
                       Consumed <br/>
+
                     {{consumedLeaves}} days
+
                       </div>
                        </div>
                        <hr class="line-break">
                        <div class="annual quota">
+
                         Annual Quota <br/>  12 days
+
                        </div>
 
 
@@ -156,7 +167,9 @@
                       <div class="line"></div> 
                       <div class="consumed">
                       Consumed <br/>
+
                        {{this.consumedLeaves}} days
+
                       </div>
                        </div>
                        <hr class="line-break">
@@ -182,6 +195,7 @@
                 <div >
                     <mat-card class="table-card">
                         <mat-card-content>
+
                             <app-dropdowntable
                             [options]="leaveTypeOptions"
                             [selectedOptions]="selectedLeaveTypes"                           
@@ -235,3 +249,6 @@
             </div>
         
         </div>
+
+                         
+

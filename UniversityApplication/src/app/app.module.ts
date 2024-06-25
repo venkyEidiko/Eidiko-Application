@@ -48,8 +48,6 @@ import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-b
 import {MatMenuModule} from '@angular/material/menu';
 
 
-
-
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -78,10 +76,13 @@ import { Donut1Component } from './donut1/donut1.component';
 import { DialogComponent } from './dialog/dialog.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
+
 import { MatAccordion } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+
+
 
 import { Dialog1Component } from './dialog1/dialog1.component';
 import { CompDialogComponent } from './comp-dialog/comp-dialog.component';
@@ -90,10 +91,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { DropdowntableComponent } from './dropdowntable/dropdowntable.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { StatusdropComponent } from './statusdrop/statusdrop.component';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { LeavesComponent } from './leaves/leaves.component';
 import { BarchartComponent } from './barchart/barchart.component';
-import { MatIconModule } from '@angular/material/icon';
+import {MatIconModule} from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 
@@ -135,8 +136,10 @@ import { MatIconModule } from '@angular/material/icon';
     TableComponent,
 
 
+
       Donut1Component,
     
+
       DialogComponent,
       Dialog1Component,
       CompDialogComponent,
@@ -145,6 +148,7 @@ import { MatIconModule } from '@angular/material/icon';
       StatusdropComponent,
       
     
+
 
     
   ],
@@ -157,13 +161,11 @@ import { MatIconModule } from '@angular/material/icon';
     MatTabsModule,
     MatGridListModule,
     MatProgressBarModule,
-
     MatMenuModule,
     RouterModule,
     NgApexchartsModule,
     NgApexchartsModule,
     AppRoutingModule,
-
     MatToolbarModule,
     FormsModule,
     HttpClientModule,
@@ -181,8 +183,10 @@ import { MatIconModule } from '@angular/material/icon';
     FormsModule,
     MatSelectModule,
     MatFormFieldModule,
+
     MatNativeDateModule,
     MatDatepickerModule,
+
 
     MatCardModule
     // NgbModalModule,
@@ -191,7 +195,6 @@ import { MatIconModule } from '@angular/material/icon';
     //   provide: DateAdapter,
     //   useFactory: adapterFactory
     // })
-
   ],
 
   providers: [],

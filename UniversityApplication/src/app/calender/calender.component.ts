@@ -54,7 +54,6 @@
 
 //   viewDate: Date = new Date();
 
-
 //   // modalData: {
 //   //   action: string;
 //   //   event: CalendarEvent;
@@ -62,7 +61,11 @@
   // modalData: {
   //   action: string;
   //   event: CalendarEvent;
-  // };
+  // 
+//   // modalData: {
+//   //   action: string;
+//   //   event: CalendarEvent;
+//   // };
 
 //   actions: CalendarEventAction[] = [
 //     {

@@ -4,7 +4,9 @@
     position: fixed;
     top: 0;
     right: 0;
+
     width: 450px;
+
     height: 100%; 
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -19,6 +21,7 @@
 {
   display: flex;
 }
+
 
 
 
@@ -41,6 +44,7 @@
   .days
   {
     margin-top:15px;
+
   
    padding:38px;
   }
@@ -61,6 +65,7 @@
  {
   font-size: 10px;
  }
+
   .req {
     display: flex;
     justify-content: space-between;

@@ -34,7 +34,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   
 
-
   { path: 'forgotpassword', component: ForgotpasswordComponent },
   { path: 'reset', component: ResetpasswordComponent },
   { path: 'resetPwdConfirmation', component: ResetPasswordConfirmationComponent },
