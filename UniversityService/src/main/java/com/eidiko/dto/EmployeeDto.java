@@ -8,7 +8,8 @@ import com.eidiko.entity.Address;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 //=======
 
-import com.eidiko.entity.Roles;
+
+import com.eidiko.entity.Roles_Table;
 //>>>>>>> e23a7c1f3f12ad6d4b9c82c7c4c8a7abfc756b48
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -36,7 +37,7 @@ public class EmployeeDto {
     private Integer employeeId;
     private String gender;
     @ManyToOne(fetch = FetchType.EAGER)
-    private Roles role;
+    private Roles_Table role;
     
     @JsonManagedReference
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
