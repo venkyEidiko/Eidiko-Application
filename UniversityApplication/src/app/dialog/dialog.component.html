@@ -15,7 +15,7 @@
           <mat-datepicker #picker1></mat-datepicker>
         </div>
       </div>
-      <p class="days">{{calculateDays()}} days</p>
+        <span class="days">{{calculateDays()}} days</span>
       <div>
         <span>To</span><br/>
         <div class="calen">
@@ -66,7 +66,14 @@
     </div>
     <div>
       <p class="note1">Notify</p>
-      <input matInput [(ngModel)]="notifyTo" name="notify" class="input1" placeholder="Search Employee">
+      <input matInput [formControl]="notifyTo" class="input1" placeholder="Search Employee">
+      <div *ngIf="searchResults.length > 0" class="search-results">
+        <ul>
+          <li *ngFor="let result of searchResults" (click)="selectEmployee(result)">
+            {{ result.employeeId }} - {{ result.firstName }} {{ result.lastName }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
   <div mat-dialog-actions class="custom-dialog-actions">

@@ -116,15 +116,17 @@ export class LeavesComponent implements OnInit {
           this.dataSource = new MatTableDataSource<PendingLeave>(pendingLeaves);
           this.dataSource.paginator = this.paginator;
           this.paginator.length = response.totalCount;
-            console.log(this.paginator.length)  
+            console.log(this.paginator.length) 
+            
+      
         } else {
           console.error('Failed to fetch leave data or no data available');
-          // Optionally show a message to the user indicating no data or error
+          
         }
       },
       error => {
         console.error('Error fetching leave data:', error);
-        // Handle error appropriately, e.g., show an error message
+      
       }
     );
   }
@@ -154,10 +156,10 @@ export class LeavesComponent implements OnInit {
       (response: any) => {
         if (response.status === 'SUCCESS' && response.result.length > 0) {
           const result = response.result[0];
+          console.log(result);
           this.consumedLeaves = result.consumedLeave;
           this.availableLeaves = 12 - result.consumedLeave;
 
-          // Update monthly chart data
           this.updateMonthlyChartData(result.monthlyLeaveData);
 
           this.updateChartOptions();
@@ -171,12 +173,13 @@ export class LeavesComponent implements OnInit {
     );
   }
 
+
   fetchMonthlyChartData(employeeId: number): void {
     this.leavetypeService.fetchMonthlyLeaveData(employeeId).subscribe(
       (response: any) => {
         if (response.status === 'SUCCESS' && response.result.length > 0) {
           const monthlyData = response.result[0].monthlyLeaveData;
-          console.log(monthlyData); // Check API response structure here
+          console.log(monthlyData);
           this.updateMonthlyChartData(monthlyData);
         } else {
           console.error('Failed to fetch monthly leave data or no data available');
@@ -196,7 +199,7 @@ export class LeavesComponent implements OnInit {
 
     this.monthlyChartData = [];
 
-    // Ensure all months are present in the chart data
+    
     const allMonths = [
       '2024-01', '2024-02', '2024-03', '2024-04', '2024-05', '2024-06',
       '2024-07', '2024-08', '2024-09', '2024-10', '2024-11', '2024-12'
@@ -204,7 +207,7 @@ export class LeavesComponent implements OnInit {
 
     allMonths.forEach(monthKey => {
       const monthLabel = this.getMonthName(monthKey);
-      console.log(monthLabel) // Get month name from "YYYY-MM" format
+      console.log(monthLabel) 
       const dataForMonth = monthlyLeaveData[monthKey];
       console.log(dataForMonth)
       const value = dataForMonth ? dataForMonth.totalLeaveTaken : 0;
@@ -216,7 +219,7 @@ export class LeavesComponent implements OnInit {
 
   private getMonthName(monthKey: string): string {
     const [year, month] = monthKey.split('-');
-    const monthIndex = parseInt(month, 10); // Convert month to 0-based index
+    const monthIndex = parseInt(month, 10); 
     const months = [
       'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -232,7 +235,7 @@ export class LeavesComponent implements OnInit {
     this.chartOptions.xaxis = {
       categories: this.monthlyChartData.map(item => item.label)
     };
-    this.chartOptions = { ...this.chartOptions }; // Trigger change detection
+    this.chartOptions = { ...this.chartOptions };
   }
 
   updateChartOptions(): void {
@@ -378,5 +381,7 @@ export class LeavesComponent implements OnInit {
     this.compdialogService.openDialog();
   }
 
-  data = []
+  data = [
+  
+  ]
 }

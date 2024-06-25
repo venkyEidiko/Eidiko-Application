@@ -46,18 +46,14 @@
             </mat-card>
             <mat-card class="card4">
                 <mat-card-content>
-                 
-                        Consumed Leave Types
+                    Consumed Leave Types
                         <mat-icon class="info-icon">info</mat-icon>
                     <div class="donut1">
+                        <div class="donut-text1"> Leave <br>types</div>
                     <app-donut1  [chartOptions]="chartOptions3"></app-donut1>
-                   </div>
-                      
                     
-
-                        
-                      
-                </mat-card-content>
+                   </div>
+                 </mat-card-content>
             </mat-card>
             <mat-card class="card5">
                 <mat-card-content>Monthly Stats</mat-card-content>
@@ -187,7 +183,7 @@
                             <app-dropdowntable
                             [options]="leaveTypeOptions"
                             [selectedOptions]="selectedLeaveTypes"
-                            (selectionChange)="applyFilter()"
+                            (selectionChange)="applyFilter()" 
                           ></app-dropdowntable>
                             <app-statusdrop></app-statusdrop>
                             <input class="search1" type="text" matInput placeholder="Search">

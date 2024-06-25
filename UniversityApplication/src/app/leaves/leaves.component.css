@@ -68,6 +68,11 @@
     height: 160px;
     margin-bottom:20px;
 }
+mat-paginator
+{
+    margin-right: 120px;
+
+}
 
 .card5 {
     flex: 1;
@@ -279,6 +284,18 @@
     pointer-events: none;
    
 }
+.donut-text1 {
+    position: absolute;
+    top: 65%;
+    left:55%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color:blueviolet;
+    font-size: 12px; 
+    pointer-events: none;
+   
+}
+
 
 .search1
 {
