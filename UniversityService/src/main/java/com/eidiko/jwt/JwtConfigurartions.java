@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
 @EnableWebSecurity
+
 @RequiredArgsConstructor
 //this class consist all configurations beans required for security
 public class JwtConfigurartions {
@@ -36,7 +37,7 @@ public class JwtConfigurartions {
 	private JwtEntryPoint jwtEntryPoint;
 
 	@Bean
-	public JwtFilter jwtAuthenticationFilter() {
+	public JwtFilter jwtAuthenticationFilter()  {
 
 		return new JwtFilter(jwtService, userDetailsService());
 
@@ -67,6 +68,8 @@ public class JwtConfigurartions {
 		};
 	}
 
+
+	  
 	// Helper methods to check if the username is an email or phone number
 	private boolean isEmail(String username) {
 		String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
@@ -98,7 +101,7 @@ public class JwtConfigurartions {
 		log.info("http security");
 		return httpSecurity.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(req -> req.requestMatchers("/login1", "/refresh/**", "/api/**", "/api/leave/**",
-						"/leave/**", "/api/save", "/leave/**", "/posts/**").permitAll().anyRequest().authenticated())
+						"/leave/**", "/leave/**", "/posts/**").permitAll().anyRequest().authenticated())
 //		    	.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))
 				// .sessionManagement(session ->
 				// session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
