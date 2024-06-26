@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 })
 export class LeavereqService {
 
- private apiUrl = 'http://10.0.0.81:8082/leave/saveEmpLeave'
+ private apiUrl = 'http://10.0.0.73:8082/leave/saveEmpLeave'
 
   constructor(private http: HttpClient) {}
 

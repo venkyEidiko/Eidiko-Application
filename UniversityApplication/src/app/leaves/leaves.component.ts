@@ -22,6 +22,7 @@ interface MonthlyLeaveData {
   leaveDuration?: number;
 }
 
+
 @Component({
   selector: 'app-leaves',
   templateUrl: './leaves.component.html',
@@ -30,6 +31,7 @@ interface MonthlyLeaveData {
 
 export class LeavesComponent implements OnInit {
   daysOfWeek: string[] = [];
+  weeklyPatternData: number[] = [];
   pendingLeaves:PendingLeave[]|null =null;
   dataSource!: MatTableDataSource<PendingLeave>;
   displayedColumns: string[] = [
@@ -119,6 +121,8 @@ export class LeavesComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           this.paginator.length = response.totalCount;
             console.log(this.paginator.length) 
+            this.updateDaysOfWeek(pendingLeaves);
+            
         } else {
           console.error('Failed to fetch leave data or no data available'); 
         }
@@ -144,7 +148,7 @@ export class LeavesComponent implements OnInit {
         if (response.status === 'SUCCESS' && response.result.length > 0) {
           const result = response.result[0];
           console.log("fetchLeaveBalance method Data : ",result)
-          this.pendingLeaves=result.
+          // this.pendingLeaves=result.
           console.log(result);
           this.consumedLeaves = result.consumedLeave;
           this.availableLeaves = 12 - result.consumedLeave;
@@ -237,7 +241,36 @@ export class LeavesComponent implements OnInit {
     this.chartOptions2.series = [this.consumedLeaves];
     this.chartOptions2 = { ...this.chartOptions2 };
   }
+  updateDaysOfWeek(pendingLeaves: PendingLeave[]): void {
+    const daysOfWeekCount: { [key: string]: number } = {};
 
+    pendingLeaves.forEach(leave => {
+      const leaveDates = leave.leaveDates.split(',');
+      leaveDates.forEach(dateStr => {
+        const dayOfWeek = new Date(dateStr).toLocaleDateString('en-US', { weekday: 'long' });
+        if (daysOfWeekCount[dayOfWeek]) {
+          daysOfWeekCount[dayOfWeek]++;
+        } else {
+          daysOfWeekCount[dayOfWeek] = 1;
+        }
+      });
+    });
+
+    // Prepare data for chart
+    this.daysOfWeek = Object.keys(daysOfWeekCount);
+    const daysOfWeekData = this.daysOfWeek.map(day => daysOfWeekCount[day]);
+
+    this.chartOptions.series = [{
+      name: 'Leave Days',
+      data: daysOfWeekData
+    }];
+    this.chartOptions.xaxis = {
+      categories: this.daysOfWeek
+    };
+
+    // Update chart options to reflect the changes
+    this.chartOptions = { ...this.chartOptions };
+  }
   chartOptions1 = {
     series: [0, 0],
     chart: {

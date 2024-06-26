@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class MonthlyLeaveService {
 
-  private apiUrl = 'http://10.0.0.81:8082/leave/getEmpLeaveSummaryByEmpId'
+  private apiUrl = 'http://10.0.0.73:8082/leave/getEmpLeaveSummaryByEmpId'
 
   constructor(private http: HttpClient) {}
   fetchMonthlyChartData(employeeId:number): Observable<any> {

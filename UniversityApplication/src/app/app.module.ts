@@ -79,7 +79,7 @@ import { MatAccordion } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
-
+import { NgChartsModule } from 'ng2-charts';
 import { Dialog1Component } from './dialog1/dialog1.component';
 import { CompDialogComponent } from './comp-dialog/comp-dialog.component';
 import { CompoffComponent } from './compoff/compoff.component';
@@ -91,6 +91,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { LeavesComponent } from './leaves/leaves.component';
 import { BarchartComponent } from './barchart/barchart.component';
 import { MatIconModule } from '@angular/material/icon';
+
 
 
 @NgModule({
@@ -138,7 +139,7 @@ import { MatIconModule } from '@angular/material/icon';
       CompoffComponent,
       DropdowntableComponent,
       StatusdropComponent,
-      
+     
     
     
   ],
@@ -154,7 +155,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatMenuModule,
     RouterModule,
     NgApexchartsModule,
-    NgApexchartsModule,
+  NgChartsModule,
     AppRoutingModule,
     MatToolbarModule,
     FormsModule,

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class LeaveService {
 
-  private apiUrl = 'http://10.0.0.81:8082/leave/getAllEmpLeave'; 
+  private apiUrl = 'http://10.0.0.73:8082/leave/getAllEmpLeave'; 
 
   constructor(private http: HttpClient) { }
 
