@@ -1,13 +1,18 @@
 .container{
     display:flex;
     flex-direction: row;
+    height: 98vh;
+    overflow-y: hidden;
+    border: 5px solid rgba(28, 206, 250, 0.74);
 }
 .right{
     width:70%;
+    height: 100vh;
 }
 .left{
     width:30%;
-    padding:5%;
+    padding:5%; 
+   background-color: white;
 }
 .right img{
     width:100%;
@@ -34,7 +39,7 @@
 }
 button{
     height: 45px;
-    width:50%;
+    width:65%;
     background-color: #2986ce;
     border:none;
     font-size: 16px;

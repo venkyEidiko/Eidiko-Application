@@ -77,6 +77,8 @@ import { TableComponent } from './table/table.component';
 import { LeavesComponent } from './leaves/leaves.component';
 import { BarchartComponent } from './barchart/barchart.component';
 import { CalenderComponent } from './calender/calender.component';
+
+import { ShiftRequestFormComponent } from './shift-request-form/shift-request-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -92,7 +94,9 @@ import { MatSelectModule } from '@angular/material/select';
   declarations: [
     AppComponent,
     LoginComponent,
-    CalenderComponent,
+
+CalenderComponent,
+
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
@@ -124,6 +128,8 @@ import { MatSelectModule } from '@angular/material/select';
     AboutTimelineComponent,
     AboutWallactivityComponent,
     TableComponent,
+    ShiftRequestFormComponent,
+
     
   ],
   imports: [

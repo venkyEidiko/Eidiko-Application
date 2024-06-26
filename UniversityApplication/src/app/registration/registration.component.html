@@ -1,6 +1,6 @@
 <div class="page-content">
     <h1>Welcom to Eidiko Application</h1>
-    <form [formGroup]="registrationForm" (ngSubmit)="onSingup()">
+    <form class="form" [formGroup]="registrationForm" (ngSubmit)="onSingup()">
         <div class="form-container">
             <div class="left">
                 <h2>General Information</h2>
@@ -57,13 +57,9 @@
                 <div class="form-row-password">
 
                     <input [type]="showPassword ? 'text' : 'password'" formControlName="password" id="password" class="form-control"
-                        placeholder="Password" />
-                    <div class="input-group-append">
-                        <button type="button" class="password-btn" (click)="togglePasswordVisibility()">
-                            <!-- <i [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i> -->
-                             Visible
-                        </button>
-                    </div>
+                        placeholder="Password"
+                         />
+                        <i id="password-icon" class="fa-solid fa-eye" (click)="togglePasswordVisibility()"></i>
                     
                 </div>
                 <small
@@ -122,6 +118,7 @@
                         *ngIf="registrationForm.get('pincode')?.invalid && registrationForm.get('pincode')?.touched">*required</small>
                 </div>
                 <button class="btn-primary" type="submit" [disabled]="registrationForm.invalid">Register</button>
+           
                 <button class="btn-primary" (click) ="onLogin()" >Login</button>
             </div>
         </div>
