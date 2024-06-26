@@ -1,64 +1,80 @@
-.page-content{
-  padding: 5%;
-  background-color: #4cb7ec;
+.page-content {
+  background-image: url('https://cdn.kekastatic.net/login/v/M178_2024.06.15.1/images/login-image.jpg');
+  background-size: cover; 
+  background-position: center; 
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
+
 .page-content h1{
-  margin-left: auto;
   color: white;
+  text-align: center;
 }
+
 .form-container{
   border-radius: 2%;
   background-color: white;
   display: flex;
+  
   flex-wrap: wrap;
   flex-direction: row;
+ 
 }
 .left{
-  width: 40%;
+  width: 45%;
   padding: 3%;
   display: flex;
   flex-direction: column;
+ /* background-color:  #615EFC ; */
+  
 }
 .right{
-  width:48%;
-  background-color: #4835D4;
+  width:43%;
+  /* background-color: #4835D4; */
   padding: 3%;
   border-radius: 2%;
+  
 }
 .right h2{
-  color:white;
+  color:#4835D4
 }
 .left h2{
   color:#4835D4
 }
 .right input{
-  padding: 11.5px 15px 15px 15px;
+  padding: 5px ;
     border: 1px solid transparent;
     background: transparent;
     outline: none;
     font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    font-size: 12px;
     box-sizing: border-box;
     border-bottom: 1px solid #ccc;
-    color: white;
+    color: rgb(12, 12, 12);
+    width: 90%;
 }
 .left input,select{
-  padding: 11.5px 15px 15px 15px;
+  padding: 5px ;
     border: 1px solid transparent;
     background: transparent;
     outline: none;
     font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    font-size: 12px;
     box-sizing: border-box;
     border-bottom: 1px solid #ccc;
+    width: 90%;
 }
 .left input::placeholder{
   color: #666;
-  font-size: 16px;
+  font-size: 12px;
 }
 .right input::placeholder{
-  color: #faf6f6;
-  font-size: 16px;
+  color: #666;
+  font-size: 12px;
+ 
 }
 .left input:focus{
   border-bottom: 1px solid #999;
@@ -71,26 +87,27 @@ small{
   color: red;
   margin-left: 15px;
 }
-.form-row{
-  margin-bottom: 20px;
+#password-icon{
+  margin-top: 4px;
+  margin-left: -20px;
 }
 .btn-primary{
-  background: #fff;
+  background: #313f7c;
 	border-radius: 25px;
 	box-shadow: 0px 6px 17px 0px rgba(0, 0, 0, 0.15);
 	width: 180px;
   height:35px;
   border: none;
-	margin: 6px 0 50px 0px;
+
 	cursor: pointer;
-	color: #333;
+	color: #fffbfb;
 	font-weight: 700;
 	font-size: 15px;
-  margin-top:35px;
-  margin-left: 15px;
+  margin-top:5px;
+  margin-left: 5px;
 }
 button:hover{
-  background-color: #d5d8d8;
+  background-color: #5d67f3;
 }
 .form-row-last{
   margin-top: 75px;

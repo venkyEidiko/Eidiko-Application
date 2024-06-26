@@ -1,0 +1,58 @@
+<div class="ShiftScheduleClass">
+    <div class="shift-request-head">
+        <h2 style="margin-left: 10px;">{{formType}}</h2>
+        <button mat-button mat-dialog-close>
+            <mat-icon style="color: aliceblue; font-size: larger;">cancel</mat-icon>
+        </button>
+    </div>
+
+
+    <mat-dialog-content>
+        <form [formGroup]="shiftRequestForm" class="shif-request-form">
+            <div class="form-group">
+                <mat-form-field style="color: #4a5363;" appearance="fill">
+                    <mat-label>Start Date</mat-label>
+                    <input matInput [matDatepicker]="startDate" formControlName="startDate" placeholder="Select Date">
+                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                    <mat-datepicker #startDate></mat-datepicker>
+                </mat-form-field>
+                <div style="margin: 0px 20px; text-align: center;">{{ totalDays }} Days</div>
+                <mat-form-field appearance="fill">
+                    <mat-label>End Date</mat-label>
+                    <input matInput [matDatepicker]="endDate" formControlName="endDate" placeholder="Select Date">
+                    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                    <mat-datepicker #endDate></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+
+            <mat-form-field appearance="fill">
+                <mat-label>New Shift</mat-label>
+                <mat-select formControlName="newShift">
+                    <mat-option *ngFor="let shift of shifts" [value]="shift">
+                        {{ shift }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <mat-form-field appearance="fill">
+                <mat-label>Reason</mat-label>
+                <textarea matInput formControlName="reason"></textarea>
+            </mat-form-field>
+
+
+            <mat-form-field appearance="fill">
+                <mat-label>Notify</mat-label>
+                <input matInput formControlName="notify" placeholder="Search Employee">
+            </mat-form-field>
+        </form>
+    </mat-dialog-content>
+
+
+    <mat-dialog-actions>
+        <button mat-button style="background-color: rgb(66, 65, 65);" mat-dialog-close
+            (click)="onCancel()">Cancel</button>
+        <button mat-button color="primary" (click)="onRequest()">Request</button>
+    </mat-dialog-actions>
+</div>

@@ -5,35 +5,35 @@
                 <div class="headings">
                     <h3>Primary Details</h3>
                     <p>Edit</p>
-                </div>  
+                </div>
                 <div class="contact-details">
                     <div>
                         <span>FIRST NAME</span>
-                        <p>Shreya</p>
+                        <p>{{employee?.firstName}}</p>
                         <span>LAST NAME</span>
-                        <p>Suddala</p>
-                       
+                        <p>{{employee?.lastName}}</p>
+
                         <span>GENDER</span>
-                        <p>Female</p>
+                        <p>{{employee?.gender}}</p>
                         <span>MARITAL STATUS</span>
-                        <p>single</p>
+                        <p>{{employee?.maritalStatus}}</p>
                         <span>PHYSICALLY HANDICAPPED</span>
-                        <p>No</p>
+                        <p>{{employee?.physicallyHandicapped}}</p>
                         <span>NATIONALITY</span>
-                        <p>India</p>
+                        <p>{{employee?.nationality}}</p>
                     </div>
                     <div>
                         <span>MIDDLE NAME</span>
                         <p>---</p>
                         <span>DISPLAY NAME</span>
-                        <p>Shreya Suddala</p>
+                        <p>{{employee?.firstName+" "+employee?.lastName}}</p>
                         <span>DATE OF BIRTH</span>
-                        <p>27 Dec, 2002</p>
+                        <p>{{employee?.dateOfBirth}}</p>
                         <span>BLOOD GROUP</span>
-                        <p>O+ (O positive)</p>
+                        <p>{{employee?.bloodGroup}}</p>
                     </div>
                 </div>
-              
+
             </mat-card-content>
         </mat-card>
         <mat-card>
@@ -45,124 +45,156 @@
                 <div class="contact-details">
                     <div>
                         <span>WORK EMAIL</span>
-                        <p>shreya.suddala eidiko-india.com</p>
+                        <p>{{employee?.workEmail}}</p>
                         <span>MOBILE NUMBER</span>
-                        <p>9390309464</p>
+                        <p>{{employee?.workNumber}}</p>
                         <span>RESIDENCE NUMBER</span>
-                        <p>-Not set-</p>
+                        <p>{{employee?.residenceNumber}}</p>
                         <span>EMERGENCY NUMBER</span>
-                        <p>-Not set-</p>             
+                        <p>{{employee?.emergencyContactNumber}}</p>
                     </div>
                     <div>
                         <span>PERSONAL EMAIL</span>
-                        <p>shreyasuddala27gmail.com</p>
+                        <p>{{employee?.personalEmail}}</p>
                         <span>WORK NUMBER</span>
-                        <p>-Not set-</p>
+                        <p>{{employee?.workNumber}}</p>
                         <span>SKYPE</span>
-                        <p>-Not set-</p>
+                        <p>{{employee?.skype}}</p>
                     </div>
                 </div>
             </mat-card-content>
         </mat-card>
     </div>
-   <div class="child">
-    <mat-card>
-        <mat-card-content>
-            <div class="headings">
-                <h3>Addresses</h3>
-                <p>Edit</p>
-            </div>
-            <div class="contact-details">
-                <div>
-                    <span>CURRENT ADDRESS</span>
+    <div class="child">
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Addresses</h3>
+                    <p>Edit</p>
                 </div>
-                <div>
-                    <span>PERMANENT ADDRESS</span>
+                <div class="contact-details">
+                    <div>
+                        <h5>CURRENT ADDRESS</h5>
+                        <div>
+                            <span>HOUSE NO/FLAT NO.</span>
+                            <p>{{address?.doorNumber}}</p>
+                            <span>AREA</span>
+                            <p>{{address?.area}}</p>
+                            <span>LANDMARK</span>
+                            <p>{{address?.landmark}}</p>
+                            <span>CITY</span>
+                            <p>{{address?.city}}</p>
+                            <span>STREAT NAME</span>
+                            <p>{{address?.streetName}}</p>
+                            <span>PINCODE</span>
+                            <p>{{address?.pincode}}</p>
+                            <span>STATE</span>
+                            <p>{{address?.state}}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h5>PERMANENT ADDRESS</h5>
+                        <div>
+                            <span>HOUSE NO/FLAT NO.</span>
+                            <p>{{address?.doorNumber}}</p>
+                            <span>AREA</span>
+                            <p>{{address?.area}}</p>
+                            <span>LANDMARK</span>
+                            <p>{{address?.landmark}}</p>
+                            <span>CITY</span>
+                            <p>{{address?.city}}</p>
+                            <span>STREAT NAME</span>
+                            <p>{{address?.streetName}}</p>
+                            <span>PINCODE</span>
+                            <p>{{address?.pincode}}</p>
+                            <span>STATE</span>
+                            <p>{{address?.state}}</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </mat-card-content>
-    </mat-card>
-    <mat-card>
-        <mat-card-content>
-            <div class="headings">
-                <h3>Relations</h3>
-                <p>Edit</p>
-            </div>
-            <div class="contact-details">
-                <div>
-                    <span>FATHER</span>
-                    <p>xxxxxxxx</p>
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Relations</h3>
+                    <p>Edit</p>
                 </div>
-                <div>
-                    <span>MOTHER</span>
-                    <p>xxxxxx</p>
+                <div class="contact-details">
+                    <div>
+                        <span>FATHER</span>
+                        <p>xxxxxxxx</p>
+                    </div>
+                    <div>
+                        <span>MOTHER</span>
+                        <p>xxxxxx</p>
+                    </div>
                 </div>
-            </div>
-        </mat-card-content>
-    </mat-card>
-   </div>
-   <div class="child">
-    <mat-card>
-        <mat-card-content>
-            <div class="headings">
-                <h3>Experience</h3>
-                <p>Edit</p>
-            </div>
-            <div class="contact-details">
-                <div>
-                    <p>No data available</p>
-                    
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="child">
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Experience</h3>
+                    <p>Edit</p>
                 </div>
-                <div>
-                    
+                <div class="contact-details">
+                    <div>
+                        <p>No data available</p>
+
+                    </div>
+                    <div>
+
+                    </div>
                 </div>
-            </div>
-        </mat-card-content>
-    </mat-card>
-    <mat-card>
-        <mat-card-content>
-            <div class="headings">
-                <h3>Education</h3>
-                <p>Edit</p>
-            </div>
-            <div class="contact-details">
-                <div>
-                    <p>No data available</p>
-                    
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Education</h3>
+                    <p>Edit</p>
                 </div>
-                <div>
-                    
+                <div class="contact-details">
+                    <div>
+                        <p>No data available</p>
+
+                    </div>
+                    <div>
+
+                    </div>
                 </div>
-            </div>
-        </mat-card-content>
-    </mat-card>
-   </div>
-   <div class="child">
-    <mat-card>
-        <mat-card-content>
-            <div class="headings">
-                <h3>Identity Information</h3>
-               
-            </div>
-        </mat-card-content>
-    </mat-card>
-    <mat-card>
-        <mat-card-content>
-            <div class="headings">
-                <h3>Professional Summary</h3>
-                <p>Edit</p>
-            </div>
-            <div class="contact-details">
-                <div>
-                    <span>PROFESSIONAL SUMMARY</span>
-                    <p>-Not set-</p>
-                    
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="child">
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Identity Information</h3>
+
                 </div>
-                <div>
-                    
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Professional Summary</h3>
+                    <p>Edit</p>
                 </div>
-            </div>
-        </mat-card-content>
-    </mat-card>
-   </div>
+                <div class="contact-details">
+                    <div>
+                        <span>PROFESSIONAL SUMMARY</span>
+                        <p>-Not set-</p>
+
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </div>
