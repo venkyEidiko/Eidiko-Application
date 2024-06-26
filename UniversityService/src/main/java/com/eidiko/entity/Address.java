@@ -13,7 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
-
+import lombok.ToString;
+@ToString
 @Data
 @Entity
 @Table(name = "ADDRESS_TABLE")
@@ -26,11 +27,12 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Integer id;
-    
+    @ToString.Exclude
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Employee employee;
+    private String addressType;
     private String doorNumber ;
     private String streetName;
     private String landmark;

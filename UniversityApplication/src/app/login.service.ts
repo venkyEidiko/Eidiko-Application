@@ -11,6 +11,7 @@ export class LoginService {
   private employeeData: any = null; 
   private jwtToken: string | null = null;
 
+
   url = "http://10.0.0.52:8080/api/save";
   loginUrl = "http://10.0.0.52:8080/login1";
 
@@ -32,11 +33,17 @@ export class LoginService {
     if (!this.employeeData) {
       const storedData = localStorage.getItem('employee-data');
       if (storedData) {
-        this.employeeData = JSON.parse(storedData);
-      }
-    }
-    return this.employeeData;
+        try {
+          this.employeeData = JSON.parse(storedData);
+        } catch (error) {
+          console.error('Error parsing employee data from localStorage:', error);
+          
+        }
+        }
+        }
+      return this.employeeData;
   }
+  
 
   setJwtToken(token: string) {
     this.jwtToken = token;
