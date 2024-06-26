@@ -21,10 +21,10 @@ public class WorkFromHomeRequestService {
     private EmployeeRepo employeeRepo;
 
 
-    public List<WorkFromHomeRequest> getApprovedRequestsForToday() {
-        LocalDate today = LocalDate.now();
-        return repository.findByStatusAndToDateGreaterThanEqual("APPROVED", today);
-    }
+//    public List<WorkFromHomeRequest> getApprovedRequestsForToday() {
+//        LocalDate today = LocalDate.now();
+//        return repository.findByStatusAndToDateGreaterThanEqual("APPROVED", today);
+//    }
 
 
 
