@@ -23,5 +23,7 @@ public interface EmployeeInterface {
 	public String updateEmployeeTimeDetails(Long empLoyeeId,Employee employee)throws UserNotFoundException;
 	
 	public String updateEmployeeOrganizationDetails(Long empLoyeeId,Employee employee)throws UserNotFoundException;
-    
+
+
+
 }

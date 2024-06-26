@@ -20,7 +20,6 @@ public class EmpLeave {
 	private String leaveType;
 	private String requestedBy;
 	@ElementCollection
-	@CollectionTable(name = "emp_leave_notify", joinColumns = @JoinColumn(name = "leave_id"))
 	@Column(name = "notify_to")
 	private Set<String> notifyTo;
 	private String actionTakenBy;
