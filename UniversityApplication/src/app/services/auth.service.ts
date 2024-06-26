@@ -9,14 +9,13 @@ import { catchError } from 'rxjs/operators';
 })
 export class AuthService {
 
-  private apiUrl = 'http://10.0.0.81:8082/password/forgotPassword';
+  private apiUrl = 'http://10.0.0.73:8082/password/forgotPassword';
 
   
 
   constructor(private http: HttpClient) { }
 
   resetPassword(requestBody: any): Observable<any> {
-
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'

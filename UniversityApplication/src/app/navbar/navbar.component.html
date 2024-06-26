@@ -5,7 +5,17 @@
         <mat-icon>search</mat-icon>
         <!-- Pending -->
         <input type="text" placeholder="Search for employees ..." [(ngModel)]="search" (ngModelChange)="onChange($event)">
-  </span>
+ 
+          <!-- <input type="text" placeholder="Search for employees ..." [(ngModel)]="searchQuery" (focus)="showDropdown=true" (input)="onSearchChange()"> -->
+          <div class="search-dropdown" *ngIf="showDropdown" (click)="$event.stopPropagation()">
+           
+             
+            <div *ngFor="let result of searchData1" (click)="selectResult(result)">
+              {{result?.firstName}}
+            </div>
+          </div>
+        </span>
+
     </div>
     <div class="navbar-profile">
       <div class="dropdown">
@@ -28,13 +38,4 @@
     </div>
   </nav>
   
-  <!-- Displaying Search Results -->
-<!-- <div *ngIf="searchData.length > 0" class="search-results">
-  <h3>Search Results</h3>
-  <ul>
-    <li *ngFor="let employee of searchData">
-      {{ employee.firstName +" "+employee.lastName}} - ID: {{ employee.employeeId }}
-    </li>
-  </ul>
-</div> -->
   

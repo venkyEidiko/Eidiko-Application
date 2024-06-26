@@ -34,7 +34,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { RouterModule, Routes } from '@angular/router';
 
 
-import {MatCardModule} from '@angular/material/card'
+import { MatCardModule } from '@angular/material/card'
 
 
 
@@ -54,9 +54,9 @@ import { FooterComponent } from './footer/footer.component';
 
 import { CommonModule } from '@angular/common';
 import { AttandanceComponent } from './attandance/attandance.component';
-import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
+import { MatProgressBar, MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 
 import { LoginComponent } from './login/login.component';
@@ -84,9 +84,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-
-
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 
@@ -94,7 +92,7 @@ import { MatSelectModule } from '@angular/material/select';
   declarations: [
     AppComponent,
     LoginComponent,
-CalenderComponent,
+    CalenderComponent,
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
@@ -107,7 +105,7 @@ CalenderComponent,
     MeComponent,
     InboxComponent,
     MyteamComponent,
-      MyfinancesComponent,
+    MyfinancesComponent,
     OrgComponent,
     ClockComponent,
     DonutchartComponent,
@@ -128,11 +126,12 @@ CalenderComponent,
     TableComponent,
     ShiftRequestFormComponent,
 
-    
+
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    MatAutocompleteModule,
     MatTabsModule,
     MatDialogModule,
     MatFormFieldModule,
@@ -141,7 +140,7 @@ CalenderComponent,
     MatInputModule,
     MatDatepickerModule,
     MatGridListModule,
-  MatProgressBarModule,
+    MatProgressBarModule,
     MatMenuModule,
     RouterModule,
     NgApexchartsModule,
@@ -150,7 +149,7 @@ CalenderComponent,
 
     MatToolbarModule,
     FormsModule,
-  
+
     HttpClientModule,
     MatIconModule,
     ReactiveFormsModule,
@@ -169,7 +168,7 @@ CalenderComponent,
     //   provide: DateAdapter,
     //   useFactory: adapterFactory
     // })
-    
+
   ],
 
   providers: [],

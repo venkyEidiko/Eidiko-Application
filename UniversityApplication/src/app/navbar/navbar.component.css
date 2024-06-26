@@ -1,25 +1,27 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .navbar {
   background-image: url('../../assets/partyimage-Photoroom.png');
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  padding: 10px 20px; 
+  width: 98%;
+  padding: 10px 20px;
   position: fixed;
   z-index: 1000;
 }
+
 
 .navbar-brand span {
   font-weight: bold;
   font-family: 'Times New Roman', Times, serif;
 }
+
+
+/* Search Styles */
+.navbar-search {
+  position: relative;
+}
+
 
 .navbar-search input[type="text"] {
   padding: 5px 30px 5px 30px;
@@ -30,42 +32,85 @@
   margin-bottom: 5px;
 }
 
-.navbar-profile {
-  font-weight: bold;
-  font-family: 'Times New Roman', Times, serif;
- 
-}
-
-.navbar-profile mat-icon {
-  font-size: 24px;
-  color: #333;
- 
-}
-.navbar-search {
-  position: fixed;
-}
 
 .navbar-search mat-icon {
-  position:absolute;
+  position: absolute;
   top: 50%;
-  left: 40px;
+  left: 10px;
   transform: translateY(-50%);
   color: #333;
   padding: 1px;
 }
 
+
+/* Search Dropdown Styles */
+.search-dropdown {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  z-index: 1001;
+  padding: 10px;
+}
+
+
+.search-dropdown div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+
+.search-dropdown div:hover {
+  background-color: #f0f0f0;
+}
+
+
+/* Cancel Button Styles */
+.cancel-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+.cancel-button mat-icon {
+  color: #333;
+}
+
+
+/* Profile Styles */
+.navbar-profile {
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+
+.navbar-profile mat-icon {
+  font-size: 24px;
+  color: #333;
+}
+
+
 .dropdown {
   position: relative;
 }
+
 
 .dropdown-toggle {
   cursor: pointer;
   padding: 12px;
 }
 
+
 .dropdown-menu {
   position: absolute;
-  top: calc(100% + 5px); 
+  top: calc(100% + 5px);
   right: 0;
   background-color: #fff;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -73,52 +118,48 @@
   display: none;
 }
 
+
 .dropdown-menu a {
   display: block;
   padding: 10px;
   text-decoration: none;
   color: black;
-  width:180px
+  width: 180px;
 }
+
 
 .dropdown-menu a:hover {
   background-color: #f0f0f0;
 }
 
+
 .dropdown:hover .dropdown-menu {
   display: block;
 }
 
-/* .footer {
-  background-image: url('../../assets/partyimage-Photoroom.png');
-  color: white;
-  text-align: center;
-  padding: 10px 0;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-} */
 
 img {
   width: 30px;
 }
-
-
+/* Responsive Styles */
 @media screen and (max-width: 768px) {
   .navbar {
-      flex-direction: column;
-      padding: 10px;
+    flex-direction: column;
+    padding: 10px;
   }
+
 
   .navbar-search input[type="text"] {
-      width: 100%;
-      margin-top: 10px;
-      margin-bottom: 10px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
+
 
   .dropdown-menu {
-      right: auto;
-      left: 0;
+    right: auto;
+    left: 0;
   }
-
 }
+
+
