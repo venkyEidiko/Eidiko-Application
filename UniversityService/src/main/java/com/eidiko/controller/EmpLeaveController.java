@@ -1,12 +1,19 @@
 package com.eidiko.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eidiko.dto.EmpLeaveDto;
 import com.eidiko.dto.LeaveSummary;
+
+import com.eidiko.entity.Employee;
+
+import com.eidiko.entity.EmpLeave;
+
 import com.eidiko.entity.ResponseModel;
 import com.eidiko.responce.CommonResponse;
 import com.eidiko.service.EmpLeaveService;
@@ -27,13 +39,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/leave")
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 public class EmpLeaveController {
 
 	@Autowired
 	private EmpLeaveService leaveService;
+	@Autowired
+	private CommonResponse<EmpLeaveDto> commonResponse;
+
 
 	@PostMapping("/saveEmpLeave")
 	public ResponseEntity<ResponseModel<Object>> saveEmpLeave(@RequestBody EmpLeaveDto empLeaveDto) {
+	System.out.println(empLeaveDto);
+		log.info("data : {}",empLeaveDto);
+		
 		EmpLeaveDto saveEmpLeaveDto = leaveService.saveEmpLeave(empLeaveDto);
 		log.info("Save the employee leave", empLeaveDto);
 		if (empLeaveDto != null) {
@@ -87,8 +106,8 @@ public class EmpLeaveController {
 
 	@GetMapping("/getAllEmpLeave")
 	public ResponseEntity<ResponseModel<Object>> getAllEmpLeave(@RequestParam("employeeId")Long employeeId,
-			@RequestParam(value = "5", defaultValue = "5", required = false) Integer pageSize,
-			@RequestParam(value = "0", defaultValue = "0", required = false) Integer pageNumber
+			@RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
+			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber
 			){
 		List<EmpLeaveDto> empLeaveDto=leaveService.getAllEmpLeaveByEmpId(pageNumber, pageSize, employeeId);
 		if (empLeaveDto != null) {
@@ -101,11 +120,52 @@ public class EmpLeaveController {
 	
 	@GetMapping("/getEmpLeaveSummaryByEmpId/{employeeId}")
 	public ResponseEntity<ResponseModel<Object>> getEmpLeaveSummaryByEmpId(@PathVariable Long employeeId) {
+		log.info("empId {}",employeeId);
 		List<LeaveSummary> leaveSummary=leaveService.getEmpLeaveSummaryByEmpId(employeeId);
+		
 		if (leaveSummary != null) {
 			return new CommonResponse<>().prepareSuccessResponseObject(leaveSummary);
 		} else {
 			return new CommonResponse<>().prepareFailedResponse("Invalid Request! Please try again.");
 		}
 	}
+
+	 @GetMapping("/getSortLeaveType")
+	    public Page<EmpLeave> getLeavesByTypesAndStatuses(
+	        @RequestParam(value = "leaveTypes", required = false) List<String> leaveTypes,
+	        @RequestParam(value = "statuses",required = false) List<String> statuses,
+	        @RequestParam(value = "page",defaultValue = "0") int page,
+	        @RequestParam(value = "size",defaultValue = "5") int size) {
+
+	        Pageable pageable = PageRequest.of(page, size);
+	        return leaveService.findByLeaveTypesAndStatuses(leaveTypes, statuses, pageable);
+	        
+	       
+	    }
+	
+	@GetMapping("/empOnLeaveToday")
+	public ResponseEntity<?> getEmployeesOnLeaveToday() {
+		List<EmpLeaveDto> employeeDetails = leaveService.getEmployeesOnLeaveToday();
+
+		if (employeeDetails.isEmpty()) {
+			return commonResponse.prepareFailedResponse("No employees on leave today.");
+		} else {
+			return commonResponse.prepareSuccessResponseObject(employeeDetails);
+		}
+	}
+
+	@GetMapping("/getEmployeeDetailsByRequestType")
+	public ResponseEntity<?> getEmployeeDetailsByRequestType(@RequestParam String leaveType) {
+		List<EmpLeaveDto> employeeDetails = leaveService.getEmployeeDetailsByRequestType(leaveType);
+
+		if (employeeDetails.isEmpty()) {
+			return commonResponse.prepareFailedResponse("No employees found with leave type: " + leaveType);
+		} else {
+			return commonResponse.prepareSuccessResponseObject(employeeDetails);
+		}
+	}
+
+	
+
+
 }
