@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="upper-cards">
+        <mat-card class="card-item">
+            <mat-card-content>
+                <h4>Who is off today</h4>
+                <div class="member-holder">
+                    <div class="member">A</div>
+                    <div class="member">B</div>
+                    <div class="member">C</div>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="card-item">
+            <mat-card-content>
+                <h4>Not in yet today</h4>
+                <div class="member-holder">
+                    <div class="member">A</div>
+                    <div class="member">B</div>
+                    <div class="member">C</div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="upper-cards-1">
+        <div *ngFor="let card of cardData">
+
+            <mat-card class="small-card">
+                <mat-card-content>
+                    <div class="grid">
+                        <div class="bar" [style.background-color]="card.color"></div>
+
+                        <div>
+                            <h4>{{card.heading}}</h4>
+                            <p>{{card.data}}</p>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+
+    </div>
+
+    <div class="calender-cards">
+        <mat-card class="card-item">
+            <mat-card-content>
+                <h4>team Calender</h4>
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+    <div class="team-container">
+        <h2>Peers({{totalteamMember}})</h2>
+        <div>
+
+        </div>
+    </div>
+    
+</div>

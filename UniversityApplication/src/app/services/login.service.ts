@@ -13,9 +13,12 @@ export class LoginService {
   private employeeData: any = null;
   private jwtToken: string | null = null;
 
-  url = "http://10.0.0.81:8082/";
 
+
+  url = "http://10.0.0.81:8082/";
+  
   constructor(private http: HttpClient) { }
+
   register(data: any): Observable<any> {
     return this.http.post<any>(this.url+"api/save", data);
   }

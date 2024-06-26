@@ -27,6 +27,7 @@ import { ProfileDocComponent } from './profile-doc/profile-doc.component';
 import { AboutSummaryComponent } from './about-summary/about-summary.component';
 import { AboutTimelineComponent } from './about-timeline/about-timeline.component';
 import { AboutWallactivityComponent } from './about-wallactivity/about-wallactivity.component';
+import { CalenderComponent } from './calender/calender.component';
 
 
 
@@ -35,7 +36,9 @@ const routes: Routes = [
   { path: '', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
 
+
   
+
 
 
   { path: 'forgotpassword', component: ForgotpasswordComponent },
