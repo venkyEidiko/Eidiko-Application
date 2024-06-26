@@ -32,4 +32,9 @@ public interface EmployeeInterface {
 	
 	public String updateEmployeeOrganizationDetails(Long empLoyeeId,Employee employee)throws UserNotFoundException;
 	Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date);
+
+
+
+	List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays();
+
 } 

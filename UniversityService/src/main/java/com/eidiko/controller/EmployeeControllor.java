@@ -159,6 +159,19 @@ public class EmployeeControllor {
 			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
+
+	@GetMapping("/nextSevenDaysBirthdays")
+	public ResponseEntity<ResponseModel<Object>> getNextSevenDaysBirthdays() {
+		List<BirtdayAndanniversaryDto> employeesWithBirthdays = employeeService.getEmployeesWithBirthdaysNextSevenDays();
+
+		if (employeesWithBirthdays.isEmpty()) {
+			return new CommonResponse<>().prepareFailedResponse("No birthdays in the next 7 days");
+		} else {
+			return new CommonResponse<>().prepareSuccessResponseObject(employeesWithBirthdays);
+		}
+	}
+
+
 
 }

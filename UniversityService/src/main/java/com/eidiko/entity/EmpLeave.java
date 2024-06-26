@@ -20,7 +20,6 @@ public class EmpLeave {
 	private String leaveType;
 	private String requestedBy;
 	@ElementCollection
-	@Column(name = "notify_to")
 	private Set<String> notifyTo;
 	private String actionTakenBy;
 	private String leaveNote;
