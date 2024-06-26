@@ -2,9 +2,7 @@ package com.eidiko.controller;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eidiko.dto.BirtdayAndanniversaryDto;
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.ResponseModel;
 import com.eidiko.entity.Roles_Table;
@@ -111,7 +108,7 @@ public class EmployeeControllor {
 			@PathVariable("keywords") String keywords)
 			throws SaveFailureException, UserNotFoundException {
 		
-		log.info("Search by key id {}",keywords);
+		log.info("Search by keyword {}",keywords);
 		
 			return new CommonResponse<>()
 					.prepareSuccessResponseObject(employeeInterface.searchByKeywords(keywords));
@@ -164,6 +161,7 @@ public class EmployeeControllor {
 				.prepareSuccessResponseObject(employeeInterface.updateEmployeeOrganizationDetails(empID, employee));
 	}
 
+
 	//for birthdays and anniversaries giving 
 	@GetMapping("/getBirthDayAnniversatyTodayList")
 	public ResponseEntity<ResponseModel<Object>> birthDayDate() {
@@ -180,3 +178,4 @@ public class EmployeeControllor {
 	
 
 }
+

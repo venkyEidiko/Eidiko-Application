@@ -3,10 +3,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppComponent } from './app.component';
 
+
 import { SidenavComponent } from './sidenav/sidenav.component';
+
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module';
+
+
+
+
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 
@@ -18,6 +26,7 @@ import { FormsModule } from '@angular/forms';
 import { OtpComponent } from './otp/otp.component';
 import { HttpClientModule } from '@angular/common/http';
 
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -27,7 +36,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { RouterModule, Routes } from '@angular/router';
 
+
 import {MatCardModule} from '@angular/material/card'
+
+
 
 
 import { MeComponent } from './me/me.component';
@@ -42,16 +54,19 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './footer/footer.component';
 
+
 import { CommonModule } from '@angular/common';
 import { AttandanceComponent } from './attandance/attandance.component';
 import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatMenuModule} from '@angular/material/menu';
 
 
+
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+
 
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileAboutComponent } from './profile-about/profile-about.component';
@@ -90,7 +105,16 @@ import { StatusdropComponent } from './statusdrop/statusdrop.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { LeavesComponent } from './leaves/leaves.component';
 import { BarchartComponent } from './barchart/barchart.component';
-import { MatIconModule } from '@angular/material/icon';
+
+import { CalenderComponent } from './calender/calender.component';
+import { ShiftRequestFormComponent } from './shift-request-form/shift-request-form.component';
+
+import { MatInputModule } from '@angular/material/input';
+
+
+
+
+
 
 
 
@@ -98,7 +122,7 @@ import { MatIconModule } from '@angular/material/icon';
   declarations: [
     AppComponent,
     LoginComponent,
-
+CalenderComponent,
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
@@ -131,6 +155,7 @@ import { MatIconModule } from '@angular/material/icon';
     AboutWallactivityComponent,
     TableComponent,
 
+
       Donut1Component,
     
       DialogComponent,
@@ -141,6 +166,10 @@ import { MatIconModule } from '@angular/material/icon';
       StatusdropComponent,
      
     
+
+    ShiftRequestFormComponent,
+
+
     
   ],
   imports: [
@@ -150,6 +179,12 @@ import { MatIconModule } from '@angular/material/icon';
     MatDialogModule,
     BrowserAnimationsModule,
     MatTabsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatInputModule,
+    MatDatepickerModule,
     MatGridListModule,
     MatProgressBarModule,
     MatMenuModule,
