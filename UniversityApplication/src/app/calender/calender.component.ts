@@ -45,6 +45,7 @@ onlyMonth=this.currentDate.getMonth();
     this.weeks = [];
     let week: any[] = new Array(7).fill(null).map(() => ({}));
 
+
     // Adjust starting date to the previous Monday
     while (currentDate.getDay() !== 1) {
       currentDate.setDate(currentDate.getDate() - 1);
@@ -56,6 +57,7 @@ onlyMonth=this.currentDate.getMonth();
         shift: this.getShift(currentDate),
         wOff: currentDate.getDay() === 0 || currentDate.getDay() === 6 // Sunday or Saturday
       };
+
 
       const dayIndex = (currentDate.getDay() + 6) % 7; // Adjust day index to start from Monday
       week[dayIndex] = day;

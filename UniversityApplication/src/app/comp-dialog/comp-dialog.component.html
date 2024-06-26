@@ -1,0 +1,53 @@
+
+
+<div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
+    <div class="req">
+      <p mat-dialog-title>Request Credit for Compensatory Off</p>
+      <div class="close-icon">
+        <mat-icon (click)="closeDialog()">close</mat-icon>
+      </div>
+    </div>
+   <div mat-dialog-content class="custom-dialog-content">
+    <div class="compoff-data">
+        Choose the date on which you have worked for to avail Compensatory Off
+    </div>
+    <div class="compoff-data">
+        Compensatory Off Dates
+    </div>
+       <div class="icons">  
+        <mat-form-field>    
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+            <input matStartDate formControlName="start" placeholder="Start date">
+            <input matEndDate formControlName="end" placeholder="End date">
+          </mat-date-range-input>
+          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        
+
+
+       </div>
+       <div class="notelabel">
+        Note
+       </div>
+       <div>
+        <input matInput name="note" class="note2" >
+       </div>
+      <div class="att">
+        <mat-icon> attachment</mat-icon>
+
+
+    
+        <input class="files" type="file" #fileInput (change)="onFileSelected($event)" >
+
+      </div>
+    </div>
+    
+    <div mat-dialog-actions class="custom-dialog-actions">
+      <button mat-button (click)="closeDialog()">Cancel</button>
+      <button mat-button class="confirm">Confirm</button>
+    </div>
+  </div>
+  
