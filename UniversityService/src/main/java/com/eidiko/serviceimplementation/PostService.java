@@ -1,20 +1,20 @@
 package com.eidiko.serviceimplementation;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.sql.Clob;
+
+
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import javax.sql.rowset.serial.SerialClob;
+
 
 import java.util.*;
-import java.io.StringWriter;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -101,17 +101,7 @@ public class PostService {
 		return postRepo.save(posts);
 	}
 
-	 // Get all posts ordered by timestamp
-//    public List<Posts> getAllPostsByTimeStamp() {
-//    List<Posts> byTimeStampDesc = postRepo.findAllByOrderByTimeStampDesc();
-//         if (byTimeStampDesc.isEmpty()) {
-//        	 throw new RuntimeException("data no found");
-//         }
-//         else {
-//        	 return byTimeStampDesc;
-//         }
-//    }
-
+	// Get all posts ordered by timestamp
 	public List<Posts> getAllPostsByTimeStamp() {
 	    // Fetch all posts from the repository ordered by timestamp in descending order
 	    List<Posts> byTimeStampDesc = postRepo.findAllByOrderByTimeStampDesc();

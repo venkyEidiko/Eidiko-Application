@@ -127,19 +127,7 @@ public class PostController {
 		}
 	}
 
-	// get all the data with latest posts are first(images are came encode code)
-//	@GetMapping("/getAllPostByTime")
-//	public ResponseEntity<ResponseModel<Object>> getAllPostsByTimeStamp() throws SQLException {
-//
-//		try {
-//			List<Posts> posts = postService.getAllPostsByTimeStamp();
-//			return new CommonResponse<>().prepareSuccessResponseObject(posts);
-//		} catch (RuntimeException e) {
-//
-//			return new CommonResponse<>().prepareFailedResponse1(e.getMessage());
-//		}
-//
-//	}
+
 	@GetMapping("/getAllPostByTime")
 	public ResponseEntity<ResponseModel<Object>> getAllPostsByTimeStamp() throws SQLException {
 	    try {

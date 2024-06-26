@@ -1,14 +1,12 @@
 package com.eidiko.serviceimplementation;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import java.util.Map;
-
 import java.util.Optional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +19,6 @@ import com.eidiko.entity.Roles_Table;
 //import com.eidiko.entity.Roles;
 import com.eidiko.exception_handler.BadRequestException;
 import com.eidiko.exception_handler.UserNotFoundException;
-import com.eidiko.repository.AddressRepo;
 import com.eidiko.repository.EmployeeRepo;
 import com.eidiko.repository.RolesReposotory;
 import com.eidiko.service.EmployeeInterface;
@@ -243,19 +240,27 @@ public class EmployeeService implements EmployeeInterface {
 			throw new BadRequestException("User record has not been updated !");
 		}
 	}
-
-//for birthdays and anniversaries giving 
-@Override
-public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date) {	
-	List<BirtdayAndanniversaryDto>employeesDataOfBirthList= employeeRepo.findBydateOfBirth(date.getMonthValue(),date.getDayOfMonth());
-	 List<BirtdayAndanniversaryDto> employeesDateOfJoiningList = employeeRepo.findByDateOfJoining(date.getMonthValue(), date.getDayOfMonth());
 	
-	 Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
-	  result.put("BirthDay Today ", employeesDataOfBirthList);
-      result.put("Work Anniversaries ", employeesDateOfJoiningList);
-      
-	 return result;
-
-}
-	
+	//for birthdays and anniversaries
+	@Override
+	public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date) {    
+	    List<BirtdayAndanniversaryDto> employeesDataOfBirthList = employeeRepo.findBydateOfBirth(date.getMonthValue(), date.getDayOfMonth());
+	    List<BirtdayAndanniversaryDto> employeesDateOfJoiningList = employeeRepo.findByDateOfJoining(date.getMonthValue(), date.getDayOfMonth());
+	    
+	    //this loop is for count no of years employee completed 
+	    for (BirtdayAndanniversaryDto dto : employeesDateOfJoiningList) {
+	      
+	        Employee employee = employeeRepo.findById(dto.getEmployeeId()).orElse(null);
+	        if (employee != null) {
+	            int yearsOfService = Period.between(employee.getDateOfJoining(), date).getYears();
+	            dto.setNoOfYearsCompletedInThisCompany(yearsOfService);
+	        }
+	    }
+	    
+	    Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
+	    result.put("BirthDay Today", employeesDataOfBirthList);
+	    result.put("Work Anniversaries", employeesDateOfJoiningList);
+	    
+	    return result;
+	}
 }

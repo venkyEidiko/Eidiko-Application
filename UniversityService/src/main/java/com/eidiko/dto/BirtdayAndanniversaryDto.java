@@ -13,5 +13,10 @@ public class BirtdayAndanniversaryDto {
 	private Long employeeId;
 	private String firstName;
 	private String lastName;
-
+	private int noOfYearsCompletedInThisCompany;
+	public BirtdayAndanniversaryDto(Long employeeId, String firstName, String lastName) {
+        this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+	}
 }

@@ -147,7 +147,7 @@ public class EmployeeControllor {
 	}
 
 	//for birthdays and anniversaries giving 
-	@GetMapping("/getBirthDayAnniversatyTodayList")
+	@GetMapping("/getBirthDayAnniversaryTodayList")
 	public ResponseEntity<ResponseModel<Object>> birthDayDate() {
 		
 		LocalDate today = LocalDate.now();
