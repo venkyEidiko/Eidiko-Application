@@ -11,7 +11,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module';
 
 
+
+
 import { MatIconModule } from '@angular/material/icon';
+
 
 
 
@@ -56,7 +59,7 @@ import { CommonModule } from '@angular/common';
 import { AttandanceComponent } from './attandance/attandance.component';
 import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
+
 
 
 import { LoginComponent } from './login/login.component';
@@ -74,16 +77,41 @@ import { AboutSummaryComponent } from './about-summary/about-summary.component';
 import { AboutTimelineComponent } from './about-timeline/about-timeline.component';
 import { AboutWallactivityComponent } from './about-wallactivity/about-wallactivity.component';
 import { TableComponent } from './table/table.component';
+
+//import { CalenderComponent } from './calender/calender.component';
+// import { FlatpickrModule } from 'angularx-flatpickr';
+//import { CalendarModule, DateAdapter } from 'angular-calendar';
+// import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+// import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { Donut1Component } from './donut1/donut1.component';
+
+import { DialogComponent } from './dialog/dialog.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatNativeDateModule} from '@angular/material/core';
+import { MatAccordion } from '@angular/material/expansion';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { NgChartsModule } from 'ng2-charts';
+import { Dialog1Component } from './dialog1/dialog1.component';
+import { CompDialogComponent } from './comp-dialog/comp-dialog.component';
+import { CompoffComponent } from './compoff/compoff.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { DropdowntableComponent } from './dropdowntable/dropdowntable.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { StatusdropComponent } from './statusdrop/statusdrop.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { LeavesComponent } from './leaves/leaves.component';
 import { BarchartComponent } from './barchart/barchart.component';
+
 import { CalenderComponent } from './calender/calender.component';
 import { ShiftRequestFormComponent } from './shift-request-form/shift-request-form.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
+
 import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
+
+
 
 
 
@@ -126,12 +154,29 @@ CalenderComponent,
     AboutTimelineComponent,
     AboutWallactivityComponent,
     TableComponent,
+
+
+      Donut1Component,
+    
+      DialogComponent,
+      Dialog1Component,
+      CompDialogComponent,
+      CompoffComponent,
+      DropdowntableComponent,
+      StatusdropComponent,
+     
+    
+
     ShiftRequestFormComponent,
+
 
     
   ],
   imports: [
+    MatDatepickerModule,
     BrowserModule,
+    MatButtonModule,
+    MatDialogModule,
     BrowserAnimationsModule,
     MatTabsModule,
     MatDialogModule,
@@ -141,18 +186,18 @@ CalenderComponent,
     MatInputModule,
     MatDatepickerModule,
     MatGridListModule,
-  MatProgressBarModule,
+    MatProgressBarModule,
     MatMenuModule,
     RouterModule,
     NgApexchartsModule,
-    NgApexchartsModule,
+  NgChartsModule,
     AppRoutingModule,
-
     MatToolbarModule,
     FormsModule,
-  
     HttpClientModule,
     MatIconModule,
+    MatCheckboxModule,
+    MatExpansionModule,
     ReactiveFormsModule,
     CommonModule,
     MatProgressBarModule,
@@ -162,6 +207,10 @@ CalenderComponent,
     MatTableModule,
     CommonModule,
     FormsModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     MatCardModule
     // NgbModalModule,
     // // FlatpickrModule.forRoot(),
@@ -169,7 +218,7 @@ CalenderComponent,
     //   provide: DateAdapter,
     //   useFactory: adapterFactory
     // })
-    
+  
   ],
 
   providers: [],

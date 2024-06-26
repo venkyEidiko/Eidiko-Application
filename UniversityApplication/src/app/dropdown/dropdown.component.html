@@ -1,0 +1,14 @@
+
+
+
+
+<mat-form-field appearance="fill">
+  <mat-label>Select Option</mat-label>
+  <mat-select [(ngModel)]="selectedOption">
+    <mat-option *ngFor="let option of options" [value]="option.value">
+      {{ option.viewValue }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+

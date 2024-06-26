@@ -1,0 +1,87 @@
+
+<div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
+  <div class="req">
+    <p mat-dialog-title>Request leave</p>
+    <div class="close-icon">
+      <mat-icon (click)="closeDialog()">close</mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="custom-dialog-content">
+    <div class="firstrow">
+      <div>
+        <span>From</span><br/>
+        <div class="calen">
+          <input matInput [(ngModel)]="fromDate" name="fromDate" [matDatepicker]="picker1" class="customwidth">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </div>
+      </div>
+        <span class="days">{{calculateDays()}} days</span>
+      <div>
+        <span>To</span><br/>
+        <div class="calen">
+          <input matInput [(ngModel)]="toDate" name="toDate" [matDatepicker]="picker2" class="customwidth">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2 color="primary"></mat-datepicker>
+        </div>
+      </div>
+    </div>
+    
+    <div class="typeofleave">
+      <p>Select type of leave you want to apply</p>
+       <mat-form-field>
+        <mat-label>Leave Type</mat-label>
+        <mat-select [(ngModel)]="leaveType" name="leaveType">
+          <mat-option value="Paid Leave">Paid Leave</mat-option>
+          <mat-option value="Comp Offs">Comp Offs</mat-option>
+          <mat-option value="unpaid">Unpaid Leave</mat-option>
+          <mat-option value="Maternity ">Maternity Leave</mat-option>
+          <mat-option value="Optional">Optional Leave</mat-option>
+          
+        </mat-select>
+      </mat-form-field>
+      
+    </div>
+    
+  
+    <div *ngIf="fromDate && toDate && fromDate.toISOString() === toDate.toISOString()">
+      <div>
+        <button mat-button>Full Day</button>
+        <button mat-button (click)="toggleCustomDropdown()">Custom</button>
+      </div>
+      
+      <div *ngIf="showCustomDropdown">
+        <mat-form-field>
+          <mat-label>Select Half Day</mat-label>
+          <mat-select [(ngModel)]="selectedHalfDay">
+            <mat-option value="firstHalf">First Half</mat-option>
+            <mat-option value="secondHalf">Second Half</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    
+    <div>
+      <p class="note">Note </p>
+      <input matInput [(ngModel)]="leaveNote" name="note" placeholder="Type Here">
+    </div>
+    <div>
+      <p class="note1">Notify</p>
+      <input matInput [formControl]="notifyTo" class="input1" placeholder="Search Employee">
+      <div *ngIf="searchResults.length > 0" class="search-results">
+        <ul>
+          <li *ngFor="let result of searchResults" (click)="selectEmployee(result)">
+            {{ result.employeeId }} - {{ result.firstName }} {{ result.lastName }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="custom-dialog-actions">
+    <button mat-button (click)="closeDialog()">Cancel</button>
+    <button mat-button class="request" (click)="submitRequest()">Request</button>
+  </div>
+</div>
+
+
+
