@@ -1,0 +1,254 @@
+<div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
+  <div class="req">
+    <p mat-dialog-title>Leave Details</p>
+    <div class="close-icon">
+      <mat-icon (click)="closeDialog()">close</mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="custom-dialog-content">
+    <div class="displayitems">
+      <div class="leavelist">
+        <ul>
+          <li><button mat-button (click)="onCompoff()">Comp Offs</button></li>
+          <li><button mat-button (click)="onMaternity()">Maternity Leave</button></li>
+          <li><button mat-button (click)="onOptional()">Optional Leave</button></li>
+          <li><button mat-button (click)="onPaid()">Paid Leave</button></li>
+          <li><button mat-button (click)="onUnpaid()">Unpaid Leave</button></li>
+        </ul>
+      </div>
+   <div class="balance">
+        <button mat-button (click)="toggleBalanceHistory()">
+          Balance history
+        </button>
+        <button mat-button (click)="togglePolicy()">Policy</button>
+        <br/>
+        <app-table class="length" *ngIf="showBalanceHistory && leavetable.length > 0" [dataSource]="leavetable"></app-table>
+        <app-table *ngIf="showBalanceHistory && maternitytable.length > 0" [dataSource]="maternitytable"></app-table>
+        <app-table *ngIf="showBalanceHistory && optionaltable.length > 0" [dataSource]="optionaltable"></app-table>
+        <app-table *ngIf="showBalanceHistory && paidtable.length > 0" [dataSource]="paidtable"></app-table>
+        <app-table *ngIf="showBalanceHistory && unpaidtable.length > 0" [dataSource]="unpaidtable"></app-table>
+
+     
+        <div *ngIf="showPolicy">
+         
+          <mat-accordion>
+            
+            <mat-expansion-panel *ngIf="pol.type === 'Comp Offs'">
+              
+     
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Leave Quota & Requesting For Leave
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              
+                <ul>
+               <li> You are allocated a total of 0 days of leave in a year beginning January 2024 till December 2024. You can consume this leave in the same year they are accrued/credited.</li>
+               <li>You are allowed to have more than annual quota of leave, if you are granted additional leave manually by your management.</li>
+               <li> Comp Offs that got credited expire if not consumed within 60 days from date of accrual (or date of credit). When you apply for a leave, the system will automatically deduct from the most recently expiring leave.</li>
+                <li>Comp Offs can be applied by self or on behalf by your manager</li>
+               <li> Comp Offs can be applied for only full day</li>
+                </ul>
+               </mat-expansion-panel>
+         <mat-expansion-panel *ngIf="pol.type === 'Comp Offs'">
+              
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Restrictions
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+               <b>Restrictions for applying leave</b>
+           <li>Comp Offs requires comment while applying leave</li>
+            <b>Restrictions after joining</b>
+          <li> You are able to consume leave 0 days after joining date.</li> 
+          <b>Past dated leave restrictions</b>
+          <li> You can apply leave for a past day, but not beyond than 60 calendar days back.</li>
+            </mat-expansion-panel>
+            <mat-expansion-panel *ngIf="pol.type === 'Comp Offs'">
+              
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Leave balances at the end of the year
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+               <b>Leave balance at the end of the year (Dec 2024)</b>
+               <p>At the end of leave calendar(Dec 2024), the following policies apply,</p>
+            <li>All Leave balances get carried forward to the next year.</li>
+            
+            </mat-expansion-panel>
+            <mat-expansion-panel *ngIf="pol.type === 'Comp Offs'">
+              
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Sandwich Policy
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+               <b>Weekly-offs during leave</b>
+               <p>Weekly off day accompanying leave is treated as leave when total number of leave exceed 0 calendar days and Weekly off day is right between two leave days (Weekly off day is sandwiched between leave days).</p>
+               </mat-expansion-panel>
+       <mat-expansion-panel *ngIf="pol.type === 'Maternity Leave'">
+            <mat-expansion-panel-header>
+               <mat-panel-title>
+                  Leave Quota and Requesting for Leave 
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+           <li> You are allocated a total of 182 days of leave in a year beginning January 2024 till December 2024. You can consume this leave in the same year they are accrued/credited.</li>
+            <li> Maternity Leave can be applied by self or on behalf by your manager</li>
+             <li> Maternity Leave can be applied for only full day</li>
+            </mat-expansion-panel>
+            <mat-expansion-panel *ngIf="pol.type === 'Maternity Leave'">
+              <mat-expansion-panel-header>
+                 <mat-panel-title>
+                   Restrictions 
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+               <b> Restrictions for applying leave</b>
+ <li>Maternity Leave requires comment while applying leave </li>
+             <li>Maternity Leave requires document proof, if leave request exceeds 0 calendar days </li>
+             <li>You cannot have more than 1 leave requests in a leave calendar year </li>
+              <li>  Maternity Leave cannot be applied when in notice period </li>
+            
+          <b>  Restrictions after joining</b>
+            
+              <li>  You are able to consume leave 180 days after joining date.</li> 
+            
+           <b> Past dated leave restrictions</b>
+            
+              <li>  You can apply leave for a past day, but not beyond than 28 calendar days back.</li>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel *ngIf="pol.type === 'Maternity Leave'">
+                <mat-expansion-panel-header>
+                   <mat-panel-title>
+                     Sandwich Policy
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                <b>  Holidays during leave</b>
+<li> If the total number of leave exceed 0 calendar days and Holiday is right between two leave days (Holiday is sandwiched between leave days).</li>
+                  <b>Weekly-offs during leave</b>
+    <li>Weekly off day accompanying leave is treated as leave when total number of leave exceed 0 calendar days and Weekly off day is right between two leave days (Weekly off day is sandwiched between leave days).</li>
+                </mat-expansion-panel>
+ <mat-expansion-panel *ngIf="pol.type === 'Optional Leave'">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                Leave Quota and requesting for Leave
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+             <li> You are allocated a total of 1 day of leave in a year beginning January 2024 till December 2024. You can consume this leave in the same year they are accrued/credited.</li>
+            <li>  Optional Leave can be applied by self or on behalf by your manager</li>
+             <li> Optional Leave can be applied for only full day</li>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel *ngIf="pol.type === 'Optional Leave'">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                Restrictions
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+             <b> Restrictions for applying leave</b>
+       <li> Optional Leave requires comment while applying leave</li>
+          <b>Restrictions after joining</b>
+          <li>You are able to consume leave 0 days after joining date.</li> 
+          <b>Past dated leave restrictions</b>
+    <li>You can apply leave for a past day, but not beyond than 28 calendar days back.</li>
+            </mat-expansion-panel>
+  
+            <mat-expansion-panel *ngIf="pol.type === 'Paid Leave'">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                Leave Quota and Requesting for Leave 
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+             <li> You are allocated a total of 10 days of leave in a year beginning January 2024 till December 2024. You can consume this leave in the same year they are accrued/credited.</li>
+             <li> You are allowed to have more than annual quota of leave, if you are granted additional leave manually by your management.</li>
+             <li> Paid Leave can be applied by self or on behalf by your manager</li>
+            <li>  Paid Leave can be applied for both full day & half-day</li> 
+            </mat-expansion-panel>
+
+            <mat-expansion-panel *ngIf="pol.type === 'Paid Leave'">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                Restrictions 
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+             <b> Restrictions for applying leave</b>
+        <li>Paid Leave requires comment while applying leave</li>
+              <li>Paid Leave cannot be applied when in notice period</li>
+          <b>  Restrictions after joining </b>
+          <li>You are able to consume leave 0 days after joining date.</li> 
+      <b> Past dated leave restrictions </b>
+    <li>You can apply leave for a past day, but not beyond than 30 calendar days back.</li>
+      <li>  You cannot apply for past dated leave after 25th of the month.</li>
+            </mat-expansion-panel>
+            <mat-expansion-panel *ngIf="pol.type === 'Paid Leave'">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Leave balances at the end of the year
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+             <b> Leave balance at the end of the year (Dec 2024)</b>
+<p> At the end of leave calendar(Dec 2024), the following policies apply,</p>
+          <li> All Leave balances expire or get reset.</li>
+    <li>Negative leave balances that may have accumulated for employees who have taken leave beyond their annual quota gets nullified and balance is reset to zero</li>
+            </mat-expansion-panel>
+            <mat-expansion-panel *ngIf="pol.type === 'Paid Leave'">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+               Sandwich Policy
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <b>Holidays during leave</b>
+<p>If the total number of leave exceed 0 calendar days and Holiday is right between two leave days (Holiday is sandwiched between leave days).</p>
+              <b> Weekly-offs during leave</b>
+ <p>Weekly off day accompanying leave is treated as leave when total number of leave exceed 0 calendar days and Weekly off day is right between two leave days (Weekly off day is sandwiched between leave days).</p>
+            </mat-expansion-panel>
+ <mat-expansion-panel *ngIf="pol.type === 'Unpaid Leave'">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Leave quota & requesting for leave
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+             <li> You have no upper limit on available annual leave quota</li>
+             <li> Unpaid Leave can be applied by self or on behalf by your manager</li>
+              <li>Unpaid Leave can be applied for both full day & half-day</li> 
+            </mat-expansion-panel>
+
+
+            <mat-expansion-panel *ngIf="pol.type === 'Unpaid Leave'">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                Restrictions
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+             <b> Restrictions for applying leave</b>
+ <li> For applying a leave duration of 3 or more days, you need to apply at least 7 calendar days before of which there have to be at least 5 working days</li>
+    <li>Unpaid Leave requires comment while applying leave</li>
+    <b>Restrictions after joining</b>
+<li> You are able to consume leave 0 days after joining date. </li>
+<b>Past dated leave restrictions</b>
+<li>You can apply leave for a past day, but not beyond than 28 calendar days back.</li>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel *ngIf="pol.type === 'Unpaid Leave'">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+               Sandwich Policy
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+             <b> Holidays during leave</b>
+<p> If the total number of leave exceed 0 calendar days and Holiday is right between two leave days (Holiday is sandwiched between leave days).</p>
+            <b>Weekly-offs during leave</b>
+<p>Weekly off day accompanying leave is treated as leave when total number of leave exceed 0 calendar days and Weekly off day is right between two leave days (Weekly off day is sandwiched between leave days).</p>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>

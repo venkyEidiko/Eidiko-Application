@@ -1,170 +1,101 @@
-// import {
-//   Component,
-//   ChangeDetectionStrategy,
-//   ViewChild,
-//   TemplateRef
-// } from '@angular/core';
-// import {
-//   startOfDay,
-//   endOfDay,
-//   subDays,
-//   addDays,
-//   endOfMonth,
-//   isSameDay,
-//   isSameMonth,
-//   addHours
-// } from 'date-fns';
-// import { Subject } from 'rxjs';
-// import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-// import {
-//   CalendarEvent,
-//   CalendarEventAction,
-//   CalendarEventTimesChangedEvent,
-//   CalendarView
-// } from 'angular-calendar';
-
-// const colors: any = {
-//   red: {
-//     primary: '#ad2121',
-//     secondary: '#FAE3E3'
-//   },
-//   blue: {
-//     primary: '#1e90ff',
-//     secondary: '#D1E8FF'
-//   },
-//   yellow: {
-//     primary: '#e3bc08',
-//     secondary: '#FDF1BA'
-//   }
-// };
+import { Component, OnInit } from '@angular/core';
+import { ShiftRequestService } from '../services/shift-request.service';
+import { format } from 'date-fns';
 
 
-// @Component({
-//   selector: 'app-calender',
-//   templateUrl: './calender.component.html',
-//   styleUrls: ['./calender.component.css']
-// })
-// export class CalenderComponent {
-//   @ViewChild('modalContent')
-//   modalContent: any;
+@Component({
+  selector: 'app-calender',
+  templateUrl: './calender.component.html',
+  styleUrls: ['./calender.component.css']
+})
+export class CalenderComponent implements OnInit {
+  days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  weeks: any[] = [];
+  currentMonth: string = '';
+  currentYear: number = 0;
+  public currentDate: Date = new Date();
+onlyDate=this.currentDate.getDate().toString();
+onlyMonth=this.currentDate.getMonth();
+ //shift form request *1
+ constructor(private shiftRequestService: ShiftRequestService) {
+  
+ }
+ openShiftRequest(): void {
+   this.shiftRequestService.openDialog();
+ }
+ //*1
+  ngOnInit() {
+    this.currentMonth = this.getMonthName(this.currentDate.getMonth());
+    this.currentYear = this.currentDate.getFullYear();
+    this.generateCalendar();
+  }
+  getMonthName(monthIndex: number): string {
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    return monthNames[monthIndex];
+  }
+  generateCalendar() {
+    const startDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+    let currentDate = new Date(startDate);
+    const endDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0);
 
-//   view: CalendarView = CalendarView.Month;
 
-//   CalendarView = CalendarView;
+    this.weeks = [];
+    let week: any[] = new Array(7).fill(null).map(() => ({}));
 
-//   viewDate: Date = new Date();
 
-  // modalData: {
-  //   action: string;
-  //   event: CalendarEvent;
-  // };
+    // Adjust starting date to the previous Monday
+    while (currentDate.getDay() !== 1) {
+      currentDate.setDate(currentDate.getDate() - 1);
+    }
 
-//   actions: CalendarEventAction[] = [
-//     {
-//       label: '<i class="fa fa-fw fa-pencil"></i>',
-//       onClick: ({ event }: { event: CalendarEvent }): void => {
-//         this.handleEvent('Edited', event);
-//       }
-//     },
-//     {
-//       label: '<i class="fa fa-fw fa-times"></i>',
-//       onClick: ({ event }: { event: CalendarEvent }): void => {
-//         this.events = this.events.filter(iEvent => iEvent !== event);
-//         this.handleEvent('Deleted', event);
-//       }
-//     }
-//   ];
+    while (currentDate <= endDate || currentDate.getDay() !== 1) {
+      const day = {
+        date: currentDate.getDate(),
+        shift: this.getShift(currentDate),
+        wOff: currentDate.getDay() === 0 || currentDate.getDay() === 6 // Sunday or Saturday
+      };
 
-//   refresh: Subject<any> = new Subject();
 
-//   events: CalendarEvent[] = [
-//     {
-//       start: subDays(startOfDay(new Date()), 1),
-//       end: addDays(new Date(), 1),
-//       title: 'A 3 day event',
-//       color: colors.red,
-//       actions: this.actions,
-//       allDay: true,
-//       resizable: {
-//         beforeStart: true,
-//         afterEnd: true
-//       },
-//       draggable: true
-//     },
-//     {
-//       start: startOfDay(new Date()),
-//       title: 'An event with no end date',
-//       color: colors.yellow,
-//       actions: this.actions
-//     },
-//     {
-//       start: subDays(endOfMonth(new Date()), 3),
-//       end: addDays(endOfMonth(new Date()), 3),
-//       title: 'A long event that spans 2 months',
-//       color: colors.blue,
-//       allDay: true
-//     },
-//     {
-//       start: addHours(startOfDay(new Date()), 2),
-//       end: new Date(),
-//       title: 'A draggable and resizable event',
-//       color: colors.yellow,
-//       actions: this.actions,
-//       resizable: {
-//         beforeStart: true,
-//         afterEnd: true
-//       },
-//       draggable: true
-//     }
-//   ];
+      const dayIndex = (currentDate.getDay() + 6) % 7; // Adjust day index to start from Monday
+      week[dayIndex] = day;
 
-//   activeDayIsOpen: boolean = true;
+      if (dayIndex === 6) {
+        this.weeks.push(week);
+        week = new Array(7).fill(null).map(() => ({}));
+      }
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    if (week.some(day => day.date)) {
+      this.weeks.push(week);
+    }
+  }
 
-//   constructor(private modal: NgbModal) {}
+  getShift(date: Date): string {
+    const shifts = ['10:00 AM - 7:00 PM'];
+    return date.getDay() !== 0 && date.getDay() !== 6 ? shifts[0] : '';
+  }
 
-//   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-//     if (isSameMonth(date, this.viewDate)) {
-//       this.viewDate = date;
-//       if (
-//         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-//         events.length === 0
-//       ) {
-//         this.activeDayIsOpen = false;
-//       } else {
-//         this.activeDayIsOpen = true;
-//       }
-//     }
-//   }
+  prevMonth() {
+    this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+    this.currentMonth = this.getMonthName(this.currentDate.getMonth());
+    this.currentYear = this.currentDate.getFullYear();
+    this.generateCalendar();
+  }
 
-//   eventTimesChanged({
-//     event,
-//     newStart,
-//     newEnd
-//   }: CalendarEventTimesChangedEvent): void {
-//     event.start = newStart;
-//     event.end = newEnd;
-//     // this.handleEvent('Dropped or resized', event);
-//     this.refresh.next("");
-//   }
+  nextMonth() {
+    this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+    this.currentMonth = this.getMonthName(this.currentDate.getMonth());
+    this.currentYear = this.currentDate.getFullYear();
+    this.generateCalendar();
+  }
 
-//   handleEvent(action: string, event: CalendarEvent): void {
-//     // this.modalData = { event, action };
-//     this.modal.open(this.modalContent, { size: 'lg' });
-//   }
-
-//   addEvent(): void {
-//     this.events.push({
-//       title: 'New event',
-//       start: startOfDay(new Date()),
-//       end: endOfDay(new Date()),
-//       color: colors.red,
-//       draggable: true,
-//       resizable: {
-//         beforeStart: true,
-//         afterEnd: true
-//       }
-//     });
-//     this.refresh.next("");
-//   }
-// }
-
+  goToToday() {
+    this.currentDate = new Date();
+    this.currentMonth = this.getMonthName(this.currentDate.getMonth());
+    this.currentYear = this.currentDate.getFullYear();
+    this.generateCalendar();
+  }
+}
