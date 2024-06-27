@@ -1,5 +1,4 @@
-
- <div class="dashboard-container">
+<div class="dashboard-container">
   <div class="quick-access">
     <h3>Quick Access</h3>
     <div class="card-row">
@@ -18,13 +17,31 @@
         </mat-card-content>
       </mat-card>
       <mat-card class="card-item">
-        <mat-card-content>Holidays</mat-card-content>
+        <mat-card-content>
+          Holidays
+          <div>
+            <button>Previous</button>
+            {{holiday.description}}
+            <button>Next</button>
+          </div>
+        </mat-card-content>
       </mat-card>
       <mat-card class="card-item">
         <mat-card-content>On Leave Today</mat-card-content>
       </mat-card>
       <mat-card class="card-item">
-        <mat-card-content>Working Remotely</mat-card-content>
+        <mat-card-content>
+          Working Remotely
+          <div class="members">
+            <div *ngFor="let emp of workFromHomeList">
+              <div class="member">
+                <img src="../../assets/profileimage.png">
+                <small>{{emp.employeeName}}</small>
+
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
       </mat-card>
       <mat-card class="card-item1">
         <mat-card-content>
@@ -36,8 +53,11 @@
         <mat-card-content>
           <span>Leave Balances</span>
           <div class="charts">
-            <app-donutchart></app-donutchart>
-            <app-donutchart></app-donutchart>
+            <div class="donut-container">
+              <div class="donut-text">{{totalAvailableLeave}} Days Available</div>
+              <app-donutchart [chartOptions]="chartOptions1">
+              </app-donutchart>
+            </div>
           </div>
         </mat-card-content>
       </mat-card>
@@ -56,20 +76,25 @@
               <a href="#" (click)="showContent($event, 'post')" [class.active]="selectedContent === 'post'">Post</a>
             </li>
             <li>
-              <a href="#" (click)="showContent($event, 'announcement')" [class.active]="selectedContent === 'announcement'">Announcement</a>
+              <a href="#" (click)="showContent($event, 'announcement')"
+                [class.active]="selectedContent === 'announcement'">Announcement</a>
             </li>
             <li>
               <a href="#" (click)="showContent($event, 'poll')" [class.active]="selectedContent === 'poll'">Poll</a>
             </li>
             <li>
-              <a href="#" (click)="showContent($event, 'praise')" [class.active]="selectedContent === 'praise'">Praise</a>
+              <a href="#" (click)="showContent($event, 'praise')"
+                [class.active]="selectedContent === 'praise'">Praise</a>
             </li>
           </ul>
           <div class="org-content">
             <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item">Content 1</div>
-            <div id="announcement" [class.active]="selectedContent === 'announcement'" class="org-content-item">Hello</div>
-            <div id="poll" [class.active]="selectedContent === 'poll'" class="org-content-item">Poll related content</div>
-            <div id="praise" [class.active]="selectedContent === 'praise'" class="org-content-item">Praise related content</div>
+            <div id="announcement" [class.active]="selectedContent === 'announcement'" class="org-content-item">Hello
+            </div>
+            <div id="poll" [class.active]="selectedContent === 'poll'" class="org-content-item">Poll related content
+            </div>
+            <div id="praise" [class.active]="selectedContent === 'praise'" class="org-content-item">Praise related
+              content</div>
           </div>
         </mat-card-content>
       </mat-card>
@@ -77,31 +102,67 @@
         <mat-card-content>
           <ul class="nav-list">
             <li>
-              <a href="#" (click)="showContent($event, 'announcement')" [class.active]="selectedContent === 'announcement'">Announcements</a>
+              <a href="#" (click)="showContent($event, 'announcement')"
+                [class.active]="selectedContent === 'announcement'">Announcements</a>
             </li>
             <li>
               <i class="fa-solid fa-cake-candles"></i>
-              <a href="#" (click)="showContent($event, 'birthday')" [class.active]="selectedContent === 'birthday'">Birthday</a>
+              <a href="#" (click)="showContent($event, 'birthday')"
+                [class.active]="selectedContent === 'birthday'">Birthday</a>
             </li>
             <li>
               <i class="fa-solid fa-ribbon"></i>
-              <a href="#" (click)="showContent($event, 'workAnniversary')" [class.active]="selectedContent === 'workAnniversary'">Work Anniversaries</a>
+              <a href="#" (click)="showContent($event, 'workAnniversary')"
+                [class.active]="selectedContent === 'workAnniversary'">Work Anniversaries</a>
             </li>
             <li>
               <i class="fa-solid fa-user-group"></i>
-              <a href="#" (click)="showContent($event, 'newJoinees')" [class.active]="selectedContent === 'newJoinees'">New Joinees</a>
+              <a href="#" (click)="showContent($event, 'newJoinees')"
+                [class.active]="selectedContent === 'newJoinees'">New Joinees</a>
             </li>
           </ul>
           <div class="content">
-            <div id="announcement" [class.active]="selectedContent === 'announcement'" class="content-item">Announcement related data</div>
-            <div id="birthday" [class.active]="selectedContent === 'birthday'" class="content-item">Birthday related data</div>
-            <div id="workAnniversary" [class.active]="selectedContent === 'workAnniversary'" class="content-item">Work Anniversaries related data</div>
-            <div id="newJoinees" [class.active]="selectedContent === 'newJoinees'" class="content-item">New Joinees related data</div>
+            <div id="announcement" [class.active]="selectedContent === 'announcement'" class="content-item">Announcement
+              related data</div>
+            <div id="birthday" [class.active]="selectedContent === 'birthday'" class="content-item">
+              <h4>Today Birthday's</h4>
+              <div class="birthday-container">
+                <div *ngFor="let person of birthday" class="birthday-item">
+                  <div class="profile-circle">
+                    <img src="../../assets/elephant.png" style="height: 50px; width: 50px;">
+                  </div>
+                  <span>{{person.firstName}} {{person.lastName}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="workAnniversary" [class.active]="selectedContent === 'workAnniversary'" class="content-item">
+              <h4> Work Anniversaries Today</h4>
+              <div class="Anniversaries-container">
+                <div *ngFor="let person of anniversary" class="Anniversaries-item">
+                  <div class="profile-circle">
+                    <img src="../../assets/profileimage.png" style="height: 50px; width: 50px;">
+                
+                  </div>
+                  <span>{{person.firstName}} {{person.lastName}}</span>
+                  <br>
+                  <span>{{person.noOfYearsCompletedInThisCompany}}{{"yrs"}}</span>
+                </div>
+              </div>
+            </div>
+            <div id="newJoinees" [class.active]="selectedContent === 'newJoinees'" class="content-item">New Joinees
+              related data</div>
           </div>
         </mat-card-content>
       </mat-card>
       <mat-card class="org-card" *ngIf="selectedTab === 'organization'">
+      
         <mat-card-content>All posts</mat-card-content>
+        <div class="allposts">
+         
+          <img [src]="uploadPosts()">
+          <h1>hello</h1>
+        </div>
       </mat-card>
       <mat-card class="org-card" *ngIf="selectedTab === 'java'">
         <mat-card-content>Java related post</mat-card-content>

@@ -20,7 +20,7 @@ public interface EmployeeInterface {
 	
 	public  Optional<List<Employee>> searchByKeywords(String keywords) ;
 	
-	public String updateEmployee(Long employeeId,Employee employee) throws UserNotFoundException;
+	public String updateEmployee(Long empID,Employee employee) throws UserNotFoundException;
 	
 	public String updateEmployeeContactDetails(Long empLoyeeId,Employee employee)throws UserNotFoundException;
 	
@@ -32,4 +32,9 @@ public interface EmployeeInterface {
 	
 	public String updateEmployeeOrganizationDetails(Long empLoyeeId,Employee employee)throws UserNotFoundException;
 	Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date);
+
+
+
+	List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays();
+
 } 

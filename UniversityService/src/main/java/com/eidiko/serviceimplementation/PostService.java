@@ -102,10 +102,11 @@ public class PostService {
 	}
 
 	// Get all posts ordered by timestamp
-	public List<Posts> getAllPostsByTimeStamp() {
+	/*public List<Posts> getAllPostsByTimeStamp() {
 	    // Fetch all posts from the repository ordered by timestamp in descending order
 	    List<Posts> byTimeStampDesc = postRepo.findAllByOrderByTimeStampDesc();
 	    
+	    List<Posts>data=new ArrayList<>();
 	    // If the list is empty, throw a RuntimeException with the message "Data not found"
 	    if (byTimeStampDesc.isEmpty()) {
 	        throw new RuntimeException("Data not found");
@@ -121,13 +122,50 @@ public class PostService {
 	                // Set the Base64 encoded string as bytes back to the image field of the post
 	                post.setImage(encodedImage.getBytes());
 	            }
+	            
 	        }
+	      
 	        // Return the list of posts with Base64 encoded images
 	        return byTimeStampDesc;
 	    }
+	}*/
+	
+	
+	
+	public List<Posts> getAllPostsByTimeStamp() {
+	    // Fetch all posts from the repository ordered by timestamp in descending order
+	    List<Posts> byTimeStampDesc = postRepo.findAllByOrderByTimeStampDesc();
+
+	    // If the list is empty, throw a RuntimeException with the message "Data not found"
+	    if (byTimeStampDesc.isEmpty()) {
+	        throw new RuntimeException("Data not found");
+	    } else {
+	        // Create a new ArrayList to hold modified Posts objects
+	        List<Posts> data = new ArrayList<>();
+
+	        // Iterate through each post in the list
+	        for (Posts post : byTimeStampDesc) {
+	            // If the post has an image (i.e., the image byte array is not null)
+	            if (post.getImage() != null) {
+	                // Get the image bytes from the post
+	                byte[] imageBytes = post.getImage();
+	                // Encode the image bytes to a Base64 string
+	                String encodedImage = Base64.getEncoder().encodeToString(imageBytes);
+	                // Set the Base64 encoded string to a new field in Posts
+	                post.setBase64Image(encodedImage);
+	                System.out.println(" encode image : "+encodedImage);
+	              
+	            }
+	            // Add the modified post to the new ArrayList
+	            data.add(post);
+	        }
+
+	        // Return the new list of posts with Base64 encoded images
+	        return data;
+	    }
 	}
 
-    }
+}
 	  
 	
 

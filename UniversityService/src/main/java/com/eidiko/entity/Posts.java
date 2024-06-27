@@ -39,6 +39,7 @@ public class Posts {
 	private byte[] image;
 	//private Clob image;
 	
+	 private String base64Image;
 	//content of post
 	private String description;
 	
