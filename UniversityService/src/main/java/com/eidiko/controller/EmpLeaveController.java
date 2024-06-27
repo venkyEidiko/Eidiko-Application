@@ -29,7 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/leave")
-@CrossOrigin(origins = "*",allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+
 public class EmpLeaveController {
 
 	@Autowired
@@ -42,7 +43,7 @@ public class EmpLeaveController {
 	public ResponseEntity<ResponseModel<Object>> saveEmpLeave(@RequestBody EmpLeaveDto empLeaveDto) {
 	System.out.println(empLeaveDto);
 		log.info("data : {}",empLeaveDto);
-		
+
 		EmpLeaveDto saveEmpLeaveDto = leaveService.saveEmpLeave(empLeaveDto);
 		log.info("Save the employee leave", empLeaveDto);
 		if (empLeaveDto != null) {
@@ -52,11 +53,6 @@ public class EmpLeaveController {
 		}
 
 	}
-
-//	@DeleteMapping("/deleteById/{leaveid}")
-//	public ResponseEntity<ResponseModel<Object>> deleteByLeaveId(@PathVariable long leaveid) {
-//		return new ResponseEntity<>(null, HttpStatus.CREATED);
-//	}
 
 	@PutMapping("/updateLeaveByEmployee/{leaveId}")
 	public ResponseEntity<ResponseModel<Object>> updateByIdByEmployee(@RequestBody EmpLeaveDto empLeaveDto,
@@ -82,7 +78,7 @@ public class EmpLeaveController {
 			return new CommonResponse<>().prepareFailedResponse("Invalid Request! Please try again.");
 		}
 	}
-	
+
 	@GetMapping("/getLeaveById/{leaveId}")
 	public ResponseEntity<ResponseModel<Object>> getEmpLeaveById(@PathVariable Long leaveId) {
 		EmpLeaveDto empLeaveDto=leaveService.getEmpLeaveById(leaveId);
@@ -96,6 +92,8 @@ public class EmpLeaveController {
 
 	@GetMapping("/getAllEmpLeave")
 	public ResponseEntity<ResponseModel<Object>> getAllEmpLeave(@RequestParam("employeeId")Long employeeId,
+			@RequestParam("status") String status,
+			@RequestParam("leaveType") String leaveType,
 			@RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
 			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber
 			){
@@ -105,14 +103,14 @@ public class EmpLeaveController {
 		} else {
 			return new CommonResponse<>().prepareFailedResponse("Invalid Request! Please try again.");
 		}
-		
+
 	}
-	
+
 	@GetMapping("/getEmpLeaveSummaryByEmpId/{employeeId}")
 	public ResponseEntity<ResponseModel<Object>> getEmpLeaveSummaryByEmpId(@PathVariable Long employeeId) {
 		log.info("empId {}",employeeId);
 		List<LeaveSummary> leaveSummary=leaveService.getEmpLeaveSummaryByEmpId(employeeId);
-		
+
 		if (leaveSummary != null) {
 			return new CommonResponse<>().prepareSuccessResponseObject(leaveSummary);
 		} else {
@@ -129,10 +127,9 @@ public class EmpLeaveController {
 
 	        Pageable pageable = PageRequest.of(page, size);
 	        return leaveService.findByLeaveTypesAndStatuses(leaveTypes, statuses, pageable);
-	        
-	       
+
 	    }
-	
+
 	@GetMapping("/empOnLeaveToday")
 	public ResponseEntity<?> getEmployeesOnLeaveToday() {
 		List<EmpLeaveDto> employeeDetails = leaveService.getEmployeesOnLeaveToday();
@@ -154,6 +151,8 @@ public class EmpLeaveController {
 			return commonResponse.prepareSuccessResponseObject(employeeDetails);
 		}
 	}
+
+	
 
 
 

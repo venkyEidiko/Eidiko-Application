@@ -1,13 +1,18 @@
 package com.eidiko.serviceimplementation;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.eidiko.dto.BirtdayAndanniversaryDto;
 import com.eidiko.entity.Address;
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.Roles_Table;
@@ -27,7 +32,12 @@ public class EmployeeService implements EmployeeInterface {
 
 	@Autowired
 	private EmployeeRepo employeeRepo;
-	
+
+	@Autowired
+	private PasswordEncoder encoder;
+	@Autowired
+	private AddressRepo addressRepo;
+
 	@Autowired
 	private RolesReposotory rolesReposotory;
 
@@ -59,13 +69,6 @@ public class EmployeeService implements EmployeeInterface {
 		}
 
 	}
-
-	@Override
-	public Optional<List<Employee>> searchByKeywords(String keywords) {
-		Optional<List<Employee>> employeeList = employeeRepo.searchByFirstNameOrLastNameOrEmployeeId(keywords);
-		return employeeList;
-	}
-
 	@Override
 	public String updateEmployee(Long employeeId, Employee employee) throws UserNotFoundException {
 
@@ -104,7 +107,6 @@ public class EmployeeService implements EmployeeInterface {
 					} else {
 						address.setEmployee(byEmployeeId);
 						updatedAddress.add(address);
-
 					}
 				}
 				byEmployeeId.setAddresses(updatedAddress);
@@ -236,5 +238,52 @@ public class EmployeeService implements EmployeeInterface {
 			throw new BadRequestException("User record has not been updated !");
 		}
 	}
+
+	@Override
+	public Optional<List<Employee>> searchByKeywords(String keywords) {
+		Optional<List<Employee>> employeeList = employeeRepo.searchByFirstNameOrLastNameOrEmployeeId(keywords);
+		return employeeList;
+	}
+
+//for birthdays and anniversaries giving 
+@Override
+public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date) {	
+	List<BirtdayAndanniversaryDto>employeesDataOfBirthList= employeeRepo.findBydateOfBirth(date.getMonthValue(),date.getDayOfMonth());
+	 List<BirtdayAndanniversaryDto> employeesDateOfJoiningList = employeeRepo.findByDateOfJoining(date.getMonthValue(), date.getDayOfMonth());
+	
+	 Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
+	  result.put("BirthDay Today ", employeesDataOfBirthList);
+      result.put("Work Anniversaries ", employeesDateOfJoiningList);
+      
+	 return result;
+
+}
+
+
+
+
+	@Override
+	public List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays() {
+		LocalDate today = LocalDate.now();
+		LocalDate endDate = today.plusDays(7);
+
+		List<Employee> allEmployees = employeeRepo.findAll();
+		List<BirtdayAndanniversaryDto> employeesWithBirthdaysNextSevenDays = new ArrayList<>();
+
+		for (Employee employee : allEmployees) {
+			LocalDate birthday = employee.getDateOfBirth();
+			if (birthday != null && (birthday.isEqual(today) || (birthday.isAfter(today) && birthday.isBefore(endDate)))) {
+				BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(
+						employee.getEmployeeId(),
+						employee.getFirstName(),
+						employee.getLastName()
+				);
+				employeesWithBirthdaysNextSevenDays.add(dto);
+			}
+		}
+
+		return employeesWithBirthdaysNextSevenDays;
+	}
+	
 
 }

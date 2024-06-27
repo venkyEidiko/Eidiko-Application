@@ -3,10 +3,7 @@ package com.eidiko.entity;
 import java.time.LocalDate;
 import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -22,6 +19,7 @@ public class EmpLeave {
 	private String status;
 	private String leaveType;
 	private String requestedBy;
+	@ElementCollection
 	private Set<String> notifyTo;
 	private String actionTakenBy;
 	private String leaveNote;
