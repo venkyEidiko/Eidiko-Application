@@ -2,6 +2,7 @@ package com.eidiko.entity;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +28,9 @@ public class Holidays {
 
 	private String imageName;
 	@Lob
+	@Column(name = "festivalImage", columnDefinition = "LONGBLOB")
     private  byte[] festivalImage;
+	
+	
 
 }
