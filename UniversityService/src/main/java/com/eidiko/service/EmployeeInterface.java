@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+import com.eidiko.entity.Address;
 import com.eidiko.entity.Employee;
 import com.eidiko.exception_handler.UserNotFoundException;
 
@@ -32,7 +33,6 @@ public interface EmployeeInterface {
 	
 	public String updateEmployeeOrganizationDetails(Long empLoyeeId,Employee employee)throws UserNotFoundException;
 	Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date);
-
 
 
 	List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays();
