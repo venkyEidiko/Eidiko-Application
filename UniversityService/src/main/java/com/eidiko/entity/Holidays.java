@@ -31,6 +31,6 @@ public class Holidays {
 	@Column(name = "festivalImage", columnDefinition = "LONGBLOB")
     private  byte[] festivalImage;
 	
-	
+	private String imageBase64;
 
 }
