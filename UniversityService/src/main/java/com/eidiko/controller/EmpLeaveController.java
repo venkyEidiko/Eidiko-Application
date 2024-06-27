@@ -123,10 +123,11 @@ public class EmpLeaveController {
 	        @RequestParam(value = "leaveTypes", required = false) List<String> leaveTypes,
 	        @RequestParam(value = "statuses",required = false) List<String> statuses,
 	        @RequestParam(value = "page",defaultValue = "0") int page,
-	        @RequestParam(value = "size",defaultValue = "5") int size) {
+	        @RequestParam(value = "size",defaultValue = "5") int size,
+	        @RequestParam(value = "employeeId") Long  employeeId) {
 
 	        Pageable pageable = PageRequest.of(page, size);
-	        return leaveService.findByLeaveTypesAndStatuses(leaveTypes, statuses, pageable);
+	        return leaveService.findByLeaveTypesAndStatuses(employeeId,leaveTypes, statuses, pageable);
 
 	    }
 
