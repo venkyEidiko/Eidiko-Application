@@ -82,7 +82,7 @@ public class EmployeeControllor {
 	}
 
 	@PutMapping("/updateEmp/{empId}")
-	public ResponseEntity<ResponseModel<Object>> updateEmployee(@PathVariable("empId") int empID,
+	public ResponseEntity<ResponseModel<Object>> updateEmployee(@PathVariable("empId") Long empID,
 			@RequestBody Employee employee) throws UserNotFoundException, SaveFailureException {
 
 		String updateEmployee = employeeInterface.updateEmployee(empID, employee);
