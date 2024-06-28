@@ -3,7 +3,7 @@ import { DashbordService } from '../services/dashbord.service';
 import { Holiday } from '../holiday';
 
 import { Person,BirthdayResponse } from './dashboard-interface';
-import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -118,13 +118,11 @@ export class DashboardComponent implements OnInit {
         if (!base64Image.startsWith('data:image/png;base64,')) {
           this.base64Image = 'data:image/png;base64,' + base64Image;
         }
-  
         this.imageData = base64Image;
-        return this.sanitizer.bypassSecurityTrustResourceUrl(base64Image);
+        
       }
     );
   }
-  
 
   extractAvailablePaidLeave(data:any){
     for(let leaveData of data){
