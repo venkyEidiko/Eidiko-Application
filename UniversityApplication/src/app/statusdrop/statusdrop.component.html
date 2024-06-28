@@ -1,0 +1,14 @@
+<div class="dropdown">
+    <button mat-button [matMenuTriggerFor]="menu">Status </button>
+    <mat-menu #menu="matMenu">
+        <input class="search" matInput type="text" placeholder="Search">
+      <div class="checkbox-list">
+        <mat-checkbox *ngFor="let option of options"
+                      [(ngModel)]="option.checked"
+                      (change)="onOptionChange()">
+          {{ option.name }}
+        </mat-checkbox>
+      </div>
+    </mat-menu>
+  </div>
+  

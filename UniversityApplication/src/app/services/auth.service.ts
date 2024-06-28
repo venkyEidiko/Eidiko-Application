@@ -9,9 +9,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class AuthService {
 
-  private apiUrl = 'http://10.0.0.73:8082/password/forgotPassword';
-
-  
+  private apiUrl = 'http://10.0.0.38:8082/api/password/forgotPassword';
 
   constructor(private http: HttpClient) { }
 
@@ -40,10 +38,7 @@ export class AuthService {
         }
         return throwError(errorMessage);
       })
-    );
-
-    
-    
+    ); 
 
   }
 }

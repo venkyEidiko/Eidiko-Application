@@ -93,18 +93,22 @@
 
 .navbar-profile mat-icon {
   font-size: 24px;
-  color: #333;
+  color: rgb(184, 181, 181);
 }
 
 
 .dropdown {
   position: relative;
+  margin-right: 20px;
 }
 
 
 .dropdown-toggle {
   cursor: pointer;
-  padding: 12px;
+  padding-bottom: 20px;
+  padding:  12px;
+  color: #fff;
+ 
 }
 
 
@@ -112,10 +116,11 @@
   position: absolute;
   top: calc(100% + 5px);
   right: 0;
-  background-color: #fff;
+  background-color:  #333;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
   display: none;
+  
 }
 
 
@@ -123,13 +128,13 @@
   display: block;
   padding: 10px;
   text-decoration: none;
-  color: black;
+  color: rgb(184, 181, 181);
   width: 180px;
 }
 
 
 .dropdown-menu a:hover {
-  background-color: #f0f0f0;
+  background-color: #747272;
 }
 
 

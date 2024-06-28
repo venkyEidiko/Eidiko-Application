@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class EmailCheckService {
   constructor(private http: HttpClient) { }
  checkEmail(email: string) {
-    return this.http.get<any>(`http://10.0.0.73:8082/api/getByEmail/${email}`);
+    return this.http.get<any>(`http://10.0.0.38:8082/api/getByEmail/${email}`);
 
 }
 }

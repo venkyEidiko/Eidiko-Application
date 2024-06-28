@@ -25,8 +25,15 @@ public interface EmpLeaveRepo extends JpaRepository<EmpLeave, Long> {
 	@Query("SELECT e FROM EmpLeave e WHERE (:leaveTypes IS NULL OR e.leaveType IN :leaveTypes) AND (:statuses IS NULL OR e.status IN :statuses)")
 	Page<EmpLeave> findByLeaveTypeInAndStatusIn(List<String> leaveTypes, List<String> statuses, Pageable pageable);
 
-	List<EmpLeave> findByLeaveTypeAndFromDateLessThanEqualAndToDateGreaterThanEqual(String leaveType,
-			LocalDate fromDate, LocalDate toDate);
+
+
+
+	List<EmpLeave> findByFromDateLessThanEqualAndToDateGreaterThanEqual(LocalDate fromDate, LocalDate toDate);
+
+
+//	List<EmpLeave> findByLeaveTypeAndFromDateLessThanEqualAndToDateGreaterThanEqual(String leaveType,
+//			LocalDate fromDate, LocalDate toDate);
+
 
 	List<EmpLeave> findByLeaveType(String leaveType);
 

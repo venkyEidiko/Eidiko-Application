@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -257,6 +258,32 @@ public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date)
 	 return result;
 
 }
+
+
+
+
+	@Override
+	public List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays() {
+		LocalDate today = LocalDate.now();
+		LocalDate endDate = today.plusDays(7);
+
+		List<Employee> allEmployees = employeeRepo.findAll();
+		List<BirtdayAndanniversaryDto> employeesWithBirthdaysNextSevenDays = new ArrayList<>();
+
+		for (Employee employee : allEmployees) {
+			LocalDate birthday = employee.getDateOfBirth();
+			if (birthday != null && (birthday.isEqual(today) || (birthday.isAfter(today) && birthday.isBefore(endDate)))) {
+				BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(
+						employee.getEmployeeId(),
+						employee.getFirstName(),
+						employee.getLastName()
+				);
+				employeesWithBirthdaysNextSevenDays.add(dto);
+			}
+		}
+
+		return employeesWithBirthdaysNextSevenDays;
+	}
 	
 
 }

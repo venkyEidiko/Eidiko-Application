@@ -6,15 +6,19 @@
     height: 40px;
     width:200px;
     margin-left:0;
-
   }
-  
+  .bar-zero {
+   
+    height: 0.2%; 
+    
+  }
   .bar {
-    background-color:rgb(193, 160, 224);
+    background-color:rgb(131, 94, 165);
     margin-right: 5px;
-    padding: 13px;
+    padding: 1px 13px;
     border-radius: 2px;
     transition: height 0.5s;
+   
   }
   .x-axis-labels {
     display: flex;

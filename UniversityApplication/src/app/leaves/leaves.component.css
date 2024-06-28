@@ -1,6 +1,7 @@
 .container {
-    overflow-y: scroll; 
+    overflow-y: auto;
     height: 100%;
+    margin: 25px;
 }
 
 .display-items {
@@ -15,146 +16,334 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    margin-right: 10%; 
+    margin-right: 9%;
     width: 160px;
     height: 40px;
+    background-color: #333d4e;
 }
 
 .cards {
     display: flex;
     flex-wrap: wrap;
-    gap: 10%;
+    gap: 1.5%;
 }
 
 .card1 {
     flex: 1;
-    min-width: 250px; 
-    max-width: 680px;
-    height: 150px;
-    margin-left: 12px;
-    margin-bottom:20px
+    min-width: 250px;
+    max-width: 880px;
+    height: auto;
+    background-color: #333d4e;
+    margin-bottom: 20px
 }
-
+.pending-table th{
+   
+    padding-left: 20px;
+}
+.pending-table td{
+padding-left: 20px;
+text-align: center;
+}
 .card2 {
-    flex: 1; 
-    min-width: 250px; 
+    flex: 1;
+    min-width: 250px;
     max-width: 300px;
     height: 150px;
-    margin-left:12px;
+    background-color: #333d4e;
 }
 
 .leave-cards {
     display: flex;
     flex-wrap: wrap;
-    gap: 10%;
-    margin-left: 10px;
-}
-.info-icon
-{
-    
-        position: absolute;
-        top: 0;
-        right: 0;
-        cursor: pointer;
-        padding:10px
-    
-    
+    gap: 1.5%;
+
 }
 
-.card3, .card4 {
+.info-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    padding: 10px
+}
+
+.card3,
+.card4 {
     flex: 1;
-    min-width: 230px; 
-    max-width: 240px;
-    height: 140px;
-    margin-bottom:20px;
+    background-color: #333d4e;
+    min-width: 230px;
+    max-width: 340px;
+    height: 160px;
+    margin-bottom: 20px;
+}
+
+mat-paginator {
+    margin-right: 120px;
+
 }
 
 .card5 {
     flex: 1;
-    min-width: 250px; 
-    max-width: 430px;
-    height: 140px;
+    background-color: #333d4e;
+    min-width: 250px;
+    max-width: 480px;
+    height: 160px;
 }
-.barchart1
-{
-    margin-left:12px;
-    padding:22px;
+
+.barchart1 {
+
+    padding: 0px 54px;
+    margin-Top: 30px;
+
 
 }
-.barchart2
-{
-    margin-top:18px;
+
+.donut1 {
+    margin-left: 60px;
+}
+
+.compoffs span {
+    margin-left: 60px;
+    color: deepskyblue
+}
+
+.compoffs {
+    margin-left: 55px;
+
+}
+
+.compoffs1 {
+    margin-left: 59px;
+}
+
+.compoffs1 span {
+    margin-left: 40px;
+    color: deepskyblue;
+
+}
+
+.table-card {
+    width: calc(100%-20px);
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 1200px;
+    height: 120px;
+     background-color: #333d4e;
+     
+}
+
+.table-content {
+    background-color: #333d4e;
+    width: 1200px;
+    height: auto;
+}
+
+.tdata {
+    width: auto;
+    table-layout: fixed;
+    border-collapse: collapse;
+    height: 100%;
+    background-color: #333d4e;
+}
+
+.tdata td,
+.tdata th {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+    font-size: 10px;
+}
+
+.tdata th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.tdata td {
+    background-color: #333d4e;
+}
+
+mat-paginator{
+    background-color: #333d4e;
+}
+.available,
+.consumed,
+.line {
+    margin-top: -126px;
+}
+
+.line-break,
+.annual-quota {
+    margin-top: -43px;
+
+}
+
+.compoff-leaves {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+.line {
+    width: 1px;
+    height: 45px;
+    background-color: grey;
+    left: 150px;
+    position: absolute
+}
+
+.balance-line {
+    border: none;
+    height: 1px;
+    background-color: #ccc;
+    margin: 35px 0px;
+    background-color: aquamarine;
+    margin-bottom: 90px;
+
+
+
+}
+
+.consumed {
+    margin-left: 90px;
+
+}
+
+
+.barchart2 {
+    padding: 0px 48px;
+    margin-Top: 25px;
 }
 
 
 .leave-balance {
     display: flex;
     flex-wrap: wrap;
-    gap: 10%;
-    margin-left: 10px;
+    gap: 1.5%;
 }
-.table-card
-{
-    margin-left:10px;
-    width: 1165px;
-    height:120px
+.leave-history-header{
+    background-color: #333d4e;
+   border-bottom: #5e5d5d 1px solid;
+    margin-right: 8.8%;
 }
-.card6, .card7, .card8 {
+.card6,
+.card7,
+.card8 {
     flex: 1;
-    min-width: 250px; 
-    max-width: 300px;
-    height: 220px;
+    min-width: 250px;
+    max-width: 387px;
+    height: 320px;
     margin-bottom: 20px;
+    background-color: #333d4e;
 }
-.elephantimg
-{
-    width:90px;
-    height:100px;
+
+.elephantimg {
+    width: 90px;
+    height: 100px;
 }
-.image-content
-{
-  display:flex;
+
+
+.image-content {
+    display: flex;
 
 }
-.comp-off,.leave-policy
-{
-    margin-top:12px;
-    color:deepskyblue
+
+.comp-off,
+.leave-policy {
+    margin-top: 12px;
+    color: deepskyblue;
+
 }
-.image-content p{
-    margin:20px;
+
+.image-content p {
+    margin: 20px;
 }
-.table-content
-{
-    width:120px;
-    height:30px;
+
+.balance-line1 {
+    border: none;
+    height: 1px;
+    background-color: #ccc;
+    margin: 175px 0px;
+    background-color: aquamarine;
+    margin-bottom: 90px;
 }
-.typeofleave
-{
-    width:1165px;
-    margin-left:10px;
+
+.typeofleave {
+    width: 1200px;
+    background-color: #333d4e;
+    height: 70px;
+}
+
+.donut-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-left: 60px;
+    margin-top: 38px;
+
+}
+
+
+.donut-text {
+    position: absolute;
+    top: 68%;
+    left: 72%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: blueviolet;
+    font-size: 12px;
+    pointer-events: none;
+
+}
+
+.donut-text1 {
+    position: absolute;
+    top: 65%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: blueviolet;
+    font-size: 12px;
+    pointer-events: none;
+
+}
+
+
+
+.search1 {
+    width: 600px;
+    height: 40px;
+    margin-left: 20px;
 }
 
 @media (max-width: 768px) {
     .cards {
-        flex-direction: column; 
-        margin-bottom:20px
-     
+        flex-direction: column;
+        margin-bottom: 20px
     }
+
     .leave-cards {
         flex-direction: column;
     }
-    .card3, .card4, .card5 {
-        min-width: 100%; 
-        max-width: 100%; 
-        height: auto; 
-        margin-bottom:20px
-        
-    }
-    .card6, .card7, .card8 {
+
+    .card3,
+    .card4,
+    .card5 {
         min-width: 100%;
-        max-width: 100%; 
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 20px
+    }
+
+    .card6,
+    .card7,
+    .card8 {
+        min-width: 100%;
+        max-width: 100%;
         height: auto;
         margin-bottom: 20px;
-          }
+    }
 }

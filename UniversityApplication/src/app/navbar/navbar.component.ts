@@ -12,35 +12,35 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  search:string='';
-  searchData:any=[];
-  searchData1:Employee[]=[];
+  search: string = '';
+  searchData: any = [];
+  searchData1: Employee[] = [];
 
   showDropdown: boolean = false;
 
-  constructor(private loginService:LoginService,private dialog: MatDialog) {  }
-  emp=this.loginService.getEmployeeData();
-  empName=this.emp.firstName+" "+this.emp.lastName
+  constructor(private loginService: LoginService, private dialog: MatDialog) { }
+  emp = this.loginService.getEmployeeData();
+  empName = this.emp.firstName + " " + this.emp.lastName
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  onChange(search:string){
+  onChange(search: string) {
     if (this.search.length > 1) {
-    console.log("Search Data : ",search)
-this.loginService.searchEmployee(search).subscribe(data=>{
-  this.searchData=data
-  this.searchData1=this.searchData.result[0]
-  console.log("Search DataList : ",this.searchData1)
-  this.searchData1?.forEach(emp=>{
-    console.log("Search Data first name : ", emp.firstName)
-    this.showDropdown = true;
-  })
- 
-});
-} else {
-  this.searchData1 = [];
-  this.showDropdown = false;
-}
+      console.log("Search Data : ", search)
+      this.showDropdown = true;
+      this.loginService.searchEmployee(search).subscribe(data => {
+        this.searchData = data
+        this.searchData1 = this.searchData.result[0]
+        console.log("Search DataList : ", this.searchData1)
+        this.searchData1?.forEach(emp => {
+          console.log("Search Data first name : ", emp.firstName)          
+        })
+
+      });
+    } else {
+      this.searchData1 = [];
+      this.showDropdown = false;
+    }
   }
 
 
@@ -50,7 +50,7 @@ this.loginService.searchEmployee(search).subscribe(data=>{
   }
 
 
- 
+
   @HostListener('document:click', ['$event'])
   onOutsideClick(event: MouseEvent): void {
     const targetElement = event.target as HTMLElement;
@@ -58,6 +58,6 @@ this.loginService.searchEmployee(search).subscribe(data=>{
       this.showDropdown = false;
     }
   }
- 
+
 }
 

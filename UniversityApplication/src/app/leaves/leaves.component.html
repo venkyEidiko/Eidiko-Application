@@ -1,4 +1,3 @@
-
 <div class="container">
     <div class="display-items">
         <h1 class="heading">Pending Leave Requests</h1>
@@ -10,17 +9,45 @@
     <div class="cards">
         <mat-card class="card1">
             <mat-card-content>
-                 <div class="image-content">
-                    <img class="elephantimg" src="../../assets/elephant.png" alt="elephantimage">
-                    <p>Nothing here!<br/>Working hard yeah??Request time off on right>>></p>
-                 </div>
-               
+                <div class="pending-table">
+                    <table *ngIf="pendingLeave && pendingLeave.length > 0">
+                      <thead>
+                        <tr>
+                          <th>Leave Type</th>
+                          <th>Dates</th>                         
+                          <th>Total Days</th>
+                          <th>Day Type</th>
+                          <!-- <th>Reason</th> -->
+                          <th>Apply Date</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let leave of pendingLeave">
+                          <td>{{ leave.leaveType || "-Not Set-" }}</td>
+                          <td>{{ leave.fromDate }} to <br>{{ leave.toDate }}</td>
+                          <td>{{ leave.durationInDays }}</td>
+                          <td>{{ leave.customDayStatus }}</td>
+                          <!-- <td>{{ leave.leaveNote }}</td>  -->
+                          <td>{{ leave.leaveDates }}</td>
+                          <td>{{ leave.status }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  
+                    <div class="image-content" *ngIf="pendingLeave === null">
+                      <img class="elephantimg" src="../../assets/elephant.png" alt="elephantimage">
+                      <p>Nothing here!<br />Working hard yeah?? Request time off on right&gt;&gt;&gt;</p>
+                    </div>
+                  </div>
+                  
+
             </mat-card-content>
         </mat-card>
         <mat-card class="card2">
             <mat-card-content>
-                <button mat-flat-button color="primary">RequestLeave</button>
-                <div class="comp-off">
+                <button mat-flat-button color="primary" (click)="openDialog()">RequestLeave</button>
+                <div class="comp-off" (click)="openDialog2()">
                     Request Credit for compensatory off
                 </div>
                 <div class="leave-policy">
@@ -35,30 +62,31 @@
         <div class="leave-cards">
             <mat-card class="card3">
                 <mat-card-content>
-                 
-                        Weekly Pattern
-                        <mat-icon class="info-icon" >info</mat-icon>
-                        <div class="barchart2">
-                        <app-barchart   [chartData]="data"></app-barchart>
-                        </div>
-                  
+
+                    Weekly Pattern
+                    <mat-icon class="info-icon">info</mat-icon>
+                    <div class="barchart2">
+                        <app-barchart [chartData]="weeklyChartData"></app-barchart>
+                    </div>
+
                 </mat-card-content>
             </mat-card>
             <mat-card class="card4">
                 <mat-card-content>
-                 
-                        Consumed Leave Types
-                        <mat-icon class="info-icon">info</mat-icon>
-                      
-                    
+                    Consumed Leave Types
+                    <mat-icon class="info-icon">info</mat-icon>
 
-                        
-                      
+
+                    <app-donut1 [chartOptions]="chartOptions3"></app-donut1>
+
+
+
+
                 </mat-card-content>
             </mat-card>
             <mat-card class="card5">
                 <mat-card-content>Monthly Stats</mat-card-content>
-                <app-barchart class="barchart1" [chartData]="data1"></app-barchart>
+                <app-barchart class="barchart1" [chartData]="monthlyChartData"></app-barchart>
             </mat-card>
         </div>
     </div>
@@ -69,40 +97,182 @@
         <div class="leave-balance">
             <mat-card class="card6">
                 <mat-card-content>
-                    <div>
-                        Comp Offs 
-                        View details
+                    <div class="compoffs">
+                        Comp Offs
+                        <span (click)="openDialog1()">View details</span>
+                    </div>
+
+                    <div class="balance-line1">
+                        <hr />
+                    </div>
+
+                    <div class="compoff-leaves">
+
+                        <div class="available">
+
+                            Available <br />
+                            0 Day
+
+                        </div>
+                        <div class="line"></div>
+                        <div class="consumed">
+                            Consumed <br />
+                            0 day
+                        </div>
+                    </div>
+                    <hr class="line-break">
+                    <div class="annual quota">
+                        Annual Quota <br /> 0 Day
                     </div>
                 </mat-card-content>
             </mat-card>
             <mat-card class="card7">
-                <mat-card-content>Simple card</mat-card-content>
+                <mat-card-content>
+                    <div class="compoffs">
+                        Paid Leave
+                        <span (click)="openDialog1()"> View details</span>
+                    </div>
+                    <div class="donut-container">
+
+                        <div class="donut-text">{{this.availableLeaves}} Days Available</div>
+                        <app-donut1 [chartOptions]="chartOptions1">
+
+
+                        </app-donut1>
+                    </div>
+                    <div class="balance-line">
+                        <hr />
+                    </div>
+
+                    <div class="compoff-leaves">
+
+                        <div class="available">
+
+                            Available <br />
+
+                            {{availableLeaves}} days
+
+
+                        </div>
+                        <div class="line"></div>
+                        <div class="consumed">
+                            Consumed <br />
+
+                            {{consumedLeaves}} days
+
+                        </div>
+                    </div>
+                    <hr class="line-break">
+                    <div class="annual quota">
+
+                        Annual Quota <br /> 12 days
+
+                    </div>
+
+
+                </mat-card-content>
             </mat-card>
             <mat-card class="card8">
-                <mat-card-content>Simple card</mat-card-content>
+                <mat-card-content>
+                    <div class="compoffs1">
+                        Unpaid Leave
+                        <span (click)="openDialog1()">View details</span>
+                    </div>
+                    <div class="donut-container">
+                        <div class="donut-text"> ∞ Days Available</div>
+                        <app-donut1 [chartOptions]="chartOptions2">
+                        </app-donut1>
+                    </div>
+                    <div class="balance-line">
+                        <hr />
+                    </div>
+
+                    <div class="compoff-leaves">
+
+                        <div class="available">
+
+                            Available <br />
+                            ∞
+
+                        </div>
+                        <div class="line"></div>
+                        <div class="consumed">
+                            Consumed <br />
+
+                            {{this.consumedLeaves}} days
+
+                        </div>
+                    </div>
+                    <hr class="line-break">
+                    <div class="annual quota">
+                        Annual Quota <br /> ∞
+                    </div>
+                </mat-card-content>
             </mat-card>
         </div>
     </div>
 
-    <div   class="typeofleave" >
-        
-            <mat-card>
-                <mat-card-content>Simple card</mat-card-content>
-            </mat-card>
-           
-        </div>
-    
-   
-       
-            <div>
-                <h2>Leave History</h2>
-                <div class="table-card">
-                    <mat-card>
-                        <mat-card-content>
-                         sample Card
-                        </mat-card-content>
-                    </mat-card>
-                </div>
+    <mat-card class="typeofleave">
+        <mat-card-content>
+            Other Leave Types Available : &nbsp;&nbsp;&nbsp;&nbsp; Maternity Leave , &nbsp;&nbsp;Optional Leave
+        </mat-card-content>
+    </mat-card>
+
+    <div>
+        <h2>Leave History</h2>
+        <div>
+            <div class="leave-history-header">
+                <mat-card-content>
+                    <app-dropdowntable [options]="leaveTypeOptions"
+                        [selectedOptions]="selectedLeaveTypes"></app-dropdowntable>
+                    <app-statusdrop></app-statusdrop>
+                    <input class="search1" type="text" matInput placeholder="Search">
+
+                </mat-card-content>
             </div>
-        
+
+            <mat-card class="table-content">
+                <mat-card-content>
+                    <mat-table class="tdata" [dataSource]="dataSource">
+
+                        <!-- Define columns for mat-table -->
+                        <ng-container matColumnDef="leaveDates">
+                            <mat-header-cell *matHeaderCellDef> Leave Date </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.leaveDates}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="leaveType">
+                            <mat-header-cell *matHeaderCellDef> Leave Type </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.leaveType}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="requestedBy">
+                            <mat-header-cell *matHeaderCellDef> Requested By </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.requestedBy}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="leaveNote">
+                            <mat-header-cell *matHeaderCellDef> Leave Note </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.leaveNote}} </mat-cell>
+                        </ng-container>
+
+
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table>
+
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange($event)"
+                        showFirstLastButtons></mat-paginator>
+
+                </mat-card-content>
+            </mat-card>
+
         </div>
+    </div>
+
+</div>

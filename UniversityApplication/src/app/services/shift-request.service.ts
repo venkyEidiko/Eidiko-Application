@@ -37,7 +37,7 @@ export class ShiftRequestService {
       this.renderer.addClass(mainContent, 'blur');  
   }
   }
-  url='http://10.0.0.73:8082/api'
+  url='http://10.0.0.38:8082/api'
 
   public emp=this.loginService.getEmployeeData();
   requestForm(data:any,key:string):Observable<any>{

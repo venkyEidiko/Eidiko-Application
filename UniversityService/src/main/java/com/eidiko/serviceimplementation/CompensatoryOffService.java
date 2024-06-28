@@ -143,4 +143,5 @@ public class CompensatoryOffService {
     public boolean isAllowedFileType(String extension) {
         return isImageFile(extension) || isPdfOrDocFile(extension);
     }
+
 }
