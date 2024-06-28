@@ -1,7 +1,7 @@
 
 <div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
   <div class="req">
-    <p mat-dialog-title>Request leave</p>
+    <p >Request leave</p>
     <div class="close-icon">
       <mat-icon (click)="closeDialog()">close</mat-icon>
     </div>
@@ -11,18 +11,22 @@
       <div>
         <span>From</span><br/>
         <div class="calen">
+          <mat-form-field style="width:140px;">
           <input matInput [(ngModel)]="fromDate" name="fromDate" [matDatepicker]="picker1" class="customwidth">
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
         </div>
       </div>
         <span class="days">{{calculateDays()}} days</span>
       <div>
         <span>To</span><br/>
         <div class="calen">
+          <mat-form-field style="width:140px">
           <input matInput [(ngModel)]="toDate" name="toDate" [matDatepicker]="picker2" class="customwidth">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2 color="primary"></mat-datepicker>
+          </mat-form-field>
         </div>
       </div>
     </div>

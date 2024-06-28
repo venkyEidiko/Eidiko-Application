@@ -12,7 +12,7 @@ export class AuthService {
 
 
 
-  private apiUrl = 'http://10.0.0.73:8082/api/password/forgotPassword';
+  private apiUrl = 'http://10.0.0.38:8082/api/password/forgotPassword';
 
   
 

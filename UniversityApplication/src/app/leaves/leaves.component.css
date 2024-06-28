@@ -293,7 +293,16 @@ mat-paginator
     color:blueviolet;
     font-size: 12px; 
     pointer-events: none;
+  
    
+}
+.consumed12
+{
+    margin-left:45px;
+}
+.filter-buttons
+{
+    padding:10px;
 }
 
 

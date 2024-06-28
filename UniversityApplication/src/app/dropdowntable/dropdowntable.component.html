@@ -9,12 +9,13 @@
       *ngFor="let option of options; let i = index; trackBy: trackByFn"
       [checked]="selectedOptions.has(option)"
       (change)="toggleOption(option)"
+
     >
       {{ option }}
     </mat-checkbox>
-    <div class="dropdown-actions">
-      <button mat-flat-button color="primary" (click)="clearSelection()">Clear</button>
-      <button mat-flat-button color="accent" (click)="toggleDropdown()">Apply</button>
-    </div>
+   
   </div>
 </div>
+
+
+
