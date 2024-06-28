@@ -1,7 +1,9 @@
 package com.eidiko.serviceimplementation;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.eidiko.dto.BirtdayAndanniversaryDto;
-import com.eidiko.entity.Address;
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.Roles_Table;
 //import com.eidiko.entity.Roles;
@@ -25,6 +26,7 @@ import com.eidiko.repository.RolesReposotory;
 import com.eidiko.service.EmployeeInterface;
 
 import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @Service
@@ -69,59 +71,43 @@ public class EmployeeService implements EmployeeInterface {
 		}
 
 	}
+	//for update the employee
 	@Override
 	public String updateEmployee(Long employeeId, Employee employee) throws UserNotFoundException {
 
-		log.info("Employee id :{}", employeeId);
+		 log.info("Employee id :{}", employeeId);
 
-		Employee byEmployeeId = employeeRepo.findByEmployeeId(employeeId)
-				.orElseThrow(() -> new UserNotFoundException("User not found in database"));
+		    Employee existingEmployee = employeeRepo.findByEmployeeId(employeeId)
+		            .orElseThrow(() -> new UserNotFoundException("User not found in database"));
 
-		byEmployeeId.setEmail(employee.getEmail());
-		byEmployeeId.setFirstName(employee.getFirstName());
-		byEmployeeId.setGender(employee.getGender());
-		byEmployeeId.setLastName(employee.getLastName());
-		// byEmployeeId.setRole(employee.getRole());
+		    updateNonNullFields(existingEmployee, employee);
 
-		// Update addresses
-		List<Address> addresses = employee.getAddresses();
-		if (addresses != null) {
-			// Update existing addresses or add new addresses
-			List<Address> updatedAddress = new ArrayList<>();
+		    Employee updatedEmployee = employeeRepo.save(existingEmployee);
 
-			// address.setEmployee(byEmployeeId);
+		    if (updatedEmployee.getEmployeeId() != 0) {
+		        return "User record has been updated";
+		    } else {
+		        return "Failed to save the updated employee record";
+		    }
 
-			for (Address address1 : byEmployeeId.getAddresses()) {
-				for (Address address : addresses) {
-					if (address1.getAddressType().equalsIgnoreCase(address.getAddressType())) {
-
-						address1.setAddressType(address.getAddressType());
-						address1.setArea(address.getArea());
-						address1.setCity(address.getCity());
-						address1.setDoorNumber(address.getDoorNumber());
-						address1.setLandmark(address.getLandmark());
-						address1.setPincode(address.getPincode());
-						address1.setState(address.getState());
-						address1.setStreetName(address.getStreetName());
-						updatedAddress.add(address1);
-					} else {
-						address.setEmployee(byEmployeeId);
-						updatedAddress.add(address);
-					}
-				}
-				byEmployeeId.setAddresses(updatedAddress);
-			}
-		}
-		Employee updatedEmployee = employeeRepo.save(byEmployeeId);
-
-		if (updatedEmployee.getEmployeeId() != 0) {
-			return "User record has been updated ";
-		} else {
-			return "Failed to save the updated employee record";
-		}
-
+		
 	}
-
+	//above update method  used this method for if one field needs upadate then remaining should not be null
+	private void updateNonNullFields(Object target, Object source) {
+	    Field[] fields = source.getClass().getDeclaredFields();
+	    for (Field field : fields) {
+	        try {
+	            field.setAccessible(true);
+	            Object value = field.get(source);
+	            if (value != null) {
+	                field.set(target, value);
+	            }
+	        } catch (IllegalAccessException e) {
+	            log.error("Failed to update field: {}", field.getName(), e);
+	        }
+	    }
+	}
+	
 	public Employee getByEmail(String emial) throws UserNotFoundException {
 
 		Employee emp = employeeRepo.findByEmail(emial).orElseThrow(() -> new UserNotFoundException("User not found"));
@@ -239,6 +225,7 @@ public class EmployeeService implements EmployeeInterface {
 		}
 	}
 
+
 	
 	//for birthdays and anniversaries
 	@Override
@@ -264,6 +251,7 @@ public class EmployeeService implements EmployeeInterface {
 	}
 
 
+
 	@Override
 	public Optional<List<Employee>> searchByKeywords(String keywords) {
 		Optional<List<Employee>> employeeList = employeeRepo.searchByFirstNameOrLastNameOrEmployeeId(keywords);
@@ -285,8 +273,7 @@ public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date)
 }
 
 
-
-
+   //this is for getting the employeedetails birthday date from todays date to next seven days
 	@Override
 	public List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays() {
 		LocalDate today = LocalDate.now();
@@ -311,9 +298,45 @@ public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date)
 	}
 	
 */
-	@Override
-	public List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	//this method returns both present date and after 7 days birthdays
+		@Override
+		public Map<String, List<BirtdayAndanniversaryDto>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
+			LocalDate today = LocalDate.now();
+			LocalDate endDate = today.plusDays(8);
+			log.info("next 7 days date {}",endDate);
+			List<BirtdayAndanniversaryDto> todayBirthdays = employeeRepo.findBydateOfBirth(today.getMonthValue(), today.getDayOfMonth());
+
+			List<BirtdayAndanniversaryDto> nextSevenDaysBirthdays = new ArrayList<>();
+			List<Employee> allEmployees = employeeRepo.findAll();
+			
+			for (Employee employee : allEmployees) {
+	            LocalDate birthday = employee.getDateOfBirth();
+	            if (birthday != null) {
+	                // Set the birthday to the current year for comparison
+	                LocalDate birthdayThisYear = birthday.withYear(today.getYear());
+	                if (birthdayThisYear.isAfter(today) && birthdayThisYear.isBefore(endDate)) {
+	                    System.out.println("---------------------------------------------");
+	                    BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(
+	                            employee.getEmployeeId(),
+	                            employee.getFirstName(),
+	                            employee.getLastName()
+	                    );
+	                    nextSevenDaysBirthdays.add(dto);
+	                }    }
+		        }
+
+			Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
+			result.put("TodayBirthdays", todayBirthdays);
+			result.put("NextSevenDaysBirthdays", nextSevenDaysBirthdays);
+
+			return result;
+		}
+		
+
+
+
+
+	
+	
 	}
-}

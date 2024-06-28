@@ -155,10 +155,11 @@ List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.map
 	
   
 	@Override
-	public Page<EmpLeave> findByLeaveTypesAndStatuses(List<String> leaveTypes, List<String> statuses, Pageable pageable) {
+	public Page<EmpLeave> findByLeaveTypesAndStatuses(Long employeeId, List<String> leaveTypes, List<String> statuses, Pageable pageable) {
         log.info("Fetching records with leaveTypes: {} and statuses: {}", leaveTypes, statuses);
 
-        Page<EmpLeave> leaves = empLeaveRepo.findByLeaveTypeInAndStatusIn(leaveTypes, statuses, pageable);
+        Page<EmpLeave> leaves = empLeaveRepo.findByEmployeeIdAndLeaveTypeInAndStatusIn(employeeId,leaveTypes, statuses, pageable);
+      
         List<EmpLeave> content = leaves.getContent();
         leaves.getTotalElements();
         log.info("Fetched records: {}", leaves);

@@ -12,26 +12,26 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Attachment {
 
-	 @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Long attachmentId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long attachmentId;
 
-	    private Long empId;
-	    private String attachmentFileName;
+	private Long empId;
+	private String attachmentFileName;
 	@Lob
-	@Column(name = "fileContent",columnDefinition = "LONGBLOB")
-	    private byte[] fileContent;
-	    private String fileExtension;
-	    @Lob
-	    @Column(name = "imagedata",columnDefinition = "LONGBLOB")
-	    private Blob imageData;
+	@Column(name = "fileContent", columnDefinition = "LONGBLOB")
+	private byte[] fileContent;
+	private String fileExtension;
+	@Lob
+	@Column(name = "imagedata", columnDefinition = "LONGBLOB")
+	private Blob imageData;
 //	    @ManyToOne
 //	    private EmpLeave empLeave;
 }
-

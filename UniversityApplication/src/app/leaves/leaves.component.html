@@ -42,7 +42,7 @@
                         Weekly Pattern
                         <mat-icon class="info-icon" >info</mat-icon>
                         <div class="barchart2">
-                        <app-barchart   [chartData]="data"></app-barchart>
+                        <app-barchart   [chartData]="weeklyChartData"></app-barchart>
                         </div>
                   
                 </mat-card-content>
@@ -51,11 +51,11 @@
                 <mat-card-content>
                     Consumed Leave Types
                         <mat-icon class="info-icon">info</mat-icon>
-
-
+                       <div class="consumed12">
+                       <div class="donut-text1">Leave <br/> Types</div>
                         <app-donut1 [chartOptions]="chartOptions3"></app-donut1>
-
-                      
+                        
+                      </div>
                     
                 
                  </mat-card-content>
@@ -194,24 +194,40 @@
         <div>
                 <h2>Leave History</h2>
                 <div >
-                    <mat-card class="table-card">
-                        <mat-card-content>
-
-                            <app-dropdowntable
-                            [options]="leaveTypeOptions"
-                            [selectedOptions]="selectedLeaveTypes"                           
-                          ></app-dropdowntable>
-                            <app-statusdrop></app-statusdrop>
-                            <input class="search1" type="text" matInput placeholder="Search">
-
-                     </mat-card-content>
-                    </mat-card>
-                    <mat-card>
-                        <mat-card-content> 
-                    <mat-table class="tdata" [dataSource]="dataSource">
+                   
+            <div style="display:flex">
+            <app-dropdowntable
+        [options]="leaveTypeOptions"
+        [selectedOptions]="selectedLeaveTypes" 
+        (selectionChange)="onSelectionChange($event)" ></app-dropdowntable> 
+      
+      
+      <mat-form-field style="margin-left:12px;width:250px;height:70px">
+  <mat-label style="font-size:11px;padding:12px;margin-top:10px">Status</mat-label>
+  <mat-select [value]="selectedStatus" >
+    <mat-option>
+      <mat-checkbox
+        [checked]="isAllSelected()"
+        (change)="toggleAllSelection()">
+        Select All
+      </mat-checkbox>
+    </mat-option>
+    <mat-option *ngFor="let status of statusOptions" [value]="status" (click)="$event.stopPropagation()">
+      <mat-checkbox
+        [checked]="isStatusSelected(status)"
+        (change)="onStatusSelected(status)">
+        {{ status }}
+      </mat-checkbox>
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<input class="search1" type="text" matInput placeholder="Search">
+            </div>
+       <mat-card>
+    <mat-card-content> 
+<mat-table class="tdata" [dataSource]="filteredData">
         
-                        <!-- Define columns for mat-table -->
-                        <ng-container matColumnDef="leaveDates">
+<ng-container matColumnDef="leaveDates">
                           <mat-header-cell *matHeaderCellDef> Leave Date </mat-header-cell>
                           <mat-cell *matCellDef="let row"> {{row.leaveDates}} </mat-cell>
                         </ng-container>

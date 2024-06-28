@@ -2,11 +2,13 @@ package com.eidiko.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -80,12 +82,13 @@ public class EmployeeControllor {
 
 
 	}
-
-	@PutMapping("/updateEmp/{empId}")
+	
+//this method is main update method 
+	@PatchMapping("/updateEmp/{empId}")
 	public ResponseEntity<ResponseModel<Object>> updateEmployee(@PathVariable("empId") Long empID,
 			@RequestBody Employee employee) throws UserNotFoundException, SaveFailureException {
 
-		String updateEmployee = employeeInterface.updateEmployee(empID, employee);
+		String updateEmployee = employeeInterface.updateEmployee((long) empID, employee);
 
 		if (updateEmployee != null) {
 
@@ -94,15 +97,7 @@ public class EmployeeControllor {
 			return new CommonResponse<>().prepareFailedResponse(updateEmployee);
 		}
 }
-	
 
-
-
-
-
-
-
-	
 
 	@GetMapping("/searchByKeyword/{keywords}")
 	public ResponseEntity<ResponseModel<Object>> searchEmployeeByKeyword(
@@ -178,17 +173,30 @@ public class EmployeeControllor {
 	}
 
 
-	@GetMapping("/nextSevenDaysBirthdays")
-	public ResponseEntity<ResponseModel<Object>> getNextSevenDaysBirthdays() {
-		List<BirtdayAndanniversaryDto> employeesWithBirthdays = employeeService.getEmployeesWithBirthdaysNextSevenDays();
 
-		if (employeesWithBirthdays.isEmpty()) {
-			return new CommonResponse<>().prepareFailedResponse("No birthdays in the next 7 days");
-		} else {
-			return new CommonResponse<>().prepareSuccessResponseObject(employeesWithBirthdays);
-		}
-	}
+	//this api is used for getting the employeedetails birthday dates from todays date to next seven days
+//	@GetMapping("/nextSevenDaysBirthdays")
+//	public ResponseEntity<ResponseModel<Object>> getNextSevenDaysBirthdays() {
+//		List<BirtdayAndanniversaryDto> employeesWithBirthdays = employeeService.getEmployeesWithBirthdaysNextSevenDays();
+//
+//		if (employeesWithBirthdays.isEmpty()) {
+//			return new CommonResponse<>().prepareFailedResponse("No birthdays in the next 7 days");
+//		} else {
+//			return new CommonResponse<>().prepareSuccessResponseObject(employeesWithBirthdays);
+//		}
+//	}
 
+	
+	//this api returns both present and after 7 days birthday details
+		@GetMapping("/todayAndNextSevenDaysBirthdaysList")
+		public ResponseEntity<ResponseModel<Object>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
+			try {
+				Map<String, List<BirtdayAndanniversaryDto>> response = employeeService.getBirthdaysAndAnniversariesForTodayAndNextSevenDays();
+				return new CommonResponse<>().prepareSuccessResponseObject(response);
+			} catch (Exception e) {
+				return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
+			}
+		}  
 
 
 }

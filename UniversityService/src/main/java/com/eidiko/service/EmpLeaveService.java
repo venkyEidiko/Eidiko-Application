@@ -19,7 +19,7 @@ public interface EmpLeaveService {
 	 
 	 public List<LeaveSummary> getEmpLeaveSummaryByEmpId(Long employeeId);
 
-	public Page<EmpLeave> findByLeaveTypesAndStatuses(List<String> leaveTypes, List<String> statuses, Pageable pageable);
+	public Page<EmpLeave> findByLeaveTypesAndStatuses(Long employeeId, List<String> leaveTypes, List<String> statuses, Pageable pageable);
 
 
 
@@ -27,5 +27,5 @@ public interface EmpLeaveService {
 
 	public List<EmpLeaveDto> getEmployeeDetailsByRequestType(String leaveType);
 
-
+	
 }

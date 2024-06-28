@@ -39,7 +39,7 @@ public class CommentController {
 		return new CommonResponse<>().prepareSuccessResponseObject(commentSave);
 		}
 		catch (RuntimeException e) {
-			return new CommonResponse<Object>().prepareFailedResponse(e.getMessage());
+			return new CommonResponse<Object>().prepareErrorResponseObject(e.getMessage(),HttpStatus.BAD_REQUEST);
 		}
 		}
 	
