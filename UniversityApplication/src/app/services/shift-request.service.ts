@@ -37,7 +37,8 @@ export class ShiftRequestService {
       this.renderer.addClass(mainContent, 'blur');  
   }
   }
-  url='http://localhost:3000/'
+  url='http://10.0.0.38:8082/api'
+
   public emp=this.loginService.getEmployeeData();
   requestForm(data:any,key:string):Observable<any>{
     console.log("shift request service : ",data);
@@ -52,17 +53,17 @@ export class ShiftRequestService {
     }
      attandance(): Observable<any[]> {
       //const employeeId = 101;
-      const url = `http://10.0.0.81:8082/api/getByEmployeeid/${this.emp.employeeId}`;
-      console.log('Calling URL:', url); // Check the constructed URL
-       return this.http.get<any[]>(url);
+  
+      console.log('Calling URL:', `${this.url}/getByEmployeeid/${this.emp.employeeId}`); // Check the constructed URL
+       return this.http.get<any[]>(`${this.url}/getByEmployeeid/${this.emp.employeeId}`);
     }
     AverageDayAndOnTimeArrival(startDate: Date, endDate: Date): Observable<any[]> {
       // Format dates as yyyy-MM-dd for the URL
       const formattedStartDate = this.formatDate(startDate);
       const formattedEndDate = this.formatDate(endDate);
-      const url = `http://10.0.0.81:8082/api/AvgPerDayAndOntimeArrival/${this.emp.employeeId}/${formattedStartDate}/${formattedEndDate}`;
-  
-      return this.http.get<any[]>(url);
+      const reportsTo=1999
+      return this.http.get<any[]>(
+        `${this.url}/AvgPerDayAndOntimeArrival/${this.emp.employeeId}/${formattedStartDate}/${formattedEndDate}/${reportsTo}`);
     }
   
     private formatDate(date: Date): string {

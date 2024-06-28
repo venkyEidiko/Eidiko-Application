@@ -3,6 +3,7 @@ package com.eidiko.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.eidiko.entity.Address;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -82,26 +83,30 @@ public class EmployeeControllor {
 	@PatchMapping("/updateEmployee/{empId}")
 	public ResponseEntity<ResponseModel<Object>> updateEmployee(@PathVariable("empId") Long empID,
 			@RequestBody Employee employee) throws UserNotFoundException, SaveFailureException {
-
 		log.info("updateEmployee empId :" + empID);
 		log.info("updateEmployee entry object " + employee);
 		String updateEmployee = employeeInterface.updateEmployee(empID, employee);
-
 		if (updateEmployee != null) {
 
 			return new CommonResponse<>().prepareSuccessResponseObject(updateEmployee);
 		} else {
 			return new CommonResponse<>().prepareFailedResponse(updateEmployee);
 		}
-	}
+
+}
+
+
+
 
 	@GetMapping("/searchByKeyword/{keywords}")
-	public ResponseEntity<ResponseModel<Object>> searchEmployeeByKeyword(@PathVariable("keywords") String keywords)
+	public ResponseEntity<ResponseModel<Object>>
+	searchEmployeeByKeyword(@PathVariable("keywords") String keywords)
 			throws SaveFailureException, UserNotFoundException {
 
 		log.info("Search by keyword {}", keywords);
 
-		return new CommonResponse<>().prepareSuccessResponseObject(employeeInterface.searchByKeywords(keywords));
+		return new CommonResponse<>().prepareSuccessResponseObject(
+				employeeInterface.searchByKeywords(keywords));
 
 	}
 
@@ -176,6 +181,10 @@ public class EmployeeControllor {
 			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
 		}
 	}
+
+
+
+	//this api is used for getting the employeedetails birthday dates from todays date to next seven days
 
 	@GetMapping("/nextSevenDaysBirthdays")
 	public ResponseEntity<ResponseModel<Object>> getNextSevenDaysBirthdays() {

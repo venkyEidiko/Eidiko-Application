@@ -1,6 +1,7 @@
 .container {
   display: flex;
   flex-wrap: wrap; 
+  background-color: #fff;
   
 }
 
@@ -9,9 +10,9 @@
 }
 
 .image img {
-  margin-top: 60px;
-  width: 100%; 
-    height: auto;
+  margin-top: 40px;
+  width: 700px; 
+    height:500px;
 }
 
 .content {

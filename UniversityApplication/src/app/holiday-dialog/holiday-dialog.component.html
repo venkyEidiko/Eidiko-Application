@@ -1,0 +1,40 @@
+<div class="holiday">
+    <div class="holiday-head">
+        <h2 style="margin-left: 20px;">Holidays</h2>
+        <button mat-button mat-dialog-close>
+            <mat-icon style="color: aliceblue; font-size: larger;">cancel</mat-icon>
+        </button>
+    </div>
+    <div class="holiday-body">
+        <mat-card>
+            <div class="holiday-content" *ngFor="let holiday of holidaysPart1">
+                <div class="holiday-content1">
+                    <div>
+                        <span>{{holiday?.dateOfHoliday | date:'MMM'}}</span>
+                    </div>
+                    <div>
+                        <p>{{holiday?.dateOfHoliday | date:'d'}}</p>
+                    </div>
+                </div>
+                <div class="holiday-content2">
+                    <span>{{holiday?.description}}</span>
+                    <p>{{ holiday?.dateOfHoliday | date:'EEEE' }}</p>
+                </div>
+            </div>
+        </mat-card>
+        <mat-card>
+            <div class="holiday-content" *ngFor="let holiday of holidaysPart2">
+                <div class="holiday-content1">
+                    <span>{{holiday?.dateOfHoliday | date:'MMM'}}</span>
+                    <p>{{holiday?.dateOfHoliday | date:'d'}}</p>
+                </div>
+                <div class="holiday-content2">
+                    <span>{{holiday?.description}}</span>
+                    <p>{{ holiday?.dateOfHoliday | date:'EEEE' }}</p>
+                </div>
+            </div>
+        </mat-card>
+
+    </div>
+
+</div>

@@ -9,18 +9,9 @@ import { Observable } from 'rxjs';
 })
 export class LeaveService {
 
-  private apiUrl = 'http://10.0.0.73:8082/leave/getAllEmpLeave'; 
+  private apiUrl = 'http://10.0.0.38:8082/leave/getAllEmpLeave'; 
 
   constructor(private http: HttpClient) { }
 
-  fetchLeaveData(employeeId: number, pageNumber: number, pageSize: number): Observable<any> {
-   
-    let params = new HttpParams()
-      .set('employeeId', employeeId.toString())
-      .set('pageNumber', pageNumber.toString())
-      .set('pageSize', pageSize.toString());
-
-    
-    return this.http.get<any>(`${this.apiUrl}`, { params: params });
-  }
+  
 }

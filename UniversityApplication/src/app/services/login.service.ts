@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import { tap, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { Observable } from 'rxjs';
-import { Employee } from './employee';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +8,6 @@ import { Employee } from './employee';
 export class LoginService {
   private employeeData: any = null;
   private jwtToken: string | null = null;
-
-
 
   url = "http://10.0.0.38:8082/";
   
