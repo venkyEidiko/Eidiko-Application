@@ -2,6 +2,8 @@ package com.eidiko.serviceimplementation;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -49,13 +51,29 @@ public class HolidaysImplementation implements HolidayService {
 		
 		List<Holidays> all = holidaysRepository.findAll();
 		
+		List<Holidays>holidayData=new ArrayList<>();
 		if (all.isEmpty()) {
 			
 			throw new UsernameNotFoundException("There is no record....!");
 			
 		}
+		else
+		{
+			 
+			 for (Holidays holidays : all) {
+				 
+				  byte[] image = holidays.getFestivalImage();
+				  
+				  String encodeToString = Base64.getEncoder().encodeToString(image);
+				  
+				  holidays.setImageBase64(encodeToString);
+				
+				 holidayData.add(holidays);
+			  }
+			
+		}
 		
-		return all;
+		return holidayData;
 	}
 
 }

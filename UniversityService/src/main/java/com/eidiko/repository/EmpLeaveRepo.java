@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.eidiko.entity.EmpLeave;
@@ -22,9 +23,16 @@ public interface EmpLeaveRepo extends JpaRepository<EmpLeave, Long> {
 //	 List<EmpLeave> findByLeaveType(String leaveType);
 	List<EmpLeave> findByLeaveTypeIn(List<String> leaveTypes);
 
-	@Query("SELECT e FROM EmpLeave e WHERE (:leaveTypes IS NULL OR e.leaveType IN :leaveTypes) AND (:statuses IS NULL OR e.status IN :statuses)")
-	Page<EmpLeave> findByLeaveTypeInAndStatusIn(List<String> leaveTypes, List<String> statuses, Pageable pageable);
+//	@Query("SELECT e FROM EmpLeave e WHERE (:leaveTypes IS NULL OR e.leaveType IN :leaveTypes) AND (:statuses IS NULL OR e.status IN :statuses)")
+//	Page<EmpLeave> findByLeaveTypeInAndStatusIn(List<String> leaveTypes, List<String> statuses, Pageable pageable);
 
+	@Query("SELECT e FROM EmpLeave e WHERE e.employeeId = :employeeId AND (:leaveTypes IS NULL OR e.leaveType IN :leaveTypes) AND (:statuses IS NULL OR e.status IN :statuses)")
+	Page<EmpLeave> findByEmployeeIdAndLeaveTypeInAndStatusIn(
+	    @Param("employeeId") Long employeeId,
+	    @Param("leaveTypes") List<String> leaveTypes,
+	    @Param("statuses") List<String> statuses,
+	    Pageable pageable
+	);
 
 
 
