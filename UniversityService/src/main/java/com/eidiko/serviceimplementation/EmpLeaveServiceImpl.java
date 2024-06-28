@@ -3,6 +3,7 @@ package com.eidiko.serviceimplementation;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +106,8 @@ List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.map
 		List<EmpLeave> pendingLeaveList = empLeaveList.stream().filter(leave->leave.getStatus().equals("Pending")).collect(Collectors.toList());
 		List<EmpLeave> approvedLeaveList = empLeaveList.stream().filter(leave->leave.getStatus().equals("Approved")).collect(Collectors.toList());
 		 // Grouping leaves by type and summing the durations of the leaves
-		Map<String, Double> leaveDurationByType = approvedLeaveList.stream()
+		System.out.println("pendingLeave list : "+pendingLeaveList);
+		Map<String, Double> leaveDurationByType = empLeaveList.stream()
 		        .collect(Collectors.groupingBy(
 		                EmpLeave::getLeaveType,
 		                Collectors.summingDouble(leave -> {
@@ -137,19 +139,24 @@ List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.map
 	   totalLeaveByType.put("Other Leave Type", Double.POSITIVE_INFINITY);
 	   // Creating a response model to hold the leave details
 	   
-	   ResponseModel<LeaveSummary> responseModel = new ResponseModel<>();
-	   responseModel.setStatus("Success");
-	   responseModel.setStatusCode(200);
 	   // Constructing the result list
+//	   if(!leaveDurationByType.isEmpty()) {
 	   List<LeaveSummary> leaveSummaries = leaveDurationByType.entrySet().stream().map(entry -> {
 		    String leaveType = entry.getKey();
 		    double consumedLeave = entry.getValue();
 		    double availableLeave = totalLeaveByType.getOrDefault(leaveType, Double.POSITIVE_INFINITY) - consumedLeave;
 		    Map<String, MonthlyLeaveData> monthlyLeaveData = leaveDataByTypeAndMonth.get(leaveType);
+		   
 		    return new LeaveSummary(leaveType, consumedLeave, availableLeave, totalLeaveByType.getOrDefault(leaveType, 0.0), pendingLeaveList, monthlyLeaveData);
-		}).collect(Collectors.toList());
+		   
+		    }).collect(Collectors.toList());
+	   return leaveSummaries;
+//	   }else {
+//		    return Arrays.asList(new LeaveSummary("CompOffLeave", 0, 0, 0, pendingLeaveList, null),
+//		    		new LeaveSummary("PaidLeave", 0, 12, 0, pendingLeaveList, null),
+//		    		new LeaveSummary("UnPaidLeave", 0, 0, 0, pendingLeaveList, null));  }
 
-		return leaveSummaries;
+		
 	}
 	
 	

@@ -8,6 +8,7 @@ import { debounceTime, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { LoginService } from '../services/login.service';
 
 interface Employee {
   employeeId: number;
@@ -30,7 +31,7 @@ export class DialogComponent implements OnInit {
   leaveType: string = '';
   leaveNote!: string;
   notifyTo = new FormControl();
-  employeeId: number = 2001;
+  employeeId:number=0
   showCustomDropdown: boolean = false;
   selectedHalfDay: string = 'fullDay';
   searchResults: Employee[] = [];
@@ -38,10 +39,14 @@ export class DialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<DialogComponent>,
     private leaveRequestService: LeavereqService,
-    private http: HttpClient
+    private http: HttpClient,
+    private loginService:LoginService
   ) {}
 
   ngOnInit(): void {
+    
+const employee=this.loginService.getEmployeeData();
+   this.employeeId=employee.employeeId;
     this.notifyTo.valueChanges.pipe(
       debounceTime(300), 
       switchMap(value => this.searchEmployees(value))
@@ -58,19 +63,22 @@ export class DialogComponent implements OnInit {
     this.showCustomDropdown = !this.showCustomDropdown;
   }
 
+  status:string='';
+  actionTakenBy:string='';
+  rejectionReason:string='';         
   submitRequest(): void {
     const leave: LeaveRequest = {
       leaveDates: new Date(),
       fromDate: this.fromDate,
       toDate: this.toDate,
-      status: 'string',
+      status: this.status,
       leaveType: this.leaveType,
-      requestedBy: 'string',
+      requestedBy: '',
       notifyTo: [this.notifyTo.value],
-      actionTakenBy: 'any',
+      actionTakenBy: this.actionTakenBy,
       customDayStatus: this.selectedHalfDay,
       leaveNote: this.leaveNote,
-      rejectionReason: 'any',
+      rejectionReason: this.rejectionReason,
       employeeId: this.employeeId
     };
 
@@ -96,14 +104,9 @@ export class DialogComponent implements OnInit {
 
   searchEmployees(keyword: string): Observable<Employee[]> {
     if (!keyword.trim()) {
-     
       return of([]);
     }
-
-    const isNumeric = /^\d+$/.test(keyword);
-    const apiUrl = isNumeric 
-      ? `http://10.0.0.81:8082/api/searchByKeyword/${keyword}`
-      : `http://10.0.0.81:8082/api/searchByKeyword/${keyword}`;
+    const apiUrl =`http://10.0.0.38:8082/api/searchByKeyword/${keyword}`;
       
     return this.http.get<any>(apiUrl).pipe(
       map(response => response.status === 'SUCCESS' ? response.result[0] : []),

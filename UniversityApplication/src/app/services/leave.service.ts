@@ -13,14 +13,5 @@ export class LeaveService {
 
   constructor(private http: HttpClient) { }
 
-  fetchLeaveData(employeeId: number, pageNumber: number, pageSize: number): Observable<any> {
-   
-    let params = new HttpParams()
-      .set('employeeId', employeeId.toString())
-      .set('pageNumber', pageNumber.toString())
-      .set('pageSize', pageSize.toString());
-
-    
-    return this.http.get<any>(`${this.apiUrl}`, { params: params });
-  }
+  
 }
