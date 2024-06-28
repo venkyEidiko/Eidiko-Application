@@ -110,6 +110,7 @@ import { CalenderComponent } from './calender/calender.component';
 import { ShiftRequestFormComponent } from './shift-request-form/shift-request-form.component';
 
 import { MatInputModule } from '@angular/material/input';
+import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.component';
 
 
 
@@ -168,6 +169,7 @@ CalenderComponent,
     
 
     ShiftRequestFormComponent,
+    CheckboxdropdownComponent,
 
 
     

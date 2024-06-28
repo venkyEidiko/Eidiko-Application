@@ -10,15 +10,18 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class DropdowntableComponent {
 
   @Input() options: string[] = [];
+ 
   @Input() selectedOptions: Set<string> = new Set<string>();
+  
   @Output() selectionChange = new EventEmitter<Set<string>>();
-
+ 
   isOpen = false;
+ 
 
   toggleDropdown(): void {
     this.isOpen = !this.isOpen;
   }
-
+ 
   toggleOption(option: string): void {
     if (this.selectedOptions.has(option)) {
       this.selectedOptions.delete(option);
@@ -27,7 +30,7 @@ export class DropdowntableComponent {
     }
     this.selectionChange.emit(this.selectedOptions);
   }
-
+ 
   clearSelection(): void {
     this.selectedOptions.clear();
     this.selectionChange.emit(this.selectedOptions);
