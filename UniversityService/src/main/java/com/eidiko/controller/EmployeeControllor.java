@@ -3,6 +3,7 @@ package com.eidiko.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.eidiko.entity.Address;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -85,7 +86,7 @@ public class EmployeeControllor {
 	public ResponseEntity<ResponseModel<Object>> updateEmployee(@PathVariable("empId") Long empID,
 			@RequestBody Employee employee) throws UserNotFoundException, SaveFailureException {
 
-		String updateEmployee = employeeInterface.updateEmployee(empID, employee);
+		String updateEmployee = employeeInterface.updateEmployee((long) empID, employee);
 
 		if (updateEmployee != null) {
 
@@ -94,15 +95,7 @@ public class EmployeeControllor {
 			return new CommonResponse<>().prepareFailedResponse(updateEmployee);
 		}
 }
-	
 
-
-
-
-
-
-
-	
 
 	@GetMapping("/searchByKeyword/{keywords}")
 	public ResponseEntity<ResponseModel<Object>> searchEmployeeByKeyword(
@@ -178,6 +171,8 @@ public class EmployeeControllor {
 	}
 
 
+
+	//this api is used for getting the employeedetails birthday dates from todays date to next seven days
 	@GetMapping("/nextSevenDaysBirthdays")
 	public ResponseEntity<ResponseModel<Object>> getNextSevenDaysBirthdays() {
 		List<BirtdayAndanniversaryDto> employeesWithBirthdays = employeeService.getEmployeesWithBirthdaysNextSevenDays();
