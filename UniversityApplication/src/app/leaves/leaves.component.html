@@ -11,36 +11,36 @@
             <mat-card-content>
                 <div class="pending-table">
                     <table *ngIf="pendingLeave && pendingLeave.length > 0">
-                      <thead>
-                        <tr>
-                          <th>Leave Type</th>
-                          <th>Dates</th>                         
-                          <th>Total Days</th>
-                          <th>Day Type</th>
-                          <!-- <th>Reason</th> -->
-                          <th>Apply Date</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let leave of pendingLeave">
-                          <td>{{ leave.leaveType || "-Not Set-" }}</td>
-                          <td>{{ leave.fromDate }} to <br>{{ leave.toDate }}</td>
-                          <td>{{ leave.durationInDays }}</td>
-                          <td>{{ leave.customDayStatus }}</td>
-                          <!-- <td>{{ leave.leaveNote }}</td>  -->
-                          <td>{{ leave.leaveDates }}</td>
-                          <td>{{ leave.status }}</td>
-                        </tr>
-                      </tbody>
+                        <thead>
+                            <tr>
+                                <th>Leave Type</th>
+                                <th>Dates</th>
+                                <th>Total Days</th>
+                                <th>Day Type</th>
+                                <!-- <th>Reason</th> -->
+                                <th>Apply Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let leave of pendingLeave">
+                                <td>{{ leave.leaveType || "-Not Set-" }}</td>
+                                <td>{{ leave.fromDate }} to <br>{{ leave.toDate }}</td>
+                                <td>{{ leave.durationInDays }}</td>
+                                <td>{{ leave.customDayStatus }}</td>
+                                <!-- <td>{{ leave.leaveNote }}</td>  -->
+                                <td>{{ leave.leaveDates }}</td>
+                                <td>{{ leave.status }}</td>
+                            </tr>
+                        </tbody>
                     </table>
-                  
+
                     <div class="image-content" *ngIf="pendingLeave === null">
-                      <img class="elephantimg" src="../../assets/elephant.png" alt="elephantimage">
-                      <p>Nothing here!<br />Working hard yeah?? Request time off on right&gt;&gt;&gt;</p>
+                        <img class="elephantimg" src="../../assets/elephant.png" alt="elephantimage">
+                        <p>Nothing here!<br />Working hard yeah?? Request time off on right&gt;&gt;&gt;</p>
                     </div>
-                  </div>
-                  
+                </div>
+
 
             </mat-card-content>
         </mat-card>
@@ -63,6 +63,7 @@
             <mat-card class="card3">
                 <mat-card-content>
 
+
                     Weekly Pattern
                     <mat-icon class="info-icon">info</mat-icon>
                     <div class="barchart2">
@@ -75,14 +76,12 @@
                 <mat-card-content>
                     Consumed Leave Types
                     <mat-icon class="info-icon">info</mat-icon>
-
-
-                    <app-donut1 [chartOptions]="chartOptions3"></app-donut1>
-
-
-
-
+                    <div class="consumed12">
+                        <div class="donut-text1">Leave <br /> Types</div>
+                        <app-donut1 [chartOptions]="chartOptions3"></app-donut1>
+                    </div>
                 </mat-card-content>
+
             </mat-card>
             <mat-card class="card5">
                 <mat-card-content>Monthly Stats</mat-card-content>
@@ -143,33 +142,21 @@
                     <div class="balance-line">
                         <hr />
                     </div>
-
                     <div class="compoff-leaves">
-
                         <div class="available">
-
                             Available <br />
-
                             {{availableLeaves}} days
-
-
                         </div>
                         <div class="line"></div>
                         <div class="consumed">
                             Consumed <br />
-
                             {{consumedLeaves}} days
-
                         </div>
                     </div>
                     <hr class="line-break">
                     <div class="annual quota">
-
                         Annual Quota <br /> 12 days
-
                     </div>
-
-
                 </mat-card-content>
             </mat-card>
             <mat-card class="card8">
@@ -190,17 +177,13 @@
                     <div class="compoff-leaves">
 
                         <div class="available">
-
                             Available <br />
                             ∞
-
                         </div>
                         <div class="line"></div>
                         <div class="consumed">
                             Consumed <br />
-
                             {{this.consumedLeaves}} days
-
                         </div>
                     </div>
                     <hr class="line-break">
@@ -220,25 +203,38 @@
 
     <div>
         <h2>Leave History</h2>
-        <div>
-            <div class="leave-history-header">
-                <mat-card-content>
-                    <app-dropdowntable [options]="leaveTypeOptions"
-                        [selectedOptions]="selectedLeaveTypes"></app-dropdowntable>
-                    <app-statusdrop></app-statusdrop>
-                    <input class="search1" type="text" matInput placeholder="Search">
-
-                </mat-card-content>
+        <div class="leave-history">
+            <div class="leave-history-dropdown">
+                <app-dropdowntable [options]="leaveTypeOptions" [selectedOptions]="selectedLeaveTypes"
+                    (selectionChange)="onSelectionChange($event)"></app-dropdowntable>
+                <div >
+                    <mat-form-field style="margin-left:12px;width:250px;height:70px;">
+                        <mat-label style="font-size:11px;padding:12px;margin-top:10px;">Status</mat-label>
+                        <mat-select  [value]="selectedStatus">
+                            <mat-option>
+                                <mat-checkbox [checked]="isAllSelected()" (change)="toggleAllSelection()">
+                                    Select All
+                                </mat-checkbox>
+                            </mat-option>
+                            <mat-option *ngFor="let status of statusOptions" [value]="status"
+                                (click)="$event.stopPropagation()">
+                                <mat-checkbox [checked]="isStatusSelected(status)" (change)="onStatusSelected(status)">
+                                    {{ status }}
+                                </mat-checkbox>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <input class="search1" type="text" matInput placeholder="Search">
             </div>
-
-            <mat-card class="table-content">
+            <mat-card>
                 <mat-card-content>
-                    <mat-table class="tdata" [dataSource]="dataSource">
+                    <mat-table class="tdata" [dataSource]="filteredData">
 
-                        <!-- Define columns for mat-table -->
                         <ng-container matColumnDef="leaveDates">
                             <mat-header-cell *matHeaderCellDef> Leave Date </mat-header-cell>
                             <mat-cell *matCellDef="let row"> {{row.leaveDates}} </mat-cell>
+                   
                         </ng-container>
 
                         <ng-container matColumnDef="leaveType">
@@ -259,20 +255,13 @@
                             <mat-header-cell *matHeaderCellDef> Leave Note </mat-header-cell>
                             <mat-cell *matCellDef="let row"> {{row.leaveNote}} </mat-cell>
                         </ng-container>
-
-
-
                         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                     </mat-table>
-
                     <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange($event)"
                         showFirstLastButtons></mat-paginator>
-
                 </mat-card-content>
             </mat-card>
 
         </div>
     </div>
-
-</div>

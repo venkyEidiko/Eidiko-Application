@@ -20,7 +20,7 @@ export class LeavetypeService {
 
   constructor(private http: HttpClient, private loginService: LoginService) { }
    employee = this.loginService.getEmployeeData();
-   employeeId=this.employee.employeeId
+   employeeId=this.employee.employeeId;
   fetchLeaveBalance(employeeId: number): Observable<LeaveStats> {
   
     return this.http.get<LeaveStats>(`${this.apiUrl}/${this.employeeId}`);

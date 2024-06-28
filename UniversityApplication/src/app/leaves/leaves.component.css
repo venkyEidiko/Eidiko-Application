@@ -79,7 +79,6 @@ text-align: center;
 
 mat-paginator {
     margin-right: 120px;
-
 }
 
 .card5 {
@@ -91,11 +90,8 @@ mat-paginator {
 }
 
 .barchart1 {
-
     padding: 0px 54px;
     margin-Top: 30px;
-
-
 }
 
 .donut1 {
@@ -109,7 +105,6 @@ mat-paginator {
 
 .compoffs {
     margin-left: 55px;
-
 }
 
 .compoffs1 {
@@ -119,7 +114,6 @@ mat-paginator {
 .compoffs1 span {
     margin-left: 40px;
     color: deepskyblue;
-
 }
 
 .table-card {
@@ -131,7 +125,6 @@ mat-paginator {
     width: 1200px;
     height: 120px;
      background-color: #333d4e;
-     
 }
 
 .table-content {
@@ -224,11 +217,6 @@ mat-paginator{
     flex-wrap: wrap;
     gap: 1.5%;
 }
-.leave-history-header{
-    background-color: #333d4e;
-   border-bottom: #5e5d5d 1px solid;
-    margin-right: 8.8%;
-}
 .card6,
 .card7,
 .card8 {
@@ -244,7 +232,16 @@ mat-paginator{
     width: 90px;
     height: 100px;
 }
-
+.leave-history mat-card{
+    background-color: #333d4e;
+    margin-right: 8.9%;
+}
+.leave-history-dropdown{    background-color: #333d4e;
+display: flex;
+margin-right: 8.9%;
+border-radius: 5px;
+border: 1px solid black;
+}
 
 .image-content {
     display: flex;
@@ -308,15 +305,29 @@ mat-paginator{
     color: blueviolet;
     font-size: 12px;
     pointer-events: none;
-
+}
+.consumed12
+{
+    margin-left:45px;
+}
+.filter-buttons
+{
+    padding:10px;
 }
 
-
-
+::ng-deep div.mat-mdc-select-panel:not(--mat-select-panel-background-color){
+background-color: #333d4e;
+}
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled):not(--mdc-filled-text-field-container-color){
+    background-color: #333d4e;
+    border-bottom: none;
+}
 .search1 {
     width: 600px;
     height: 40px;
     margin-left: 20px;
+    background-color: #333d4e;
+    border: none;
 }
 
 @media (max-width: 768px) {

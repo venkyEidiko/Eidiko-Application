@@ -1,0 +1,16 @@
+<div class="checkbox-dropdown">
+    <div class="selected-options" (click)="toggleDropdown()">
+        <div *ngIf="selectedOptions.length === 0">Select options</div>
+        <div *ngIf="selectedOptions.length > 0">{{ selectedOptions.join(', ') }}</div>
+        <span class="dropdown-icon">▼</span>
+    </div>
+    <div class="dropdown-list" *ngIf="dropdownVisible">
+        <div *ngFor="let option of options">
+            <label>
+                <input type="checkbox" [checked]="isSelected(option)" (change)="toggleOption(option)">
+                {{ option }}
+            </label>
+        </div>
+    </div>
+</div>
+

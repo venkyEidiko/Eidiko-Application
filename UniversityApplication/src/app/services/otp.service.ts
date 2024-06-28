@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OtpService {
-  private apiUrl = 'http://10.0.0.73:8082/api/sendMail';
+  private apiUrl = 'http://10.0.0.38:8082/api/sendMail';
 
   constructor(private http: HttpClient) { }
   sendOtpEmail(toEmail: string): Observable<any> {

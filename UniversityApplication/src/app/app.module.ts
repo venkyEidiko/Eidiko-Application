@@ -63,7 +63,6 @@ import { CompoffComponent } from './compoff/compoff.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DropdowntableComponent } from './dropdowntable/dropdowntable.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { StatusdropComponent } from './statusdrop/statusdrop.component';
 import { LeavesComponent } from './leaves/leaves.component';
 import { BarchartComponent } from './barchart/barchart.component';
 import { CalenderComponent } from './calender/calender.component';
@@ -73,6 +72,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { HolidayDialogComponent } from './holiday-dialog/holiday-dialog.component'; // Import CarouselModule
+import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.component';
 
 @NgModule({
   declarations: [
@@ -116,9 +116,14 @@ import { HolidayDialogComponent } from './holiday-dialog/holiday-dialog.componen
     CompDialogComponent,
     CompoffComponent,
     DropdowntableComponent,
-    StatusdropComponent,
+   
     ShiftRequestFormComponent,
+
     HolidayDialogComponent,
+
+    CheckboxdropdownComponent,
+
+
     
   ],
   imports: [
