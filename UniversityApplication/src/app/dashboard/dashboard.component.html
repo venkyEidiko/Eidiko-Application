@@ -19,7 +19,7 @@
       <mat-card class="card-item">
         <mat-card-content>
           Holidays
-          <div >
+          <div>
             <button>Previous</button>
             {{holiday.description}}
             <button>Next</button>
@@ -124,8 +124,37 @@
           <div class="content">
             <div id="announcement" [class.active]="selectedContent === 'announcement'" class="content-item">Announcement
               related data</div>
-            <div id="birthday" [class.active]="selectedContent === 'birthday'" class="content-item">Birthday related
-              data</div>
+            <div id="birthday" [class.active]="selectedContent === 'birthday'" class="content-item">
+
+              <div class="birthday-after7days">
+
+                <div class="Today-birthday">
+                  <h4>Birthdays today</h4>
+                  <div class="birthday-container">
+
+                    <div *ngFor="let today of todayBirthday" class="birthday-item" >
+                      <div class="profile-circle">
+                        <img src="../../assets/elephant.png">
+                      </div>
+
+                      <diV>
+                        <span>{{today.firstName}} &nbsp;{{today.lastName}}</span>
+
+                      </diV>
+                    </div>
+                  </div>
+                </div>
+                <div class="After-7days">
+                  <h4>Next 7 Days </h4>
+
+                  <div *ngFor="let afterSeven of nextSevendays">
+                    <span>{{afterSeven.firstName}} &nbsp;{{afterSeven.lastName}}</span>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
             <div id="workAnniversary" [class.active]="selectedContent === 'workAnniversary'" class="content-item">Work
               Anniversaries related data</div>
             <div id="newJoinees" [class.active]="selectedContent === 'newJoinees'" class="content-item">New Joinees
@@ -135,6 +164,9 @@
       </mat-card>
       <mat-card class="org-card" *ngIf="selectedTab === 'organization'">
         <mat-card-content>All posts</mat-card-content>
+        <div>
+          <img [src]="image" alt="Image">
+        </div>
       </mat-card>
       <mat-card class="org-card" *ngIf="selectedTab === 'java'">
         <mat-card-content>Java related post</mat-card-content>

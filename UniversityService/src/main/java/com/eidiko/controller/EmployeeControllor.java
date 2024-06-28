@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,23 +29,21 @@ import com.eidiko.serviceimplementation.EmployeeService;
 import com.eidiko.dto.BirtdayAndanniversaryDto;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*",allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmployeeControllor {
 
-	//@Autowired
+	// @Autowired
 	private EmployeeInterface employeeInterface;
 
-	//@Autowired
+	// @Autowired
 	private RoleInterface roleInterface;
 
 //	@Autowired
 	private EmployeeService employeeService;
-	
-	
-	
 
 	public EmployeeControllor(EmployeeInterface employeeInterface, RoleInterface roleInterface,
 			EmployeeService employeeService) {
@@ -78,13 +77,14 @@ public class EmployeeControllor {
 			return new CommonResponse<>().handleBadRequestException(e.getMessage());
 		}
 
-
 	}
 
-	@PutMapping("/updateEmp/{empId}")
+	@PatchMapping("/updateEmployee/{empId}")
 	public ResponseEntity<ResponseModel<Object>> updateEmployee(@PathVariable("empId") Long empID,
 			@RequestBody Employee employee) throws UserNotFoundException, SaveFailureException {
 
+		log.info("updateEmployee empId :" + empID);
+		log.info("updateEmployee entry object " + employee);
 		String updateEmployee = employeeInterface.updateEmployee(empID, employee);
 
 		if (updateEmployee != null) {
@@ -93,35 +93,37 @@ public class EmployeeControllor {
 		} else {
 			return new CommonResponse<>().prepareFailedResponse(updateEmployee);
 		}
-}
-	
-
-
-
-
-
-
-
-	
-
-	@GetMapping("/searchByKeyword/{keywords}")
-	public ResponseEntity<ResponseModel<Object>> searchEmployeeByKeyword(
-			@PathVariable("keywords") String keywords)
-			throws SaveFailureException, UserNotFoundException {
-		
-		log.info("Search by keyword {}",keywords);
-		
-			return new CommonResponse<>()
-					.prepareSuccessResponseObject(employeeInterface.searchByKeywords(keywords));
-		
-		
 	}
 
+	@GetMapping("/searchByKeyword/{keywords}")
+	public ResponseEntity<ResponseModel<Object>> searchEmployeeByKeyword(@PathVariable("keywords") String keywords)
+			throws SaveFailureException, UserNotFoundException {
+
+		log.info("Search by keyword {}", keywords);
+
+		return new CommonResponse<>().prepareSuccessResponseObject(employeeInterface.searchByKeywords(keywords));
+
+	}
+
+	@GetMapping("/getBybyEmployeeID/{employeeID}")
+	public ResponseEntity<ResponseModel<Object>> getByEmployeeId(@PathVariable("employeeID") Long employeeId)
+			 {
+
+		System.out.println("EMployee service :" + employeeId);
+
+		try {
+			Employee byEmployeeID = employeeService.getByEmployeeId(employeeId);
+			return new CommonResponse<>().prepareSuccessResponseObject(byEmployeeID);
+
+		} catch (BadRequestException e) {
+             
+			return new CommonResponse<>().prepareFailedResponse(e.getMessage());
+		}
+	}
 
 	@GetMapping("/getByEmail/{email}")
 	public ResponseEntity<ResponseModel<Object>> getByEmail(@PathVariable String email) throws UserNotFoundException {
 
-		System.out.println("EMployee service :" + email);
 		Employee byEmail = employeeService.getByEmail(email);
 		return new CommonResponse<>().prepareSuccessResponseEmail(byEmail);
 	}
@@ -139,7 +141,7 @@ public class EmployeeControllor {
 		return new CommonResponse<>()
 				.prepareSuccessResponseObject(employeeInterface.updateEmployeePrimaryDetails(empID, employee));
 	}
-	
+
 	@PutMapping("/updateEmployeeJobDetailsByEmpId/{empId}")
 	public ResponseEntity<ResponseModel<Object>> updateEmployeeJobDetailsByEmpId(@PathVariable("empId") Long empID,
 			@RequestBody Employee employee) throws SaveFailureException, UserNotFoundException {
@@ -153,7 +155,7 @@ public class EmployeeControllor {
 		return new CommonResponse<>()
 				.prepareSuccessResponseObject(employeeInterface.updateEmployeeTimeDetails(empID, employee));
 	}
-	
+
 	@PutMapping("/updateEmployeeOrganizationDetailsByEmpId/{empId}")
 	public ResponseEntity<ResponseModel<Object>> updateEmployeeOrganizationDetailsByEmpId(
 			@PathVariable("empId") Long empID, @RequestBody Employee employee)
@@ -162,25 +164,23 @@ public class EmployeeControllor {
 				.prepareSuccessResponseObject(employeeInterface.updateEmployeeOrganizationDetails(empID, employee));
 	}
 
-
-	//for birthdays and anniversaries giving 
+	// for birthdays and anniversaries giving
 	@GetMapping("/getBirthDayAnniversatyTodayList")
 	public ResponseEntity<ResponseModel<Object>> birthDayDate() {
-		
+
 		LocalDate today = LocalDate.now();
 		try {
-      
-			return new CommonResponse<>().prepareSuccessResponseObject( employeeInterface.bithDayMethod(today));
-		}
-		catch (Exception e) {
+
+			return new CommonResponse<>().prepareSuccessResponseObject(employeeInterface.bithDayMethod(today));
+		} catch (Exception e) {
 			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
 		}
 	}
 
-
 	@GetMapping("/nextSevenDaysBirthdays")
 	public ResponseEntity<ResponseModel<Object>> getNextSevenDaysBirthdays() {
-		List<BirtdayAndanniversaryDto> employeesWithBirthdays = employeeService.getEmployeesWithBirthdaysNextSevenDays();
+		List<BirtdayAndanniversaryDto> employeesWithBirthdays = employeeService
+				.getEmployeesWithBirthdaysNextSevenDays();
 
 		if (employeesWithBirthdays.isEmpty()) {
 			return new CommonResponse<>().prepareFailedResponse("No birthdays in the next 7 days");
@@ -189,7 +189,4 @@ public class EmployeeControllor {
 		}
 	}
 
-
-
 }
-

@@ -103,9 +103,10 @@ List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.map
 		List<EmpLeave> empLeaveList=empLeaveRepo.findAllByEmployeeId(employeeId);
 
 		List<EmpLeave> pendingLeaveList = empLeaveList.stream().filter(leave->leave.getStatus().equals("Pending")).collect(Collectors.toList());
+		log.info("pending employee leave : {} ",pendingLeaveList);
 		List<EmpLeave> approvedLeaveList = empLeaveList.stream().filter(leave->leave.getStatus().equals("Approved")).collect(Collectors.toList());
 		 // Grouping leaves by type and summing the durations of the leaves
-		Map<String, Double> leaveDurationByType = approvedLeaveList.stream()
+		Map<String, Double> leaveDurationByType = empLeaveList.stream()
 		        .collect(Collectors.groupingBy(
 		                EmpLeave::getLeaveType,
 		                Collectors.summingDouble(leave -> {
@@ -137,18 +138,18 @@ List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.map
 	   totalLeaveByType.put("Other Leave Type", Double.POSITIVE_INFINITY);
 	   // Creating a response model to hold the leave details
 	   
-	   ResponseModel<LeaveSummary> responseModel = new ResponseModel<>();
-	   responseModel.setStatus("Success");
-	   responseModel.setStatusCode(200);
+
 	   // Constructing the result list
 	   List<LeaveSummary> leaveSummaries = leaveDurationByType.entrySet().stream().map(entry -> {
 		    String leaveType = entry.getKey();
 		    double consumedLeave = entry.getValue();
 		    double availableLeave = totalLeaveByType.getOrDefault(leaveType, Double.POSITIVE_INFINITY) - consumedLeave;
 		    Map<String, MonthlyLeaveData> monthlyLeaveData = leaveDataByTypeAndMonth.get(leaveType);
+		    
+		    log.info(null);
 		    return new LeaveSummary(leaveType, consumedLeave, availableLeave, totalLeaveByType.getOrDefault(leaveType, 0.0), pendingLeaveList, monthlyLeaveData);
 		}).collect(Collectors.toList());
-
+ log.info("leave summaries final result {} ",leaveSummaries);
 		return leaveSummaries;
 	}
 	

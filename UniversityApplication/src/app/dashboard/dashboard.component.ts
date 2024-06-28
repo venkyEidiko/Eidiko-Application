@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashbordService } from '../services/dashbord.service';
 import { Holiday } from '../holiday';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,14 +10,21 @@ import { Holiday } from '../holiday';
 })
 export class DashboardComponent implements OnInit {
 
+
   constructor(private service: DashbordService){}
 
   ngOnInit(): void {
     this.fetchworkFromHome();
     this.fethHoliday();
     this.fetchleaveData();
+    this.uploadImage();
+    this.getBirthdayAndAfterSevenDaysLIst();
   }
-  
+  todayBirthday:any;
+  nextSevendays:any;
+  image:string =''
+  imagePost:any;
+  postsList:any;
   workFromHomeList:any;
   holidayList:any;
   holiday:Holiday={
@@ -78,7 +86,37 @@ export class DashboardComponent implements OnInit {
       }
     }
   }
+  uploadImage()
+  {
+    this.service.getPosts().subscribe(
+         
+       response =>{
+           console.log(response);
+           this.postsList=response;
+           let img =this.postsList.result[0].base64Image;
+          
+            this.image = 'data:image/png;base64,' + img;
+          
+       }
+    )
+  }
 
+  getBirthdayAndAfterSevenDaysLIst()
+  {
+    this.service.getBirthdays().subscribe(
+
+      (response: any) =>{
+
+               this.todayBirthday=response.result[0].TodayBirthdays;
+               this.nextSevendays=response.result[0].NextSevenDaysBirthdays;
+         console.log("Birthday and holidays ",response.result[0].TodayBirthdays);
+      }
+        );
+        
+  }
+    
+    
+  
   
   public chartOptions1 = {
     series: [12-this.totalAvailableLeave, 12], 

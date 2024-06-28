@@ -213,3 +213,78 @@ mat-card-content {
 .member small{
   margin-left: 11px;
 }
+/* Add css for birthdays and anniversaries */
+
+
+.birthday-after-7-days {
+  margin-top: 20px;
+}
+
+
+.Today-birthday h1 {
+  font-size: 1.5em;
+  color: #ff6347;
+  margin-bottom: 10px;
+}
+
+.After-7days h1 {
+  font-size: 1.5em;
+  color: #4682b4;
+  margin-bottom: 10px;
+}
+/* Base styles for the Today-birthday section */
+.Today-birthday {
+  padding: 0px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+
+}
+
+.Today-birthday h4 {
+  font-size: 1.5em;
+  color: #29bfda;
+  margin-bottom: 15px;
+}
+
+/* Flexbox container for the list of birthdays */
+.birthday-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Individual birthday item styles */
+.birthday-item {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+
+}
+
+/* Profile circle styles */
+.profile-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  /* background-color: #ddd; */
+  border:  2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-right: 10px; /* Adjusted margin for spacing between image and name */
+background-repeat: no-repeat;
+}
+
+.profile-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Name span styles */
+.Today-birthday span {
+  font-size: 1em;
+  color: #c3c6e9;
+}

@@ -15,7 +15,7 @@ export class LoginService {
 
 
 
-  url = "http://10.0.0.81:8082/";
+  url = "http://10.0.0.38:8082/";
   
   constructor(private http: HttpClient) { }
 
