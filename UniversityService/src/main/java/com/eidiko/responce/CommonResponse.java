@@ -31,6 +31,7 @@ public class CommonResponse<T> {
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
+
 // this is commonresponse
 	public ResponseEntity<ResponseModel<T>> prepareSuccessResponseObject(T result, T password) {
 		ResponseModel<T> response = new ResponseModel<>();

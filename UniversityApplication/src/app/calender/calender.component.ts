@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { ShiftRequestService } from '../services/shift-request.service';
 import { format } from 'date-fns';

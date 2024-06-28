@@ -25,6 +25,7 @@ import com.eidiko.responce.CommonResponse;
 import com.eidiko.service.EmployeeInterface;
 import com.eidiko.service.RoleInterface;
 import com.eidiko.serviceimplementation.EmployeeService;
+import com.eidiko.dto.BirtdayAndanniversaryDto;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -92,7 +93,7 @@ public class EmployeeControllor {
 		} else {
 			return new CommonResponse<>().prepareFailedResponse(updateEmployee);
 		}
-
+}
 	
 
 
@@ -175,7 +176,20 @@ public class EmployeeControllor {
 			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
+
+	@GetMapping("/nextSevenDaysBirthdays")
+	public ResponseEntity<ResponseModel<Object>> getNextSevenDaysBirthdays() {
+		List<BirtdayAndanniversaryDto> employeesWithBirthdays = employeeService.getEmployeesWithBirthdaysNextSevenDays();
+
+		if (employeesWithBirthdays.isEmpty()) {
+			return new CommonResponse<>().prepareFailedResponse("No birthdays in the next 7 days");
+		} else {
+			return new CommonResponse<>().prepareSuccessResponseObject(employeesWithBirthdays);
+		}
+	}
+
+
 
 }
 

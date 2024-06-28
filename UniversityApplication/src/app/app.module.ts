@@ -107,6 +107,7 @@ import { LeavesComponent } from './leaves/leaves.component';
 import { BarchartComponent } from './barchart/barchart.component';
 
 import { CalenderComponent } from './calender/calender.component';
+
 import { ShiftRequestFormComponent } from './shift-request-form/shift-request-form.component';
 
 import { MatInputModule } from '@angular/material/input';
@@ -118,12 +119,13 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
 
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+
 CalenderComponent,
+
     SidenavComponent,
     NavbarComponent,
     HomeComponent,
@@ -136,7 +138,7 @@ CalenderComponent,
     MeComponent,
     InboxComponent,
     MyteamComponent,
-      MyfinancesComponent,
+    MyfinancesComponent,
     OrgComponent,
     ClockComponent,
     DonutchartComponent,
