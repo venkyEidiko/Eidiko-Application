@@ -18,6 +18,7 @@ import com.eidiko.serviceimplementation.LikeService;
 
 @RestController
 @RequestMapping("/posts")
+@CrossOrigin(origins="*")
 public class LikeController {
 
 	@Autowired

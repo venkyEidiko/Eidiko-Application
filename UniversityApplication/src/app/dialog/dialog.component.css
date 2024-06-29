@@ -126,3 +126,6 @@
   {
     height:50px;
   }
+  .search-results li{
+    list-style-type: none;
+  }

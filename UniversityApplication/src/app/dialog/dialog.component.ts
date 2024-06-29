@@ -102,8 +102,8 @@ export class DialogComponent implements OnInit {
 
     const isNumeric = /^\d+$/.test(keyword);
     const apiUrl = isNumeric 
-      ? `http://10.0.0.81:8082/api/searchByKeyword/${keyword}`
-      : `http://10.0.0.81:8082/api/searchByKeyword/${keyword}`;
+      ? `http://10.0.0.38:8082/api/searchByKeyword/${keyword}`
+      : `http://10.0.0.38:8082/api/searchByKeyword/${keyword}`;
       
     return this.http.get<any>(apiUrl).pipe(
       map(response => response.status === 'SUCCESS' ? response.result[0] : []),
