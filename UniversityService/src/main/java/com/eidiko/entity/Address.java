@@ -14,6 +14,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.ToString;
+
+import javax.naming.Name;
+
 @ToString
 @Data
 @Entity
@@ -30,7 +33,7 @@ public class Address {
     @ToString.Exclude
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "employeeId")
     private Employee employee;
     private String addressType;
     private String doorNumber ;

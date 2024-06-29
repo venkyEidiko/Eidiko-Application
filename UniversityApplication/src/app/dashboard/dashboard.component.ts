@@ -22,6 +22,12 @@ export class DashboardComponent implements OnInit {
   }
   imageSrcList: { base64Image: string, timeStamp: string ,description:string,postId:number}[] = [];
   showIcons: boolean = false;
+//     this.convertImageToBase64('assets/your-image.jpg');
+//   }
+//   openHoliday(): void {
+//     this.service.openDialog();
+//   }
+// >>>>>>> 6898ca88ffd93e7f67b4d1caeb4d5c1fce2c7dca
   workFromHomeList:any;
   showCommentBox: boolean[] = [];
   
@@ -62,12 +68,47 @@ export class DashboardComponent implements OnInit {
         this.holidayList = response;
         this.holidayList = this.holidayList.result;
         this.holiday = this.holidayList[0];
-        
+        console.log("fetch HOliday data: ",this.holidayList)
+        this.convertImageToBase64(this.holidayList[0].imageBase64)
       }
     )
   }
+   base64Image!: string;
+   currentHolidayIndex = 0;
+   updateCurrentHoliday() {
+    this.holiday = this.holidayList[this.currentHolidayIndex];
+    this.convertImageToBase64(this.holidayList[this.currentHolidayIndex].imageBase64);
+  }
+  convertImageToBase64(imagePath: string): void {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+  
+      const ctx = canvas.getContext('2d');
+      ctx?.drawImage(img, 0, 0); // Draw the entire image starting from (0, 0)
+  
+      // Convert canvas content to base64 URL and assign to base64Image
+      this.base64Image = canvas.toDataURL('image/jpeg');
+    };
+    
+    // Set src attribute of the image to load from the base64 string directly
+    img.src = 'data:image/jpeg;base64,' + imagePath;
+  }
+  previousHoliday() {
+    if (this.currentHolidayIndex > 0) {
+      this.currentHolidayIndex--;
+      this.updateCurrentHoliday();
+    }
+  }
 
-
+  nextHoliday() {
+    if (this.currentHolidayIndex < this.holidayList.length - 1) {
+      this.currentHolidayIndex++;
+      this.updateCurrentHoliday();
+    }
+  }
   fetchleaveData(){
     this.service.getLeaveData().subscribe(
       response =>{

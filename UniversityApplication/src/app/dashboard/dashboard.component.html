@@ -16,16 +16,36 @@
           </div>
         </mat-card-content>
       </mat-card>
-      <mat-card class="card-item">
+      <mat-card class="card-item" [ngStyle]="{'background-image': 'url(' + base64Image + ')'}">
+        <div class="card-item-header">
+          <span>Holidays</span>
+         <div  (click)="openHoliday()">
+          <a style="background-color:transparent; cursor: pointer;">view all</a>
+         </div>
+        </div>
         <mat-card-content>
-          Holidays
-          <div >
-            <button>Previous</button>
-            {{holiday.description}}
-            <button>Next</button>
+          <div class="card-content">
+            <div class="card-navigation">
+              <div>
+                <button mat-icon-button (click)="previousHoliday()">
+                  <mat-icon>arrow_back</mat-icon>
+                </button>
+              </div>
+              <div>
+                <button mat-icon-button (click)="nextHoliday()">
+                  <mat-icon>arrow_forward</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div class="card-info">
+              <p class="card-info">{{ holiday.description }} &nbsp; &nbsp;{{ holiday.dateOfHoliday | date:'EEE, dd MMMM, yyyy' }}</p>
+            </div>
+
           </div>
         </mat-card-content>
       </mat-card>
+
+
       <mat-card class="card-item">
         <mat-card-content>On Leave Today</mat-card-content>
       </mat-card>
