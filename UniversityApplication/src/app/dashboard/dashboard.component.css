@@ -1,6 +1,18 @@
 .hover-icons {
   position: relative;
 }
+.org-content-item {
+  transition: height 0.3s ease;
+}
+.org-content{
+  cursor:text;
+}
+
+.org-content-item.expanded {
+  height: 250px; 
+  cursor:text;
+}
+
 
 .like-icons {
   display: none; 

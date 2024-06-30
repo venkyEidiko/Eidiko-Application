@@ -109,8 +109,26 @@
             </li>
           </ul>
           <div class="org-content">
-            <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item">
-            ghjfgkjkjkjh
+            <div id="post" 
+            [class.active]="selectedContent === 'post'" 
+            class="org-content-item"
+            (focus)="expandCard()"
+            (focusout)="collapseCard()"
+
+            tabindex="0"
+            [ngClass]="{'expanded': isCardExpanded}">
+           
+                   
+                   <div >
+    
+    <button title="Mention Employee" (click)="insertSymbol('@')"
+    style="background-color:rgb(51, 61, 78); ;border-radius:10px;font-size:12px;height:32px;"><i class="fas fa-at"></i></button>
+                    <button style="background-color:rgb(51, 61, 78);border-radius:10px;font-size:12px;height:30px"><i class="fas fa-camera"></i></button>
+                    <button style="background-color:rgb(51, 61, 78);border-radius:10px;font-size:12px;height:30px"><i class="fas fa-smile"></i></button>
+                   </div>
+                   <input type="text" placeholder="write your post here and mention your peers....."
+                      style="background-color:rgb(51, 61, 78);height:80px">
+                   {{insertedSymbol}}
             </div>
             <div id="announcement" [class.active]="selectedContent === 'announcement'" class="org-content-item">Hello
             </div>
@@ -164,6 +182,7 @@
               <p style="margin-top:35px;margin-left:10px">{{ image.timeStamp }}</p>
             </div>
             <p>{{image.description}}</p>
+            <p style="color:dodgerblue">{{image.mentionEmployee}}</p>
             <img [src]="image.base64Image" alt="Image from base64" style="margin-bottom:20px">
             <div style="display: flex; gap: 30px;">
               <div class="hover-icons">

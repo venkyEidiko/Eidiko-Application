@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class DashbordService {
   private apiUrl1 = 'http://10.0.0.60:8080/posts/savelike'; 
   private apiUrl2='http://10.0.0.60:8080/posts/saveComment'
+  private apiUrl3='http://10.0.0.60/8080/posts/saveimage'
 
   constructor(private http: HttpClient, private loginService: LoginService, private dialog: MatDialog,) { }
   url = "http://10.0.0.38:8082/api/";
@@ -55,7 +56,19 @@ export class DashbordService {
     const payload = { comment, empId };
     return this.http.post(`${this.apiUrl2}/${postId}`, payload);
   }
-
+   postImage(description:string,postType:string,mentionEmployee:any,postEmployee:any,files:File[]):Observable<any>
+   {
+    const formData1=new FormData();
+    formData1.append('description',description);
+    formData1.append('postType',postType);
+    formData1.append('mentionEmployee',mentionEmployee);
+    formData1.append('postEmployee',postEmployee);
+    for(let i=0;i<files.length;i++)
+      {
+       formData1.append('files',files[i])
+      }
+    return this.http.post<any>(this.apiUrl3,formData1)
+   }
   
 
 

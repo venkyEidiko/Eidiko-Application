@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashbordService } from '../services/dashbord.service';
 import { Holiday } from '../holiday';
 import { timestamp } from 'rxjs';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +11,7 @@ import { timestamp } from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private service: DashbordService,private dashservice:DashbordService){
+  constructor(private service: DashbordService,private dashservice:DashbordService,private loginService:LoginService){
     this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
   }
 
@@ -20,14 +21,24 @@ export class DashboardComponent implements OnInit {
     this.fetchleaveData();
     this.loadAllPosts();
   }
-  imageSrcList: { base64Image: string, timeStamp: string ,description:string,postId:number}[] = [];
+ // employeeId=this.loginService.getEmployeeData().employeeId;
+  imageSrcList: { base64Image: string, timeStamp: string ,description:string,postId:number,mentionEmployee:any}[] = [];
   showIcons: boolean = false;
-//     this.convertImageToBase64('assets/your-image.jpg');
-//   }
-//   openHoliday(): void {
-//     this.service.openDialog();
-//   }
-// >>>>>>> 6898ca88ffd93e7f67b4d1caeb4d5c1fce2c7dca
+  isCardExpanded: boolean = false;
+  insertedSymbol: string = ''; 
+
+  insertSymbol(symbol: string) {
+    this.insertedSymbol = symbol;
+  }
+
+
+
+  //   this.convertImageToBase64('assets/your-image.jpg');
+  // }
+  openHoliday(): void {
+    this.service.openDialog();
+  }
+
   workFromHomeList:any;
   showCommentBox: boolean[] = [];
   
@@ -45,9 +56,18 @@ export class DashboardComponent implements OnInit {
   selectedContent: string = 'announcement';
   currentDate = new Date();
   
+
+  
   selectTab(tab: string) {
     this.selectedTab = tab;
   }
+  expandCard() {
+    this.isCardExpanded = true;
+  }
+  collapseCard() {
+    this.isCardExpanded = false;
+  }
+
 
   showContent(event: Event, content: string) {
     event.preventDefault();
@@ -121,13 +141,15 @@ export class DashboardComponent implements OnInit {
   }
   loadAllPosts(): void {
     this.dashservice.getAllPosts().subscribe((response: any) => {
-      console.log(response);
+      console.log("posts ",response);
       if (response.status === 'SUCCESS') {
         this.imageSrcList = response.result.map((item: any) => ({
           base64Image: 'data:image/jpeg;base64,' + item.base64Image,
           timeStamp: this.formatTime(item.timeStamp),
           description:item.description,
-          postId:item.postId
+          postId:item.postId,
+          mentionEmployee:item.mentionEmployee
+
         }));
       } else {
         console.error('No result found in the response');
@@ -160,16 +182,16 @@ formatTime(timestamp: string): string {
   //   this.showCommentBox[index] = false; 
   // }
   onEmojiClick(postId: number, emojiId: number): void {
-    const empId = 1110; // Replace with the actual employee ID
-
+    
+   const empId=1110;
     this.service.saveLike(postId, emojiId, empId).subscribe(
       response => {
         console.log('Like saved successfully', response);
-        // Handle successful response, e.g., update UI or show a message
+
       },
       error => {
         console.error('Error saving like', error);
-        // Handle error, e.g., show an error message
+
       }
     );
   }
