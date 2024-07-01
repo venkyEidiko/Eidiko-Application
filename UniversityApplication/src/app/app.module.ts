@@ -17,7 +17,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule } from '@angular/material/card'
@@ -70,13 +69,16 @@ import { ShiftRequestFormComponent } from './shift-request-form/shift-request-fo
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
 import { HolidayDialogComponent } from './holiday-dialog/holiday-dialog.component'; // Import CarouselModule
 import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.component';
+import { PickerComponent,PickerModule } from '@ctrl/ngx-emoji-mart';
+import { TruncatePipe } from './turncate.pipe';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    TruncatePipe,
     LoginComponent,
     CalenderComponent,
     SidenavComponent,
@@ -86,13 +88,14 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
     ForgotpasswordComponent,
     ResetpasswordComponent,
     ResetPasswordConfirmationComponent,
-    DashboardComponent,
+     DashboardComponent,
     WelcomeComponent,
     MeComponent,
     InboxComponent,
     MyteamComponent,
     MyfinancesComponent,
     OrgComponent,
+  
     ClockComponent,
     DonutchartComponent,
     OtpComponent,
@@ -114,6 +117,7 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
     DialogComponent,
     Dialog1Component,
     CompDialogComponent,
+  
     
     DropdowntableComponent,
    
@@ -122,12 +126,13 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
     HolidayDialogComponent,
 
     CheckboxdropdownComponent,
+      
 
 
     
   ],
   imports: [
-  
+    PickerModule,
     MatDatepickerModule,
     BrowserModule,
     MatButtonModule,

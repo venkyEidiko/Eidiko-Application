@@ -97,6 +97,7 @@ List<EmpLeave> empLeaveList=leavePage.getContent();
 List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.mapper.empLeaveToEmpLeaveDto(empLeave)).collect(Collectors.toList());
 		return empLeaveDtoList;
 	}
+	/*
 
 	@Override
 	public List<LeaveSummary> getEmpLeaveSummaryByEmpId(Long employeeId) {
@@ -106,7 +107,6 @@ List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.map
 		List<EmpLeave> pendingLeaveList = empLeaveList.stream().filter(leave->leave.getStatus().equals("Pending")).collect(Collectors.toList());
 		List<EmpLeave> approvedLeaveList = empLeaveList.stream().filter(leave->leave.getStatus().equals("Approved")).collect(Collectors.toList());
 		 // Grouping leaves by type and summing the durations of the leaves
-		System.out.println("pendingLeave list : "+pendingLeaveList);
 		Map<String, Double> leaveDurationByType = empLeaveList.stream()
 		        .collect(Collectors.groupingBy(
 		                EmpLeave::getLeaveType,
@@ -140,27 +140,90 @@ List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.map
 	   // Creating a response model to hold the leave details
 	   
 	   // Constructing the result list
-//	   if(!leaveDurationByType.isEmpty()) {
 	   List<LeaveSummary> leaveSummaries = leaveDurationByType.entrySet().stream().map(entry -> {
 		    String leaveType = entry.getKey();
 		    double consumedLeave = entry.getValue();
 		    double availableLeave = totalLeaveByType.getOrDefault(leaveType, Double.POSITIVE_INFINITY) - consumedLeave;
 		    Map<String, MonthlyLeaveData> monthlyLeaveData = leaveDataByTypeAndMonth.get(leaveType);
-		   
 		    return new LeaveSummary(leaveType, consumedLeave, availableLeave, totalLeaveByType.getOrDefault(leaveType, 0.0), pendingLeaveList, monthlyLeaveData);
-		   
-		    }).collect(Collectors.toList());
-	   return leaveSummaries;
-//	   }else {
-//		    return Arrays.asList(new LeaveSummary("CompOffLeave", 0, 0, 0, pendingLeaveList, null),
-//		    		new LeaveSummary("PaidLeave", 0, 12, 0, pendingLeaveList, null),
-//		    		new LeaveSummary("UnPaidLeave", 0, 0, 0, pendingLeaveList, null));  }
+		}).collect(Collectors.toList());
 
-		
+		return leaveSummaries;
 	}
-	
-	
+		*/
   
+	@Override
+	public List<LeaveSummary> getEmpLeaveSummaryByEmpId(Long employeeId) {
+	    log.info("Id :{}", employeeId);
+	    List<EmpLeave> empLeaveList = empLeaveRepo.findAllByEmployeeId(employeeId);
+
+	    List<EmpLeave> pendingLeaveList = empLeaveList.stream()
+	        .filter(leave -> "Pending".equals(leave.getStatus()))
+	        .collect(Collectors.toList());
+
+	    List<EmpLeave> approvedLeaveList = empLeaveList.stream()
+	        .filter(leave -> "Approved".equals(leave.getStatus()))
+	        .collect(Collectors.toList());
+
+	    // Grouping leaves by type and summing the durations of the leaves
+	    Map<String, Double> leaveDurationByType = empLeaveList.stream()
+	        .filter(leave -> leave.getLeaveType() != null && leave.getCustomDayStatus() != null)
+	        .collect(Collectors.groupingBy(
+	            EmpLeave::getLeaveType,
+	            Collectors.summingDouble(leave -> {
+	                Double duration = leave.getDurationInDays();
+	                if (duration == null) {
+	                    duration = 0.0;
+	                }
+	                if (!"Full Day".equalsIgnoreCase(leave.getCustomDayStatus())) {
+	                    return duration - 0.5; // Subtract 0.5 days for half day
+	                } else {
+	                    return duration; // Full day or other statuses, no change
+	                }
+	            })
+	        ));
+
+	    // Grouping leaves by month
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+	    Map<String, Map<String, MonthlyLeaveData>> leaveDataByTypeAndMonth = approvedLeaveList.stream()
+	        .filter(leave -> leave.getLeaveType() != null && leave.getFromDate() != null && leave.getToDate() != null)
+	        .collect(Collectors.groupingBy(
+	            EmpLeave::getLeaveType,
+	            Collectors.groupingBy(
+	                leave -> leave.getFromDate().format(formatter),
+	                Collectors.collectingAndThen(Collectors.toList(), leaves -> {
+	                    double totalLeaveTaken = leaves.stream()
+	                        .mapToDouble(leave -> {
+	                            Double duration = leave.getDurationInDays();
+	                            return duration != null ? duration : 0.0;
+	                        })
+	                        .sum();
+	                    List<LocalDate> leaveDays = leaves.stream()
+	                        .flatMap(leave -> leave.getFromDate().datesUntil(leave.getToDate().plusDays(1)))
+	                        .collect(Collectors.toList());
+	                    return new MonthlyLeaveData(totalLeaveTaken, leaveDays);
+	                })
+	            )
+	        ));
+
+	    Map<String, Double> totalLeaveByType = new HashMap<>();
+	    totalLeaveByType.put("Paid Leave", 12.0); // Example for paid leave
+	    totalLeaveByType.put("Other Leave Type", Double.POSITIVE_INFINITY);
+
+	    // Constructing the result list
+	    List<LeaveSummary> leaveSummaries = leaveDurationByType.entrySet().stream()
+	        .map(entry -> {
+	            String leaveType = entry.getKey();
+	            double consumedLeave = entry.getValue();
+	            double availableLeave = totalLeaveByType.getOrDefault(leaveType, Double.POSITIVE_INFINITY) - consumedLeave;
+	            Map<String, MonthlyLeaveData> monthlyLeaveData = leaveDataByTypeAndMonth.get(leaveType);
+	            return new LeaveSummary(leaveType, consumedLeave, availableLeave, totalLeaveByType.getOrDefault(leaveType, 0.0), pendingLeaveList, monthlyLeaveData);
+	        })
+	        .collect(Collectors.toList());
+
+	    return leaveSummaries;
+	}
+
 	@Override
 	public Page<EmpLeave> findByLeaveTypesAndStatuses(Long employeeId, List<String> leaveTypes, List<String> statuses, Pageable pageable) {
         log.info("Fetching records with leaveTypes: {} and statuses: {}", leaveTypes, statuses);

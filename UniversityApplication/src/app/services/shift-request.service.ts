@@ -52,7 +52,6 @@ export class ShiftRequestService {
    
     }
      attandance(): Observable<any[]> {
-      //const employeeId = 101;
   
       console.log('Calling URL:', `${this.url}/getByEmployeeid/${this.emp.employeeId}`); // Check the constructed URL
        return this.http.get<any[]>(`${this.url}/getByEmployeeid/${this.emp.employeeId}`);
