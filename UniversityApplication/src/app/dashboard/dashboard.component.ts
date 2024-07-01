@@ -11,41 +11,42 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class DashboardComponent implements OnInit {
 
 
-  constructor(private service: DashbordService){}
-  todayBirthday:any;
-  nextSevendays:any;
-  image:string =''
-  imagePost:any;
-  postsList:any;
+  constructor(private service: DashbordService) { }
 
+  todayAnniversaryCount: number = 0;
+  todayAnniversary: any;
+  nextSevendaysAnniversarys: any;
+  todayBirthday: any;
+  nextSevendaysBirthday: any;
+  todayBirthdayCount: number = 0;
+
+  noBirthdayMessage:String=''
   ngOnInit(): void {
     this.fetchworkFromHome();
     this.fethHoliday();
     this.fetchleaveData();
-
-    this.uploadImage();
-    this.getBirthdayAndAfterSevenDaysLIst();
-
- 
+    this.getBirthdayAndAfterSevenDaysList();
+    this.getAnniversaryAndAfterSevenDaysList();
     this.convertImageToBase64('assets/your-image.jpg');
   }
-  openHoliday(): void {
-    this.service.openDialog();
-  }
-  workFromHomeList:any;
-  holidayList:any;
-  holiday:Holiday={
+ 
+  workFromHomeList: any;
+  holidayList: any;
+  holiday: Holiday = {
     id: 12,
-    dateOfHoliday:"",
-    description:"",
-    imageName:""
+    dateOfHoliday: "",
+    description: "",
+    imageName: ""
   }
-  LeaveResponse:any;
+  LeaveResponse: any;
   totalAvailableLeave = 12;
   selectedTab: string = 'organization';
   selectedContent: string = 'announcement';
   currentDate = new Date();
-  
+
+  openHoliday(): void {
+    this.service.openDialog();
+  }
   selectTab(tab: string) {
     this.selectedTab = tab;
   }
@@ -55,28 +56,29 @@ export class DashboardComponent implements OnInit {
     this.selectedContent = content;
   }
 
-  fetchworkFromHome(){
+  fetchworkFromHome() {
     this.service.getWorkFromHome().subscribe(
-      response => {this.workFromHomeList = response;
+      response => {
+        this.workFromHomeList = response;
         this.workFromHomeList = this.workFromHomeList.result;
       }
     )
   }
-  
-  fethHoliday(){
+
+  fethHoliday() {
     this.service.getHolidays().subscribe(
       response => {
         this.holidayList = response;
         this.holidayList = this.holidayList.result;
         this.holiday = this.holidayList[0];
-        console.log("fetch HOliday data: ",this.holidayList)
+        console.log("fetch HOliday data: ", this.holidayList)
         this.convertImageToBase64(this.holidayList[0].imageBase64)
       }
     )
   }
-   base64Image!: string;
-   currentHolidayIndex = 0;
-   updateCurrentHoliday() {
+  base64Image!: string;
+  currentHolidayIndex = 0;
+  updateCurrentHoliday() {
     this.holiday = this.holidayList[this.currentHolidayIndex];
     this.convertImageToBase64(this.holidayList[this.currentHolidayIndex].imageBase64);
   }
@@ -86,14 +88,14 @@ export class DashboardComponent implements OnInit {
       const canvas = document.createElement('canvas');
       canvas.width = img.width;
       canvas.height = img.height;
-  
+
       const ctx = canvas.getContext('2d');
       ctx?.drawImage(img, 0, 0); // Draw the entire image starting from (0, 0)
-  
+
       // Convert canvas content to base64 URL and assign to base64Image
       this.base64Image = canvas.toDataURL('image/jpeg');
     };
-    
+
     // Set src attribute of the image to load from the base64 string directly
     img.src = 'data:image/jpeg;base64,' + imagePath;
   }
@@ -110,10 +112,10 @@ export class DashboardComponent implements OnInit {
       this.updateCurrentHoliday();
     }
   }
-  fetchleaveData(){
+  fetchleaveData() {
     this.service.getLeaveData().subscribe(
-      response =>{
-        console.log("leave data:- ",response);
+      response => {
+        console.log("leave data:- ", response);
         this.LeaveResponse = response;
         this.LeaveResponse = this.LeaveResponse.result;
         this.totalAvailableLeave = this.extractAvailablePaidLeave(this.totalAvailableLeave);
@@ -121,53 +123,81 @@ export class DashboardComponent implements OnInit {
     )
   }
 
-  extractAvailablePaidLeave(data:any){
-    for(let leaveData of data){
-      if(leaveData.leaveType==="Paid Leave"){
+  extractAvailablePaidLeave(data: any) {
+    for (let leaveData of data) {
+      if (leaveData.leaveType === "Paid Leave") {
         return leaveData.availableLeave;
       }
     }
   }
-  uploadImage()
-  {
-    this.service.getPosts().subscribe(
-         
-       response =>{
-           console.log(response);
-           this.postsList=response;
-           let img =this.postsList.result[0].base64Image;
-          
-            this.image = 'data:image/png;base64,' + img;
-          
-       }
-    )
-  }
 
-  getBirthdayAndAfterSevenDaysLIst()
-  {
+  getBirthdayAndAfterSevenDaysList() {
+
     this.service.getBirthdays().subscribe(
 
-      (response: any) =>{
+      (response: any) => {
 
-               this.todayBirthday=response.result[0].TodayBirthdays;
-               this.nextSevendays=response.result[0].NextSevenDaysBirthdays;
-         console.log("Birthday and holidays ",response.result[0].TodayBirthdays);
+        this.todayBirthday = response.result[0].TodayBirthdays;
+        this.nextSevendaysBirthday = response.result[0].NextSevenDaysBirthdays;
+        this.todayBirthdayCount = this.todayBirthday.length;
       }
-        );
-        
+     
+    );
+    if(this.todayBirthday=== 0)
+      {
+        this.noBirthdayMessage ='No birthdays today';
+      }
   }
-    
-    
-  
-  
+
+  getAnniversaryAndAfterSevenDaysList() {
+
+    this.service.getAnniversary().subscribe(
+
+      (response: any) => {
+             console.log("Annivwersary",response);
+        this.todayAnniversary = response.result[0].TodayAnniversary;
+        this.nextSevendaysAnniversarys = response.result[0].NextSevenDaysAnniversary;
+        this.todayAnniversaryCount = this.todayAnniversary.length;
+        console.log(this.nextSevendaysAnniversarys);
+        
+      }
+    );
+  }
+  getBirthdayDisplayText(birthday: string): string {
+    const birthdayDate = new Date(birthday);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    if (this.isSameDay(birthdayDate, tomorrow)) {
+      return 'Tomorrow';
+    } else {
+      return this.formatDate(birthdayDate);
+    }
+  }
+
+  private isSameDay(date1: Date, date2: Date): boolean {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
+  }
+
+  private formatDate(date: Date): string {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
+    return `${date.getDate()} ${months[date.getMonth()]}`;
+  }
+
   public chartOptions1 = {
-    series: [12-this.totalAvailableLeave, 12], 
+    series: [12 - this.totalAvailableLeave, 12],
     chart: {
       type: 'donut',
       width: 150,
       height: 220
     },
-    labels: ['Consumed Leaves','Available Leaves'],
+    labels: ['Consumed Leaves', 'Available Leaves'],
     colors: ['#cdfaf6', '#1eebe7'],
     fill: {
       type: 'solid',
@@ -195,7 +225,7 @@ export class DashboardComponent implements OnInit {
       x: {
         show: true,
         formatter: function (val: any, opts: any) {
-          return opts.w.config.labels[opts.seriesIndex] +' '+ val;
+          return opts.w.config.labels[opts.seriesIndex] + ' ' + val;
         }
       }
     },
@@ -220,5 +250,5 @@ export class DashboardComponent implements OnInit {
   };
 
 
-  
+
 }

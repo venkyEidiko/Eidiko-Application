@@ -153,7 +153,7 @@ mat-card-content {
   flex-direction: row;
   list-style: none;
   padding: 0;
-  gap: 10px;
+  gap: 8px;
   border-bottom: 1px solid #A2A9B4;
 }
 
@@ -240,78 +240,150 @@ mat-card-content {
 .member small{
   margin-left: 11px;
 }
-/* Add css for birthdays and anniversaries */
+
+/* Add css for birthdays and next Seven birthdays */
 
 
-.birthday-after-7-days {
-  margin-top: 20px;
-}
-
-
-.Today-birthday h1 {
-  font-size: 1.5em;
-  color: #ff6347;
-  margin-bottom: 10px;
-}
-
-.After-7days h1 {
-  font-size: 1.5em;
-  color: #4682b4;
-  margin-bottom: 10px;
-}
-/* Base styles for the Today-birthday section */
-.Today-birthday {
+.todayBirthdays-container {
   padding: 0px;
   border-radius: 5px;
   margin-bottom: 20px;
-
 }
 
-.Today-birthday h4 {
-  font-size: 1.5em;
-  color: #29bfda;
-  margin-bottom: 15px;
-}
-
-/* Flexbox container for the list of birthdays */
-.birthday-container {
+.today-birthdays {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
 }
 
-/* Individual birthday item styles */
-.birthday-item {
+.nextSeven-birthdays {
   display: flex;
-  align-items: center;
-  text-align: center;
-  flex-direction: column;
-
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-/* Profile circle styles */
-.profile-circle {
+.todayBirthdays-container h4 {
+  font-size: 1.2em;
+  color: #d6e6e9;
+}
+
+.nextSevenBirthdays-container h6 {
+  font-size: 1.0em;
+  color: #d6e6e9;
+}
+
+.today-birthdays-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: column;
+}
+
+.nextSeven-birthdays-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: column;
+}
+
+.birthdays-profile {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  /* background-color: #ddd; */
-  border:  2px solid white;
+  background-color: #c8cae2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-right: 10px;
+  background-repeat: no-repeat;
+  margin-bottom: 10px;
+}
+
+.birthdays-profile img {
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.nextSeven-bithdays{
+  text-align: center;
+  font-size: 12px;
+}
+
+/* Added css for today anniversary and next 7 days */
+
+.todayAnniversary-container {
+  padding: 0px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+
+}
+.nextSeven-Anniversary{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.today-Anniversary{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.todayAnniversary-container h4 {
+  font-size: 1.2em;
+  color: #d6e6e9;
+}
+.nextSevenAnniversay-container h6 {
+  font-size: 1.0em;
+  color: #d6e6e9;
+}
+
+.today-Anniversary-items{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: column;
+}
+
+.nextSeven-Anniversary-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: column;
+  
+}
+.Anniversary-profile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  /* border:  2px solid white; */
+  background-color: #c8cae2;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   margin-right: 10px; /* Adjusted margin for spacing between image and name */
 background-repeat: no-repeat;
+margin-bottom: 10px;
 }
 
-.profile-circle img {
-  width: 100%;
-  height: 100%;
+.Anniversary-profile img {
+  width: 90%;
+  height: 90%;
   object-fit: cover;
+  border-radius: 50%;
 }
+.nextSeven-years{
 
-/* Name span styles */
-.Today-birthday span {
-  font-size: 1em;
-  color: #c3c6e9;
+  text-align: center;
+  font-size: 12px;
+}
+.extra-Anniversary-items{
+  margin-top: 30px;
+  margin-left: -30px;
+}
+.anniversary-names span{
+
+  text-align: center;
+  
 }

@@ -73,10 +73,12 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { HolidayDialogComponent } from './holiday-dialog/holiday-dialog.component'; // Import CarouselModule
 import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.component';
+import { TruncatePipe } from './turncate.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
+    TruncatePipe,
     LoginComponent,
     CalenderComponent,
     SidenavComponent,
@@ -122,6 +124,7 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
     HolidayDialogComponent,
 
     CheckboxdropdownComponent,
+      
 
 
     
