@@ -8,7 +8,7 @@
     width: 450px;
 
     height: 100%; 
-    background-color: #fff;
+    background-color:rgb(51, 61, 78);
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     
 }
@@ -113,6 +113,7 @@
   .note,.note1 
   {
     font-size:12px;
+   
   }
   .note1{
     padding:7px;

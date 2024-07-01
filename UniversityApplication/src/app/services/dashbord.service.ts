@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { LoginService } from './login.service';
 import { HolidayDialogComponent } from '../holiday-dialog/holiday-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
-
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class DashbordService {
   private apiUrl1 = 'http://10.0.0.60:8080/posts/savelike'; 
   private apiUrl2='http://10.0.0.60:8080/posts/saveComment'
-  private apiUrl3='http://10.0.0.60/8080/posts/saveimage'
+  private apiUrl3='http://10.0.0.60:8080/posts/saveimage'
+  private apiUrl4='http://10.0.0.60:8080/posts/savelike/${postId}'
 
   constructor(private http: HttpClient, private loginService: LoginService, private dialog: MatDialog,) { }
   url = "http://10.0.0.38:8082/api/";
@@ -40,7 +41,7 @@ export class DashbordService {
 
   getAllPosts():Observable<any[]>
   {
-    return this.http.get<any>("http://10.0.0.38:8082/posts/getAllPostByTime")
+    return this.http.get<any>("http://10.0.0.60:8080/posts/getAllPostByTime")
   }
   saveLike(postId: number, emojiId: number, empId: number): Observable<any> {
     const url = `${this.apiUrl1}/${postId}`;
@@ -78,9 +79,12 @@ export class DashbordService {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // if (mainContent) {
-      //   this.renderer.removeClass(mainContent, 'blur');
-      // }
+      
     });
   }
+  
+   getPostsAndLikes(): Observable<any> {
+    console.log("inside service")
+    return this.http.get<any>('http://10.0.0.60:8080/posts/getAllPostByTime');
+}
 }

@@ -119,7 +119,7 @@
             [ngClass]="{'expanded': isCardExpanded}">
            
                    
-                   <div >
+                   <div>
     
     <button title="Mention Employee" (click)="insertSymbol('@')"
     style="background-color:rgb(51, 61, 78); ;border-radius:10px;font-size:12px;height:32px;"><i class="fas fa-at"></i></button>
@@ -181,9 +181,21 @@
               <img src="../../assets/profileimage.png" style="height: 55px; width: 60px; border-radius: 30px; margin-top: 10px; margin-bottom: 10px;">
               <p style="margin-top:35px;margin-left:10px">{{ image.timeStamp }}</p>
             </div>
+            <!-- <div *ngFor="let post of posts">
+  <h3>{{ post.description }}</h3>
+  <p>Likes:</p>
+  <ul>
+    <ng-container *ngFor="let like of post.likes">
+      <li *ngIf="like.postId === post.postId">
+        Like ID: {{ like.likeId }}, Emoji: {{ like.emoji }}, Employee ID: {{ like.empId }}
+      </li>
+    </ng-container>
+  </ul>
+</div> -->
             <p>{{image.description}}</p>
-            <p style="color:dodgerblue">{{image.mentionEmployee}}</p>
-            <img [src]="image.base64Image" alt="Image from base64" style="margin-bottom:20px">
+
+            <p style="color:dodgerblue">{{image.mentionEmployee.join(',')}}</p>
+            <img [src]="image.base64Image" alt="Image from base64" style="margin-bottom:20px;max-width:600px">
             <div style="display: flex; gap: 30px;">
               <div class="hover-icons">
                 <i class="fa-regular fa-thumbs-up" (click)="onEmojiClick(image.postId, 1)"></i>Like
@@ -203,9 +215,21 @@
                 <textarea rows="3" cols="50" placeholder="Write a comment..." name="comment" ngModel
                           (keydown.enter)="postComment1(i, commentForm.value.comment, $event)">
                 </textarea>
-                <button type="submit" style="display:none;"></button> <!-- Hide submit button -->
+                <button type="submit" style="display:none;"></button> 
               </form>
+              <div *ngFor="let post of posts">
+                <h3>{{ post.description }}</h3>
+                <p>Likes:</p>
+                <ul>
+                  <ng-container *ngFor="let like of post.likes">
+                    <li>
+                      Like ID: {{ like.likeId }}, Emoji: {{ like.emoji }}, Employee ID: {{ like.empId }}
+                    </li>
+                  </ng-container>
+                </ul>
+              </div> 
             </div>
+         
                 </mat-card-content>
         </mat-card>
       </div>

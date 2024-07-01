@@ -10,6 +10,8 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+post: any;
+like: any;
 
   constructor(private service: DashbordService,private dashservice:DashbordService,private loginService:LoginService){
     this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
@@ -20,12 +22,14 @@ export class DashboardComponent implements OnInit {
     this.fethHoliday();
     this.fetchleaveData();
     this.loadAllPosts();
+    this.fetchPostsAndLikes();
   }
  // employeeId=this.loginService.getEmployeeData().employeeId;
   imageSrcList: { base64Image: string, timeStamp: string ,description:string,postId:number,mentionEmployee:any}[] = [];
   showIcons: boolean = false;
   isCardExpanded: boolean = false;
   insertedSymbol: string = ''; 
+  posts: any[] = [];
 
   insertSymbol(symbol: string) {
     this.insertedSymbol = symbol;
@@ -109,11 +113,11 @@ export class DashboardComponent implements OnInit {
       const ctx = canvas.getContext('2d');
       ctx?.drawImage(img, 0, 0); // Draw the entire image starting from (0, 0)
   
-      // Convert canvas content to base64 URL and assign to base64Image
+      
       this.base64Image = canvas.toDataURL('image/jpeg');
     };
     
-    // Set src attribute of the image to load from the base64 string directly
+    
     img.src = 'data:image/jpeg;base64,' + imagePath;
   }
   previousHoliday() {
@@ -129,6 +133,23 @@ export class DashboardComponent implements OnInit {
       this.updateCurrentHoliday();
     }
   }
+  fetchPostsAndLikes(): void {
+    this.service.getPostsAndLikes().subscribe(
+      (response) => {
+        this.posts = response.result.map((post: { postId: any; }) => ({
+          ...post,
+          likes: response.likes.filter((like: { postId: any; }) => like.postId === post.postId)
+        }));
+  
+        console.log("Posts with Likes:", this.posts);
+      },
+      (error) => {
+        console.error('Error fetching posts:', error);
+      }
+    );
+  }
+  
+ 
   fetchleaveData(){
     this.service.getLeaveData().subscribe(
       response =>{
@@ -144,10 +165,12 @@ export class DashboardComponent implements OnInit {
       console.log("posts ",response);
       if (response.status === 'SUCCESS') {
         this.imageSrcList = response.result.map((item: any) => ({
+          
           base64Image: 'data:image/jpeg;base64,' + item.base64Image,
           timeStamp: this.formatTime(item.timeStamp),
           description:item.description,
           postId:item.postId,
+          
           mentionEmployee:item.mentionEmployee
 
         }));
@@ -183,7 +206,7 @@ formatTime(timestamp: string): string {
   // }
   onEmojiClick(postId: number, emojiId: number): void {
     
-   const empId=1110;
+   const empId=1111;
     this.service.saveLike(postId, emojiId, empId).subscribe(
       response => {
         console.log('Like saved successfully', response);
@@ -196,12 +219,15 @@ formatTime(timestamp: string): string {
     );
   }
 
+  
+  
+
   postComment1(index: number, comment: string, event?: Event): void {
     if (event instanceof KeyboardEvent && event.key !== 'Enter') {
       return;
     }
 
-    const empId = 1110; // Replace with actual employee ID
+    const empId = 1111; 
     const postId = this.imageSrcList[index]?.postId;
     this.service.postComment(postId, comment, empId).subscribe(
       response => {
