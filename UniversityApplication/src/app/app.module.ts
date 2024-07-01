@@ -17,7 +17,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule } from '@angular/material/card'
@@ -73,10 +72,13 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { HolidayDialogComponent } from './holiday-dialog/holiday-dialog.component'; // Import CarouselModule
 import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.component';
+import { TruncatePipe } from './turncate.pipe';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    TruncatePipe,
     LoginComponent,
     CalenderComponent,
     SidenavComponent,
@@ -86,7 +88,7 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
     ForgotpasswordComponent,
     ResetpasswordComponent,
     ResetPasswordConfirmationComponent,
-    DashboardComponent,
+     DashboardComponent,
     WelcomeComponent,
     MeComponent,
     InboxComponent,
@@ -122,12 +124,13 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
     HolidayDialogComponent,
 
     CheckboxdropdownComponent,
+      
 
 
     
   ],
   imports: [
-  
+
     MatDatepickerModule,
     BrowserModule,
     MatButtonModule,

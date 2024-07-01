@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DashbordService } from '../services/dashbord.service';
 import { Holiday } from '../holiday';
+
 import { timestamp } from 'rxjs';
 import { LoginService } from '../services/login.service';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -13,14 +15,28 @@ export class DashboardComponent implements OnInit {
 post: any;
 like: any;
 
-  constructor(private service: DashbordService,private dashservice:DashbordService,private loginService:LoginService){
+
+  constructor(private service: DashbordService,private loginService:LoginService){
     this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
   }
 
+
+  
+
+  todayAnniversaryCount: number = 0;
+  todayAnniversary: any;
+  nextSevendaysAnniversarys: any;
+  todayBirthday: any;
+  nextSevendaysBirthday: any;
+  todayBirthdayCount: number = 0;
+
+  noBirthdayMessage:String=''
   ngOnInit(): void {
     this.fetchworkFromHome();
     this.fethHoliday();
     this.fetchleaveData();
+    this.getAnniversaryAndAfterSevenDaysList();
+    this.getBirthdayAndAfterSevenDaysList();
     this.loadAllPosts();
     this.fetchPostsAndLikes();
   }
@@ -52,16 +68,18 @@ like: any;
     dateOfHoliday:"",
     description:"",
     imageName:"",
-  
   }
-  LeaveResponse:any;
+  LeaveResponse: any;
   totalAvailableLeave = 12;
   selectedTab: string = 'organization';
   selectedContent: string = 'announcement';
   currentDate = new Date();
+
+
   
 
   
+
   selectTab(tab: string) {
     this.selectedTab = tab;
   }
@@ -78,28 +96,29 @@ like: any;
     this.selectedContent = content;
   }
 
-  fetchworkFromHome(){
+  fetchworkFromHome() {
     this.service.getWorkFromHome().subscribe(
-      response => {this.workFromHomeList = response;
+      response => {
+        this.workFromHomeList = response;
         this.workFromHomeList = this.workFromHomeList.result;
       }
     )
   }
-  
-  fethHoliday(){
+
+  fethHoliday() {
     this.service.getHolidays().subscribe(
       response => {
         this.holidayList = response;
         this.holidayList = this.holidayList.result;
         this.holiday = this.holidayList[0];
-        console.log("fetch HOliday data: ",this.holidayList)
+        console.log("fetch HOliday data: ", this.holidayList)
         this.convertImageToBase64(this.holidayList[0].imageBase64)
       }
     )
   }
-   base64Image!: string;
-   currentHolidayIndex = 0;
-   updateCurrentHoliday() {
+  base64Image!: string;
+  currentHolidayIndex = 0;
+  updateCurrentHoliday() {
     this.holiday = this.holidayList[this.currentHolidayIndex];
     this.convertImageToBase64(this.holidayList[this.currentHolidayIndex].imageBase64);
   }
@@ -113,11 +132,11 @@ like: any;
       const ctx = canvas.getContext('2d');
       ctx?.drawImage(img, 0, 0); // Draw the entire image starting from (0, 0)
   
-      
+      // Convert canvas content to base64 URL and assign to base64Image
       this.base64Image = canvas.toDataURL('image/jpeg');
     };
     
-    
+    // Set src attribute of the image to load from the base64 string directly
     img.src = 'data:image/jpeg;base64,' + imagePath;
   }
   previousHoliday() {
@@ -151,9 +170,10 @@ like: any;
   
  
   fetchleaveData(){
+
     this.service.getLeaveData().subscribe(
-      response =>{
-        console.log("leave data:- ",response);
+      response => {
+        console.log("leave data:- ", response);
         this.LeaveResponse = response;
         this.LeaveResponse = this.LeaveResponse.result;
         this.totalAvailableLeave = this.extractAvailablePaidLeave(this.totalAvailableLeave);
@@ -161,7 +181,7 @@ like: any;
     )
   }
   loadAllPosts(): void {
-    this.dashservice.getAllPosts().subscribe((response: any) => {
+    this.service.getAllPosts().subscribe((response: any) => {
       console.log("posts ",response);
       if (response.status === 'SUCCESS') {
         this.imageSrcList = response.result.map((item: any) => ({
@@ -180,6 +200,7 @@ like: any;
     });
   }
 
+
 formatTime(timestamp: string): string {
   const date = new Date(timestamp);
   return date.toLocaleTimeString();
@@ -188,10 +209,72 @@ formatTime(timestamp: string): string {
   extractAvailablePaidLeave(data:any){
     for(let leaveData of data){
       if(leaveData.leaveType==="Paid Leave"){
+
         return leaveData.availableLeave;
       }
     }
   }
+
+
+  getBirthdayAndAfterSevenDaysList() {
+
+    this.service.getBirthdays().subscribe(
+
+      (response: any) => {
+
+        this.todayBirthday = response.result[0].TodayBirthdays;
+        this.nextSevendaysBirthday = response.result[0].NextSevenDaysBirthdays;
+        this.todayBirthdayCount = this.todayBirthday.length;
+      }
+     
+    );
+    if(this.todayBirthday=== 0)
+      {
+        this.noBirthdayMessage ='No birthdays today';
+      }
+  }
+
+  getAnniversaryAndAfterSevenDaysList() {
+
+    this.service.getAnniversary().subscribe(
+
+      (response: any) => {
+             console.log("Annivwersary",response);
+        this.todayAnniversary = response.result[0].TodayAnniversary;
+        this.nextSevendaysAnniversarys = response.result[0].NextSevenDaysAnniversary;
+        this.todayAnniversaryCount = this.todayAnniversary.length;
+        console.log("next seven annevewsiry ",this.nextSevendaysAnniversarys);
+        
+      }
+    );
+  }
+  getBirthdayDisplayText(birthday: string): string {
+    const birthdayDate = new Date(birthday);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    if (this.isSameDay(birthdayDate, tomorrow)) {
+      return 'Tomorrow';
+    } else {
+      return this.formatDate(birthdayDate);
+    }
+  }
+
+  private isSameDay(date1: Date, date2: Date): boolean {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
+  }
+
+  private formatDate(date: Date): string {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
+    return `${date.getDate()} ${months[date.getMonth()]}`;
+  }
+
 
   toggleCommentBox(index: number): void {
     this.showCommentBox[index] = !this.showCommentBox[index];
@@ -243,14 +326,15 @@ formatTime(timestamp: string): string {
   
 
   
+
   public chartOptions1 = {
-    series: [12-this.totalAvailableLeave, 12], 
+    series: [12 - this.totalAvailableLeave, 12],
     chart: {
       type: 'donut',
       width: 150,
       height: 220
     },
-    labels: ['Consumed Leaves','Available Leaves'],
+    labels: ['Consumed Leaves', 'Available Leaves'],
     colors: ['#cdfaf6', '#1eebe7'],
     fill: {
       type: 'solid',
@@ -278,7 +362,7 @@ formatTime(timestamp: string): string {
       x: {
         show: true,
         formatter: function (val: any, opts: any) {
-          return opts.w.config.labels[opts.seriesIndex] +' '+ val;
+          return opts.w.config.labels[opts.seriesIndex] + ' ' + val;
         }
       }
     },
@@ -303,5 +387,5 @@ formatTime(timestamp: string): string {
   };
 
 
-  
+
 }
