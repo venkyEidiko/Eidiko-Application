@@ -1,21 +1,23 @@
 .hover-icons {
   position: relative;
 }
+
 .org-content-item {
   transition: height 0.3s ease;
 }
-.org-content{
-  cursor:text;
+
+.org-content {
+  cursor: text;
 }
 
 .org-content-item.expanded {
-  height: 250px; 
-  cursor:text;
+  height: 250px;
+  cursor: text;
 }
 
 
 .like-icons {
-  display: none; 
+  display: none;
   position: absolute;
   top: 100%;
   left: 0;
@@ -28,53 +30,58 @@
 
 .hover-icons:hover .like-icons {
   display: flex;
-  flex-direction: row; 
-  gap: 10px; 
+  flex-direction: row;
+  gap: 10px;
 }
 
 .like-icons p {
-  margin: 0; 
+  margin: 0;
   cursor: pointer;
 }
 
 .like-icons p i {
-  margin-right: 5px; 
+  margin-right: 5px;
 }
 
- .dashboard-container {
+.dashboard-container {
   display: flex;
   gap: 20px;
   padding: 15px;
   height: 100%;
   overflow-y: scroll;
-  
- 
+
+
 }
-.card-item-header{
+
+.card-item-header {
   display: flex;
   justify-content: space-between;
 }
-.card-item-header a{
- text-decoration: none;
- color: dodgerblue;
+
+.card-item-header a {
+  text-decoration: none;
+  color: dodgerblue;
 }
+
 .card-navigation {
 
   color: #9275c9;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  
- 
+
+
 }
 
 .card-info {
   color: #130330;
   text-align: center;
-  margin-top:  30px;
+  margin-top: 30px;
 
 }
-.quick-access, .org-div {
+
+.quick-access,
+.org-div {
   padding: 15px;
 }
 
@@ -94,7 +101,10 @@
   gap: 20px;
 }
 
-.card-item, .card-item1, .card-item2 {
+/* for holiday img here */
+.card-item,
+.card-item1,
+.card-item2 {
   background-color: #333d4e;
   border: 0.1px solid #525455;
   height: 25vh;
@@ -102,7 +112,7 @@
   padding: 10px;
   box-sizing: border-box;
   background-repeat: no-repeat;
-  background-size: 412px  147px;
+  background-size: 100% 100%;
 }
 
 .card-item1 {
@@ -116,21 +126,23 @@
 .card-item2 .charts {
   display: flex;
   flex-direction: row;
-  gap: 10px; 
+  gap: 10px;
 }
 
 .card-item2 .charts app-donutchart {
   width: 120px;
-  height: 120px; 
+  height: 120px;
 }
 
 mat-card {
   display: flex;
   flex-direction: column;
 }
-.card-content{
+
+.card-content {
   width: 100%;
 }
+
 mat-card-content {
   display: flex;
   flex-direction: column;
@@ -165,7 +177,8 @@ mat-card-content {
   border-radius: 5%;
   cursor: pointer;
 }
-.org-buttons button:hover{
+
+.org-buttons button:hover {
   border: 1px solid #9275c9;
   background-color: #3a3042;
 }
@@ -177,7 +190,8 @@ mat-card-content {
   gap: 20px;
 }
 
-.org-card, .org-card-short {
+.org-card,
+.org-card-short {
   background-color: #333d4e;
   border: 0.1px solid #525455;
   width: 50vw;
@@ -248,42 +262,128 @@ mat-card-content {
 
 .donut-container {
   position: relative;
-  width: 100px; 
+  width: 100px;
   height: 100px;
   margin-left: 150px;
   margin-top: -45px;
 }
+
 .donut-text {
   position: absolute;
   top: 68%;
   left: 72%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color:white;
-  font-size: 12px; 
+  color: white;
+  font-size: 12px;
   pointer-events: none;
- 
+
 }
-.member{
+
+.member {
   width: 50px;
   height: 50px;
 }
-.member img{
+
+.member img {
   height: 50px;
   width: 50px;
   border-radius: 50%;
 }
-.members{
+
+.members {
   display: flex;
   flex-direction: row;
-  gap:15px;
+  gap: 15px;
 }
-.member small{
+
+.member small {
   margin-left: 11px;
 }
 
-/* Add css for birthdays and next Seven birthdays */
+/* emoji css */
+.emoticon-picker {
+  position: absolute;
+  background-color: #333d4e;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 350px;
+  max-height: 400px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  /* Hide scrollbar in IE and Edge */
+  scrollbar-width: none;
+  /* Hide scrollbar in Firefox */
+  overflow-x: hidden;
+}
 
+
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  position: relative;
+}
+
+
+emoji-mart {
+  display: block;
+}
+
+
+.emoji-category-buttons {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+
+.emoji-picker-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+
+.emoji-picker-header button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+.emoji-picker-content {
+  display: none;
+}
+
+
+.emoji-picker-content.active {
+  display: block;
+}
+
+/* text area  */
+.textarea {
+  min-width: 700px;
+  width: auto;
+  height: auto;
+  min-height: 100px;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  outline: none;
+  resize: none;
+  border-radius: 4px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  /* Hide scrollbar in IE and Edge */
+  scrollbar-width: none;
+  position: relative;
+}
+
+/* Add css for birthdays and next Seven birthdays */
 
 .todayBirthdays-container {
   padding: 0px;
@@ -347,7 +447,8 @@ mat-card-content {
   object-fit: cover;
   border-radius: 50%;
 }
-.nextSeven-bithdays{
+
+.nextSeven-bithdays {
   text-align: center;
   font-size: 12px;
 }
@@ -360,26 +461,30 @@ mat-card-content {
   margin-bottom: 20px;
 
 }
-.nextSeven-Anniversary{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-.today-Anniversary{
+
+.nextSeven-Anniversary {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
 }
+
+.today-Anniversary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
 .todayAnniversary-container h4 {
   font-size: 1.2em;
   color: #d6e6e9;
 }
+
 .nextSevenAnniversay-container h6 {
   font-size: 1.0em;
   color: #d6e6e9;
 }
 
-.today-Anniversary-items{
+.today-Anniversary-items {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -391,8 +496,9 @@ mat-card-content {
   flex-wrap: wrap;
   align-items: center;
   flex-direction: column;
-  
+
 }
+
 .Anniversary-profile {
   width: 50px;
   height: 50px;
@@ -403,9 +509,10 @@ mat-card-content {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-right: 10px; /* Adjusted margin for spacing between image and name */
-background-repeat: no-repeat;
-margin-bottom: 10px;
+  margin-right: 10px;
+  /* Adjusted margin for spacing between image and name */
+  background-repeat: no-repeat;
+  margin-bottom: 10px;
 }
 
 .Anniversary-profile img {
@@ -414,17 +521,20 @@ margin-bottom: 10px;
   object-fit: cover;
   border-radius: 50%;
 }
-.nextSeven-years{
+
+.nextSeven-years {
 
   text-align: center;
   font-size: 12px;
 }
-.extra-Anniversary-items{
+
+.extra-Anniversary-items {
   margin-top: 30px;
   margin-left: -30px;
 }
-.anniversary-names span{
+
+.anniversary-names span {
 
   text-align: center;
-  
+
 }

@@ -83,7 +83,7 @@ export class RegistrationComponent implements OnInit {
       phoneNu: formValues.phoneNu,
       employeeId: formValues.employeeId,
       gender: formValues.gender,
-      role: { roleName: formValues.role },
+      role: {roleName: formValues.role },
       addresses: addresses
     };
     console.log(registrationData);

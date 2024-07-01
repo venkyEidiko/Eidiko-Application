@@ -69,9 +69,9 @@ import { ShiftRequestFormComponent } from './shift-request-form/shift-request-fo
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
 import { HolidayDialogComponent } from './holiday-dialog/holiday-dialog.component'; // Import CarouselModule
 import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.component';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { TruncatePipe } from './turncate.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
@@ -130,7 +130,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     
   ],
   imports: [
-
+    PickerComponent,
     MatDatepickerModule,
     BrowserModule,
     MatButtonModule,
