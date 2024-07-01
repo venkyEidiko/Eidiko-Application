@@ -76,10 +76,10 @@
                 <mat-card-content>
                     Consumed Leave Types
                     <mat-icon class="info-icon">info</mat-icon>
-                    <div class="consumed12">
-                        <div class="donut-text1">Leave <br /> Types</div>
-                        <app-donut1 [chartOptions]="chartOptions3"></app-donut1>
-                    </div>
+                    <div style="margin-top:3px;margin-left:15px;display:flex;position:relative">
+                             <div style="margin-top:40px;margin-left:115px;">Leave <br /> Types</div>
+                        <app-donut1 class=" d" [chartOptions]="chartOptions3"></app-donut1>
+                           </div>
                 </mat-card-content>
 
             </mat-card>
@@ -100,6 +100,15 @@
                         Comp Offs
                         <span (click)="openDialog1()">View details</span>
                     </div>
+                    <!-- <div class="donut-container">
+         <div class="donut-text1">{{this.availableCompOffs}} Days Available</div>
+                        <app-donut1 [chartOptions]="chartOptions4">
+
+
+                        </app-donut1>
+                    </div> -->
+
+                    
 
                     <div class="balance-line1">
                         <hr />
@@ -110,18 +119,19 @@
                         <div class="available">
 
                             Available <br />
-                            0 Day
+                            <!-- {{this.availableCompOffs}} -->
+                             0 days
 
                         </div>
                         <div class="line"></div>
                         <div class="consumed">
-                            Consumed <br />
-                            0 day
+                            Consumed <br />0 Days
+                            <!-- {{this.consumedCompOffs}} -->
                         </div>
                     </div>
                     <hr class="line-break">
                     <div class="annual quota">
-                        Annual Quota <br /> 0 Day
+                        Annual Quota <br /> 0 Days
                     </div>
                 </mat-card-content>
             </mat-card>
@@ -133,7 +143,7 @@
                     </div>
                     <div class="donut-container">
 
-                        <div class="donut-text">{{this.availableLeaves}} Days Available</div>
+                        <div class="donut-text">{{this.availablePaidLeave}} Days Available</div>
                         <app-donut1 [chartOptions]="chartOptions1">
 
 
@@ -145,12 +155,12 @@
                     <div class="compoff-leaves">
                         <div class="available">
                             Available <br />
-                            {{availableLeaves}} days
+                            {{availablePaidLeave}} days
                         </div>
                         <div class="line"></div>
                         <div class="consumed">
                             Consumed <br />
-                            {{consumedLeaves}} days
+                            {{consumedPaidLeave}} days
                         </div>
                     </div>
                     <hr class="line-break">
@@ -183,7 +193,7 @@
                         <div class="line"></div>
                         <div class="consumed">
                             Consumed <br />
-                            {{this.consumedLeaves}} days
+                            {{this.consumedUnpaidLeave}} days
                         </div>
                     </div>
                     <hr class="line-break">
@@ -216,7 +226,7 @@
                                     Select All
                                 </mat-checkbox>
                             </mat-option>
-                            <mat-option *ngFor="let status of statusOptions" [value]="status"
+                            <mat-option *ngFor="let status of statusOptions"
                                 (click)="$event.stopPropagation()">
                                 <mat-checkbox [checked]="isStatusSelected(status)" (change)="onStatusSelected(status)">
                                     {{ status }}

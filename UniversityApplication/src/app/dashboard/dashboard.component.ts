@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DashbordService } from '../services/dashbord.service';
 import { Holiday } from '../holiday';
+import { timestamp } from 'rxjs';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,25 +10,49 @@ import { Holiday } from '../holiday';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+post: any;
+like: any;
 
-  constructor(private service: DashbordService){}
+  constructor(private service: DashbordService,private dashservice:DashbordService,private loginService:LoginService){
+    this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
+  }
 
   ngOnInit(): void {
     this.fetchworkFromHome();
     this.fethHoliday();
     this.fetchleaveData();
-    this.convertImageToBase64('assets/your-image.jpg');
+    this.loadAllPosts();
+    this.fetchPostsAndLikes();
   }
+ // employeeId=this.loginService.getEmployeeData().employeeId;
+  imageSrcList: { base64Image: string, timeStamp: string ,description:string,postId:number,mentionEmployee:any}[] = [];
+  showIcons: boolean = false;
+  isCardExpanded: boolean = false;
+  insertedSymbol: string = ''; 
+  posts: any[] = [];
+
+  insertSymbol(symbol: string) {
+    this.insertedSymbol = symbol;
+  }
+
+
+
+  //   this.convertImageToBase64('assets/your-image.jpg');
+  // }
   openHoliday(): void {
     this.service.openDialog();
   }
+
   workFromHomeList:any;
+  showCommentBox: boolean[] = [];
+  
   holidayList:any;
   holiday:Holiday={
     id: 12,
     dateOfHoliday:"",
     description:"",
-    imageName:""
+    imageName:"",
+  
   }
   LeaveResponse:any;
   totalAvailableLeave = 12;
@@ -34,9 +60,18 @@ export class DashboardComponent implements OnInit {
   selectedContent: string = 'announcement';
   currentDate = new Date();
   
+
+  
   selectTab(tab: string) {
     this.selectedTab = tab;
   }
+  expandCard() {
+    this.isCardExpanded = true;
+  }
+  collapseCard() {
+    this.isCardExpanded = false;
+  }
+
 
   showContent(event: Event, content: string) {
     event.preventDefault();
@@ -78,11 +113,11 @@ export class DashboardComponent implements OnInit {
       const ctx = canvas.getContext('2d');
       ctx?.drawImage(img, 0, 0); // Draw the entire image starting from (0, 0)
   
-      // Convert canvas content to base64 URL and assign to base64Image
+      
       this.base64Image = canvas.toDataURL('image/jpeg');
     };
     
-    // Set src attribute of the image to load from the base64 string directly
+    
     img.src = 'data:image/jpeg;base64,' + imagePath;
   }
   previousHoliday() {
@@ -98,6 +133,23 @@ export class DashboardComponent implements OnInit {
       this.updateCurrentHoliday();
     }
   }
+  fetchPostsAndLikes(): void {
+    this.service.getPostsAndLikes().subscribe(
+      (response) => {
+        this.posts = response.result.map((post: { postId: any; }) => ({
+          ...post,
+          likes: response.likes.filter((like: { postId: any; }) => like.postId === post.postId)
+        }));
+  
+        console.log("Posts with Likes:", this.posts);
+      },
+      (error) => {
+        console.error('Error fetching posts:', error);
+      }
+    );
+  }
+  
+ 
   fetchleaveData(){
     this.service.getLeaveData().subscribe(
       response =>{
@@ -108,7 +160,31 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
+  loadAllPosts(): void {
+    this.dashservice.getAllPosts().subscribe((response: any) => {
+      console.log("posts ",response);
+      if (response.status === 'SUCCESS') {
+        this.imageSrcList = response.result.map((item: any) => ({
+          
+          base64Image: 'data:image/jpeg;base64,' + item.base64Image,
+          timeStamp: this.formatTime(item.timeStamp),
+          description:item.description,
+          postId:item.postId,
+          
+          mentionEmployee:item.mentionEmployee
 
+        }));
+      } else {
+        console.error('No result found in the response');
+      }
+    });
+  }
+
+formatTime(timestamp: string): string {
+  const date = new Date(timestamp);
+  return date.toLocaleTimeString();
+}
+  
   extractAvailablePaidLeave(data:any){
     for(let leaveData of data){
       if(leaveData.leaveType==="Paid Leave"){
@@ -116,6 +192,55 @@ export class DashboardComponent implements OnInit {
       }
     }
   }
+
+  toggleCommentBox(index: number): void {
+    this.showCommentBox[index] = !this.showCommentBox[index];
+  }
+
+  // postComment(index: number, event?: Event): void {
+  //   if (event instanceof KeyboardEvent) {
+  //     event.preventDefault(); 
+  //   }
+  //   console.log(`Comment posted for image index: ${index}`);
+  //   this.showCommentBox[index] = false; 
+  // }
+  onEmojiClick(postId: number, emojiId: number): void {
+    
+   const empId=1111;
+    this.service.saveLike(postId, emojiId, empId).subscribe(
+      response => {
+        console.log('Like saved successfully', response);
+
+      },
+      error => {
+        console.error('Error saving like', error);
+
+      }
+    );
+  }
+
+  
+  
+
+  postComment1(index: number, comment: string, event?: Event): void {
+    if (event instanceof KeyboardEvent && event.key !== 'Enter') {
+      return;
+    }
+
+    const empId = 1111; 
+    const postId = this.imageSrcList[index]?.postId;
+    this.service.postComment(postId, comment, empId).subscribe(
+      response => {
+        console.log('Comment posted successfully', response);
+        this.showCommentBox[index] = false; 
+      },
+      error => {
+        console.error('Error posting comment', error);
+      }
+    );
+  }
+
+  
 
   
   public chartOptions1 = {

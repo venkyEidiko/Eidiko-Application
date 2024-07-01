@@ -59,7 +59,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgChartsModule } from 'ng2-charts';
 import { Dialog1Component } from './dialog1/dialog1.component';
 import { CompDialogComponent } from './comp-dialog/comp-dialog.component';
-import { CompoffComponent } from './compoff/compoff.component';
+
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DropdowntableComponent } from './dropdowntable/dropdowntable.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -70,7 +70,7 @@ import { ShiftRequestFormComponent } from './shift-request-form/shift-request-fo
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { CarouselModule } from 'ngx-bootstrap/carousel';
+
 import { HolidayDialogComponent } from './holiday-dialog/holiday-dialog.component'; // Import CarouselModule
 import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.component';
 
@@ -114,7 +114,7 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
     DialogComponent,
     Dialog1Component,
     CompDialogComponent,
-    CompoffComponent,
+    
     DropdowntableComponent,
    
     ShiftRequestFormComponent,
@@ -127,7 +127,7 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
     
   ],
   imports: [
-    CarouselModule,
+  
     MatDatepickerModule,
     BrowserModule,
     MatButtonModule,

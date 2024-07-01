@@ -241,6 +241,12 @@ display: flex;
 margin-right: 8.9%;
 border-radius: 5px;
 border: 1px solid black;
+
+}
+.app-dropdowntable
+{
+height:280px;
+flex-direction: column;
 }
 
 .image-content {
@@ -287,10 +293,10 @@ border: 1px solid black;
 .donut-text {
     position: absolute;
     top: 68%;
-    left: 72%;
+    left: 77%;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: blueviolet;
+    color:white;
     font-size: 12px;
     pointer-events: none;
 
@@ -308,7 +314,12 @@ border: 1px solid black;
 }
 .consumed12
 {
-    margin-left:45px;
+    margin-left:55px;
+}
+.donut-text2
+{
+    top:80%;
+    margin-left:78%
 }
 .filter-buttons
 {
@@ -328,6 +339,10 @@ background-color: #333d4e;
     margin-left: 20px;
     background-color: #333d4e;
     border: none;
+}
+.d
+{
+margin-left:-90px;
 }
 
 @media (max-width: 768px) {
