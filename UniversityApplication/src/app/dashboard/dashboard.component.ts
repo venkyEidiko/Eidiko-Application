@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { DashbordService } from '../services/dashbord.service';
 import { Holiday } from '../holiday';
 
-import { Person,BirthdayResponse } from './dashboard-interface';
-
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -12,27 +9,19 @@ import { Person,BirthdayResponse } from './dashboard-interface';
 })
 export class DashboardComponent implements OnInit {
 
-  imageData: String ='';
-  birthday: Person[] = [];
-  selectedContent: string = 'announcement';
-  anniversary:Person[]=[];
-  selectedPerson: any = null;
-  base64Image: string='';
-  constructor(private service: DashbordService,private sanitizer:DomSanitizer){}
+  constructor(private service: DashbordService){}
 
   ngOnInit(): void {
     this.fetchworkFromHome();
     this.fethHoliday();
     this.fetchleaveData();
-    this.getBirthdayAndAnniversary();
-    this.uploadPosts()
+    this.convertImageToBase64('assets/your-image.jpg');
   }
-  
+  openHoliday(): void {
+    this.service.openDialog();
+  }
   workFromHomeList:any;
   holidayList:any;
-
-  birthdayAndAnniversary1: any;
-
   holiday:Holiday={
     id: 12,
     dateOfHoliday:"",
@@ -42,7 +31,7 @@ export class DashboardComponent implements OnInit {
   LeaveResponse:any;
   totalAvailableLeave = 12;
   selectedTab: string = 'organization';
-  // selectedContent: string = 'announcement';
+  selectedContent: string = 'announcement';
   currentDate = new Date();
   
   selectTab(tab: string) {
@@ -61,27 +50,6 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
-
-
-  getBirthdayAndAnniversary() {
-    this.service.getBirthdayAndAnniversary().subscribe(
-      (response: BirthdayResponse) => {
-      
-        if (response && response.result && response.result[0]) {
-          this.birthday = response.result[0].BirthDayToday;
-          this.anniversary = response.result[0].WorkAnniversaries;
-        }
-        else {
-          console.error('Unexpected response structure:', response);
-        }
-      },
-      error => {
-        console.error('Error fetching data', error);
-      }
-    );
-  }
-
-
   
   fethHoliday(){
     this.service.getHolidays().subscribe(
@@ -89,12 +57,47 @@ export class DashboardComponent implements OnInit {
         this.holidayList = response;
         this.holidayList = this.holidayList.result;
         this.holiday = this.holidayList[0];
-        
+        console.log("fetch HOliday data: ",this.holidayList)
+        this.convertImageToBase64(this.holidayList[0].imageBase64)
       }
     )
   }
+   base64Image!: string;
+   currentHolidayIndex = 0;
+   updateCurrentHoliday() {
+    this.holiday = this.holidayList[this.currentHolidayIndex];
+    this.convertImageToBase64(this.holidayList[this.currentHolidayIndex].imageBase64);
+  }
+  convertImageToBase64(imagePath: string): void {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+  
+      const ctx = canvas.getContext('2d');
+      ctx?.drawImage(img, 0, 0); // Draw the entire image starting from (0, 0)
+  
+      // Convert canvas content to base64 URL and assign to base64Image
+      this.base64Image = canvas.toDataURL('image/jpeg');
+    };
+    
+    // Set src attribute of the image to load from the base64 string directly
+    img.src = 'data:image/jpeg;base64,' + imagePath;
+  }
+  previousHoliday() {
+    if (this.currentHolidayIndex > 0) {
+      this.currentHolidayIndex--;
+      this.updateCurrentHoliday();
+    }
+  }
 
-
+  nextHoliday() {
+    if (this.currentHolidayIndex < this.holidayList.length - 1) {
+      this.currentHolidayIndex++;
+      this.updateCurrentHoliday();
+    }
+  }
   fetchleaveData(){
     this.service.getLeaveData().subscribe(
       response =>{
@@ -104,24 +107,6 @@ export class DashboardComponent implements OnInit {
         this.totalAvailableLeave = this.extractAvailablePaidLeave(this.totalAvailableLeave);
       }
     )
-  }
-
-
-
-  uploadPosts() {
-    this.service.getPosts().subscribe(
-      (response: any) => {
-        console.log("upload images method ", response.result[0].base64Image);
-        let base64Image = response.result[0].base64Image;
-  
-        // Check if the base64Image already contains the prefix 'data:image/png;base64,'
-        if (!base64Image.startsWith('data:image/png;base64,')) {
-          this.base64Image = 'data:image/png;base64,' + base64Image;
-        }
-        this.imageData = base64Image;
-        
-      }
-    );
   }
 
   extractAvailablePaidLeave(data:any){
@@ -194,5 +179,4 @@ export class DashboardComponent implements OnInit {
 
 
   
-
 }

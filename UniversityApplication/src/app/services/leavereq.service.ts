@@ -21,7 +21,6 @@ export class LeavereqService {
     formData.append('toDate', toDate);
     formData.append('note', note || '');
     formData.append('employeeId', employeeId); 
-
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
     }
