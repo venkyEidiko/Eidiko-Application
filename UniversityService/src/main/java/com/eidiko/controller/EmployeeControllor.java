@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import com.eidiko.entity.Address;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -207,7 +206,7 @@ public class EmployeeControllor {
 	@GetMapping("/workAnniversaries")
 	public ResponseEntity<ResponseModel<Object>> getWorkAnniversariesForTodayAndNextSevenDays() {
 		try {
-			Map<String, List<BirtdayAndanniversaryDto>> response = employeeService.getWorkAnniversariesForTodayAndNextSevenDays();
+			Map<String, List<Map<String, Object>>> response = employeeService.getWorkAnniversariesForTodayAndNextSevenDays();
 			return new CommonResponse<>().prepareSuccessResponseObject(response);
 		} catch (Exception e) {
 			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
@@ -215,6 +214,19 @@ public class EmployeeControllor {
 	}
 
 
+
+
+
+
+	@GetMapping("/newJoineesAndLast7Days")
+	public ResponseEntity<ResponseModel<Object>> getNewJoinersForTodayAndLast7Days() {
+		try {
+			Map<String, List<Map<String, Object>>> response = employeeService.getNewJoinersForTodayAndLast7Days();
+			return new CommonResponse<>().prepareSuccessResponseObject(response);
+		} catch (Exception e) {
+			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
+		}
+	}
 
 
 }

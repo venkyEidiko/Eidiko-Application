@@ -1,5 +1,6 @@
 package com.eidiko.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,5 +44,9 @@ public interface EmployeeRepo extends JpaRepository<Employee, Long>{
 
 
 	List<Employee> findAll();
+
+
+
+	List<Employee> findByDateOfJoiningBetween(LocalDate startDate, LocalDate endDate);
 
 }

@@ -39,6 +39,9 @@ public interface EmployeeInterface {
 
 	Map<String, List<BirtdayAndanniversaryDto>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays();
 
-	Map<String, List<BirtdayAndanniversaryDto>> getWorkAnniversariesForTodayAndNextSevenDays();
+	Map<String, List<Map<String, Object>>> getWorkAnniversariesForTodayAndNextSevenDays();
+
+
+	Map<String, List<Map<String, Object>>> getNewJoinersForTodayAndLast7Days();
 
 } 

@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoginService } from './login.service';
-
 import { HolidayDialogComponent } from '../holiday-dialog/holiday-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
