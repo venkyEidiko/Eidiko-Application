@@ -1,5 +1,5 @@
 <div class="page-content">
-    <h1>Welcom to Eidiko Application</h1>
+    <h1>Welcome to Eidiko Application</h1>
     <form class="form" [formGroup]="registrationForm" (ngSubmit)="onSingup()">
         <div class="form-container">
             <div class="left">
@@ -15,6 +15,7 @@
                     <input type="text" formControlName="lastName" id="lastName" class="input-text"
                         placeholder="Last Name">
                 </div>
+
 
                 <div class="form-row">
                     <select formControlName="role" id="role" class="form-control">
@@ -54,18 +55,22 @@
                     <small
                         *ngIf="registrationForm.get('gender')?.invalid && registrationForm.get('gender')?.touched">*required</small>
                 </div>
-                <div class="form-row-password">
+                <div class="form-row">
+
 
                     <input [type]="showPassword ? 'text' : 'password'" formControlName="password" id="password" class="form-control"
                         placeholder="Password"
                          />
                         <i id="password-icon" class="fa-solid fa-eye" (click)="togglePasswordVisibility()"></i>
-                    
+                   
                 </div>
                 <small
                         *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched">Password
-                        should contain 8 characters and one uppercase, lowercase, number, and special character</small>
+                        should 8 characters and one uppercase, lowercase, number, and special character</small>
+                       
+                       
                 <div class="form-row">
+
 
                     <input type="password" formControlName="confirmPassword" id="confirmPassword" class="form-control"
                         placeholder="Confirm Password">
@@ -74,8 +79,10 @@
                         and Confirm Password do not match</small>
                 </div>
 
+
             </div>
             <div class="right">
+
 
                 <h2>Address Details</h2>
                 <div class="form-row">

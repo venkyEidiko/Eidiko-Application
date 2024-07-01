@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoginService } from './login.service';
@@ -31,6 +31,28 @@ export class DashbordService {
 
   getEmpId() {
     return this.loginService.getEmployeeData().employeeId;
+  }
+
+  submitPostRequest(requestData: any,file:File|null): Observable<any> {
+    let params = new HttpParams();
+    const formData = new FormData();
+
+    // Append requestData fields
+    formData.append('description', requestData.description);
+    formData.append('postType', requestData.postType);
+    formData.append('mentionEmployee', requestData.mentionEmployee);
+    formData.append('postEmployee', requestData.postEmployee);
+
+    // Append file if it exists
+    if (file) {
+      formData.append('file', file, file.name);
+    }
+
+   
+   
+
+console.log("submitPostRequestData requestData : ",requestData)
+    return this.http.post<any>(`http://10.0.0.60:8080/posts/saveimage`, formData);
   }
 
   openDialog(): void {

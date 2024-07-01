@@ -1,7 +1,7 @@
 .page-content {
   background-image: url('https://cdn.kekastatic.net/login/v/M178_2024.06.15.1/images/login-image.jpg');
-  background-size: cover; 
-  background-position: center; 
+  background-size: cover;
+  background-position: center;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -9,116 +9,141 @@
   flex-direction: column;
 }
 
-.page-content h1{
+
+.page-content h1 {
   color: white;
   text-align: center;
 }
 
-.form-container{
+
+.form {
+  width: 1000px;
+  height: 550px;/* Set a fixed height for the form */
+}
+
+
+.form-row-password {
+  display: flex;
+  flex-direction: row;
+  height: 2em;
+}
+
+
+/* Ensure form-row elements have a fixed height */
+.form-row {
+  height: 3em; /* Adjust this height as needed */
+}
+#confirmPassword{
+  height: 5em;
+}
+.form-row-password {
+  align-items: center;
+}
+
+
+.form-container {
   border-radius: 2%;
   background-color: white;
   display: flex;
-  
   flex-wrap: wrap;
   flex-direction: row;
- 
+  width: 1000px;
+  height: 510px;
 }
-.left{
-  width: 45%;
+
+
+.left, .right {
   padding: 3%;
+}
+
+
+.left {
+  width: 45%;
   display: flex;
   flex-direction: column;
- /* background-color:  #615EFC ; */
-  
 }
-.right{
-  width:43%;
-  /* background-color: #4835D4; */
-  padding: 3%;
+
+
+.right {
+  width: 43%;
   border-radius: 2%;
-  
 }
-.right h2{
-  color:#4835D4
+
+
+.right h2, .left h2 {
+  color: #4835D4;
 }
-.left h2{
-  color:#4835D4
+
+
+.right input, .left input, .left select {
+  padding: 5px;
+  border: 1px solid transparent;
+  background: transparent;
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  width: 90%;
 }
-.right input{
-  padding: 5px ;
-    border: 1px solid transparent;
-    background: transparent;
-    outline: none;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    box-sizing: border-box;
-    border-bottom: 1px solid #ccc;
-    color: rgb(12, 12, 12);
-    width: 90%;
-}
-.left input,select{
-  padding: 5px ;
-    border: 1px solid transparent;
-    background: transparent;
-    outline: none;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    box-sizing: border-box;
-    border-bottom: 1px solid #ccc;
-    width: 90%;
-}
-.left input::placeholder{
+
+
+.left input::placeholder, .right input::placeholder {
   color: #666;
   font-size: 12px;
 }
-.right input::placeholder{
-  color: #666;
-  font-size: 12px;
- 
-}
-.left input:focus{
+
+
+.left input:focus, .right input:focus {
   border-bottom: 1px solid #999;
 }
-.right input:focus{
-  border-bottom: 1px solid #999;
-}
-small{
+
+
+small {
   display: block;
   color: red;
   margin-left: 15px;
+  height: 1em; /* Set a fixed height for error messages */
 }
-#password-icon{
+
+
+#password-icon {
   margin-top: 4px;
   margin-left: -20px;
 }
-.btn-primary{
-  background: #313f7c;
-	border-radius: 25px;
-	box-shadow: 0px 6px 17px 0px rgba(0, 0, 0, 0.15);
-	width: 180px;
-  height:35px;
-  border: none;
 
-	cursor: pointer;
-	color: #fffbfb;
-	font-weight: 700;
-	font-size: 15px;
-  margin-top:5px;
+
+.btn-primary {
+  background: #313f7c;
+  border-radius: 25px;
+  box-shadow: 0px 6px 17px 0px rgba(0, 0, 0, 0.15);
+  width: 180px;
+  height: 35px;
+  border: none;
+  cursor: pointer;
+  color: #fffbfb;
+  font-weight: 700;
+  font-size: 15px;
+  margin-top: 50px;
   margin-left: 5px;
 }
-button:hover{
+
+
+button:hover {
   background-color: #5d67f3;
 }
-.form-row-last{
+
+
+.form-row-last {
   margin-top: 75px;
 }
-.password-btn{
-  border:none;
+
+
+.password-btn {
+  border: none;
 }
+
+
 .input-group-append {
   padding: 11.5px 15px 15px 15px;
-}
-.form-row-password{
-  display: flex;
-  flex-direction: row;
 }

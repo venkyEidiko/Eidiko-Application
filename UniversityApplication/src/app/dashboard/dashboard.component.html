@@ -108,7 +108,76 @@
             </li>
           </ul>
           <div class="org-content">
-            <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item">Content 1</div>
+             <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item">
+                <div class="form-container">
+                  <textarea class="textarea" #textarea (input)="onTextChange($event)"
+                    placeholder="Write your post here and mention your peers"></textarea>
+                  <div class="actions">
+                    <button mat-icon-button (click)="addAtSymbol(textarea)"><mat-icon>alternate_email</mat-icon></button>
+                    <button mat-icon-button (click)="fileInput.click()" ><mat-icon>image</mat-icon></button>
+                    <input type="file" #fileInput multiple (change)="onFileSelected($event)" >
+                    <button mat-icon-button (click)="toggleEmoticonPicker()"><mat-icon>insert_emoticon</mat-icon></button>
+                  </div>
+                  <div class="emoticon-picker" *ngIf="showEmoticonPicker">
+                    <div class="emoji-picker-header">
+                      <button (click)="selectEmojiCategory('frequentlyUsed')">⏰</button>
+                      <button (click)="selectEmojiCategory('smileys')">😊</button>
+                      <button (click)="selectEmojiCategory('animals')">🐻</button>
+                      <button (click)="selectEmojiCategory('foods')">🍏</button>
+                      <button (click)="selectEmojiCategory('activity')">🏀</button>
+                      <button (click)="selectEmojiCategory('places')">🚗</button>
+                      <button (click)="selectEmojiCategory('objects')">📑</button>
+                      <button (click)="selectEmojiCategory('symbols')">🔣</button>
+                      <button (click)="selectEmojiCategory('flags')">🏳️</button>
+                      <button (click)="selectEmojiCategory('custom')">✨</button>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'frequentlyUsed'">
+                      <emoji-mart set="apple" [include]="['frequently_used']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'smileys'">
+                      <emoji-mart set="apple" [include]="['people']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'animals'">
+                      <emoji-mart set="apple" [include]="['nature']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'foods'">
+                      <emoji-mart set="apple" [include]="['foods']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'activity'">
+                      <emoji-mart set="apple" [include]="['activity']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'places'">
+                      <emoji-mart set="apple" [include]="['places']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'objects'">
+                      <emoji-mart set="apple" [include]="['objects']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'symbols'">
+                      <emoji-mart set="apple" [include]="['symbols']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'flags'">
+                      <emoji-mart set="apple" [include]="['flags']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'custom'">
+                      <emoji-mart set="apple" [include]="['custom']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <!-- Add more divs for other categories as needed -->
+                  </div>
+                  <button mat-raised-button color="primary" (click)="postRequest()">Post</button>
+                </div>
+              
+            
+            </div>
             <div id="announcement" [class.active]="selectedContent === 'announcement'" class="org-content-item">Hello
             </div>
             <div id="poll" [class.active]="selectedContent === 'poll'" class="org-content-item">Poll related content

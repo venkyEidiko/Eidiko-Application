@@ -73,7 +73,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { HolidayDialogComponent } from './holiday-dialog/holiday-dialog.component'; // Import CarouselModule
 import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.component';
-
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 @NgModule({
   declarations: [
     AppComponent,
@@ -128,6 +128,7 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
   ],
   imports: [
     CarouselModule,
+    PickerComponent,
     MatDatepickerModule,
     BrowserModule,
     MatButtonModule,

@@ -9,7 +9,7 @@ export class LoginService {
   private employeeData: any = null;
   private jwtToken: string | null = null;
 
-  url = "http://10.0.0.73:8082/";
+  url = "http://10.0.0.38:8082/";
  
   constructor(private http: HttpClient) { }
 
