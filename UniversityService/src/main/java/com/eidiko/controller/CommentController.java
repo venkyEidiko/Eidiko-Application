@@ -63,7 +63,7 @@ public class CommentController {
 	//delete the comment
 	@DeleteMapping("deleteComment/{commentId}")
 	public ResponseEntity<ResponseModel<Object>> deleteCommentById(@PathVariable Long commentId){
-		//return new ResponseEntity<>(commentService.deleteComment(commentId ),HttpStatus.OK);
+		
 		try {
 			String deleteCommentResult = commentService.deleteComment(commentId);
 			return new CommonResponse<>().prepareSuccessResponseObject(deleteCommentResult);
