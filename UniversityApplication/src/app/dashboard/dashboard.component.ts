@@ -16,7 +16,7 @@ post: any;
 like: any;
 
 
-  constructor(private service: DashbordService,private dashservice:DashbordService,private loginService:LoginService){
+  constructor(private service: DashbordService,private loginService:LoginService){
     this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
   }
 
@@ -35,7 +35,8 @@ like: any;
     this.fetchworkFromHome();
     this.fethHoliday();
     this.fetchleaveData();
-
+    this.getAnniversaryAndAfterSevenDaysList();
+    this.getBirthdayAndAfterSevenDaysList();
     this.loadAllPosts();
     this.fetchPostsAndLikes();
   }
@@ -67,8 +68,6 @@ like: any;
     dateOfHoliday:"",
     description:"",
     imageName:"",
-  
-
   }
   LeaveResponse: any;
   totalAvailableLeave = 12;
@@ -131,18 +130,15 @@ like: any;
       canvas.height = img.height;
   
       const ctx = canvas.getContext('2d');
-      ctx?.drawImage(img, 0, 0);
+      ctx?.drawImage(img, 0, 0); // Draw the entire image starting from (0, 0)
   
+      // Convert canvas content to base64 URL and assign to base64Image
       this.base64Image = canvas.toDataURL('image/jpeg');
     };
-  
-    img.onerror = (error) => {
-      console.error('Error loading image:', error);
-    };
-  
+    
+    // Set src attribute of the image to load from the base64 string directly
     img.src = 'data:image/jpeg;base64,' + imagePath;
   }
-  
   previousHoliday() {
     if (this.currentHolidayIndex > 0) {
       this.currentHolidayIndex--;
@@ -185,7 +181,7 @@ like: any;
     )
   }
   loadAllPosts(): void {
-    this.dashservice.getAllPosts().subscribe((response: any) => {
+    this.service.getAllPosts().subscribe((response: any) => {
       console.log("posts ",response);
       if (response.status === 'SUCCESS') {
         this.imageSrcList = response.result.map((item: any) => ({
@@ -247,7 +243,7 @@ formatTime(timestamp: string): string {
         this.todayAnniversary = response.result[0].TodayAnniversary;
         this.nextSevendaysAnniversarys = response.result[0].NextSevenDaysAnniversary;
         this.todayAnniversaryCount = this.todayAnniversary.length;
-        console.log(this.nextSevendaysAnniversarys);
+        console.log("next seven annevewsiry ",this.nextSevendaysAnniversarys);
         
       }
     );
