@@ -1,40 +1,35 @@
 <nav class="navbar">
-    <div class="navbar-brand">
-      <span>EIDIKO SYSTEM INTEGRATORS</span>
-      <span class="navbar-search">
-        <mat-icon>search</mat-icon>
-        <!-- Pending -->
-        <input type="text" placeholder="Search for employees ..." [(ngModel)]="search" (ngModelChange)="onChange($event)">
-  </span>
-    </div>
-    <div class="navbar-profile">
-      <div class="dropdown">
-        <span class="dropdown-toggle">{{empName}}</span>
-        <div class="dropdown-menu">
-          <a routerLink="/layout/myprofile">
-            <mat-icon>search</mat-icon>Profile
-          </a>
-          <a href="#">
-            <mat-icon>key</mat-icon>Change Password
-          </a>
-          <a href="/login">
-            <mat-icon>logout</mat-icon>Logout
-          </a>
+  <div class="navbar-brand">
+    <span>EIDIKO SYSTEM INTEGRATORS</span>
+    <span class="navbar-search">
+      <mat-icon>search</mat-icon>
+
+      <input type="text" placeholder="Search for employees ..." [(ngModel)]="search" (ngModelChange)="onChange($event)">
+      <div class="search-dropdown" *ngIf="showDropdown" (click)="$event.stopPropagation()">
+        <div *ngFor="let result of searchData1" (click)="selectResult(result)">
+          {{result.firstName|| "-No Result-"}}
         </div>
-        <span>
-          <img src="../../assets/profileimg2.jpg" alt="Profile Picture">
-        </span>
       </div>
+    </span>
+
+  </div>
+  <div class="navbar-profile">
+    <div class="dropdown">
+      <span class="dropdown-toggle">{{empName | titlecase }}</span>
+      <div class="dropdown-menu">
+        <a routerLink="/layout/myprofile">
+          <mat-icon>search</mat-icon>Profile
+        </a>
+        <a href="#">
+          <mat-icon>key</mat-icon>Change Password
+        </a>
+        <a href="/login">
+          <mat-icon>logout</mat-icon>Logout
+        </a>
+      </div>
+      <span>
+        <img src="../../assets/profileimg2.jpg" alt="Profile Picture">
+      </span>
     </div>
-  </nav>
-  
-  <!-- Displaying Search Results -->
-<!-- <div *ngIf="searchData.length > 0" class="search-results">
-  <h3>Search Results</h3>
-  <ul>
-    <li *ngFor="let employee of searchData">
-      {{ employee.firstName +" "+employee.lastName}} - ID: {{ employee.employeeId }}
-    </li>
-  </ul>
-</div> -->
-  
+  </div>
+</nav>

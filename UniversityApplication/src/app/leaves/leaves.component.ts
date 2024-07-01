@@ -6,7 +6,8 @@ import { Dialog1Service } from '../services/dialog1.service';
 import { CompdialogService } from '../services/compdialog.service';
 import { DialogService } from '../services/dialog.service';
 import { LeavetypeService } from '../services/leavetype.service';
-
+import { TableService } from '../services/table.service';
+import { LoginService } from '../services/login.service';
 interface PendingLeave {
   leaveId: number;
   leaveDates: string;
@@ -15,11 +16,55 @@ interface PendingLeave {
   requestedBy: string | null;
   leaveNote: string | null;
 }
+export interface LeaveRequest {
+  actionTakenBy: string;
+  customDayStatus: string;
+  durationInDays: number;
+  employeeId: number;
+  fromDate: Date;
+  leaveDates: Date;
+  leaveId: number;
+  leaveNote: string;
+  leaveType: string;
+  notifyTo: string;
+  rejectionReason: string;
+  requestedBy: string;
+  status: string;
+  toDate: Date;
+}
 
 interface MonthlyLeaveData {
   totalLeaveTaken: number;
   leaveDays: string[];
   leaveDuration?: number;
+}
+interface LeaveResponse {
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  content: PendingLeave[];
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  first: boolean;
+  last: boolean;
+  numberOfElements: number;
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  empty: boolean;
 }
 
 
@@ -31,47 +76,72 @@ interface MonthlyLeaveData {
 
 export class LeavesComponent implements OnInit {
   daysOfWeek: string[] = [];
-  weeklyPatternData: number[] = [];
-  pendingLeaves:PendingLeave[]|null =null;
+
+  pendingLeaves: PendingLeave[] | null = null;
   dataSource!: MatTableDataSource<PendingLeave>;
+  filteredData!: MatTableDataSource<PendingLeave>;
+  selectedStatuses: Set<string> = new Set<string>();
+  statusOptions: string[] = ['Pending', 'Approved', 'Rejected', 'Cancelled']
+  
+  selectedOptions: Set<string> = new Set<string>();
+
+  options: string[] = ['Paid Leave', 'Unpaid Leave', 'Maternity Leave','Optional Leave','Comp Offs']; 
+ 
   displayedColumns: string[] = [
     'leaveDates',
     'leaveType',
     'status',
     'requestedBy',
     'leaveNote'
-
-
   ];
+
+  totalDays: any = []
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   leaveTypeOptions: string[] = [];
+  statusTypeOptions:string[]=[]
   selectedLeaveTypes: Set<string> = new Set<string>();
-  
+  //selectedStatus:Set<string>=new Set<string>();
+    selectedStatus: string[] = [];
   consumedLeaves = 0;
   availableLeaves = 0;
   totalLeave = 12;
+  pendingLeave: LeaveRequest[] | null = null;
 
-  monthlyChartData: { label: string; value: number,duration: number }[] = []; // Array to hold monthly chart data
+
+  monthlyChartData: { label: string; value: number, duration: number }[] = []; // Array to hold monthly chart data
+  weeklyChartData: { label: string; value: number }[] = [
+    { label: 'Mon', value: 0 },
+    { label: 'Tue', value: 0 },
+    { label: 'Wed', value: 0 },
+    { label: 'Thu', value: 0 },
+    { label: 'Fri', value: 0 },
+    { label: 'Sat', value: 0 },
+    { label: 'Sun', value: 0 }
+  ]
 
   constructor(
-    private leaveService: LeaveService,
+    private loginService: LoginService,
     private dialogService: DialogService,
     private dialogService1: Dialog1Service,
     private compdialogService: CompdialogService,
-    private leavetypeService: LeavetypeService
+    private leavetypeService: LeavetypeService,
+    private tableService:TableService,
+    
+
   ) {}
-
+   employeeId = this.loginService.getEmployeeData().employeeId;
   ngOnInit(): void {
-    const employeeId = 2001;
+   
     const pageSize = 5;
-
-    this.fetchLeaveBalance(employeeId);
-    this.fetchMonthlyChartData(employeeId);
-    this.fetchLeaveData(employeeId, 0, pageSize);
+   
+    this.fetchLeaveBalance(this.employeeId);
+    this.fetchMonthlyChartData(this.employeeId);
+    this.fetchLeaveData([],[],0,pageSize);
 
     this.leaveTypeOptions = ['Paid Leave', 'Unpaid Leave', 'Maternity Leave', 'Optional Leave', 'Comp Offs'];
+
   }
   chartOptions: ApexCharts.ApexOptions = {
     series: [{
@@ -103,28 +173,19 @@ export class LeavesComponent implements OnInit {
     }
   };
 
-  fetchLeaveData(employeeId: number, pageIndex: number, pageSize: number): void {
-    const pageNumber = pageIndex + 1;
-
-    this.leaveService.fetchLeaveData(employeeId, pageNumber, pageSize).subscribe(
-      response => {
-        if (response.status === 'SUCCESS' && response.result.length > 0) {
-          const pendingLeaves: PendingLeave[] = response.result.map((item: any) => ({
-            leaveId: item.leaveId,
-            leaveDates: item.leaveDates,
-            leaveType: item.leaveType,
-            status: item.status,
-            requestedBy: item.requestedBy,
-            leaveNote: item.leaveNote
-          }));
-          this.dataSource = new MatTableDataSource<PendingLeave>(pendingLeaves);
+  fetchLeaveData(leaveTypes: string[], statuses: string[], page: number, size: number): void {
+  
+    this.tableService.fetchFilteredLeaveData(this.employeeId, leaveTypes, statuses, page, size).subscribe(
+      (response: LeaveResponse) => {
+        if (response && response.content) {
+          this.pendingLeaves = response.content
+        
+          this.dataSource = new MatTableDataSource<PendingLeave>(this.pendingLeaves);
           this.dataSource.paginator = this.paginator;
-          this.paginator.length = response.totalCount;
-            console.log(this.paginator.length) 
-            this.updateDaysOfWeek(pendingLeaves);
-            
+          console.log("paginator",this.dataSource.paginator)
+          this.applyFilter();
         } else {
-          console.error('Failed to fetch leave data or no data available'); 
+          console.error('Failed to fetch leave data or no data available');
         }
       },
       error => {
@@ -134,28 +195,32 @@ export class LeavesComponent implements OnInit {
   }
 
   onPageChange(event: PageEvent): void {
-    const employeeId = 2001;
     const pageSize = event.pageSize;
     const pageIndex = event.pageIndex;
-
-    this.fetchLeaveData(employeeId, pageIndex, pageSize);
+    const leaveTypes = Array.from(this.selectedOptions);
+    const statuses = Array.from(this.selectedStatuses);
+    this.fetchLeaveData(leaveTypes, statuses, pageIndex, pageSize);
   }
 
-    fetchLeaveBalance(employeeId: number): void {
+  fetchLeaveBalance(employeeId: number): void {
     this.leavetypeService.fetchLeaveBalance(employeeId).subscribe(
       (response: any) => {
-        console.log("fetchLeaveBalance method Response Data : ",response)
+        console.log("fetchLeaveBalance method Response Data : ", response)
         if (response.status === 'SUCCESS' && response.result.length > 0) {
           const result = response.result[0];
           console.log("fetchLeaveBalance method Data : ",result)
-          // this.pendingLeaves=result.
-          console.log(result);
           this.consumedLeaves = result.consumedLeave;
           this.availableLeaves = 12 - result.consumedLeave;
-
           this.updateMonthlyChartData(result.monthlyLeaveData);
-
           this.updateChartOptions();
+
+          //pending leave data
+          this.pendingLeave = result.pendingLeave
+          console.log("Pending leave: ", this.pendingLeave);
+          this.pendingLeave?.forEach(pending=>{
+            console.log("Panding leave Object: ",pending)
+          })
+
         } else {
           console.error('Failed to fetch leave balance or no data available');
         }
@@ -166,14 +231,62 @@ export class LeavesComponent implements OnInit {
     );
   }
 
+  weekday = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  getDayOfWeek(date: Date): string {
+
+    const dayIndex = date.getDay(); // 0 (Sunday) to 6 (Saturday)
+    return this.weekday[dayIndex];
+  }
+
+  dayIndexCountMap = new Map<string, number>();
 
   fetchMonthlyChartData(employeeId: number): void {
     this.leavetypeService.fetchMonthlyLeaveData(employeeId).subscribe(
+
       (response: any) => {
         if (response.status === 'SUCCESS' && response.result.length > 0) {
           const monthlyData = response.result[0].monthlyLeaveData;
-          console.log(monthlyData);
+          const keys = Object.keys(monthlyData)
+
+          console.log("value of month name: ", keys);
+          console.log("fetchMonthlyChartData Response Data : ", response)
+
           this.updateMonthlyChartData(monthlyData);
+
+          Object.keys(monthlyData).forEach(month => {
+            const leaveDays: string[] = monthlyData[month].leaveDays;
+
+            if (!this.totalDays) {
+              this.totalDays = leaveDays.slice(); 
+            } else {
+              this.totalDays = this.totalDays.concat(leaveDays);
+            }
+            leaveDays.forEach(dateStr => {
+              const date = new Date(dateStr);
+              const dayIndex = this.getDayOfWeek(date);
+
+              if (this.dayIndexCountMap.has(dayIndex)) {
+                this.dayIndexCountMap.set(dayIndex, this.dayIndexCountMap.get(dayIndex)! + 1);
+              } else {
+                this.dayIndexCountMap.set(dayIndex, 1);
+              }
+            });
+          });
+
+
+          console.log("weekly chart before map : ", this.weeklyChartData);
+
+
+          this.dayIndexCountMap.forEach((count, dayName) => {
+            const dayObject = this.weeklyChartData.find(day => day.label === dayName);
+            if (dayObject) {
+              dayObject.value = count * 10;
+            }
+
+          });
+          console.log(`Total Leave days: `, this.totalDays);
+          console.log(`Day Index Count Map: `, this.dayIndexCountMap);
+          console.log(`weeklyChartData : `, this.weeklyChartData);
         } else {
           console.error('Failed to fetch monthly leave data or no data available');
         }
@@ -189,35 +302,38 @@ export class LeavesComponent implements OnInit {
       console.error('Monthly leave data is undefined or null.');
       return;
     }
-
+  
     this.monthlyChartData = [];
-
-    
+  
     const allMonths = [
       '2024-01', '2024-02', '2024-03', '2024-04', '2024-05', '2024-06',
       '2024-07', '2024-08', '2024-09', '2024-10', '2024-11', '2024-12'
     ];
-
+  
     allMonths.forEach(monthKey => {
       const monthLabel = this.getMonthName(monthKey);
-      console.log(monthLabel) 
+      // console.log(monthLabel) 
       const dataForMonth = monthlyLeaveData[monthKey];
-      console.log(dataForMonth)
-      const value = dataForMonth ? dataForMonth.totalLeaveTaken : 0;
-      console.log(value);
+      // console.log(dataForMonth)
+      const value = dataForMonth ? dataForMonth.totalLeaveTaken * 10 : 0;
+      // console.log( value);
       const duration = dataForMonth ? dataForMonth.leaveDuration || 0 : 0; // Default to 0 if no duration data
-      this.monthlyChartData.push({ label: monthLabel, value, duration });
+     this.monthlyChartData.push({ label: monthLabel, value, duration });
+      // console.log(" monthly chart values : ",this.monthlyChartData)
     });
-  }
+  
 
+    this.updateChart();
+  }
+  
   private getMonthName(monthKey: string): string {
     const [year, month] = monthKey.split('-');
-    const monthIndex = parseInt(month, 10); 
+    const monthIndex = parseInt(month, 10);
     const months = [
       'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ];
-    return `${months[monthIndex-1]} `;
+    return `${months[monthIndex - 1]} `;
   }
 
   updateChart(): void {
@@ -241,36 +357,7 @@ export class LeavesComponent implements OnInit {
     this.chartOptions2.series = [this.consumedLeaves];
     this.chartOptions2 = { ...this.chartOptions2 };
   }
-  updateDaysOfWeek(pendingLeaves: PendingLeave[]): void {
-    const daysOfWeekCount: { [key: string]: number } = {};
-
-    pendingLeaves.forEach(leave => {
-      const leaveDates = leave.leaveDates.split(',');
-      leaveDates.forEach(dateStr => {
-        const dayOfWeek = new Date(dateStr).toLocaleDateString('en-US', { weekday: 'long' });
-        if (daysOfWeekCount[dayOfWeek]) {
-          daysOfWeekCount[dayOfWeek]++;
-        } else {
-          daysOfWeekCount[dayOfWeek] = 1;
-        }
-      });
-    });
-
-    // Prepare data for chart
-    this.daysOfWeek = Object.keys(daysOfWeekCount);
-    const daysOfWeekData = this.daysOfWeek.map(day => daysOfWeekCount[day]);
-
-    this.chartOptions.series = [{
-      name: 'Leave Days',
-      data: daysOfWeekData
-    }];
-    this.chartOptions.xaxis = {
-      categories: this.daysOfWeek
-    };
-
-    // Update chart options to reflect the changes
-    this.chartOptions = { ...this.chartOptions };
-  }
+ 
   chartOptions1 = {
     series: [0, 0],
     chart: {
@@ -336,7 +423,7 @@ export class LeavesComponent implements OnInit {
         formatter: (val: number) => `${val} days`
       },
       x: {
-        show :true
+        show: true
       }
     },
     responsive: [
@@ -403,13 +490,57 @@ export class LeavesComponent implements OnInit {
     this.compdialogService.openDialog();
   }
 
-  data = [
-  
-  ]
+  applyFilter(): void {
+    if (!this.dataSource) return;
 
+    let filteredData = this.dataSource.data;
 
-  
+    if (this.selectedOptions.size > 0) {
+      filteredData = filteredData.filter(item => this.selectedOptions.has(item.leaveType || ''));
+    }
+
+    if (this.selectedStatuses.size > 0) {
+      filteredData = filteredData.filter(item => this.selectedStatuses.has(item.status));
+    }
+
+    this.filteredData = new MatTableDataSource<PendingLeave>(filteredData);
+    this.filteredData.paginator = this.paginator;
+  }
+
+  onSelectionChange(selectedOptions: Set<string>): void {
+    this.selectedOptions = selectedOptions;
+    this.applyFilter();
+  }
+
+  onStatusSelected(status: string): void {
+    if (this.selectedStatuses.has(status)) {
+      this.selectedStatuses.delete(status);
+    } else {
+      this.selectedStatuses.add(status);
+    }
+    this.applyFilter();
+  }
+
+  isStatusSelected(status: string): boolean {
+    return this.selectedStatuses.has(status);
+  }
  
+  isAllSelected(): boolean {
+    return this.statusOptions.length === this.selectedStatus.length;
+  }
 
-
+  toggleAllSelection(): void {
+    if (this.isAllSelected()) {
+      this.selectedStatus = [];
+    } else {
+      this.selectedStatus = [...this.statusOptions];
+    }
+  }
 }
+
+
+
+
+
+
+

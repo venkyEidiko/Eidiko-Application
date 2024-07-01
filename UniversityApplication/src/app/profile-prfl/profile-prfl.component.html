@@ -9,28 +9,27 @@
                 <div class="contact-details">
                     <div>
                         <span>FIRST NAME</span>
-                        <p>{{employee?.firstName}}</p>
+                        <p>{{employee?.firstName|| "-Not Set-"}}</p>
                         <span>LAST NAME</span>
-                        <p>{{employee?.lastName}}</p>
-
+                        <p>{{employee?.lastName|| "-Not Set-"}}</p>
                         <span>GENDER</span>
-                        <p>{{employee?.gender}}</p>
+                        <p>{{employee?.gender|| "-Not Set-"}}</p>
                         <span>MARITAL STATUS</span>
-                        <p>{{employee?.maritalStatus}}</p>
+                        <p>{{employee?.maritalStatus|| "-Not Set-"}}</p>
                         <span>PHYSICALLY HANDICAPPED</span>
-                        <p>{{employee?.physicallyHandicapped}}</p>
+                        <p>{{employee?.physicallyHandicapped|| "-Not Set-"}}</p>
                         <span>NATIONALITY</span>
-                        <p>{{employee?.nationality}}</p>
+                        <p>{{employee?.nationality|| "-Not Set-"}}</p>
                     </div>
                     <div>
                         <span>MIDDLE NAME</span>
-                        <p>---</p>
+                        <p>{{null|| "-Not Set-"}}</p>
                         <span>DISPLAY NAME</span>
-                        <p>{{employee?.firstName+" "+employee?.lastName}}</p>
+                        <p>{{employee?.firstName+" "+employee?.lastName|| "-Not Set-"}}</p>
                         <span>DATE OF BIRTH</span>
-                        <p>{{employee?.dateOfBirth}}</p>
+                        <p>{{employee?.dateOfBirth|| "-Not Set-"}}</p>
                         <span>BLOOD GROUP</span>
-                        <p>{{employee?.bloodGroup}}</p>
+                        <p>{{employee?.bloodGroup|| "-Not Set-"}}</p>
                     </div>
                 </div>
 
@@ -45,21 +44,21 @@
                 <div class="contact-details">
                     <div>
                         <span>WORK EMAIL</span>
-                        <p>{{employee?.workEmail}}</p>
+                        <p>{{employee?.workEmail|| "-Not Set-"}}</p>
                         <span>MOBILE NUMBER</span>
-                        <p>{{employee?.workNumber}}</p>
+                        <p>{{employee?.workNumber|| "-Not Set-"}}</p>
                         <span>RESIDENCE NUMBER</span>
-                        <p>{{employee?.residenceNumber}}</p>
+                        <p>{{employee?.residenceNumber|| "-Not Set-"}}</p>
                         <span>EMERGENCY NUMBER</span>
-                        <p>{{employee?.emergencyContactNumber}}</p>
+                        <p>{{employee?.emergencyContactNumber|| "-Not Set-"}}</p>
                     </div>
                     <div>
                         <span>PERSONAL EMAIL</span>
-                        <p>{{employee?.personalEmail}}</p>
+                        <p>{{employee?.personalEmail|| "-Not Set-"}}</p>
                         <span>WORK NUMBER</span>
-                        <p>{{employee?.workNumber}}</p>
+                        <p>{{employee?.workNumber|| "-Not Set-"}}</p>
                         <span>SKYPE</span>
-                        <p>{{employee?.skype}}</p>
+                        <p>{{employee?.skype|| "-Not Set-"}}</p>
                     </div>
                 </div>
             </mat-card-content>
@@ -77,38 +76,38 @@
                         <h5>CURRENT ADDRESS</h5>
                         <div>
                             <span>HOUSE NO/FLAT NO.</span>
-                            <p>{{address?.doorNumber}}</p>
+                            <p>{{currentAddress?.doorNumber|| "-Not Set-"}}</p>
                             <span>AREA</span>
-                            <p>{{address?.area}}</p>
+                            <p>{{currentAddress?.area|| "-Not Set-"}}</p>
                             <span>LANDMARK</span>
-                            <p>{{address?.landmark}}</p>
+                            <p>{{currentAddress?.landmark|| "-Not Set-"}}</p>
                             <span>CITY</span>
-                            <p>{{address?.city}}</p>
+                            <p>{{currentAddress?.city|| "-Not Set-"}}</p>
                             <span>STREAT NAME</span>
-                            <p>{{address?.streetName}}</p>
+                            <p>{{currentAddress?.streetName|| "-Not Set-"}}</p>
                             <span>PINCODE</span>
-                            <p>{{address?.pincode}}</p>
+                            <p>{{currentAddress?.pincode|| "-Not Set-"}}</p>
                             <span>STATE</span>
-                            <p>{{address?.state}}</p>
+                            <p>{{currentAddress?.state|| "-Not Set-"}}</p>
                         </div>
                     </div>
                     <div>
                         <h5>PERMANENT ADDRESS</h5>
                         <div>
                             <span>HOUSE NO/FLAT NO.</span>
-                            <p>{{address?.doorNumber}}</p>
+                            <p>{{permanentAddress?.doorNumber || "-Not Set-"}}</p>
                             <span>AREA</span>
-                            <p>{{address?.area}}</p>
+                            <p>{{permanentAddress?.area || "-Not Set-"}}</p>
                             <span>LANDMARK</span>
-                            <p>{{address?.landmark}}</p>
+                            <p>{{permanentAddress?.landmark|| "-Not Set-"}}</p>
                             <span>CITY</span>
-                            <p>{{address?.city}}</p>
+                            <p>{{permanentAddress?.city|| "-Not Set-"}}</p>
                             <span>STREAT NAME</span>
-                            <p>{{address?.streetName}}</p>
+                            <p>{{permanentAddress?.streetName|| "-Not Set-"}}</p>
                             <span>PINCODE</span>
-                            <p>{{address?.pincode}}</p>
+                            <p>{{permanentAddress?.pincode|| "-Not Set-"}}</p>
                             <span>STATE</span>
-                            <p>{{address?.state}}</p>
+                            <p>{{permanentAddress?.state|| "-Not Set-"}}</p>
                         </div>
                     </div>
                 </div>

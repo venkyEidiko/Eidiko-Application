@@ -23,6 +23,8 @@ export class AttandanceComponent {
 attandanceStatus:any=[]
 averageHour:String='';
 arrival:String='';
+teamAverageHour:string=""
+teamArrival:string='';
   weekdata = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
 
@@ -42,11 +44,15 @@ arrival:String='';
     }, 1000)
 
    this.shiftService.AverageDayAndOnTimeArrival( this.startDate,this.endDate).subscribe(
-    response=>{console.log(response)
+    response=>{
 this.attandanceStatus=response;
-this.attandanceStatus=this.attandanceStatus.result;
-this.averageHour=this.attandanceStatus.avgPerDay
-this.arrival=this.attandanceStatus.avgArivalPer
+const attandStatus=this.attandanceStatus.result[0];
+console.log("Attandace Status: ",attandStatus)
+this.averageHour=attandStatus.avgPerDay
+this.arrival=attandStatus.avgArivalPer
+this.teamAverageHour=attandStatus.teamAvgPerDay
+this.teamArrival=attandStatus.avgArivalPerTeam
+
     }
    );
   }

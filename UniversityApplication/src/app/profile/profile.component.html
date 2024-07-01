@@ -6,27 +6,27 @@
                     <img class="profile-img" src="../../assets/profileimage.png"/>
                 </div>
                 <div class="profile-details">
-                    <h2>Shreya</h2>
+                    <h2>{{employee?.firstName+" "+employee?.lastName|| "-Not Set-"}}</h2>
                     <div class="profile-details1"> 
                         <div>
                             <i class="fa-solid fa-briefcase"></i>
-                            <span>{{employee?.jobTitlePrimary}}</span>
+                            <span>{{employee?.jobTitlePrimary|| "-Not Set-"}}</span>
                         </div>
                         <div>
                             <i class="fa-solid fa-envelope"></i>
-                            <span style="color: #7e5991;">{{employee?.email}}</span>
+                            <span style="color: #7e5991;">{{employee?.email|| "-Not Set-"}}</span>
                         </div>
                         <div>
                             <i class="fa-solid fa-phone"></i>
-                            <span>{{employee?.workNumber}}</span>
+                            <span>{{employee?.workNumber|| "-Not Set-"}}</span>
                         </div>
                         <div>
                             <i class="fa-solid fa-location-dot"></i>
-                            <span>{{employee?.location}}</span>
+                            <span>{{employee?.location|| "-Not Set-"}}</span>
                         </div>
                         <div>
                             <i class="fa-solid fa-hashtag"></i>
-                            <span>{{employee?.employeeId}}</span>
+                            <span>{{employee?.employeeId|| "-Not Set-"}}</span>
                         </div>
                         <div>
                             <button class="prfl-btn">
@@ -41,11 +41,11 @@
                         <h5>REPORTING MANAGER</h5>
                     </div>
                     <div class="departments-child">
-                        <span>{{employee?.department}}</span>
-                        <span>{{employee?.department}}</span>
+                        <span>{{employee?.department|| "-Not Set-"}}</span>
+                        <span>{{employee?.department|| "-Not Set-"}}</span>
                         <span>
                             <img class="manager" src="../../assets/profileimage.png"/>
-                            <a style="text-decoration: none; color:#7e5991;" href="#">Srinivasa rao Pilli</a>
+                        <a style="text-decoration: none; color:#7e5991;" href="#">{{employee?.reportsTo|| "-Not Set-"}}</a>
                         </span>
                     </div>
                    
