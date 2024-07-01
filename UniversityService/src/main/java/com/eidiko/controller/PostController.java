@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,8 @@ import com.eidiko.responce.CommonResponse;
 import com.eidiko.serviceimplementation.PostService;
 
 @RestController
-@RequestMapping("/posts/")
+@RequestMapping("/posts")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostController {
 
 	@Autowired
@@ -147,11 +149,11 @@ public class PostController {
 	        List<Posts> posts = postService.getAllPostsByTimeStamp();
 	        
 	        // Convert byte array back to Base64 string before sending response
-	        for (Posts post : posts) {
-	            if (post.getImage() != null) {
-	                post.setImage(Base64.getEncoder().encode(post.getImage()));
-	            }
-	        }
+//	        for (Posts post : posts) {
+//	            if (post.getImage() != null) {
+//	                post.setImage(Base64.getEncoder().encode(post.getImage()));
+//	            }
+//	        }
 	        
 	        // Prepare and return a successful response with the list of posts
 	        return new CommonResponse<>().prepareSuccessResponseObject(posts);
@@ -160,6 +162,7 @@ public class PostController {
 	        return new CommonResponse<>().prepareFailedResponse1(e.getMessage());
 	    }
 	}
+
 
 	
 

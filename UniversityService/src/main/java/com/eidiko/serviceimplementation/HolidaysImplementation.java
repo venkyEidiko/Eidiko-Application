@@ -2,10 +2,10 @@ package com.eidiko.serviceimplementation;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Date;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,12 +23,11 @@ public class HolidaysImplementation implements HolidayService {
 	@Autowired
 	private HolidaysRepository holidaysRepository;
 
-
 	@Override
 	public String saveHolidays(MultipartFile file, String description, LocalDate dateOFHoliday) throws IOException {
 
 		Holidays holidays = new Holidays();
-     
+
 		holidays.setDateOfHoliday(dateOFHoliday);
 		holidays.setFestivalImage(file.getBytes());
 		holidays.setDescription(description);
@@ -44,36 +43,51 @@ public class HolidaysImplementation implements HolidayService {
 
 	}
 
-
-	@Override
+	/*@Override
 	public List<Holidays> getAllHolidays() {
 
-		
 		List<Holidays> all = holidaysRepository.findAll();
-		
-		List<Holidays>holidayData=new ArrayList<>();
+
+		List<Holidays> holidayData = new ArrayList<>();
 		if (all.isEmpty()) {
-			
+
 			throw new UsernameNotFoundException("There is no record....!");
-			
-		}
-		else
-		{
-			 
-			 for (Holidays holidays : all) {
-				 
-				  byte[] image = holidays.getFestivalImage();
-				  
-				  String encodeToString = Base64.getEncoder().encodeToString(image);
-				  
-				  holidays.setImageBase64(encodeToString);
-				
-				 holidayData.add(holidays);
-			  }
-			
+
+		} else {
+			for (Holidays holidays : all) {
+
+				byte[] image = holidays.getFestivalImage();
+
+				String encodeToString = Base64.getEncoder().encodeToString(image);
+
+				holidays.setImageBase64(encodeToString);
+
+				holidayData.add(holidays);
+			}
+
 		}
 		
 		return holidayData;
+	}*/
+	@Override
+	public List<Holidays> getAllHolidays() {
+	    List<Holidays> all = holidaysRepository.findAll();
+
+	    if (all.isEmpty()) {
+	        throw new UsernameNotFoundException("There is no record....!");
+	    }
+
+	    List<Holidays> holidayData = all.stream()
+	        .peek(holidays -> {
+	            byte[] image = holidays.getFestivalImage();
+	            String encodeToString = Base64.getEncoder().encodeToString(image);
+	            holidays.setImageBase64(encodeToString);
+	        })
+	        .sorted(Comparator.comparing(Holidays::getDateOfHoliday))
+	        .collect(Collectors.toList());
+
+	    return holidayData;
 	}
+
 
 }

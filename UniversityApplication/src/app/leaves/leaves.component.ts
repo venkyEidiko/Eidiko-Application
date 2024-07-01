@@ -76,7 +76,7 @@ interface LeaveResponse {
 
 export class LeavesComponent implements OnInit {
   daysOfWeek: string[] = [];
-
+  
   pendingLeaves: PendingLeave[] | null = null;
   dataSource!: MatTableDataSource<PendingLeave>;
   filteredData!: MatTableDataSource<PendingLeave>;
@@ -103,11 +103,22 @@ export class LeavesComponent implements OnInit {
   statusTypeOptions:string[]=[]
   selectedLeaveTypes: Set<string> = new Set<string>();
   //selectedStatus:Set<string>=new Set<string>();
+  
     selectedStatus: string[] = [];
   consumedLeaves = 0;
   availableLeaves = 0;
   totalLeave = 12;
   pendingLeave: LeaveRequest[] | null = null;
+  consumedPaidLeave = 0;
+  availablePaidLeave = 0;
+  consumedCompOffs = 0;
+  availableCompOffs = 0;
+  consumedUnpaidLeave =0;
+  availableUnpaidLeave = 0;
+  paidLeaveCount: number = 0;
+  unpaidLeaveCount: number = 0;
+
+
 
 
   monthlyChartData: { label: string; value: number, duration: number }[] = []; // Array to hold monthly chart data
@@ -132,6 +143,7 @@ export class LeavesComponent implements OnInit {
 
   ) {}
    employeeId = this.loginService.getEmployeeData().employeeId;
+   
   ngOnInit(): void {
    
     const pageSize = 5;
@@ -140,7 +152,7 @@ export class LeavesComponent implements OnInit {
     this.fetchMonthlyChartData(this.employeeId);
     this.fetchLeaveData([],[],0,pageSize);
 
-    this.leaveTypeOptions = ['Paid Leave', 'Unpaid Leave', 'Maternity Leave', 'Optional Leave', 'Comp Offs'];
+    this.leaveTypeOptions = ['Paid Leave', 'unpaid', 'Maternity Leave', 'Optional Leave', 'comp offs'];
 
   }
   chartOptions: ApexCharts.ApexOptions = {
@@ -184,6 +196,8 @@ export class LeavesComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           console.log("paginator",this.dataSource.paginator)
           this.applyFilter();
+          
+
         } else {
           console.error('Failed to fetch leave data or no data available');
         }
@@ -201,26 +215,61 @@ export class LeavesComponent implements OnInit {
     const statuses = Array.from(this.selectedStatuses);
     this.fetchLeaveData(leaveTypes, statuses, pageIndex, pageSize);
   }
+  // aggregateLeaveCounts(): void {
+  //   this.paidLeaveCount = 0;
+  //   this.unpaidLeaveCount = 0;
+  //   if (this.pendingLeaves) {
+  //     this.pendingLeaves.forEach(leave => {
+  //       if (leave.leaveType === 'Paid Leave') {
+  //         this.paidLeaveCount++;
+  //       } else if (leave.leaveType === 'unpaid') {
+  //         this.unpaidLeaveCount++;
+          
+  //       }
+  //     });
+  //   }
+  //   this.updateChartOptions();
+  // }
 
+  
   fetchLeaveBalance(employeeId: number): void {
     this.leavetypeService.fetchLeaveBalance(employeeId).subscribe(
       (response: any) => {
-        console.log("fetchLeaveBalance method Response Data : ", response)
+        console.log("employee ", employeeId);
+        console.log("fetchLeaveBalance method Response Data : ", response);
+  
         if (response.status === 'SUCCESS' && response.result.length > 0) {
-          const result = response.result[0];
-          console.log("fetchLeaveBalance method Data : ",result)
-          this.consumedLeaves = result.consumedLeave;
-          this.availableLeaves = 12 - result.consumedLeave;
-          this.updateMonthlyChartData(result.monthlyLeaveData);
-          this.updateChartOptions();
-
-          //pending leave data
-          this.pendingLeave = result.pendingLeave
-          console.log("Pending leave: ", this.pendingLeave);
-          this.pendingLeave?.forEach(pending=>{
-            console.log("Panding leave Object: ",pending)
-          })
-
+          response.result.forEach((leave: any) => {
+            console.log(`Leave Type: ${leave.leaveType}`);
+            console.log(`Consumed Leave: ${leave.consumedLeave}`);
+            console.log(`Available Leave: ${leave.availableLeave}`);
+  
+            if (leave.leaveType === 'Paid Leave') {
+              this.consumedPaidLeave = leave.consumedLeave;
+              this.availablePaidLeave = leave.totalLeave - leave.consumedLeave;
+              this.updateMonthlyChartData(leave.monthlyLeaveData);
+              this.updateChartOptions();
+            } else if (leave.leaveType === 'comp offs') {
+              this.consumedCompOffs = leave.consumedLeave;
+              this.availableCompOffs = this.totalLeave - leave.consumedLeave;
+              this.updateMonthlyChartData(leave.monthlyLeaveData);
+                this.updateChartOptions();
+            } else if (leave.leaveType == 'unpaid') {
+              this.consumedUnpaidLeave = leave.consumedLeave;
+             
+              console.log("consumedunpaidleave",this.consumedUnpaidLeave);
+              
+              this.updateMonthlyChartData(leave.monthlyLeaveData);
+              this.updateChartOptions();
+            }
+  
+            // pending leave data
+            this.pendingLeave = leave.pendingLeave;
+            console.log("Pending leave: ", this.pendingLeave);
+            this.pendingLeave?.forEach(pending => {
+              console.log("Pending leave Object: ", pending);
+            });
+          });
         } else {
           console.error('Failed to fetch leave balance or no data available');
         }
@@ -230,11 +279,11 @@ export class LeavesComponent implements OnInit {
       }
     );
   }
-
+  
   weekday = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   getDayOfWeek(date: Date): string {
 
-    const dayIndex = date.getDay(); // 0 (Sunday) to 6 (Saturday)
+    const dayIndex = date.getDay(); 
     return this.weekday[dayIndex];
   }
 
@@ -242,48 +291,48 @@ export class LeavesComponent implements OnInit {
 
   fetchMonthlyChartData(employeeId: number): void {
     this.leavetypeService.fetchMonthlyLeaveData(employeeId).subscribe(
-
       (response: any) => {
         if (response.status === 'SUCCESS' && response.result.length > 0) {
-          const monthlyData = response.result[0].monthlyLeaveData;
-          const keys = Object.keys(monthlyData)
-
-          console.log("value of month name: ", keys);
-          console.log("fetchMonthlyChartData Response Data : ", response)
-
-          this.updateMonthlyChartData(monthlyData);
-
-          Object.keys(monthlyData).forEach(month => {
-            const leaveDays: string[] = monthlyData[month].leaveDays;
-
-            if (!this.totalDays) {
-              this.totalDays = leaveDays.slice(); 
+          response.result.forEach((resultItem: { leaveType: any; monthlyLeaveData: any; }) => {
+            const leaveType = resultItem.leaveType;
+            const monthlyData = resultItem.monthlyLeaveData;
+  
+            if (monthlyData) {
+              const keys = Object.keys(monthlyData);
+              console.log("Leave Type: ", leaveType);
+              console.log("Month keys: ", keys);
+  
+              // Update monthly chart data for each leave type
+              this.updateMonthlyChartData(monthlyData);
+  
+              // Process leave days for each month
+              Object.keys(monthlyData).forEach(month => {
+                const leaveDays: string[] = monthlyData[month].leaveDays;
+  
+                leaveDays.forEach(dateStr => {
+                  const date = new Date(dateStr);
+                  const dayIndex = this.getDayOfWeek(date);
+  
+                  if (this.dayIndexCountMap.has(dayIndex)) {
+                    this.dayIndexCountMap.set(dayIndex, this.dayIndexCountMap.get(dayIndex)! + 1);
+                  } else {
+                    this.dayIndexCountMap.set(dayIndex, 1);
+                  }
+                });
+              });
             } else {
-              this.totalDays = this.totalDays.concat(leaveDays);
+              console.warn(`No monthly leave data available for ${leaveType}`);
             }
-            leaveDays.forEach(dateStr => {
-              const date = new Date(dateStr);
-              const dayIndex = this.getDayOfWeek(date);
-
-              if (this.dayIndexCountMap.has(dayIndex)) {
-                this.dayIndexCountMap.set(dayIndex, this.dayIndexCountMap.get(dayIndex)! + 1);
-              } else {
-                this.dayIndexCountMap.set(dayIndex, 1);
-              }
-            });
           });
-
-
-          console.log("weekly chart before map : ", this.weeklyChartData);
-
-
+  
+          // Example of updating weeklyChartData based on dayIndexCountMap
           this.dayIndexCountMap.forEach((count, dayName) => {
             const dayObject = this.weeklyChartData.find(day => day.label === dayName);
             if (dayObject) {
-              dayObject.value = count * 10;
+              dayObject.value = count * 10; // Example value adjustment
             }
-
           });
+  
           console.log(`Total Leave days: `, this.totalDays);
           console.log(`Day Index Count Map: `, this.dayIndexCountMap);
           console.log(`weeklyChartData : `, this.weeklyChartData);
@@ -296,7 +345,7 @@ export class LeavesComponent implements OnInit {
       }
     );
   }
-
+  
   updateMonthlyChartData(monthlyLeaveData: { [key: string]: MonthlyLeaveData }): void {
     if (!monthlyLeaveData) {
       console.error('Monthly leave data is undefined or null.');
@@ -348,14 +397,18 @@ export class LeavesComponent implements OnInit {
   }
 
   updateChartOptions(): void {
-    this.chartOptions1.series = [this.availableLeaves, this.consumedLeaves];
+    this.chartOptions1.series = [this.availablePaidLeave, this.consumedPaidLeave];
     this.chartOptions1 = { ...this.chartOptions1 };
 
-    this.chartOptions3.series = [this.availableLeaves, this.consumedLeaves];
+    this.chartOptions3.series = [this.consumedPaidLeave, this.consumedUnpaidLeave];
+    
+    console.log("chartOptions3",this.consumedUnpaidLeave)
     this.chartOptions3 = { ...this.chartOptions3 };
 
-    this.chartOptions2.series = [this.consumedLeaves];
+    this.chartOptions2.series = [this.consumedUnpaidLeave];
     this.chartOptions2 = { ...this.chartOptions2 };
+    this.chartOptions4.series = [this.availableCompOffs,this.consumedCompOffs];
+    this.chartOptions4 = { ...this.chartOptions4};
   }
  
   chartOptions1 = {
@@ -397,6 +450,46 @@ export class LeavesComponent implements OnInit {
       }
     ]
   };
+  chartOptions4 = {
+    series: [0, 0],
+    chart: {
+      type: 'donut',
+      width: 150,
+      height: 220
+    },
+    labels: ['AvailableCompOffLeaves', 'ConsumedCompOffLeaves'],
+    colors: ['#cdfaf6', '#1eebe7'],
+    fill: {
+      type: 'solid',
+      colors: ['#cdfaf6', '#1eebe7']
+    },
+    legend: {
+      show: false
+    },
+    dataLabels: {
+      enabled: false
+    },
+    tooltip: {
+      enabled: true,
+      y: {
+        formatter: (val: number) => `${val} days`
+      },
+      x: {
+        show: true
+      }
+    },
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 200
+          }
+        }
+      }
+    ]
+  };
+
 
   chartOptions3 = {
     series: [0, 0],
@@ -405,7 +498,7 @@ export class LeavesComponent implements OnInit {
       width: 150,
       height: 180
     },
-    labels: ['Available Leaves', 'Consumed Leaves'],
+    labels: ['Paid Leaves', 'unpaid'],
     colors: ['#dde2eb', '#dde2eb'],
     fill: {
       type: 'solid',

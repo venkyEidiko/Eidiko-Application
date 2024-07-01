@@ -19,7 +19,9 @@ export class Dialog1Component {
   showPolicy: boolean = false;
   pol: any={};
 
-  constructor(private dialogRef: MatDialogRef<Dialog1Component>) {}
+  constructor(private dialogRef: MatDialogRef<Dialog1Component>) {
+    this.onCompoff();
+  }
 
   closeDialog(): void {
     this.dialogRef.close();

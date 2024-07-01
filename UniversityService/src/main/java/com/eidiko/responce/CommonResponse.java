@@ -56,7 +56,7 @@ public class CommonResponse<T> {
 		response.setStatus("FAILURE");
 		response.setError(error);
 
-		return new ResponseEntity<>(response, HttpStatus.CREATED);
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
 	public ResponseEntity<ResponseModel<T>> prepareSuccessResponseEmail(T result) {
