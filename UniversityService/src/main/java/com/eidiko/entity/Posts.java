@@ -4,7 +4,7 @@ package com.eidiko.entity;
 
 import java.util.List;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -36,6 +36,7 @@ public class Posts {
 	// file or img for post 
 	@Lob
 	//@JsonSerialize(using = ByteArrayToBase64Serializer.class)
+	@JsonIgnore
 	private byte[] image;
 	//private Clob image;
 	

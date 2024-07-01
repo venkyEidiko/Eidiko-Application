@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Base64;
 import java.util.List;
 
+import org.aspectj.apache.bcel.classfile.Module.Require;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +30,7 @@ import com.eidiko.responce.CommonResponse;
 import com.eidiko.serviceimplementation.PostService;
 
 @RestController
-@RequestMapping("/posts/")
+@RequestMapping("/posts")
 @CrossOrigin(origins = "*",allowedHeaders = "*")
 public class PostController {
 
@@ -41,19 +42,25 @@ public class PostController {
 
 	// saves data and file in db
 	@PostMapping("/saveimage")
-	public ResponseEntity<ResponseModel<Object>> saveImage(@RequestParam("description") String description,
-			@RequestParam("postType") String postType, 
-			@RequestParam("mentionEmployee") List<String> mentionEmployee,
-			@RequestParam("postEmployee") Long postEmployee,
-			@RequestParam("file") MultipartFile file)
+	public ResponseEntity<ResponseModel<Object>> saveImage(@RequestParam(value="description",required = false) String description,
+			@RequestParam(value="postType",required = false) String postType, 
+			@RequestParam(value="mentionEmployee", required = false) List<String> mentionEmployee,
+			@RequestParam(value = "postEmployee",required = false) Long postEmployee,
+			@RequestParam(value = "file",required = false) MultipartFile file
+			
+			)
 			throws IOException, SQLException, FileUploadException {
 		
+		System.out.println("saveImage :"+description);
+		
+		System.out.println("saveImage :"+postEmployee);
+	
 		System.out.println("======================================================");
-		if (file.getSize() > 15 * 1024 * 1024) { // 20MB in bytes
-			throw new FileUploadException("File size should not exceed 20MB.");
+		if (file!=null && file.getSize() > 20 * 1024 * 1024) { // 20MB in bytes
+			throw new FileUploadException("File size should not exceed 5MB.");
 			
 		}
- 
+// 
 		try {
 			
 		Posts posts = new Posts();
@@ -61,10 +68,15 @@ public class PostController {
 		posts.setMentionEmployee(mentionEmployee);
 		posts.setPostEmployee(postEmployee);
 		posts.setPostType(postType);
-
-		String res = postService.saveImage(posts, file);
+		if(file!=null) {
+        posts.setImage(file.getBytes());
+		}
+//		if (file!=null) {
+//			
+//			String res = postService.saveImage(posts, file);
+//		}
 		
-		
+		String res = postService.saveImage(posts);
 		return new CommonResponse<>().prepareSuccessResponseObject(res);
 		}
 		catch (IllegalArgumentException e) {

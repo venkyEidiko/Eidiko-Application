@@ -76,7 +76,7 @@ public class EmployeeControllor {
 			saveEmployee = employeeInterface.saveEmployee(employee);
 			return new CommonResponse<>().prepareSuccessResponseObject(saveEmployee);
 		} catch (BadRequestException e) {
-			// TODO Auto-generated catch block
+			
 			return new CommonResponse<>().handleBadRequestException(e.getMessage());
 		}
 
@@ -198,6 +198,15 @@ public class EmployeeControllor {
 			}
 		}  
 
-
+		//this api returns both present and after 7 days anniversaries details
+				@GetMapping("/todayAndNextSevenDaysAnniversaryList")
+				public ResponseEntity<ResponseModel<Object>> getTodayAndNextDaysAnniversaries() {
+					try {
+						Map<String, List<BirtdayAndanniversaryDto>> response = employeeService.getTodayAndSevenDaysAnniversaryList();
+						return new CommonResponse<>().prepareSuccessResponseObject(response);
+					} catch (Exception e) {
+						return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
+					}
+				}  
 }
 

@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class DashbordService {
 
   constructor(private http: HttpClient, private loginService: LoginService, private dialog: MatDialog,) { }
-  url = "http://10.0.0.38:8082/api/";
+  url = "http://localhost:8080/api/";
   getWorkFromHome(): Observable<any[]> {
     return this.http.get<any>(this.url + "getemployeesdata/Work From Home");
 

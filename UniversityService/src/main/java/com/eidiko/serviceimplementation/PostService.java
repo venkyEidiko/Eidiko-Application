@@ -30,13 +30,13 @@ public class PostService {
 	private PostRepo postRepo;
 
 	// saving purpose
-	public String saveImage(Posts posts, MultipartFile file) throws IOException, SQLException, FileUploadException {
-
-		if (file != null) {
-			byte[] fileData = genareteImageTobyteArray(file);
-			posts.setImage(fileData);
-
-		}
+	public String saveImage(Posts posts) throws IOException, SQLException, FileUploadException {
+//
+//		if (file != null) {
+//			byte[] fileData = genareteImageTobyteArray(file);
+//			posts.setImage(fileData);
+//
+//		}
 		
 		//for setting time (post created time)	
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
