@@ -32,6 +32,7 @@ public class CompensatoryOffController {
     private CommonResponse<String> commonResponse;
 
 
+    //this api is used for making a request for compensatory request
     @PostMapping("/requestCompensatory")
     public ResponseEntity<ResponseModel<String>> requestCompensatory(@RequestParam LocalDate fromDate,
                                                                      @RequestParam LocalDate toDate, @RequestParam String note, @RequestParam("files") List<MultipartFile> files,

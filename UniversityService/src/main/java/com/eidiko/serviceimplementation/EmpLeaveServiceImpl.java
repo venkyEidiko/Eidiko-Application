@@ -168,6 +168,7 @@ List<EmpLeaveDto> empLeaveDtoList=empLeaveList.stream().map((empLeave)->this.map
 
 
 
+	//this method is used for fetching the details who are on leave today
 @Override
 public List<EmpLeaveDto> getEmployeesOnLeaveToday() {
 	LocalDate today = LocalDate.now();
@@ -186,6 +187,7 @@ public List<EmpLeaveDto> getEmployeesOnLeaveToday() {
 }
 
 
+//this method is used to get the details by their leavetype
 	@Override
 	public List<EmpLeaveDto> getEmployeeDetailsByRequestType(String leaveType) {
 		List<EmpLeave> empLeaveList = empLeaveRepo.findByLeaveType(leaveType);

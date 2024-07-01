@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.apache.poi.hssf.record.PageBreakRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -287,6 +288,103 @@ public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date)
 
 		return employeesWithBirthdaysNextSevenDays;
 	}
-	
+
+
+
+
+
+
+	//this method returns both present date and after 7 days birthdays
+	@Override
+	public Map<String, List<BirtdayAndanniversaryDto>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
+		LocalDate today = LocalDate.now();
+		LocalDate endDate = today.plusDays(7);
+
+		List<BirtdayAndanniversaryDto> todayBirthdays = employeeRepo.findBydateOfBirth(today.getMonthValue(), today.getDayOfMonth());
+
+		List<BirtdayAndanniversaryDto> nextSevenDaysBirthdays = new ArrayList<>();
+		List<Employee> allEmployees = employeeRepo.findAll();
+
+		for (Employee employee : allEmployees) {
+			LocalDate birthday = employee.getDateOfBirth();
+			if (birthday != null &&  (birthday.isAfter(today) && birthday.isBefore(endDate))) {
+				BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(
+						employee.getEmployeeId(),
+						employee.getFirstName(),
+						employee.getLastName()
+				);
+				nextSevenDaysBirthdays.add(dto);
+			}
+		}
+
+		Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
+		result.put("Today Birthdays", todayBirthdays);
+		result.put("Next Seven Days Birthdays", nextSevenDaysBirthdays);
+
+		return result;
+	}
+
+
+
+
+
+
+
+
+
+	@Override
+	public Map<String, List<BirtdayAndanniversaryDto>> getWorkAnniversariesForTodayAndNextSevenDays() {
+
+		LocalDate today = LocalDate.now();
+		LocalDate endDate = today.plusDays(7);
+
+		// Fetch all employees
+		List<Employee> allEmployees = employeeRepo.findAll();
+
+		// Initialize lists for today's and next seven days' anniversaries
+		List<BirtdayAndanniversaryDto> todayAnniversaries = new ArrayList<>();
+		List<BirtdayAndanniversaryDto> nextSevenDaysAnniversaries = new ArrayList<>();
+
+		for (Employee employee : allEmployees) {
+			LocalDate joiningDate = employee.getDateOfJoining();
+			if (joiningDate != null) {
+				LocalDate anniversaryThisYear = joiningDate.withYear(today.getYear());
+
+				// Skip if joining date is in the current year
+				if (joiningDate.getYear() == today.getYear()) {
+					continue;
+				}
+
+				// Add to today's anniversaries if it matches
+				if (anniversaryThisYear.equals(today)) {
+					BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(
+							employee.getEmployeeId(),
+							employee.getFirstName(),
+							employee.getLastName()
+					);
+					todayAnniversaries.add(dto);
+				}
+
+				// Add to next seven days' anniversaries if it matches
+				if (anniversaryThisYear.isAfter(today) && anniversaryThisYear.isBefore(endDate)) {
+					BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(
+							employee.getEmployeeId(),
+							employee.getFirstName(),
+							employee.getLastName()
+					);
+					nextSevenDaysAnniversaries.add(dto);
+				}
+			}
+		}
+
+		Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
+		result.put("Today Anniversaries", todayAnniversaries);
+		result.put("Next Seven Days Anniversaries", nextSevenDaysAnniversaries);
+
+		return result;
+	}
+
+
+
 
 }

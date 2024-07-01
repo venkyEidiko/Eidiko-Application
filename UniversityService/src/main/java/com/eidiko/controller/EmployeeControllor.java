@@ -2,6 +2,7 @@ package com.eidiko.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import com.eidiko.entity.Address;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*",allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmployeeControllor {
 
 	//@Autowired
@@ -186,5 +187,34 @@ public class EmployeeControllor {
 
 
 
-}
 
+
+
+	//this api returns both present and after 7 days birthday details
+	@GetMapping("/todayAndNext7Daysbirthdays")
+	public ResponseEntity<ResponseModel<Object>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
+		try {
+			Map<String, List<BirtdayAndanniversaryDto>> response = employeeService.getBirthdaysAndAnniversariesForTodayAndNextSevenDays();
+			return new CommonResponse<>().prepareSuccessResponseObject(response);
+		} catch (Exception e) {
+			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
+		}
+	}
+
+
+
+
+	@GetMapping("/workAnniversaries")
+	public ResponseEntity<ResponseModel<Object>> getWorkAnniversariesForTodayAndNextSevenDays() {
+		try {
+			Map<String, List<BirtdayAndanniversaryDto>> response = employeeService.getWorkAnniversariesForTodayAndNextSevenDays();
+			return new CommonResponse<>().prepareSuccessResponseObject(response);
+		} catch (Exception e) {
+			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
+		}
+	}
+
+
+
+
+}

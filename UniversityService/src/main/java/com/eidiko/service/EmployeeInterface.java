@@ -37,4 +37,8 @@ public interface EmployeeInterface {
 
 	List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays();
 
+	Map<String, List<BirtdayAndanniversaryDto>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays();
+
+	Map<String, List<BirtdayAndanniversaryDto>> getWorkAnniversariesForTodayAndNextSevenDays();
+
 } 
