@@ -23,7 +23,7 @@ export class ForgotpasswordComponent {
   }
 
   onSubmit() {
-    console.log(this.email);
+    console.log("forgot pwd",this.email);
 
     this.apiService.checkEmail(this.email).subscribe({
       next: (response: any) => {

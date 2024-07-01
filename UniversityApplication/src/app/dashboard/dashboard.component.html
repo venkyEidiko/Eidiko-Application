@@ -96,6 +96,7 @@
           <ul class="nav-list">
             <li>
               <a href="#" (click)="showContent($event, 'post')" [class.active]="selectedContent === 'post'">Post</a>
+              
             </li>
             <li>
               <a href="#" (click)="showContent($event, 'announcement')"
@@ -110,7 +111,27 @@
             </li>
           </ul>
           <div class="org-content">
-            <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item">Content 1</div>
+            <div id="post" 
+            [class.active]="selectedContent === 'post'" 
+            class="org-content-item"
+            (focus)="expandCard()"
+            (focusout)="collapseCard()"
+
+            tabindex="0"
+            [ngClass]="{'expanded': isCardExpanded}">
+           
+                   
+                   <div>
+    
+    <button title="Mention Employee" (click)="insertSymbol('@')"
+    style="background-color:rgb(51, 61, 78); ;border-radius:10px;font-size:12px;height:32px;"><i class="fas fa-at"></i></button>
+                    <button style="background-color:rgb(51, 61, 78);border-radius:10px;font-size:12px;height:30px"><i class="fas fa-camera"></i></button>
+                    <button style="background-color:rgb(51, 61, 78);border-radius:10px;font-size:12px;height:30px"><i class="fas fa-smile"></i></button>
+                   </div>
+                   <input type="text" placeholder="write your post here and mention your peers....."
+                      style="background-color:rgb(51, 61, 78);height:80px">
+                   {{insertedSymbol}}
+            </div>
             <div id="announcement" [class.active]="selectedContent === 'announcement'" class="org-content-item">Hello
             </div>
             <div id="poll" [class.active]="selectedContent === 'poll'" class="org-content-item">Poll related content
@@ -231,10 +252,70 @@
           </div>
         </mat-card-content>
       </mat-card>
-      <mat-card class="org-card" *ngIf="selectedTab === 'organization'">
-        <mat-card-content>All posts</mat-card-content>
 
-      </mat-card>
+      <div *ngIf="selectedTab === 'organization'">
+        <mat-card class="org-card" *ngFor="let image of imageSrcList; let i = index" style="margin-top:10px;">
+          <mat-card-content>
+            <div style="display:flex;">
+              <img src="../../assets/profileimage.png" style="height: 55px; width: 60px; border-radius: 30px; margin-top: 10px; margin-bottom: 10px;">
+              <p style="margin-top:35px;margin-left:10px">{{ image.timeStamp }}</p>
+            </div>
+            <!-- <div *ngFor="let post of posts">
+  <h3>{{ post.description }}</h3>
+  <p>Likes:</p>
+  <ul>
+    <ng-container *ngFor="let like of post.likes">
+      <li *ngIf="like.postId === post.postId">
+        Like ID: {{ like.likeId }}, Emoji: {{ like.emoji }}, Employee ID: {{ like.empId }}
+      </li>
+    </ng-container>
+  </ul>
+</div> -->
+            <p>{{image.description}}</p>
+
+            <p style="color:dodgerblue">{{image.mentionEmployee.join(',')}}</p>
+            <img [src]="image.base64Image" alt="Image from base64" style="margin-bottom:20px;max-width:600px">
+            <div style="display: flex; gap: 30px;">
+              <div class="hover-icons">
+                <i class="fa-regular fa-thumbs-up" (click)="onEmojiClick(image.postId, 1)"></i>Like
+                <div class="like-icons">
+                  <p title="Like"><i class="fa-solid fa-thumbs-up" (click)="onEmojiClick(image.postId, 1)"></i></p>
+                  <p title="Haha"><i class="fa-solid fa-face-laugh-beam" (click)="onEmojiClick(image.postId, 2)"></i></p>
+                  <p title="Love"><i class="fa-solid fa-heart" (click)="onEmojiClick(image.postId, 3)"></i></p>
+                  <p title="Claps"><i class="fa-solid fa-hands-clapping" (click)="onEmojiClick(image.postId, 4)"></i></p>
+                  <p title="Insightful"><i class="fa-solid fa-lightbulb" (click)="onEmojiClick(image.postId, 5)"></i></p>
+                  <p title="Curious"><i class="fa-brands fa-cloudversify" (click)="onEmojiClick(image.postId, 6)"></i></p>
+                </div>
+              </div>
+              <p (click)="toggleCommentBox(i)"><i class="fa-regular fa-message"></i>Comment</p>
+            </div>
+            <div *ngIf="showCommentBox[i]">
+              <form #commentForm="ngForm" (ngSubmit)="postComment1(i, commentForm.value.comment, $event)">
+                <textarea rows="3" cols="50" placeholder="Write a comment..." name="comment" ngModel
+                          (keydown.enter)="postComment1(i, commentForm.value.comment, $event)">
+                </textarea>
+                <button type="submit" style="display:none;"></button> 
+              </form>
+              <div *ngFor="let post of posts">
+                <h3>{{ post.description }}</h3>
+                <p>Likes:</p>
+                <ul>
+                  <ng-container *ngFor="let like of post.likes">
+                    <li>
+                      Like ID: {{ like.likeId }}, Emoji: {{ like.emoji }}, Employee ID: {{ like.empId }}
+                    </li>
+                  </ng-container>
+                </ul>
+              </div> 
+            </div>
+         
+                </mat-card-content>
+        </mat-card>
+      </div>
+      
+      
+      
+
       <mat-card class="org-card" *ngIf="selectedTab === 'java'">
         <mat-card-content>Java related post</mat-card-content>
       </mat-card>

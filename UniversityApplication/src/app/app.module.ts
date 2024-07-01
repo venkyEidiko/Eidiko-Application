@@ -59,7 +59,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgChartsModule } from 'ng2-charts';
 import { Dialog1Component } from './dialog1/dialog1.component';
 import { CompDialogComponent } from './comp-dialog/comp-dialog.component';
-import { CompoffComponent } from './compoff/compoff.component';
+
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DropdowntableComponent } from './dropdowntable/dropdowntable.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -116,7 +116,7 @@ import { TruncatePipe } from './turncate.pipe';
     DialogComponent,
     Dialog1Component,
     CompDialogComponent,
-    CompoffComponent,
+    
     DropdowntableComponent,
    
     ShiftRequestFormComponent,
@@ -130,7 +130,7 @@ import { TruncatePipe } from './turncate.pipe';
     
   ],
   imports: [
-   
+
     MatDatepickerModule,
     BrowserModule,
     MatButtonModule,

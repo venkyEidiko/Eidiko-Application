@@ -76,14 +76,17 @@
       <div *ngIf="searchResults.length > 0" class="search-results">
         <ul>
           <li *ngFor="let result of searchResults" (click)="selectEmployee(result)">
+            <div>
+            <img src="../../assets/profileimage.png" style="height:25px;width:30px;">
             {{ result.employeeId }} - {{ result.firstName }} {{ result.lastName }}
+            </div>
           </li>
         </ul>
       </div>
     </div>
   </div>
-  <div mat-dialog-actions class="custom-dialog-actions">
-    <button mat-button (click)="closeDialog()">Cancel</button>
+  <div mat-dialog-actions class="custom-dialog-actions" >
+    <button mat-button (click)="closeDialog()" >Cancel</button>
     <button mat-button class="request" (click)="submitRequest()">Request</button>
   </div>
 </div>
