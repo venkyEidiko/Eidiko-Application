@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.eidiko.dto.BirtdayAndanniversaryDto;
+import com.eidiko.dto.EmployeeDto;
 import com.eidiko.entity.Address;
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.Roles_Table;
@@ -72,6 +73,7 @@ public class EmployeeService implements EmployeeInterface {
 		}
 
 	}
+
 	@Override
 	public String updateEmployee(Long employeeId, Employee employee) throws UserNotFoundException {
 
@@ -85,36 +87,28 @@ public class EmployeeService implements EmployeeInterface {
 		byEmployeeId.setGender(employee.getGender());
 		byEmployeeId.setLastName(employee.getLastName());
 		// byEmployeeId.setRole(employee.getRole());
-
-		// Update addresses
-		List<Address> addresses = employee.getAddresses();
-		if (addresses != null) {
-			// Update existing addresses or add new addresses
-			List<Address> updatedAddress = new ArrayList<>();
-
-			// address.setEmployee(byEmployeeId);
-
-			for (Address address1 : byEmployeeId.getAddresses()) {
-				for (Address address : addresses) {
-					if (address1.getAddressType().equalsIgnoreCase(address.getAddressType())) {
-
-						address1.setAddressType(address.getAddressType());
-						address1.setArea(address.getArea());
-						address1.setCity(address.getCity());
-						address1.setDoorNumber(address.getDoorNumber());
-						address1.setLandmark(address.getLandmark());
-						address1.setPincode(address.getPincode());
-						address1.setState(address.getState());
-						address1.setStreetName(address.getStreetName());
-						updatedAddress.add(address1);
-					} else {
-						address.setEmployee(byEmployeeId);
-						updatedAddress.add(address);
-					}
-				}
-				byEmployeeId.setAddresses(updatedAddress);
-			}
-		}
+		/*
+		 * // Update addresses List<Address> addresses = employee.getAddresses(); if
+		 * (addresses != null) { // Update existing addresses or add new addresses
+		 * List<Address> updatedAddress = new ArrayList<>();
+		 * 
+		 * // address.setEmployee(byEmployeeId);
+		 * 
+		 * for (Address address1 : byEmployeeId.getAddresses()) { for (Address address :
+		 * addresses) { if
+		 * (address1.getAddressType().equalsIgnoreCase(address.getAddressType())) {
+		 * 
+		 * address1.setAddressType(address.getAddressType());
+		 * address1.setArea(address.getArea()); address1.setCity(address.getCity());
+		 * address1.setDoorNumber(address.getDoorNumber());
+		 * address1.setLandmark(address.getLandmark());
+		 * address1.setPincode(address.getPincode());
+		 * address1.setState(address.getState());
+		 * address1.setStreetName(address.getStreetName());
+		 * updatedAddress.add(address1); } else { address.setEmployee(byEmployeeId);
+		 * updatedAddress.add(address); } } byEmployeeId.setAddresses(updatedAddress); }
+		 * }
+		 */
 		Employee updatedEmployee = employeeRepo.save(byEmployeeId);
 
 		if (updatedEmployee.getEmployeeId() != 0) {
@@ -251,21 +245,22 @@ public class EmployeeService implements EmployeeInterface {
 	}
 
 //for birthdays and anniversaries giving 
-@Override
-public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date) {	
-	List<BirtdayAndanniversaryDto>employeesDataOfBirthList= employeeRepo.findBydateOfBirth(date.getMonthValue(),date.getDayOfMonth());
-	 List<BirtdayAndanniversaryDto> employeesDateOfJoiningList = employeeRepo.findByDateOfJoining(date.getMonthValue(), date.getDayOfMonth());
-	
-	 Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
-	  result.put("BirthDay Today ", employeesDataOfBirthList);
-      result.put("Work Anniversaries ", employeesDateOfJoiningList);
-      
-	 return result;
+	@Override
+	public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date) {
+		List<BirtdayAndanniversaryDto> employeesDataOfBirthList = employeeRepo.findBydateOfBirth(date.getMonthValue(),
+				date.getDayOfMonth());
+		List<BirtdayAndanniversaryDto> employeesDateOfJoiningList = employeeRepo
+				.findByDateOfJoining(date.getMonthValue(), date.getDayOfMonth());
 
-}
+		Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
+		result.put("BirthDay Today ", employeesDataOfBirthList);
+		result.put("Work Anniversaries ", employeesDateOfJoiningList);
+
+		return result;
+
+	}
 
 
-   //this is for getting the employeedetails birthday date from todays date to next seven days
 	@Override
 	public List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays() {
 		LocalDate today = LocalDate.now();
@@ -276,12 +271,10 @@ public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date)
 
 		for (Employee employee : allEmployees) {
 			LocalDate birthday = employee.getDateOfBirth();
-			if (birthday != null && (birthday.isEqual(today) || (birthday.isAfter(today) && birthday.isBefore(endDate)))) {
-				BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(
-						employee.getEmployeeId(),
-						employee.getFirstName(),
-						employee.getLastName()
-				);
+			if (birthday != null
+					&& (birthday.isEqual(today) || (birthday.isAfter(today) && birthday.isBefore(endDate)))) {
+				BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(employee.getEmployeeId(),
+						employee.getFirstName(), employee.getLastName());
 				employeesWithBirthdaysNextSevenDays.add(dto);
 			}
 		}
@@ -327,6 +320,7 @@ public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date)
 
 
 
+	//this will return both todays anniversary and next  7 days anniversary
 	@Override
 	public Map<String, List<Map<String, Object>>> getWorkAnniversariesForTodayAndNextSevenDays() {
 		LocalDate today = LocalDate.now();
@@ -411,5 +405,22 @@ public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date)
 
 
 
+	@Override
+	public Employee getByEmployeeId(Long employeeId) {
+
+		Employee byEmployeeId;
+		try {
+			byEmployeeId = employeeRepo.findByEmployeeId(employeeId)
+					.orElseThrow(() -> new BadRequestException("Employee not found :" + employeeId));
+
+			return byEmployeeId;
+
+		} catch (BadRequestException e) {
+
+			throw new BadRequestException("Employee not found ");
+
+		}
+
+	}
 
 }

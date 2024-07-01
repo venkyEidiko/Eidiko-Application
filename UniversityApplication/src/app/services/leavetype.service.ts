@@ -22,7 +22,7 @@ export class LeavetypeService {
    employee = this.loginService.getEmployeeData();
    employeeId=this.employee.employeeId;
   fetchLeaveBalance(employeeId: number): Observable<LeaveStats> {
-  
+   console.log("fetch leave balance",employeeId)
     return this.http.get<LeaveStats>(`${this.apiUrl}/${this.employeeId}`);
   }
   fetchMonthlyLeaveData(employeeId: number): Observable<any> {
@@ -36,7 +36,7 @@ export class LeavetypeService {
   fetchLeaveData(employeeId: number, pageNumber: number, pageSize: number): Observable<any> {
    console.log("employee id in leavetpye service: ",this.employeeId)
     let params = new HttpParams()
-      .set('employeeId', 1105)
+      .set('employeeId', employeeId)
       .set('pageNumber', pageNumber.toString())
       .set('pageSize', pageSize.toString());
 

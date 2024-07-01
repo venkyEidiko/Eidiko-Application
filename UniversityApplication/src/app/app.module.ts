@@ -17,7 +17,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule } from '@angular/material/card'
@@ -59,7 +58,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgChartsModule } from 'ng2-charts';
 import { Dialog1Component } from './dialog1/dialog1.component';
 import { CompDialogComponent } from './comp-dialog/comp-dialog.component';
-import { CompoffComponent } from './compoff/compoff.component';
+
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DropdowntableComponent } from './dropdowntable/dropdowntable.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -70,13 +69,16 @@ import { ShiftRequestFormComponent } from './shift-request-form/shift-request-fo
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { CarouselModule } from 'ngx-bootstrap/carousel';
+
 import { HolidayDialogComponent } from './holiday-dialog/holiday-dialog.component'; // Import CarouselModule
 import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.component';
+import { TruncatePipe } from './turncate.pipe';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    TruncatePipe,
     LoginComponent,
     CalenderComponent,
     SidenavComponent,
@@ -86,7 +88,7 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
     ForgotpasswordComponent,
     ResetpasswordComponent,
     ResetPasswordConfirmationComponent,
-    DashboardComponent,
+     DashboardComponent,
     WelcomeComponent,
     MeComponent,
     InboxComponent,
@@ -114,7 +116,7 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
     DialogComponent,
     Dialog1Component,
     CompDialogComponent,
-    CompoffComponent,
+    
     DropdowntableComponent,
    
     ShiftRequestFormComponent,
@@ -122,12 +124,13 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
     HolidayDialogComponent,
 
     CheckboxdropdownComponent,
+      
 
 
     
   ],
   imports: [
-    CarouselModule,
+
     MatDatepickerModule,
     BrowserModule,
     MatButtonModule,

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { LeavereqService } from '../services/leavereq.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-comp-dialog',
@@ -14,12 +15,15 @@ export class CompDialogComponent {
   toDate: Date | null = null;
   note: string | undefined;
   files: File[] = [];
-  employeeId='2001'; 
+  
 
   constructor(
     private dialogRef: MatDialogRef<CompDialogComponent>,
-    private compdialogService: LeavereqService
+    private compdialogService: LeavereqService,
+    private loginService:LoginService
   ) {}
+  employeeId = this.loginService.getEmployeeData().employeeId;
+  
 
   closeDialog(): void {
     this.dialogRef.close();

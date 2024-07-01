@@ -35,6 +35,9 @@ public interface EmployeeInterface {
 	Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date);
 
 
+
+    public Employee getByEmployeeId(Long employeeId)throws UserNotFoundException;
+
 	List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays();
 
 	Map<String, List<BirtdayAndanniversaryDto>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays();
