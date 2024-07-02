@@ -1,8 +1,9 @@
 .container{
     display:flex;
     flex-direction: row;
-    height: 98vh;
-    overflow-y: hidden;
+    height: 98.5vh;
+    background-color: #fff;
+    overflow: hidden;
     border: 5px solid rgba(28, 206, 250, 0.74);
 }
 .right{
@@ -11,7 +12,7 @@
 }
 .left{
     width:30%;
-    padding:5%; 
+    padding:5%;
    background-color: white;
 }
 .right img{
@@ -36,15 +37,17 @@
     box-sizing: border-box;
     border-bottom: 1px solid #ccc;
     outline: none;
+    width:70%;
 }
 button{
     height: 45px;
-    width:65%;
+    width:70%;
     background-color: #2986ce;
     border:none;
     font-size: 16px;
     color:white;
     margin-bottom: 2px;
+    cursor: pointer;
 }
 .form-data input:focus{
     border: 2px solid #ccc;
@@ -58,10 +61,14 @@ small{
 }
 a{
     color:#6ea8d4
+   
 }
 a:hover{
     background-color: #e6e0e0;
+    cursor: pointer;
 }
 button:hover{
     background-color: #198be2;
 }
+
+

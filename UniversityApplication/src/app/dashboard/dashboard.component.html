@@ -20,11 +20,12 @@
       <mat-card class="card-item" [ngStyle]="{'background-image': 'url(' + base64Image + ')'}">
         <div class="card-item-header">
           <span>Holidays</span>
-         <div  (click)="openHoliday()">
-          <a style="background-color:transparent; cursor: pointer;">view all</a>
-         </div>
+          <div (click)="openHoliday()">
+            <a style="background-color:transparent; cursor: pointer;">view all</a>
+          </div>
         </div>
         <mat-card-content>
+
           <div class="card-content">
             <div class="card-navigation">
               <div>
@@ -39,7 +40,8 @@
               </div>
             </div>
             <div class="card-info">
-              <p class="card-info">{{ holiday.description }} &nbsp; &nbsp;{{ holiday.dateOfHoliday | date:'EEE, dd MMMM, yyyy' }}</p>
+              <p class="card-info">{{ holiday.description }} &nbsp; &nbsp;
+                {{ holiday.dateOfHoliday | date:'EEE, dd MMMM, yyyy' }} </p>
             </div>
 
           </div>
@@ -47,8 +49,19 @@
       </mat-card>
 
 
-      <mat-card class="card-item">
-        <mat-card-content>On Leave Today</mat-card-content>
+      <mat-card class="card-item" style="height:auto">
+        <mat-card-content><span>On Leave Today</span>
+          <div class="today-birthdays">
+            <div *ngFor="let onLeave of onLeaveToday" class="today-birthdays-items">
+              <div class="birthdays-profile">
+                <img src="../../assets/elephant.png">
+              </div>
+              <div class="birthdays-names">
+                <span>{{onLeave.requestedBy}}</span>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
       </mat-card>
       <mat-card class="card-item">
         <mat-card-content>
@@ -95,6 +108,7 @@
           <ul class="nav-list">
             <li>
               <a href="#" (click)="showContent($event, 'post')" [class.active]="selectedContent === 'post'">Post</a>
+              
             </li>
             <li>
               <a href="#" (click)="showContent($event, 'announcement')"
@@ -109,7 +123,75 @@
             </li>
           </ul>
           <div class="org-content">
-            <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item">Content 1</div>
+             <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item">
+                <div class="form-container">
+                  <textarea class="textarea" #textarea (input)="onTextChange($event)"
+                    placeholder="Write your post here and mention your peers"></textarea>
+                  <div class="actions">
+                    <button mat-icon-button (click)="addAtSymbol(textarea)"><mat-icon>alternate_email</mat-icon></button>
+                    <button mat-icon-button (click)="fileInput.click()" ><mat-icon>image</mat-icon></button>
+                    <input type="file" #fileInput multiple (change)="onFileSelected($event)" hidden >
+                    <button mat-icon-button (click)="toggleEmoticonPicker()"><mat-icon>insert_emoticon</mat-icon></button>
+                  </div>
+                  <div class="emoticon-picker" *ngIf="showEmoticonPicker">
+                    <div class="emoji-picker-header">
+                      <button (click)="selectEmojiCategory('frequentlyUsed')">⏰</button>
+                      <button (click)="selectEmojiCategory('smileys')">😊</button>
+                      <button (click)="selectEmojiCategory('animals')">🐻</button>
+                      <button (click)="selectEmojiCategory('foods')">🍏</button>
+                      <button (click)="selectEmojiCategory('activity')">🏀</button>
+                      <button (click)="selectEmojiCategory('places')">🚗</button>
+                      <button (click)="selectEmojiCategory('objects')">📑</button>
+                      <button (click)="selectEmojiCategory('symbols')">🔣</button>
+                      <button (click)="selectEmojiCategory('flags')">🏳️</button>
+                      <button (click)="selectEmojiCategory('custom')">✨</button>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'frequentlyUsed'">
+                      <emoji-mart set="apple" [include]="['frequently_used']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'smileys'">
+                      <emoji-mart set="apple" [include]="['people']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'animals'">
+                      <emoji-mart set="apple" [include]="['nature']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'foods'">
+                      <emoji-mart set="apple" [include]="['foods']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'activity'">
+                      <emoji-mart set="apple" [include]="['activity']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'places'">
+                      <emoji-mart set="apple" [include]="['places']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'objects'">
+                      <emoji-mart set="apple" [include]="['objects']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'symbols'">
+                      <emoji-mart set="apple" [include]="['symbols']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'flags'">
+                      <emoji-mart set="apple" [include]="['flags']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'custom'">
+                      <emoji-mart set="apple" [include]="['custom']"
+                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                    </div>
+                    <!-- Add more divs for other categories as needed -->
+                  </div>
+                  <button mat-raised-button color="primary" (click)="postRequest()">Post</button>
+                </div>
+              
+            </div>
             <div id="announcement" [class.active]="selectedContent === 'announcement'" class="org-content-item">Hello
             </div>
             <div id="poll" [class.active]="selectedContent === 'poll'" class="org-content-item">Poll related content
@@ -129,12 +211,12 @@
             <li>
               <i class="fa-solid fa-cake-candles"></i>
               <a href="#" (click)="showContent($event, 'birthday')"
-                [class.active]="selectedContent === 'birthday'">Birthday</a>
+                [class.active]="selectedContent === 'birthday'">{{todayBirthdayCount}} Birthday</a>
             </li>
             <li>
               <i class="fa-solid fa-ribbon"></i>
               <a href="#" (click)="showContent($event, 'workAnniversary')"
-                [class.active]="selectedContent === 'workAnniversary'">Work Anniversaries</a>
+                [class.active]="selectedContent === 'workAnniversary'">{{todayAnniversaryCount}} Work Anniversaries</a>
             </li>
             <li>
               <i class="fa-solid fa-user-group"></i>
@@ -145,18 +227,152 @@
           <div class="content">
             <div id="announcement" [class.active]="selectedContent === 'announcement'" class="content-item">Announcement
               related data</div>
-            <div id="birthday" [class.active]="selectedContent === 'birthday'" class="content-item">Birthday related
-              data</div>
-            <div id="workAnniversary" [class.active]="selectedContent === 'workAnniversary'" class="content-item">Work
-              Anniversaries related data</div>
+            <!-- This is for birthdays and next seven days -->
+            <div id="birthday" [class.active]="selectedContent === 'birthday'" class="content-item">
+
+              <div class="todayBirthdays-nextSevenBirthdays">
+                <div class="todayBirthdays-container">
+                  <h4>Birthday's today</h4>
+                  <div class="today-birthdays">
+                    <div *ngIf="todayBirthdayCount === 0">
+                      {{ noBirthdayMessage }}
+                    </div>
+                    <div *ngFor="let today of todayBirthday" class="today-birthdays-items">
+                      <div class="birthdays-profile">
+                        <img src="../../assets/elephant.png">
+                      </div>
+                      <div class="birthdays-names">
+                        <span>{{today.firstName}} {{today.lastName}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="nextSevenBirthdays-container">
+                  <h6>Next 7 Days</h6>
+                  <div class="nextSeven-birthdays">
+                    <div *ngFor="let afterSeven of nextSevendaysBirthday" class="nextSeven-birthdays-items">
+                      <div class="birthdays-profile">
+                        <img src="../../assets/elephant.png">
+                      </div>
+                      <div class="nextSeven-bithdays">
+                        <span>{{afterSeven.firstName}} {{afterSeven.lastName}}</span>
+                        <br>
+                        <span>{{ getBirthdayDisplayText(afterSeven.dateOfBirth) }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="workAnniversary" [class.active]="selectedContent === 'workAnniversary'" class="content-item">
+
+              <div class="todayAnniversary-NextSevenAnniversary">
+
+                <div class="todayAnniversary-container">
+                  <h4>Work anniversaries today</h4>
+                  <div class="today-Anniversary">
+                    <div *ngFor="let t_Annivarsary of todayAnniversary" class="today-Anniversary-items">
+                      <div class="Anniversary-profile">
+                        <img src=".../../assets/elephant.png">
+                      </div>
+                      <div class="anniversary-names">
+                        <span>{{t_Annivarsary.firstName}} {{t_Annivarsary.lastName}} </span>
+                        <br>
+                          <span>{{t_Annivarsary.noOfYearsCompletedInThisCompany}}{{'yrs'}}</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="nextSevenAnniversay-container">
+                  <h6>Next 7 Days</h6>
+                  <div class="nextSeven-Anniversary">
+                    <div *ngFor="let nextSeven_Annivarsary of nextSevendaysAnniversarys; let i = index"
+                      class="nextSeven-Anniversary-items">
+                      <div *ngIf = "(i<11)">
+                        <div class="Anniversary-profile">
+                          <img src="../../assets/elephant.png">
+                        </div>
+                        <div class="nextSeven-years">
+                          <span>{{nextSeven_Annivarsary.firstName | truncate}} </span>
+                          <br>
+                          <span>{{nextSeven_Annivarsary.noOfYearsCompletedInThisCompany}}{{'yrs'}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf = "nextSevendaysAnniversarys.length>11" class="extra-Anniversary-items">
+                      {{nextSevendaysAnniversarys.length - 11}}+more
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div id="newJoinees" [class.active]="selectedContent === 'newJoinees'" class="content-item">New Joinees
               related data</div>
           </div>
         </mat-card-content>
       </mat-card>
-      <mat-card class="org-card" *ngIf="selectedTab === 'organization'">
-        <mat-card-content>All posts</mat-card-content>
-      </mat-card>
+
+      <div *ngIf="selectedTab === 'organization'">
+        <mat-card class="org-card" *ngFor="let image of imageSrcList; let i = index" style="margin-top:10px;">
+          <mat-card-content>
+            <div style="display:flex;">
+              <img src="../../assets/profileimage.png" style="height: 55px; width: 60px; border-radius: 30px; margin-top: 10px; margin-bottom: 10px;">
+              <p style="margin-top:35px;margin-left:10px">{{ image.timeStamp }}</p>
+            </div>
+            <!-- <div *ngFor="let post of posts">
+  <h3>{{ post.description }}</h3>
+  <p>Likes:</p>
+  <ul>
+    <ng-container *ngFor="let like of post.likes">
+      <li *ngIf="like.postId === post.postId">
+        Like ID: {{ like.likeId }}, Emoji: {{ like.emoji }}, Employee ID: {{ like.empId }}
+      </li>
+    </ng-container>
+  </ul>
+</div> -->
+            <p>{{image.description}}</p>
+
+            <p style="color:dodgerblue">{{image.mentionEmployee.join(',')}}</p>
+            <img [src]="image.base64Image" alt="Image from base64" style="margin-bottom:20px;max-width:600px">
+            <div style="display: flex; gap: 30px;">
+              <div class="hover-icons">
+                <i class="fa-regular fa-thumbs-up" (click)="onEmojiClick(image.postId, 1)"></i>Like
+                <div class="like-icons">
+                  <p title="Like"><i class="fa-solid fa-thumbs-up" (click)="onEmojiClick(image.postId, 1)"></i></p>
+                  <p title="Haha"><i class="fa-solid fa-face-laugh-beam" (click)="onEmojiClick(image.postId, 2)"></i></p>
+                  <p title="Love"><i class="fa-solid fa-heart" (click)="onEmojiClick(image.postId, 3)"></i></p>
+                  <p title="Claps"><i class="fa-solid fa-hands-clapping" (click)="onEmojiClick(image.postId, 4)"></i></p>
+                  <p title="Insightful"><i class="fa-solid fa-lightbulb" (click)="onEmojiClick(image.postId, 5)"></i></p>
+                  <p title="Curious"><i class="fa-brands fa-cloudversify" (click)="onEmojiClick(image.postId, 6)"></i></p>
+                </div>
+              </div>
+              <p (click)="toggleCommentBox(i)"><i class="fa-regular fa-message"></i>Comment</p>
+            </div>
+            <div *ngIf="showCommentBox[i]">
+              <form #commentForm="ngForm" (ngSubmit)="postComment1(i, commentForm.value.comment, $event)">
+                <textarea rows="3" cols="50" placeholder="Write a comment..." name="comment" ngModel
+                          (keydown.enter)="postComment1(i, commentForm.value.comment, $event)">
+                </textarea>
+                <button type="submit" style="display:none;"></button> 
+              </form>
+              <div *ngFor="let post of posts">
+                <h3>{{ post.description }}</h3>
+                <p>Likes:</p>
+                <ul>
+                  <ng-container *ngFor="let like of post.likes">
+                    <li>
+                      Like ID: {{ like.likeId }}, Emoji: {{ like.emoji }}, Employee ID: {{ like.empId }}
+                    </li>
+                  </ng-container>
+                </ul>
+              </div> 
+            </div>
+         
+                </mat-card-content>
+        </mat-card>
+      </div>
+      
       <mat-card class="org-card" *ngIf="selectedTab === 'java'">
         <mat-card-content>Java related post</mat-card-content>
       </mat-card>

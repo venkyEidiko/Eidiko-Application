@@ -3,7 +3,6 @@ package com.eidiko.serviceimplementation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.Period;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import com.eidiko.dto.BirtdayAndanniversaryDto;
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.Roles_Table;
-
 import com.eidiko.exception_handler.BadRequestException;
 import com.eidiko.exception_handler.UserNotFoundException;
 import com.eidiko.repository.AddressRepo;
@@ -71,6 +69,8 @@ public class EmployeeService implements EmployeeInterface {
 
 	}
 
+
+
 	// for update the employee
 	@Override
 	public String updateEmployee(Long employeeId, Employee employee) throws UserNotFoundException {
@@ -108,7 +108,7 @@ public class EmployeeService implements EmployeeInterface {
 			}
 		}
 	}
-
+	
 	public Employee getByEmail(String emial) throws UserNotFoundException {
 
 		Employee emp = employeeRepo.findByEmail(emial).orElseThrow(() -> new UserNotFoundException("User not found"));
@@ -258,62 +258,62 @@ public class EmployeeService implements EmployeeInterface {
 	}
 
 	// this method returns both present date and after 7 days birthdays
-	@Override
-	public Map<String, List<BirtdayAndanniversaryDto>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
-		LocalDate today = LocalDate.now();
-		LocalDate endDate = today.plusDays(8);
-		log.info("next 7 days date {}", endDate);
-		List<BirtdayAndanniversaryDto> todayBirthdays = employeeRepo.findBydateOfBirth(today.getMonthValue(),
-				today.getDayOfMonth());
+		@Override
+		public Map<String, List<BirtdayAndanniversaryDto>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
+			LocalDate today = LocalDate.now();
+			LocalDate endDate = today.plusDays(8);
+			log.info("next 7 days date {}", endDate);
+			List<BirtdayAndanniversaryDto> todayBirthdays = employeeRepo.findBydateOfBirth(today.getMonthValue(),
+					today.getDayOfMonth());
 
-		List<BirtdayAndanniversaryDto> nextSevenDaysBirthdays = new ArrayList<>();
-		List<Employee> allEmployees = employeeRepo.findAll();
+			List<BirtdayAndanniversaryDto> nextSevenDaysBirthdays = new ArrayList<>();
+			List<Employee> allEmployees = employeeRepo.findAll();
 
-		for (Employee employee : allEmployees) {
-			LocalDate birthday = employee.getDateOfBirth();
-			if (birthday != null) {
-				// Set the birthday to the current year for comparison
-				// (This means the month and day stay the same, but the year is changed to the
-				// current year.)
-				LocalDate birthdayThisYear = birthday.withYear(today.getYear());
-				if (birthdayThisYear.isAfter(today) && birthdayThisYear.isBefore(endDate)) {
+			for (Employee employee : allEmployees) {
+				LocalDate birthday = employee.getDateOfBirth();
+				if (birthday != null) {
+					// Set the birthday to the current year for comparison
+					// (This means the month and day stay the same, but the year is changed to the
+					// current year.)
+					LocalDate birthdayThisYear = birthday.withYear(today.getYear());
+					if (birthdayThisYear.isAfter(today) && birthdayThisYear.isBefore(endDate)) {
 
-					BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(
-							employee.getEmployeeId(),
-							employee.getFirstName(), 
-							employee.getLastName()
-						
+						BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(
+								employee.getEmployeeId(),
+								employee.getFirstName(), 
+								employee.getLastName()
+							
 
-					);
-					nextSevenDaysBirthdays.add(dto);
-				}
-			}
-		}
-		//for add dateof birth in the response
-		for (BirtdayAndanniversaryDto dto : todayBirthdays) {
-
-			Employee employee = employeeRepo.findById(dto.getEmployeeId()).orElse(null);
-			if (employee != null) {
-				LocalDate date  = employee.getDateOfBirth();
-				dto.setDateOfBirth(date);
-			}
-		}
-
-		//for add dateof birth in the response
-				for (BirtdayAndanniversaryDto dto : nextSevenDaysBirthdays) {
-
-					Employee employee = employeeRepo.findById(dto.getEmployeeId()).orElse(null);
-					if (employee != null) {
-						LocalDate date  = employee.getDateOfBirth();
-						dto.setDateOfBirth(date);
+						);
+						nextSevenDaysBirthdays.add(dto);
 					}
 				}
-		Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
-		result.put("TodayBirthdays", todayBirthdays);
-		result.put("NextSevenDaysBirthdays", nextSevenDaysBirthdays);
+			}
+			//for add dateof birth in the response
+			for (BirtdayAndanniversaryDto dto : todayBirthdays) {
 
-		return result;
-	}
+				Employee employee = employeeRepo.findById(dto.getEmployeeId()).orElse(null);
+				if (employee != null) {
+					LocalDate date  = employee.getDateOfBirth();
+					dto.setDateOfBirth(date);
+				}
+			}
+
+			//for add dateof birth in the response
+					for (BirtdayAndanniversaryDto dto : nextSevenDaysBirthdays) {
+
+						Employee employee = employeeRepo.findById(dto.getEmployeeId()).orElse(null);
+						if (employee != null) {
+							LocalDate date  = employee.getDateOfBirth();
+							dto.setDateOfBirth(date);
+						}
+					}
+			Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
+			result.put("TodayBirthdays", todayBirthdays);
+			result.put("NextSevenDaysBirthdays", nextSevenDaysBirthdays);
+
+			return result;
+		}
 
 	//this is for today and next seven days anniversary employee list along with count of they worked
 	public Map<String, List<BirtdayAndanniversaryDto>> getTodayAndSevenDaysAnniversaryList() {
@@ -374,5 +374,31 @@ public class EmployeeService implements EmployeeInterface {
 
 		return result;
 	}
+	@Override
+	public Employee getByEmployeeId(Long employeeId) {
+
+		Employee byEmployeeId;
+		try {
+			byEmployeeId = employeeRepo.findByEmployeeId(employeeId)
+					.orElseThrow(() -> new BadRequestException("Employee not found :" + employeeId));
+
+			return byEmployeeId;
+
+		} catch (BadRequestException e) {
+
+			throw new BadRequestException("Employee not found ");
+
+		}
+
+	}
+
+
+
+	@Override
+	public List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

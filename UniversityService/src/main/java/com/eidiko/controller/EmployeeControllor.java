@@ -30,23 +30,21 @@ import com.eidiko.service.RoleInterface;
 import com.eidiko.serviceimplementation.EmployeeService;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*",allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmployeeControllor {
 
-	//@Autowired
+	// @Autowired
 	private EmployeeInterface employeeInterface;
 
-	//@Autowired
+	// @Autowired
 	private RoleInterface roleInterface;
 
 //	@Autowired
 	private EmployeeService employeeService;
-	
-	
-	
 
 	public EmployeeControllor(EmployeeInterface employeeInterface, RoleInterface roleInterface,
 			EmployeeService employeeService) {
@@ -76,47 +74,56 @@ public class EmployeeControllor {
 			saveEmployee = employeeInterface.saveEmployee(employee);
 			return new CommonResponse<>().prepareSuccessResponseObject(saveEmployee);
 		} catch (BadRequestException e) {
-			
+
 			return new CommonResponse<>().handleBadRequestException(e.getMessage());
 		}
 
-
 	}
-	
-//this method is main update method 
-	@PatchMapping("/updateEmp/{empId}")
+
+	// this method is main update method
+	@PatchMapping("/updateEmployee/{empId}")
 	public ResponseEntity<ResponseModel<Object>> updateEmployee(@PathVariable("empId") Long empID,
 			@RequestBody Employee employee) throws UserNotFoundException, SaveFailureException {
-
-		String updateEmployee = employeeInterface.updateEmployee((long) empID, employee);
-
+		log.info("updateEmployee empId :" + empID);
+		log.info("updateEmployee entry object " + employee);
+		String updateEmployee = employeeInterface.updateEmployee(empID, employee);
 		if (updateEmployee != null) {
 
 			return new CommonResponse<>().prepareSuccessResponseObject(updateEmployee);
 		} else {
 			return new CommonResponse<>().prepareFailedResponse(updateEmployee);
 		}
-}
 
-
-	@GetMapping("/searchByKeyword/{keywords}")
-	public ResponseEntity<ResponseModel<Object>> searchEmployeeByKeyword(
-			@PathVariable("keywords") String keywords)
-			throws SaveFailureException, UserNotFoundException {
-		
-		log.info("Search by keyword {}",keywords);
-		
-			return new CommonResponse<>()
-					.prepareSuccessResponseObject(employeeInterface.searchByKeywords(keywords));
-		
-		
 	}
 
+	@GetMapping("/searchByKeyword/{keywords}")
+	public ResponseEntity<ResponseModel<Object>> searchEmployeeByKeyword(@PathVariable("keywords") String keywords)
+			throws SaveFailureException, UserNotFoundException {
+
+		log.info("Search by keyword {}", keywords);
+
+		return new CommonResponse<>().prepareSuccessResponseObject(employeeInterface.searchByKeywords(keywords));
+
+	}
+
+	@GetMapping("/getBybyEmployeeID/{employeeID}")
+	public ResponseEntity<ResponseModel<Object>> getByEmployeeId(@PathVariable("employeeID") Long employeeId) {
+
+		System.out.println("EMployee service :" + employeeId);
+
+		try {
+			Employee byEmployeeID = employeeService.getByEmployeeId(employeeId);
+			return new CommonResponse<>().prepareSuccessResponseObject(byEmployeeID);
+
+		} catch (BadRequestException e) {
+
+			return new CommonResponse<>().prepareFailedResponse(e.getMessage());
+		}
+	}
 
 	@GetMapping("/getByEmail/{email}")
 	public ResponseEntity<ResponseModel<Object>> getByEmail(@PathVariable String email) throws UserNotFoundException {
 
-		System.out.println("EMployee service :" + email);
 		Employee byEmail = employeeService.getByEmail(email);
 		return new CommonResponse<>().prepareSuccessResponseEmail(byEmail);
 	}
@@ -134,7 +141,7 @@ public class EmployeeControllor {
 		return new CommonResponse<>()
 				.prepareSuccessResponseObject(employeeInterface.updateEmployeePrimaryDetails(empID, employee));
 	}
-	
+
 	@PutMapping("/updateEmployeeJobDetailsByEmpId/{empId}")
 	public ResponseEntity<ResponseModel<Object>> updateEmployeeJobDetailsByEmpId(@PathVariable("empId") Long empID,
 			@RequestBody Employee employee) throws SaveFailureException, UserNotFoundException {
@@ -148,7 +155,7 @@ public class EmployeeControllor {
 		return new CommonResponse<>()
 				.prepareSuccessResponseObject(employeeInterface.updateEmployeeTimeDetails(empID, employee));
 	}
-	
+
 	@PutMapping("/updateEmployeeOrganizationDetailsByEmpId/{empId}")
 	public ResponseEntity<ResponseModel<Object>> updateEmployeeOrganizationDetailsByEmpId(
 			@PathVariable("empId") Long empID, @RequestBody Employee employee)
@@ -157,56 +164,53 @@ public class EmployeeControllor {
 				.prepareSuccessResponseObject(employeeInterface.updateEmployeeOrganizationDetails(empID, employee));
 	}
 
-
-	//for birthdays and anniversaries giving 
-	@GetMapping("/getBirthDayAnniversaryTodayList")
+	// for birthdays and anniversaries giving
+	@GetMapping("/getBirthDayAnniversatyTodayList")
 	public ResponseEntity<ResponseModel<Object>> birthDayDate() {
-		
+
 		LocalDate today = LocalDate.now();
 		try {
-      
-			return new CommonResponse<>().prepareSuccessResponseObject( employeeInterface.bithDayMethod(today));
-		}
-		catch (Exception e) {
+
+			return new CommonResponse<>().prepareSuccessResponseObject(employeeInterface.bithDayMethod(today));
+		} catch (Exception e) {
 			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
 		}
 	}
 
+	// this api returns both present and after 7 days birthday details
+	@GetMapping("/todayAndNextSevenDaysBirthdaysList")
+	public ResponseEntity<ResponseModel<Object>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
+		try {
+			Map<String, List<BirtdayAndanniversaryDto>> response = employeeService
+					.getBirthdaysAndAnniversariesForTodayAndNextSevenDays();
+			return new CommonResponse<>().prepareSuccessResponseObject(response);
+		} catch (Exception e) {
+			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
+		}
+	}
 
+	// this api returns both present and after 7 days anniversaries details
+	@GetMapping("/todayAndNextSevenDaysAnniversaryList")
+	public ResponseEntity<ResponseModel<Object>> getTodayAndNextDaysAnniversaries() {
+		try {
+			Map<String, List<BirtdayAndanniversaryDto>> response = employeeService
+					.getTodayAndSevenDaysAnniversaryList();
+			return new CommonResponse<>().prepareSuccessResponseObject(response);
+		} catch (Exception e) {
+			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
+		}
+	}
 
-	//this api is used for getting the employeedetails birthday dates from todays date to next seven days
-//	@GetMapping("/nextSevenDaysBirthdays")
-//	public ResponseEntity<ResponseModel<Object>> getNextSevenDaysBirthdays() {
-//		List<BirtdayAndanniversaryDto> employeesWithBirthdays = employeeService.getEmployeesWithBirthdaysNextSevenDays();
-//
-//		if (employeesWithBirthdays.isEmpty()) {
-//			return new CommonResponse<>().prepareFailedResponse("No birthdays in the next 7 days");
-//		} else {
-//			return new CommonResponse<>().prepareSuccessResponseObject(employeesWithBirthdays);
-//		}
-//	}
+	@GetMapping("/nextSevenDaysBirthdays")
+	public ResponseEntity<ResponseModel<Object>> getNextSevenDaysBirthdays() {
+		List<BirtdayAndanniversaryDto> employeesWithBirthdays = employeeService
+				.getEmployeesWithBirthdaysNextSevenDays();
 
-	
-	//this api returns both present and after 7 days birthday details
-		@GetMapping("/todayAndNextSevenDaysBirthdaysList")
-		public ResponseEntity<ResponseModel<Object>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
-			try {
-				Map<String, List<BirtdayAndanniversaryDto>> response = employeeService.getBirthdaysAndAnniversariesForTodayAndNextSevenDays();
-				return new CommonResponse<>().prepareSuccessResponseObject(response);
-			} catch (Exception e) {
-				return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
-			}
-		}  
+		if (employeesWithBirthdays.isEmpty()) {
+			return new CommonResponse<>().prepareFailedResponse("No birthdays in the next 7 days");
+		} else {
+			return new CommonResponse<>().prepareSuccessResponseObject(employeesWithBirthdays);
+		}
+	}
 
-		//this api returns both present and after 7 days anniversaries details
-				@GetMapping("/todayAndNextSevenDaysAnniversaryList")
-				public ResponseEntity<ResponseModel<Object>> getTodayAndNextDaysAnniversaries() {
-					try {
-						Map<String, List<BirtdayAndanniversaryDto>> response = employeeService.getTodayAndSevenDaysAnniversaryList();
-						return new CommonResponse<>().prepareSuccessResponseObject(response);
-					} catch (Exception e) {
-						return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
-					}
-				}  
 }
-

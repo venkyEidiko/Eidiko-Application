@@ -31,7 +31,9 @@ import com.eidiko.serviceimplementation.PostService;
 
 @RestController
 @RequestMapping("/posts")
+
 @CrossOrigin(origins = "*",allowedHeaders = "*")
+
 public class PostController {
 
 	@Autowired
@@ -55,12 +57,12 @@ public class PostController {
 		
 		System.out.println("saveImage :"+postEmployee);
 	
-		System.out.println("======================================================");
+		
 		if (file!=null && file.getSize() > 20 * 1024 * 1024) { // 20MB in bytes
 			throw new FileUploadException("File size should not exceed 5MB.");
 			
 		}
-// 
+ 
 		try {
 			
 		Posts posts = new Posts();
@@ -71,11 +73,7 @@ public class PostController {
 		if(file!=null) {
         posts.setImage(file.getBytes());
 		}
-//		if (file!=null) {
-//			
-//			String res = postService.saveImage(posts, file);
-//		}
-		
+
 		String res = postService.saveImage(posts);
 		return new CommonResponse<>().prepareSuccessResponseObject(res);
 		}
@@ -141,27 +139,22 @@ public class PostController {
 		}
 	}
 
-
+	
+	//get all the posts
 	@GetMapping("/getAllPostByTime")
 	public ResponseEntity<ResponseModel<Object>> getAllPostsByTimeStamp() throws SQLException {
 	    try {
 	        // Call the service method to get all posts ordered by timestamp
 	        List<Posts> posts = postService.getAllPostsByTimeStamp();
+
 	        
-	        // Convert byte array back to Base64 string before sending response
-//	        for (Posts post : posts) {
-//	            if (post.getImage() != null) {
-//	                post.setImage(Base64.getEncoder().encode(post.getImage()));
-//	            }
-//	        }
-	        
-	        // Prepare and return a successful response with the list of posts
 	        return new CommonResponse<>().prepareSuccessResponseObject(posts);
 	    } catch (RuntimeException e) {
-	        // If an exception occurs, prepare and return a failed response with the error message
+	       
 	        return new CommonResponse<>().prepareFailedResponse1(e.getMessage());
 	    }
 	}
+
 
 	
 
