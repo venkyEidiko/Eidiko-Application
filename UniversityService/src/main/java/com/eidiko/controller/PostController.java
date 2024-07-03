@@ -3,10 +3,9 @@ package com.eidiko.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Base64;
 import java.util.List;
 
-import org.aspectj.apache.bcel.classfile.Module.Require;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

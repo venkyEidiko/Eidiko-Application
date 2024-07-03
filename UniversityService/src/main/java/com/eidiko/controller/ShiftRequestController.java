@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eidiko.entity.ResponseModel;
 import com.eidiko.entity.ShiftRequest;
+import com.eidiko.exception_handler.UserNotFoundException;
 import com.eidiko.responce.CommonResponse;
 import com.eidiko.serviceimplementation.ShiftRequestService;
 
@@ -33,7 +34,7 @@ public class ShiftRequestController {
 
 			return new CommonResponse<>().prepareSuccessResponseObject(saveRequest);
 		} catch (Exception e) {
-			return new CommonResponse<>().prepareErrorResponseObject(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new CommonResponse<>().prepareFailedResponse1(e.getMessage());
 		}
 	}
 
@@ -44,20 +45,20 @@ public class ShiftRequestController {
 			String result = shiftRequestService.approveShiftChange(employeeId);
 			return new CommonResponse<>().prepareSuccessResponseObject(result);
 		} catch (Exception e) {
-			return new CommonResponse<>().prepareErrorResponseObject(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new CommonResponse<>().prepareFailedResponse1(e.getMessage());
 		}
 	}
 	
 	@DeleteMapping("/deleteRequest/{employeeId}")
-	public ResponseEntity<ResponseModel<Object>> deleteShiftRequest(@PathVariable Long employeeId){
+	public ResponseEntity<ResponseModel<Object>> deleteShiftRequest(@PathVariable Long employeeId)throws UserNotFoundException{
 	
 		try 
 		{
 			String result = shiftRequestService.deleteShiftRequestsByEmployeeId(employeeId);
 			return new CommonResponse<>().prepareSuccessResponseObject(result);
 		}
-		catch (Exception e) {
-			return new CommonResponse<>().prepareErrorResponseObject(e.getMessage(), HttpStatus.BAD_REQUEST); 
+		catch (UserNotFoundException e) {
+			return new CommonResponse<>().prepareFailedResponse1(e.getMessage()); 
 		}
 	}
 	

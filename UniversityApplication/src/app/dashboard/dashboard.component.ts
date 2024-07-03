@@ -493,9 +493,6 @@ export class DashboardComponent implements OnInit {
     )
   }
 
-<<<<<<< HEAD
-  
-=======
 }
 
 interface PostRequest {
@@ -503,5 +500,5 @@ interface PostRequest {
   postType: string | null
   mentionEmployee: string[]
   postEmployee: number
->>>>>>> eef3e8d15858483979440e3410ee8b7ec4d4030f
+
 }

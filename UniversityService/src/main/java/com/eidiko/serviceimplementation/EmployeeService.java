@@ -49,12 +49,16 @@ public class EmployeeService implements EmployeeInterface {
 
 		Optional<Roles_Table> byRoleId = rolesReposotory.findByRoleId(employee.getRole().getRoleId());
 
-		Integer roleId = byRoleId.get().getRoleId();
-		if (employee.getRole().getRoleId() == roleId) {
-			Roles_Table save2 = rolesReposotory.save(employee.getRole());
-			employee.setRole(save2);
-
-		}
+//		Integer roleId = byRoleId.get().getRoleId();
+//		if (employee.getRole().getRoleId() == roleId) {
+//			Roles_Table save2 = rolesReposotory.save(employee.getRole());
+//			employee.setRole(save2);
+//
+//		}
+		
+		Roles_Table save2 = rolesReposotory.save(employee.getRole());
+		employee.setRole(save2);
+		
 		String encode = passwordEncoder.encode(employee.getPassword());
 		log.info("Encode password :{}", encode);
 		employee.setPassword(encode);
