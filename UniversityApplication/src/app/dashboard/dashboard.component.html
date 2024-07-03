@@ -48,9 +48,21 @@
       </mat-card>
 
 
-      <mat-card class="card-item">
-        <mat-card-content>On Leave Today</mat-card-content>
+      <mat-card class="card-item" style="height:300px">
+        <mat-card-content><span>On Leave Today</span>
+          <div class="today-birthdays">
+            <div *ngFor="let onLeave of onLeaveToday" class="today-birthdays-items">
+              <div class="birthdays-profile">
+                <img src="../../assets/elephant.png">
+              </div>
+              <div class="birthdays-names">
+                <span>{{onLeave.requestedBy}}</span>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
       </mat-card>
+
       <mat-card class="card-item">
         <mat-card-content>
           Working Remotely
@@ -96,7 +108,7 @@
           <ul class="nav-list">
             <li>
               <a href="#" (click)="showContent($event, 'post')" [class.active]="selectedContent === 'post'">Post</a>
-              
+
             </li>
             <li>
               <a href="#" (click)="showContent($event, 'announcement')"
@@ -111,26 +123,23 @@
             </li>
           </ul>
           <div class="org-content">
-            <div id="post" 
-            [class.active]="selectedContent === 'post'" 
-            class="org-content-item"
-            (focus)="expandCard()"
-            (focusout)="collapseCard()"
+            <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item" (focus)="expandCard()"
+              (focusout)="collapseCard()" tabindex="0" [ngClass]="{'expanded': isCardExpanded}">
 
-            tabindex="0"
-            [ngClass]="{'expanded': isCardExpanded}">
-           
-                   
-                   <div>
-    
-    <button title="Mention Employee" (click)="insertSymbol('@')"
-    style="background-color:rgb(51, 61, 78); ;border-radius:10px;font-size:12px;height:32px;"><i class="fas fa-at"></i></button>
-                    <button style="background-color:rgb(51, 61, 78);border-radius:10px;font-size:12px;height:30px"><i class="fas fa-camera"></i></button>
-                    <button style="background-color:rgb(51, 61, 78);border-radius:10px;font-size:12px;height:30px"><i class="fas fa-smile"></i></button>
-                   </div>
-                   <input type="text" placeholder="write your post here and mention your peers....."
-                      style="background-color:rgb(51, 61, 78);height:80px">
-                   {{insertedSymbol}}
+
+              <div>
+
+                <button title="Mention Employee" (click)="insertSymbol('@')"
+                  style="background-color:rgb(51, 61, 78); ;border-radius:10px;font-size:12px;height:32px;"><i
+                    class="fas fa-at"></i></button>
+                <button style="background-color:rgb(51, 61, 78);border-radius:10px;font-size:12px;height:30px"><i
+                    class="fas fa-camera"></i></button>
+                <button style="background-color:rgb(51, 61, 78);border-radius:10px;font-size:12px;height:30px"><i
+                    class="fas fa-smile"></i></button>
+              </div>
+              <input type="text" placeholder="write your post here and mention your peers....."
+                style="background-color:rgb(51, 61, 78);height:80px">
+              {{insertedSymbol}}
             </div>
             <div id="announcement" [class.active]="selectedContent === 'announcement'" class="org-content-item">Hello
             </div>
@@ -197,7 +206,7 @@
                       <div class="nextSeven-bithdays">
                         <span>{{afterSeven.firstName}} {{afterSeven.lastName}}</span>
                         <br>
-                        <!-- <span>{{ getBirthdayDisplayText(afterSeven.birthday) }}</span> -->
+                        <span>{{ getBirthdayDisplayText(afterSeven) }}</span>
                       </div>
                     </div>
                   </div>
@@ -218,7 +227,7 @@
                       <div class="anniversary-names">
                         <span>{{t_Annivarsary.firstName}} {{t_Annivarsary.lastName}} </span>
                         <br>
-                          <span>{{t_Annivarsary.noOfYearsCompletedInThisCompany}}{{'yrs'}}</span>
+                        <span>{{t_Annivarsary.noOfYearsCompletedInThisCompany}}{{'yrs'}}</span>
                       </div>
                     </div>
 
@@ -229,7 +238,7 @@
                   <div class="nextSeven-Anniversary">
                     <div *ngFor="let nextSeven_Annivarsary of nextSevendaysAnniversarys; let i = index"
                       class="nextSeven-Anniversary-items">
-                      <div *ngIf = "(i<11)">
+                      <div *ngIf="(i<6)">
                         <div class="Anniversary-profile">
                           <img src="../../assets/elephant.png">
                         </div>
@@ -240,15 +249,21 @@
                         </div>
                       </div>
                     </div>
-                    <div *ngIf = "nextSevendaysAnniversarys.length>11" class="extra-Anniversary-items">
-                      {{nextSevendaysAnniversarys.length - 11}}+more
+                    <div *ngIf="nextSevendaysAnniversarys.length>6" class="extra-Anniversary-items">
+                      {{nextSevendaysAnniversarys.length - 6}}+more
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div id="newJoinees" [class.active]="selectedContent === 'newJoinees'" class="content-item">New Joinees
-              related data</div>
+            <div id="newJoinees" [class.active]="selectedContent === 'newJoinees'" class="content-item">
+              
+              <img height="80" width="100" alt="Alternate Text" src="https://cdn.kekastatic.net/shared/assets/images/background/noone-work-anniversary.svg"/>
+              <h1>toott</h1>
+
+           
+
+            </div>
           </div>
         </mat-card-content>
       </mat-card>
@@ -257,7 +272,8 @@
         <mat-card class="org-card" *ngFor="let image of imageSrcList; let i = index" style="margin-top:10px;">
           <mat-card-content>
             <div style="display:flex;">
-              <img src="../../assets/profileimage.png" style="height: 55px; width: 60px; border-radius: 30px; margin-top: 10px; margin-bottom: 10px;">
+              <img src="../../assets/profileimage.png"
+                style="height: 55px; width: 60px; border-radius: 30px; margin-top: 10px; margin-bottom: 10px;">
               <p style="margin-top:35px;margin-left:10px">{{ image.timeStamp }}</p>
             </div>
             <!-- <div *ngFor="let post of posts">
@@ -280,11 +296,15 @@
                 <i class="fa-regular fa-thumbs-up" (click)="onEmojiClick(image.postId, 1)"></i>Like
                 <div class="like-icons">
                   <p title="Like"><i class="fa-solid fa-thumbs-up" (click)="onEmojiClick(image.postId, 1)"></i></p>
-                  <p title="Haha"><i class="fa-solid fa-face-laugh-beam" (click)="onEmojiClick(image.postId, 2)"></i></p>
+                  <p title="Haha"><i class="fa-solid fa-face-laugh-beam" (click)="onEmojiClick(image.postId, 2)"></i>
+                  </p>
                   <p title="Love"><i class="fa-solid fa-heart" (click)="onEmojiClick(image.postId, 3)"></i></p>
-                  <p title="Claps"><i class="fa-solid fa-hands-clapping" (click)="onEmojiClick(image.postId, 4)"></i></p>
-                  <p title="Insightful"><i class="fa-solid fa-lightbulb" (click)="onEmojiClick(image.postId, 5)"></i></p>
-                  <p title="Curious"><i class="fa-brands fa-cloudversify" (click)="onEmojiClick(image.postId, 6)"></i></p>
+                  <p title="Claps"><i class="fa-solid fa-hands-clapping" (click)="onEmojiClick(image.postId, 4)"></i>
+                  </p>
+                  <p title="Insightful"><i class="fa-solid fa-lightbulb" (click)="onEmojiClick(image.postId, 5)"></i>
+                  </p>
+                  <p title="Curious"><i class="fa-brands fa-cloudversify" (click)="onEmojiClick(image.postId, 6)"></i>
+                  </p>
                 </div>
               </div>
               <p (click)="toggleCommentBox(i)"><i class="fa-regular fa-message"></i>Comment</p>
@@ -292,9 +312,9 @@
             <div *ngIf="showCommentBox[i]">
               <form #commentForm="ngForm" (ngSubmit)="postComment1(i, commentForm.value.comment, $event)">
                 <textarea rows="3" cols="50" placeholder="Write a comment..." name="comment" ngModel
-                          (keydown.enter)="postComment1(i, commentForm.value.comment, $event)">
+                  (keydown.enter)="postComment1(i, commentForm.value.comment, $event)">
                 </textarea>
-                <button type="submit" style="display:none;"></button> 
+                <button type="submit" style="display:none;"></button>
               </form>
               <div *ngFor="let post of posts">
                 <h3>{{ post.description }}</h3>
@@ -306,15 +326,15 @@
                     </li>
                   </ng-container>
                 </ul>
-              </div> 
+              </div>
             </div>
-         
-                </mat-card-content>
+
+          </mat-card-content>
         </mat-card>
       </div>
-      
-      
-      
+
+
+
 
       <mat-card class="org-card" *ngIf="selectedTab === 'java'">
         <mat-card-content>Java related post</mat-card-content>

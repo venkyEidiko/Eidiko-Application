@@ -23,26 +23,22 @@ public interface EmpLeaveRepo extends JpaRepository<EmpLeave, Long> {
 //	 List<EmpLeave> findByLeaveType(String leaveType);
 	List<EmpLeave> findByLeaveTypeIn(List<String> leaveTypes);
 
-//	@Query("SELECT e FROM EmpLeave e WHERE (:leaveTypes IS NULL OR e.leaveType IN :leaveTypes) AND (:statuses IS NULL OR e.status IN :statuses)")
-//	Page<EmpLeave> findByLeaveTypeInAndStatusIn(List<String> leaveTypes, List<String> statuses, Pageable pageable);
-
-	@Query("SELECT e FROM EmpLeave e WHERE e.employeeId = :employeeId AND (:leaveTypes IS NULL OR e.leaveType IN :leaveTypes) AND (:statuses IS NULL OR e.status IN :statuses)")
-	Page<EmpLeave> findByEmployeeIdAndLeaveTypeInAndStatusIn(
-	    @Param("employeeId") Long employeeId,
-	    @Param("leaveTypes") List<String> leaveTypes,
-	    @Param("statuses") List<String> statuses,
-	    Pageable pageable
-	);
-
-
+	@Query("SELECT e FROM EmpLeave e WHERE e.employeeId = :employeeId "
+			+ "AND (:leaveTypes IS NULL OR e.leaveType IN :leaveTypes) "
+			+ "AND (:statuses IS NULL OR e.status IN :statuses)")
+	Page<EmpLeave> findByEmployeeIdAndLeaveTypeInAndStatusIn(@Param("employeeId") Long employeeId,
+			@Param("leaveTypes") List<String> leaveTypes, @Param("statuses") List<String> statuses, Pageable pageable);
 
 	List<EmpLeave> findByFromDateLessThanEqualAndToDateGreaterThanEqual(LocalDate fromDate, LocalDate toDate);
 
-
-//	List<EmpLeave> findByLeaveTypeAndFromDateLessThanEqualAndToDateGreaterThanEqual(String leaveType,
-//			LocalDate fromDate, LocalDate toDate);
-
-
 	List<EmpLeave> findByLeaveType(String leaveType);
+
+	@Query("SELECT l FROM EmpLeave l WHERE l.employeeId = :employeeId " + "AND lower(l.status) <> 'pending' "
+			+ "AND (lower(l.leaveType) LIKE lower(concat('%', :key, '%')) "
+			+ "OR lower(l.status) LIKE lower(concat('%', :key, '%')) "
+			+ "OR lower(l.leaveNote) LIKE lower(concat('%', :key, '%')) "
+			+ "OR CAST(l.leaveDates AS string) LIKE concat('%', :key, '%'))")
+	Optional<List<EmpLeave>> searchByLeaveTypeOrStatusAndEmployeeId(@Param("key") String keyword,
+			@Param("employeeId") Long employeeId);
 
 }

@@ -12,8 +12,6 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-post: any;
-like: any;
 
 
   constructor(private service: DashbordService,private loginService:LoginService){
@@ -22,7 +20,12 @@ like: any;
 
 
   
-
+  post: any;
+  like: any;
+  
+  todaynewJoiners:any
+  todayNewJoinersCount:number=0
+  lastSevenDaysNewjoiners:any;
   todayAnniversaryCount: number = 0;
   todayAnniversary: any;
   nextSevendaysAnniversarys: any;
@@ -30,7 +33,9 @@ like: any;
   nextSevendaysBirthday: any;
   todayBirthdayCount: number = 0;
 
+
   noBirthdayMessage:String=''
+  noJoinersToday:String=''
   ngOnInit(): void {
     this.fetchworkFromHome();
     this.fethHoliday();
@@ -39,6 +44,8 @@ like: any;
     this.getBirthdayAndAfterSevenDaysList();
     this.loadAllPosts();
     this.fetchPostsAndLikes();
+    this.fetchOnLeaveToday();
+    this.getNewJoiners();
   }
  // employeeId=this.loginService.getEmployeeData().employeeId;
   imageSrcList: { base64Image: string, timeStamp: string ,description:string,postId:number,mentionEmployee:any}[] = [];
@@ -61,7 +68,7 @@ like: any;
 
   workFromHomeList:any;
   showCommentBox: boolean[] = [];
-  
+  onLeaveToday:any[] = [];
   holidayList:any;
   holiday:Holiday={
     id: 12,
@@ -101,6 +108,15 @@ like: any;
       response => {
         this.workFromHomeList = response;
         this.workFromHomeList = this.workFromHomeList.result;
+      }
+    )
+  }
+
+  fetchOnLeaveToday(){
+    this.service.getOnLeaveToday().subscribe(
+      (response:any) => {
+        console.log("onLeaveTpday respoanse ",response);
+        this.onLeaveToday = response.result;
       }
     )
   }
@@ -215,6 +231,18 @@ formatTime(timestamp: string): string {
     }
   }
 
+  getNewJoiners(){
+    this.service.getNewJoiners().subscribe(
+      (response:any)=>{
+        this.todaynewJoiners = response.result[0].newJoinersToday;
+        this.lastSevenDaysNewjoiners = response.result[0].newJoinersLast7Days;
+        this.todayNewJoinersCount = this.todaynewJoiners.length;
+      }
+    );
+    if(this.todaynewJoiners===0){
+      this.noJoinersToday='No New Joinings!!'
+    }
+  }
 
   getBirthdayAndAfterSevenDaysList() {
 
@@ -302,7 +330,7 @@ formatTime(timestamp: string): string {
     );
   }
 
-  
+ 
   
 
   postComment1(index: number, comment: string, event?: Event): void {

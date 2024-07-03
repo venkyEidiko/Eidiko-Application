@@ -8,26 +8,24 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.poi.hssf.record.PageBreakRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.eidiko.dto.BirtdayAndanniversaryDto;
 import com.eidiko.dto.EmployeeDto;
-import com.eidiko.entity.Address;
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.Roles_Table;
 //import com.eidiko.entity.Roles;
 import com.eidiko.exception_handler.BadRequestException;
 import com.eidiko.exception_handler.UserNotFoundException;
+import com.eidiko.mapper.Mapper;
 import com.eidiko.repository.AddressRepo;
 import com.eidiko.repository.EmployeeRepo;
 import com.eidiko.repository.RolesReposotory;
 import com.eidiko.service.EmployeeInterface;
 
 import lombok.extern.slf4j.Slf4j;
-
 
 @Slf4j
 @Service
@@ -40,6 +38,8 @@ public class EmployeeService implements EmployeeInterface {
 	private PasswordEncoder encoder;
 	@Autowired
 	private AddressRepo addressRepo;
+	@Autowired
+	private Mapper mapper;
 
 	@Autowired
 	private RolesReposotory rolesReposotory;
@@ -51,17 +51,15 @@ public class EmployeeService implements EmployeeInterface {
 	@Override
 	public String saveEmployee(Employee employee) {
 
-		Optional<Roles_Table> byRoleId = rolesReposotory.findByRoleId(employee.getRole().getRoleId());
-
-		Integer roleId = byRoleId.get().getRoleId();
-		if (employee.getRole().getRoleId() == roleId) {
-			Roles_Table save2 = rolesReposotory.save(employee.getRole());
-			employee.setRole(save2);
-
-		}
+		Roles_Table save2 = rolesReposotory.save(employee.getRole());
+		employee.setRole(save2);
 		String encode = passwordEncoder.encode(employee.getPassword());
 		log.info("Encode password :{}", encode);
 		employee.setPassword(encode);
+		
+		 this.validateUniqueEmail(employee.getEmail());
+		
+		 this.validateUniquePhoneNumber(employee.getPhoneNu());
 		Employee save = employeeRepo.save(employee);
 
 		if (save != null && save.getEmployeeId() != 0) {
@@ -73,6 +71,51 @@ public class EmployeeService implements EmployeeInterface {
 
 	}
 
+   /*private boolean validateUniqueEmail(String email) {
+
+		log.info("validateUniqueEmail {}",email);
+		 Optional<Employee> byEmail = employeeRepo.findByEmail(email);
+		 String existMail = byEmail.get().getEmail();
+		 log.info("validateUniqueEmail existmail {}",existMail);
+		 
+		 boolean ignoreCase = email.equalsIgnoreCase(existMail);
+		 
+		 if (ignoreCase==false) {
+			
+			 throw new BadRequestException("THis mail is already exits "+email );
+		} else {
+            
+			return true;
+		}
+    }
+*/
+	private boolean validateUniqueEmail(String email) {
+	    log.info("validateUniqueEmail {}", email);
+	    Optional<Employee> byEmail = employeeRepo.findByEmail(email);
+
+	    if (byEmail.isPresent()) {
+	        throw new BadRequestException("This email already exists: " + email);
+	    } else {
+	        return true; // Email is unique
+	    }
+	}
+
+
+	private boolean validateUniquePhoneNumber(String phoneNu) {
+	    log.info("validateUniqueEmail {}", phoneNu);
+	    Optional<Employee> byEmail = employeeRepo.findByPhoneNu(phoneNu);
+
+	    if (byEmail.isPresent()) {
+	        throw new BadRequestException("This number already exists: " + phoneNu);
+	    } else {
+	        return true; // number is unique
+	    }
+	}
+	
+	
+	
+	
+	
 	@Override
 	public String updateEmployee(Long employeeId, Employee employee) throws UserNotFoundException {
 
@@ -85,29 +128,7 @@ public class EmployeeService implements EmployeeInterface {
 		byEmployeeId.setFirstName(employee.getFirstName());
 		byEmployeeId.setGender(employee.getGender());
 		byEmployeeId.setLastName(employee.getLastName());
-		// byEmployeeId.setRole(employee.getRole());
-		/*
-		 * // Update addresses List<Address> addresses = employee.getAddresses(); if
-		 * (addresses != null) { // Update existing addresses or add new addresses
-		 * List<Address> updatedAddress = new ArrayList<>();
-		 * 
-		 * // address.setEmployee(byEmployeeId);
-		 * 
-		 * for (Address address1 : byEmployeeId.getAddresses()) { for (Address address :
-		 * addresses) { if
-		 * (address1.getAddressType().equalsIgnoreCase(address.getAddressType())) {
-		 * 
-		 * address1.setAddressType(address.getAddressType());
-		 * address1.setArea(address.getArea()); address1.setCity(address.getCity());
-		 * address1.setDoorNumber(address.getDoorNumber());
-		 * address1.setLandmark(address.getLandmark());
-		 * address1.setPincode(address.getPincode());
-		 * address1.setState(address.getState());
-		 * address1.setStreetName(address.getStreetName());
-		 * updatedAddress.add(address1); } else { address.setEmployee(byEmployeeId);
-		 * updatedAddress.add(address); } } byEmployeeId.setAddresses(updatedAddress); }
-		 * }
-		 */
+
 		Employee updatedEmployee = employeeRepo.save(byEmployeeId);
 
 		if (updatedEmployee.getEmployeeId() != 0) {
@@ -235,8 +256,6 @@ public class EmployeeService implements EmployeeInterface {
 		}
 	}
 
-
-
 	@Override
 	public Optional<List<Employee>> searchByKeywords(String keywords) {
 		Optional<List<Employee>> employeeList = employeeRepo.searchByFirstNameOrLastNameOrEmployeeId(keywords);
@@ -258,7 +277,6 @@ public class EmployeeService implements EmployeeInterface {
 		return result;
 
 	}
-
 
 	@Override
 	public List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays() {
@@ -299,4 +317,113 @@ public class EmployeeService implements EmployeeInterface {
 
 	}
 
+/*	public List<EmployeeDto> getAllEmployee(Long employeeId) throws UserNotFoundException {
+		Employee byEmployeeId = employeeRepo.findByEmployeeId(employeeId)
+				.orElseThrow(() -> new UserNotFoundException("User id not found"));
+
+		Long reportsTo = byEmployeeId.getReportsTo();
+
+		
+		List<Employee> allEmployees = employeeRepo.findAll();
+
+		 for (Employee employee : allEmployees) {
+			
+			 if (employee.getReportsTo()==null) {
+				
+				 throw new BadRequestException("Required reports to id");
+			}
+		}
+		try {
+			List<Employee> filteredEmployees = allEmployees.stream().filter(e -> e.getReportsTo().equals(reportsTo))
+					.collect(Collectors.toList());
+
+			List<EmployeeDto> employeeDtoList = new ArrayList<>();
+			for (Employee employee : filteredEmployees) {
+				EmployeeDto employeeDto = mapper.employeeToEmployeeDto(employee);
+				employeeDtoList.add(employeeDto);
+			}
+
+			log.info("Employee dto {}", employeeDtoList);
+			return employeeDtoList;
+
+		} catch (Exception e) {
+
+			throw new RuntimeException(e.getMessage());
+		}
+
+	}*/
+	
+	public List<EmployeeDto> getAllEmployee(Long employeeId) throws UserNotFoundException, BadRequestException {
+	    // Find the employee by employeeId
+	    Employee byEmployeeId = employeeRepo.findByEmployeeId(employeeId)
+	            .orElseThrow(() -> new UserNotFoundException("User id not found"));
+
+	    // Get the reportsTo ID of the employee
+	    Long reportsTo = byEmployeeId.getReportsTo();
+
+	    // Validate that all employees have a valid reportsTo ID
+	    List<Employee> allEmployees = employeeRepo.findAll();
+	    for (Employee employee : allEmployees) {
+	        if (employee.getReportsTo() == null) {
+	            throw new BadRequestException("Required reports to id");
+	        }
+	    }
+
+	    // Filter employees based on reportsTo ID and convert to DTOs
+	    List<Employee> filteredEmployees = allEmployees.stream()
+	            .filter(e -> e.getReportsTo().equals(reportsTo))
+	            .collect(Collectors.toList());
+
+	    // Check if filteredEmployees is empty
+	    if (filteredEmployees.isEmpty()) {
+	        throw new BadRequestException("No employees found for the given reportsTo id");
+	    }
+
+	    // Convert to DTOs
+	    List<EmployeeDto> employeeDtoList = new ArrayList<>();
+	    for (Employee employee : filteredEmployees) {
+	        EmployeeDto employeeDto = mapper.employeeToEmployeeDto(employee);
+	        employeeDtoList.add(employeeDto);
+	    }
+
+	    log.info("Employee DTOs: {}", employeeDtoList);
+	    return employeeDtoList;
+	}
+	
+	
+	
+	//this will return both new joinees and last 7 days joinees
+		@Override
+		public Map<String, List<Map<String, Object>>> getNewJoinersForTodayAndLast7Days() {
+			LocalDate today = LocalDate.now();
+			LocalDate last7Days = today.minusDays(7);
+
+			List<Employee> newJoinersTodayAndLast7Days = employeeRepo.findByDateOfJoiningBetween(last7Days, today);
+
+			List<Map<String, Object>> newJoinersTodayList = new ArrayList<>();
+			List<Map<String, Object>> newJoinersLast7DaysList = new ArrayList<>();
+
+			for (Employee employee : newJoinersTodayAndLast7Days) {
+				LocalDate joiningDate = employee.getDateOfJoining();
+				if (joiningDate != null) {
+					Map<String, Object> newJoinerData = new HashMap<>();
+					newJoinerData.put("employeeId", employee.getEmployeeId());
+					newJoinerData.put("firstName", employee.getFirstName());
+					newJoinerData.put("lastName", employee.getLastName());
+					newJoinerData.put("joinDate", joiningDate);
+
+					if (joiningDate.equals(today)) {
+						newJoinersTodayList.add(newJoinerData);
+					} else if (joiningDate.isAfter(last7Days) && joiningDate.isBefore(today)) {
+						newJoinersLast7DaysList.add(newJoinerData);
+					}
+				}
+			}
+			Map<String, List<Map<String, Object>>> response = new HashMap<>();
+			response.put("newJoinersToday", newJoinersTodayList);
+			response.put("newJoinersLast7Days", newJoinersLast7DaysList);
+
+			return response;
+		}
+			                              
 }

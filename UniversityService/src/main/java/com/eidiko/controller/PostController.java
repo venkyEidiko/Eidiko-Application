@@ -1,9 +1,7 @@
 package com.eidiko.controller;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,37 +35,32 @@ public class PostController {
 	private PostService postService;
 	@Autowired
 	private CommonResponse<String> commonResponse;
-	
 
 	// saves data and file in db
 	@PostMapping("/saveimage")
 	public ResponseEntity<ResponseModel<Object>> saveImage(@RequestParam("description") String description,
-			@RequestParam("postType") String postType, 
-			@RequestParam("mentionEmployee") List<String> mentionEmployee,
-			@RequestParam("postEmployee") Long postEmployee,
-			@RequestParam("file") MultipartFile file)
+			@RequestParam("postType") String postType, @RequestParam("mentionEmployee") List<String> mentionEmployee,
+			@RequestParam("postEmployee") Long postEmployee, @RequestParam("file") MultipartFile file)
 			throws IOException, SQLException, FileUploadException {
+
 		
-		System.out.println("======================================================");
 		if (file.getSize() > 15 * 1024 * 1024) { // 20MB in bytes
 			throw new FileUploadException("File size should not exceed 20MB.");
-			
-		}
- 
-		try {
-			
-		Posts posts = new Posts();
-		posts.setDescription(description);
-		posts.setMentionEmployee(mentionEmployee);
-		posts.setPostEmployee(postEmployee);
-		posts.setPostType(postType);
 
-		String res = postService.saveImage(posts, file);
-		
-		
-		return new CommonResponse<>().prepareSuccessResponseObject(res);
 		}
-		catch (IllegalArgumentException e) {
+
+		try {
+
+			Posts posts = new Posts();
+			posts.setDescription(description);
+			posts.setMentionEmployee(mentionEmployee);
+			posts.setPostEmployee(postEmployee);
+			posts.setPostType(postType);
+
+			String res = postService.saveImage(posts, file);
+
+			return new CommonResponse<>().prepareSuccessResponseObject(res);
+		} catch (IllegalArgumentException e) {
 			return new CommonResponse<>().prepareErrorResponseObject(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -104,67 +97,49 @@ public class PostController {
 	@DeleteMapping("/deletePost/{id}")
 	public ResponseEntity<ResponseModel<Object>> deletePosts(@PathVariable long id) throws SQLException {
 		try {
-		String message = postService.deletePost(id);
-		
-		return new CommonResponse<>().prepareSuccessResponseObject(message);
-		}
-		catch (RuntimeException e) {
+			String message = postService.deletePost(id);
+
+			return new CommonResponse<>().prepareSuccessResponseObject(message);
+		} catch (RuntimeException e) {
 			return new CommonResponse<Object>().prepareFailedResponse(e.getMessage());
 		}
-		
-	}
 
+	}
 
 	// update the posts
 	@PutMapping("updatePost/{postId}")
 	public ResponseEntity<ResponseModel<Object>> updatePostByPostId(@PathVariable Long postId, @RequestBody Posts post)
 			throws SQLException {
 		try {
-		
+
 			Posts upadtedPost = postService.updatePostById(postId, post);
 			return new CommonResponse<>().prepareSuccessResponseObject(upadtedPost);
 		} catch (RuntimeException e) {
-			
+
 			return new CommonResponse<>().prepareFailedResponse(e.getMessage());
 		}
 	}
 
-	// get all the data with latest posts are first(images are came encode code)
-//	@GetMapping("/getAllPostByTime")
-//	public ResponseEntity<ResponseModel<Object>> getAllPostsByTimeStamp() throws SQLException {
-//
-//		try {
-//			List<Posts> posts = postService.getAllPostsByTimeStamp();
-//			return new CommonResponse<>().prepareSuccessResponseObject(posts);
-//		} catch (RuntimeException e) {
-//
-//			return new CommonResponse<>().prepareFailedResponse1(e.getMessage());
-//		}
-//
-//	}
 	@GetMapping("/getAllPostByTime")
 	public ResponseEntity<ResponseModel<Object>> getAllPostsByTimeStamp() throws SQLException {
-	    try {
-	        // Call the service method to get all posts ordered by timestamp
-	        List<Posts> posts = postService.getAllPostsByTimeStamp();
-	        
-	        // Convert byte array back to Base64 string before sending response
+		try {
+			// Call the service method to get all posts ordered by timestamp
+			List<Posts> posts = postService.getAllPostsByTimeStamp();
+
+			// Convert byte array back to Base64 string before sending response
 //	        for (Posts post : posts) {
 //	            if (post.getImage() != null) {
 //	                post.setImage(Base64.getEncoder().encode(post.getImage()));
 //	            }
 //	        }
-	        
-	        // Prepare and return a successful response with the list of posts
-	        return new CommonResponse<>().prepareSuccessResponseObject(posts);
-	    } catch (RuntimeException e) {
-	        // If an exception occurs, prepare and return a failed response with the error message
-	        return new CommonResponse<>().prepareFailedResponse1(e.getMessage());
-	    }
+
+			// Prepare and return a successful response with the list of posts
+			return new CommonResponse<>().prepareSuccessResponseObject(posts);
+		} catch (RuntimeException e) {
+			// If an exception occurs, prepare and return a failed response with the error
+			// message
+			return new CommonResponse<>().prepareFailedResponse1(e.getMessage());
+		}
 	}
-
-
-	
-
 
 }

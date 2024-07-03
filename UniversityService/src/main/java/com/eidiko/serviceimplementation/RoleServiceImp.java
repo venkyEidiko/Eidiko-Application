@@ -17,7 +17,7 @@ public class RoleServiceImp  implements RoleInterface{
 	private RolesReposotory rolesReposotory;
 	@Override
 	public List<Roles_Table> getAllRoles() {
-		// TODO Auto-generated method stub
+		
 		return rolesReposotory.findAll();
 	}
 

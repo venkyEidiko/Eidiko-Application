@@ -1,31 +1,31 @@
 package com.eidiko.serviceimplementation;
 
-import com.eidiko.dto.ImageUtils;
-import com.eidiko.entity.Attachment;
-import com.eidiko.entity.EmpLeave;
-import com.eidiko.entity.EmpLeave;
-import com.eidiko.mapper.Mapper;
-import com.eidiko.repository.AttachmentRepository;
-import com.eidiko.repository.EmpLeaveRepo;
-import com.eidiko.service.EmpLeaveService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-
-import javax.sql.rowset.serial.SerialBlob;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+
+import javax.sql.rowset.serial.SerialBlob;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.eidiko.dto.ImageUtils;
+import com.eidiko.entity.Attachment;
+import com.eidiko.entity.EmpLeave;
+import com.eidiko.mapper.Mapper;
+import com.eidiko.repository.AttachmentRepository;
+import com.eidiko.repository.EmpLeaveRepo;
+import com.eidiko.service.EmpLeaveService;
 
 @Service
 public class CompensatoryOffService {
