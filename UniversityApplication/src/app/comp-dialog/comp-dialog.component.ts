@@ -36,8 +36,6 @@ export class CompDialogComponent {
       console.log('Selected file:', files[i].name);
     }
   }
-  
-      
 
   onSubmit(): void {
     if (!this.fromDate || !this.toDate || !this.note) {
@@ -46,19 +44,11 @@ export class CompDialogComponent {
     }
 
   
-    const formattedFromDate = this.fromDate;
-    const formattedToDate = this.toDate;
+    const formattedFromDate = this.fromDate.toISOString().split('T')[0];
+    const formattedToDate = this.toDate.toISOString().split('T')[0];
 
-    const compOffRequestData:any = {
-
-      "fromdate":formattedFromDate,
-       "toDate":formattedToDate,
-       "note":this.note,
-       "file":this.files,
-       "employeeId": this.employeeId
-     }
-
-    this.compdialogService.postCompoff( compOffRequestData).subscribe(
+   
+    this.compdialogService.postCompoff( formattedFromDate, formattedToDate, this.note, this.files,this.employeeId).subscribe(
       response => {
         console.log('POST request successful:', response);
         this.dialogRef.close();
@@ -69,12 +59,4 @@ export class CompDialogComponent {
       }
     );
   }
-}
-export interface compOffrequest {
-  "fromdate":string,
-  "toDate":string,
-  "note":string,
-  "file":File,
-  "employeeId":number
-
 }

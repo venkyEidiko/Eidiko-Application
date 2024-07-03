@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { OtpService } from '../services/otp.service';
+import { EmailCheckService } from '../services/email-check.service';
 
 @Component({
   selector: 'app-otp',
@@ -12,10 +13,10 @@ export class OtpComponent {
   otp: string = '';
 
   errorMessage: string = '';
-  toEmail: string = 'nalla.harshini@gmail.com';
+  toEmail: string =this.emailService.getEmail();
   generatedOtp: string = '';
 
-  constructor(private router: Router, private otpService: OtpService) { }
+  constructor(private router: Router, private otpService: OtpService,private emailService:EmailCheckService) { }
 
   generateOtp() {
     this.otpService.sendOtpEmail(this.toEmail).subscribe({

@@ -28,7 +28,11 @@ export class ForgotpasswordComponent {
     this.apiService.checkEmail(this.email).subscribe({
       next: (response: any) => {
 
-        const backendEmail = response.email; 
+        const backendEmail = response.result[0]; 
+        console.log("backEnd email : ",backendEmail);
+        console.log("input email : ",this.email);
+        
+        
         if (backendEmail === this.email) {
           console.log('Email matches');
           this.Otppage();

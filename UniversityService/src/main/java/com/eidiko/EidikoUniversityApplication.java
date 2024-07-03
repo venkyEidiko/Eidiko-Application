@@ -20,23 +20,23 @@ public class EidikoUniversityApplication {
 
 	
 	
-	@Autowired
-	private RolesReposotory roleRepository;
-	
-	
-	@Bean
-    public CommandLineRunner roleData() {
-        return args -> {
-            // Insert static roles
-          
-            roleRepository.save(new Roles_Table(201,"ADMIN"));
-            roleRepository.save(new Roles_Table(202,"EMPLOYEE"));
-            roleRepository.save(new Roles_Table(203,"HR"));
-        	
-        	
-        };
-        
-        
-    }
+//	@Autowired
+//	private RolesReposotory roleRepository;
+//	
+//	
+//	@Bean
+//    public CommandLineRunner roleData() {
+//        return args -> {
+//            // Insert static roles
+//          
+//            roleRepository.save(new Roles_Table(201,"ADMIN"));
+//            roleRepository.save(new Roles_Table(202,"EMPLOYEE"));
+//            roleRepository.save(new Roles_Table(203,"HR"));
+//        	
+//        	
+//        };
+//        
+//        
+//    }
 	
 }

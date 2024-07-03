@@ -96,6 +96,10 @@ public class Employee implements UserDetails {
     private Long reportsTo;
     private Long reportingHr;
     private Long managerOfManager;
+    
+    @JsonManagedReference
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ShiftRequest> shiftRequests;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
