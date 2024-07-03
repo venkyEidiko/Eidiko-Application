@@ -503,4 +503,5 @@ interface PostRequest {
   postType: string | null
   mentionEmployee: string[]
   postEmployee: number
+
 }

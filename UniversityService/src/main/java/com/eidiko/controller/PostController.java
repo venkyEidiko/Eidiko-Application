@@ -3,8 +3,8 @@ package com.eidiko.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Base64;
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,9 @@ import com.eidiko.serviceimplementation.PostService;
 
 @RestController
 @RequestMapping("/posts")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+
+@CrossOrigin(origins = "*",allowedHeaders = "*")
+
 public class PostController {
 
 	@Autowired
@@ -41,16 +43,22 @@ public class PostController {
 
 	// saves data and file in db
 	@PostMapping("/saveimage")
-	public ResponseEntity<ResponseModel<Object>> saveImage(@RequestParam("description") String description,
-			@RequestParam("postType") String postType, 
-			@RequestParam("mentionEmployee") List<String> mentionEmployee,
-			@RequestParam("postEmployee") Long postEmployee,
-			@RequestParam("file") MultipartFile file)
+	public ResponseEntity<ResponseModel<Object>> saveImage(@RequestParam(value="description",required = false) String description,
+			@RequestParam(value="postType",required = false) String postType, 
+			@RequestParam(value="mentionEmployee", required = false) List<String> mentionEmployee,
+			@RequestParam(value = "postEmployee",required = false) Long postEmployee,
+			@RequestParam(value = "file",required = false) MultipartFile file
+			
+			)
 			throws IOException, SQLException, FileUploadException {
 		
-		System.out.println("======================================================");
-		if (file.getSize() > 15 * 1024 * 1024) { // 20MB in bytes
-			throw new FileUploadException("File size should not exceed 20MB.");
+		System.out.println("saveImage :"+description);
+		
+		System.out.println("saveImage :"+postEmployee);
+	
+		
+		if (file!=null && file.getSize() > 20 * 1024 * 1024) { // 20MB in bytes
+			throw new FileUploadException("File size should not exceed 5MB.");
 			
 		}
  
@@ -61,10 +69,11 @@ public class PostController {
 		posts.setMentionEmployee(mentionEmployee);
 		posts.setPostEmployee(postEmployee);
 		posts.setPostType(postType);
+		if(file!=null) {
+        posts.setImage(file.getBytes());
+		}
 
-		String res = postService.saveImage(posts, file);
-		
-		
+		String res = postService.saveImage(posts);
 		return new CommonResponse<>().prepareSuccessResponseObject(res);
 		}
 		catch (IllegalArgumentException e) {
@@ -129,36 +138,18 @@ public class PostController {
 		}
 	}
 
-	// get all the data with latest posts are first(images are came encode code)
-//	@GetMapping("/getAllPostByTime")
-//	public ResponseEntity<ResponseModel<Object>> getAllPostsByTimeStamp() throws SQLException {
-//
-//		try {
-//			List<Posts> posts = postService.getAllPostsByTimeStamp();
-//			return new CommonResponse<>().prepareSuccessResponseObject(posts);
-//		} catch (RuntimeException e) {
-//
-//			return new CommonResponse<>().prepareFailedResponse1(e.getMessage());
-//		}
-//
-//	}
+	
+	//get all the posts
 	@GetMapping("/getAllPostByTime")
 	public ResponseEntity<ResponseModel<Object>> getAllPostsByTimeStamp() throws SQLException {
 	    try {
 	        // Call the service method to get all posts ordered by timestamp
 	        List<Posts> posts = postService.getAllPostsByTimeStamp();
+
 	        
-	        // Convert byte array back to Base64 string before sending response
-//	        for (Posts post : posts) {
-//	            if (post.getImage() != null) {
-//	                post.setImage(Base64.getEncoder().encode(post.getImage()));
-//	            }
-//	        }
-	        
-	        // Prepare and return a successful response with the list of posts
 	        return new CommonResponse<>().prepareSuccessResponseObject(posts);
 	    } catch (RuntimeException e) {
-	        // If an exception occurs, prepare and return a failed response with the error message
+	       
 	        return new CommonResponse<>().prepareFailedResponse1(e.getMessage());
 	    }
 	}
