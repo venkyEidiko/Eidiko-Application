@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -254,6 +255,129 @@ public class EmployeeService implements EmployeeInterface {
 
 		return result;
 	}
+
+
+
+
+
+
+	//this method returns both present date and after 7 days birthdays
+	@Override
+	public Map<String, List<BirtdayAndanniversaryDto>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
+		LocalDate today = LocalDate.now();
+		LocalDate endDate = today.plusDays(7);
+
+		List<BirtdayAndanniversaryDto> todayBirthdays = employeeRepo.findBydateOfBirth(today.getMonthValue(), today.getDayOfMonth());
+
+		List<BirtdayAndanniversaryDto> nextSevenDaysBirthdays = new ArrayList<>();
+		List<Employee> allEmployees = employeeRepo.findAll();
+
+		for (Employee employee : allEmployees) {
+			LocalDate birthday = employee.getDateOfBirth();
+			if (birthday != null &&  (birthday.isAfter(today) && birthday.isBefore(endDate))) {
+				BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(
+						employee.getEmployeeId(),
+						employee.getFirstName(),
+						employee.getLastName()
+				);
+				nextSevenDaysBirthdays.add(dto);
+			}
+		}
+
+		Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
+		result.put("Today Birthdays", todayBirthdays);
+		result.put("Next Seven Days Birthdays", nextSevenDaysBirthdays);
+
+		return result;
+	}
+
+
+
+
+	//this will return both todays anniversary and next  7 days anniversary
+	@Override
+	public Map<String, List<Map<String, Object>>> getWorkAnniversariesForTodayAndNextSevenDays() {
+		LocalDate today = LocalDate.now();
+		LocalDate endDate = today.plusDays(7);
+
+		List<Employee> allEmployees = employeeRepo.findAll();
+
+		List<Map<String, Object>> todayAnniversaries = new ArrayList<>();
+		List<Map<String, Object>> nextSevenDaysAnniversaries = new ArrayList<>();
+
+		for (Employee employee : allEmployees) {
+			LocalDate joiningDate = employee.getDateOfJoining();
+			if (joiningDate != null) {
+				LocalDate anniversaryThisYear = joiningDate.withYear(today.getYear());
+
+				if (joiningDate.getYear() == today.getYear()) {
+					continue;
+				}
+
+				int years = today.getYear() - joiningDate.getYear();
+
+				Map<String, Object> anniversaryData = new HashMap<>();
+				anniversaryData.put("employeeId", employee.getEmployeeId());
+				anniversaryData.put("firstName", employee.getFirstName());
+				anniversaryData.put("lastName", employee.getLastName());
+				anniversaryData.put("years", years);
+
+				if (anniversaryThisYear.equals(today)) {
+					todayAnniversaries.add(anniversaryData);
+				}
+
+				if (anniversaryThisYear.isAfter(today) && anniversaryThisYear.isBefore(endDate)) {
+					nextSevenDaysAnniversaries.add(anniversaryData);
+				}
+			}
+		}
+
+		Map<String, List<Map<String, Object>>> result = new HashMap<>();
+		result.put("Today Anniversaries", todayAnniversaries);
+		result.put("Next Seven Days Anniversaries", nextSevenDaysAnniversaries);
+
+		return result;
+	}
+
+
+
+	//this will return both new joinees and last 7 days joinees
+	@Override
+	public Map<String, List<Map<String, Object>>> getNewJoinersForTodayAndLast7Days() {
+		LocalDate today = LocalDate.now();
+		LocalDate last7Days = today.minusDays(7);
+
+		List<Employee> newJoinersTodayAndLast7Days = employeeRepo.findByDateOfJoiningBetween(last7Days, today);
+
+		List<Map<String, Object>> newJoinersTodayList = new ArrayList<>();
+		List<Map<String, Object>> newJoinersLast7DaysList = new ArrayList<>();
+
+		for (Employee employee : newJoinersTodayAndLast7Days) {
+			LocalDate joiningDate = employee.getDateOfJoining();
+			if (joiningDate != null) {
+				Map<String, Object> newJoinerData = new HashMap<>();
+				newJoinerData.put("employeeId", employee.getEmployeeId());
+				newJoinerData.put("firstName", employee.getFirstName());
+				newJoinerData.put("lastName", employee.getLastName());
+				newJoinerData.put("joinDate", joiningDate);
+
+				if (joiningDate.equals(today)) {
+					newJoinersTodayList.add(newJoinerData);
+				} else if (joiningDate.isAfter(last7Days) && joiningDate.isBefore(today)) {
+					newJoinersLast7DaysList.add(newJoinerData);
+				}
+			}
+		}
+
+		Map<String, List<Map<String, Object>>> response = new HashMap<>();
+		response.put("new Joiners Today", newJoinersTodayList);
+		response.put("new Joiners Last 7 Days", newJoinersLast7DaysList);
+
+		return response;
+	}
+
+
+
 
 	@Override
 	public Optional<List<Employee>> searchByKeywords(String keywords) {

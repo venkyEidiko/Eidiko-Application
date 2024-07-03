@@ -131,6 +131,8 @@ public class EmpLeaveController {
 
 	    }
 
+
+		//this api is used to get the details who are onleave today
 	@GetMapping("/empOnLeaveToday")
 	public ResponseEntity<?> getEmployeesOnLeaveToday() {
 		List<EmpLeaveDto> employeeDetails = leaveService.getEmployeesOnLeaveToday();
@@ -142,6 +144,7 @@ public class EmpLeaveController {
 		}
 	}
 
+	//this api is used to get the details by their request type
 	@GetMapping("/getEmployeeDetailsByRequestType")
 	public ResponseEntity<?> getEmployeeDetailsByRequestType(@RequestParam String leaveType) {
 		List<EmpLeaveDto> employeeDetails = leaveService.getEmployeeDetailsByRequestType(leaveType);

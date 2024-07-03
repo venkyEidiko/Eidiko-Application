@@ -213,4 +213,52 @@ public class EmployeeControllor {
 		}
 	}
 
+
+
+
+
+
+	//this api returns both present and after 7 days birthday details
+	@GetMapping("/todayAndNext7Daysbirthdays")
+	public ResponseEntity<ResponseModel<Object>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
+		try {
+			Map<String, List<BirtdayAndanniversaryDto>> response = employeeService.getBirthdaysAndAnniversariesForTodayAndNextSevenDays();
+			return new CommonResponse<>().prepareSuccessResponseObject(response);
+		} catch (Exception e) {
+			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
+		}
+	}
+
+
+
+
+	//this api is used for fetching both work anniversary today and next 7 days also
+	@GetMapping("/workAnniversaries")
+	public ResponseEntity<ResponseModel<Object>> getWorkAnniversariesForTodayAndNextSevenDays() {
+		try {
+			Map<String, List<Map<String, Object>>> response = employeeService.getWorkAnniversariesForTodayAndNextSevenDays();
+			return new CommonResponse<>().prepareSuccessResponseObject(response);
+		} catch (Exception e) {
+			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
+		}
+	}
+
+
+
+
+
+
+	//this api is used for fetching new joinees and last 7 days joinees also
+	@GetMapping("/newJoineesAndLast7Days")
+	public ResponseEntity<ResponseModel<Object>> getNewJoinersForTodayAndLast7Days() {
+		try {
+			Map<String, List<Map<String, Object>>> response = employeeService.getNewJoinersForTodayAndLast7Days();
+			return new CommonResponse<>().prepareSuccessResponseObject(response);
+		} catch (Exception e) {
+			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
+		}
+	}
+
+
+
 }
