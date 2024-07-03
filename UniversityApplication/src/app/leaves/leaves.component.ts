@@ -104,7 +104,7 @@ export class LeavesComponent implements OnInit {
   selectedLeaveTypes: Set<string> = new Set<string>();
   //selectedStatus:Set<string>=new Set<string>();
   
-    selectedStatus: string[] = [];
+  selectedStatus: string[] = [];
   consumedLeaves = 0;
   availableLeaves = 0;
   totalLeave = 12;
@@ -117,9 +117,6 @@ export class LeavesComponent implements OnInit {
   availableUnpaidLeave = 0;
   paidLeaveCount: number = 0;
   unpaidLeaveCount: number = 0;
-
-
-
 
   monthlyChartData: { label: string; value: number, duration: number }[] = []; // Array to hold monthly chart data
   weeklyChartData: { label: string; value: number }[] = [
@@ -139,8 +136,6 @@ export class LeavesComponent implements OnInit {
     private compdialogService: CompdialogService,
     private leavetypeService: LeavetypeService,
     private tableService:TableService,
-    
-
   ) {}
    employeeId = this.loginService.getEmployeeData().employeeId;
    
@@ -215,23 +210,7 @@ export class LeavesComponent implements OnInit {
     const statuses = Array.from(this.selectedStatuses);
     this.fetchLeaveData(leaveTypes, statuses, pageIndex, pageSize);
   }
-  // aggregateLeaveCounts(): void {
-  //   this.paidLeaveCount = 0;
-  //   this.unpaidLeaveCount = 0;
-  //   if (this.pendingLeaves) {
-  //     this.pendingLeaves.forEach(leave => {
-  //       if (leave.leaveType === 'Paid Leave') {
-  //         this.paidLeaveCount++;
-  //       } else if (leave.leaveType === 'unpaid') {
-  //         this.unpaidLeaveCount++;
-          
-  //       }
-  //     });
-  //   }
-  //   this.updateChartOptions();
-  // }
-
-  
+   
   fetchLeaveBalance(employeeId: number): void {
     this.leavetypeService.fetchLeaveBalance(employeeId).subscribe(
       (response: any) => {
@@ -629,6 +608,17 @@ export class LeavesComponent implements OnInit {
       this.selectedStatus = [...this.statusOptions];
     }
   }
+
+  search:string='';
+  onChangeSearchLeave(search:string){
+    console.log("leave search key : ",search);
+    
+if(search.length>1){
+  this.leavetypeService.searchLeaveByKey(search,this.employeeId).subscribe(response=>{
+    console.log(" Leave data By search : ",response)
+  })
+    }
+}
 }
 
 
