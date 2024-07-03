@@ -130,8 +130,10 @@ export class DashbordService {
 
 
 
+
     getPostsAndLikes(): Observable < any > {
       console.log("inside service")
     return this.http.get<any>('http://10.0.0.60:8080/posts/getAllPostByTime');
     }
   }
+

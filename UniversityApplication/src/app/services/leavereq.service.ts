@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,20 +15,16 @@ export class LeavereqService {
     return this.http.post<any>(this.apiUrl, requestData);
   }
 
-  postCompoff(data:any): Observable<any> {
-   let param = new HttpParams();
+  postCompoff(fromDate: string, toDate: string, note: string | undefined, files: File[],employeeId:string): Observable<any> {
     const formData = new FormData();
-    // formData.append('fromDate', fromDate);
-    // formData.append('toDate', toDate);
-    // formData.append('note', note || '');
-    // formData.append('employeeId', employeeId); 
-    // for (let i = 0; i < files.length; i++) {
-    //   formData.append('files', files[i]);
-    // }
-    // param.append('fromDate', fromDate);
-    // param.append('toDate', toDate);
-    // console.log("compOff request form data : ",formData);
-    
-    return this.http.post<any>(this.apiUrl1, data);
+    formData.append('fromDate', fromDate);
+    formData.append('toDate', toDate);
+    formData.append('note', note || '');
+    formData.append('employeeId', employeeId); 
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+    }
+
+    return this.http.post<any>(this.apiUrl1, formData);
   }
 }
