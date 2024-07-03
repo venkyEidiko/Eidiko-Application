@@ -28,6 +28,7 @@ import { AboutSummaryComponent } from './about-summary/about-summary.component';
 import { AboutTimelineComponent } from './about-timeline/about-timeline.component';
 import { AboutWallactivityComponent } from './about-wallactivity/about-wallactivity.component';
 import { CalenderComponent } from './calender/calender.component';
+import { SummaryComponent } from './summary/summary.component';
 
 
 
@@ -84,7 +85,11 @@ const routes: Routes = [
         ]
       },
       { path: 'inbox', component: InboxComponent },
-      { path: 'myteam', component: MyteamComponent },
+      { path: 'myteam', component: MyteamComponent,
+        children:[
+          {path: 'summary',component:SummaryComponent}
+        ]
+       },
       { path: 'myfinance', component: MyfinancesComponent },
       { path: 'org', component: OrgComponent }
     ]

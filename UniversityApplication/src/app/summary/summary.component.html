@@ -44,18 +44,64 @@
     </div>
 
     <div class="calender-cards">
-        <mat-card class="card-item">
-            <mat-card-content>
-                <h4>team Calender</h4>
-            </mat-card-content>
-        </mat-card>
-
-    </div>
-    <div class="team-container">
-        <h2>Peers({{totalteamMember}})</h2>
-        <div>
-
+        <h4>Team Calender</h4>
+        <div class="card-item-calender">
+            <div class="header">
+                <div class="month-slider" style="width:300px;">
+                    <div><mat-icon (click)="previous(currentMonth)">arrow_back</mat-icon> </div>
+                    <div>{{currentMonth}} 2024 </div>
+                    <div><mat-icon (click)="next(currentMonth)">arrow_forward</mat-icon></div>
+                </div>
+                <div class="dayNames">
+                    <div *ngFor="let day of getDaysArray(currentMonth)" class="dayName">
+                        {{getDay(2024,currentMonth,day)}}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="list">
+                <div *ngFor="let employee of onLeaveEmployee" class="list-days">
+                    <div class="row">
+                        <div style="width: 300px;">
+                            <p>{{employee}}</p>
+                        </div>
+                        <div class="days">
+                            <div *ngFor="let day of getDaysArray(currentMonth)" class="day" 
+                            [ngClass]="{'highlight-weekoff': getDay(2024, currentMonth, day) === 'St' || getDay(2024, currentMonth, day) === 'Su'}">
+                                {{day}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    
+
+</div>
+<div class="team-container">
+    <h2>Peers({{employees.length}})</h2>
+    <div class="employees-container">
+        <div *ngFor="let employee of employees">
+            <mat-card class="card-item-employee">
+                <mat-card-content class="container">
+
+                    <div class="member-holder">
+                        <div class="member">{{employee.firstName.charAt(0) | uppercase}}</div>
+                    </div>
+                    <div>
+                        <h3 style="color: rgb(228, 230, 233);">{{employee.firstName | capatlize}}
+                            {{employee.lastName | capatlize}}
+                            <br>
+                            <small style="font-size: 13px; color: rgb(228, 230, 233);">{{employee.jobTitlePrimary}}</small>
+                        </h3>
+                        <p>Location: <span>{{employee.location | capatlize}}</span></p>
+                        <p>Department: <span>{{employee.department}}</span></p>
+                        <p>Email: <span>{{employee.email}}</span></p>
+                        <p>Mobile: <span>{{employee.phoneNu}}</span></p>
+                    </div>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
 </div>

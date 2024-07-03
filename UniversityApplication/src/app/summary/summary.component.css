@@ -4,15 +4,12 @@
   font-size: 18px;
   font-weight: 400;
   margin-bottom: 50px;
-  
 }
-.upper-cards{
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    gap:20px;
-    
-    
+.upper-cards {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
 }
 .card-item {
   background-color: #333d4e;
@@ -23,58 +20,170 @@
   box-sizing: border-box;
   width: 50%;
 }
-.member-holder{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
+.member-holder {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
-.member{
-    width:50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: aqua;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.member {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: aqua;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.grid{
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
+.grid {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
 }
-.bar{
-    width: 4px;
-    height: px;
-   
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+.bar {
+  width: 4px;
+  height: px;
+
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
-.small-card{
-    background-color: #333d4e;
-    width: 100%;
-    
+.small-card {
+  background-color: #333d4e;
+  width: 265px;
 }
-.grid p{
-    font-weight:bold;
-    font-size: 40px;
+.grid p {
+  font-weight: bold;
+  font-size: 40px;
 }
-.upper-cards-1{
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    gap: 5.2%;
-    margin-top: 20px;
+.upper-cards-1 {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  gap: 5.2%;
+  margin-top: 20px;
 }
-.calender-cards{
-    margin-top: 20px;
+.team-container {
+  padding: 20px;
+  font-family: "Proxima Nova";
+  margin-bottom: 50px;
+  
 }
-.calender-cards .card-item {
-    width: 90%;
+.employees-container {
+  width: 90%;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  
 }
-.team-container{
-    margin-top: 20px;
+.card-item-employee {
+  background-color: #333d4e;
+  border: 0.1px solid #525455;
+  height: 250px;
+  border-radius: 2px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 350px;
 }
+.card-item-employee:hover {
+  box-shadow: rgba(126, 131, 136, 0.48) 2px 2px 10px 0px,
+    rgba(207, 204, 204, 0.8) -2px -2px 10px 0px;
+}
+.card-item-employee .container {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+}
+.card-item-employee .container p {
+  color: rgb(162, 169, 180);
+  font-size: 13px;
+}
+.card-item-employee .container p span {
+  color: rgb(228, 230, 233);
+}
+.card-item-employee .container .member-holder {
+  margin-top: 45px;
+}
+
+.calender-cards {
+  margin-top: 20px;
+  width: 100%;
+}
+.card-item-calender {
+  background-color: #333d4e;
+  border: 0.1px solid #525455;
+  height: auto;
+  width: 90%;
+  border-radius: 2px;
+  padding: 10px;
+  box-sizing: border-box;
+  
+}
+
+.month-slider {
+  display: flex;
+  flex-direction: row;
+}
+.week-day {
+  margin: 5px;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+}
+.row{
+  display: flex;
+  flex-direction: row;
+}
+.days{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.day{
+  width: 20px;
+  height:20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  
+}
+.highlight-weekoff{
+  background-color: yellow;
+  color: black;
+  
+}
+.dayNames{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+}
+.header{
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+}
+.dayName{
+  font-size: 12px;
+  width: 20px;
+  height:20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.highlight{
+  background-color: yellow;
+  color: black;
+}
+
+
+
+
+
+
 
