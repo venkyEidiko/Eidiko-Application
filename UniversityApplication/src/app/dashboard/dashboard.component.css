@@ -538,3 +538,103 @@ emoji-mart {
   text-align: center;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+/* 
+.new-joinees-section {
+  margin-bottom: 20px;
+}
+
+.new-joinees-section h2 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.new-joinees-section h2 span {
+  margin-left: 10px;
+  font-size: 0.8em;
+  color: #888;
+}
+
+.joinees-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.joinee {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.joinee img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.joinee p {
+  margin: 0;
+} */
+
+
+
+
+
+.new-joinees-section {
+  margin: 20px 0;
+}
+
+.new-joinees-section h2 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.todayNewJoinees-container, .lastSevenDays-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.joinees-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.joinee {
+  display: grid;
+  align-items: center;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.joinee img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.joinee p {
+  margin: 0;
+}
+
+.announcement-text{
+  border-style: solid;
+  padding: 10px 300px 10px 10px ;
+  border-radius: 10px;
+}
+  
