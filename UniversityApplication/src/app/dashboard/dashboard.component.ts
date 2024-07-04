@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DashbordService } from '../services/dashbord.service';
 import { Holiday } from '../holiday';
+
 import { Employee } from '../services/employee';
 
 import { timestamp } from 'rxjs';
+
 import { LoginService } from '../services/login.service';
 
 
@@ -13,7 +15,8 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./dashboard.component.css']
 })
 
-export class DashboardComponent implements OnInit {
+
+export class DashboardComponent implements OnInit, OnChanges {
   post: any;
   like: any;
   showEmoticonPicker = false;
@@ -26,16 +29,24 @@ export class DashboardComponent implements OnInit {
   files: File[] | null = null;
   textMessage: string | null = null;
   showCommentBox: boolean[] = [];
+  hideDate:Date|null=null;
+  selectPostTo:string='organization'
+
   postRequestData: PostRequest =
     {
       description: "",
-      postType: this.selectedTab,
+      postType: this.selectPostTo,
       mentionEmployee: [],
       postEmployee: this.service.getEmpId()
     }
 
   constructor(private service: DashbordService, private loginService: LoginService) {
     this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+      this.fetchOnLeaveToday()
+      this.workFromHomeList()
+      this.loadAllPosts()
   }
 
   todayAnniversaryCount: number = 0;
@@ -53,24 +64,19 @@ export class DashboardComponent implements OnInit {
     this.getAnniversaryAndAfterSevenDaysList();
     this.getBirthdayAndAfterSevenDaysList();
     this.loadAllPosts();
-    this.fetchPostsAndLikes();
     this.fetchOnLeaveToday();
+    this.workFromHomeList();
+
   }
-  // employeeId=this.loginService.getEmployeeData().employeeId;
-  imageSrcList: { base64Image: string, timeStamp: string, description: string, postId: number, mentionEmployee: any }[] = [];
+ // employeeId=this.loginService.getEmployeeData().employeeId;
+  imageSrcList: { base64Image: string, timeStamp: string ,description:string,postId:number,mentionEmployee:any,likes:any,emojiIds:any,emojiIdsCount:any,commentIdsCount:any,commentIds:any,comments:any,showComments:any}[] = [];
   showIcons: boolean = false;
   isCardExpanded: boolean = false;
-  insertedSymbol: string = '';
-  posts: any[] = [];
+  insertedSymbol: string = ''; 
 
   insertSymbol(symbol: string) {
     this.insertedSymbol = symbol;
-  }
-
-
-
-  //   this.convertImageToBase64('assets/your-image.jpg');
-  // }
+  } 
   openHoliday(): void {
     this.service.openDialog();
   }
@@ -84,9 +90,15 @@ export class DashboardComponent implements OnInit {
     imageName: ""
   }
 
-
   selectTab(tab: string) {
     this.selectedTab = tab;
+  }
+
+  updateSelection(selectPostTo:string, checkBox:boolean){
+if(checkBox){
+  this.selectPostTo=selectPostTo
+  console.log("selectPostTo value : ",this.selectPostTo)
+}
   }
   expandCard() {
     this.isCardExpanded = true;
@@ -94,7 +106,6 @@ export class DashboardComponent implements OnInit {
   collapseCard() {
     this.isCardExpanded = false;
   }
-
 
   showContent(event: Event, content: string) {
     event.preventDefault();
@@ -157,25 +168,8 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  fetchPostsAndLikes(): void {
-    this.service.getPostsAndLikes().subscribe(
-      (response) => {
-        this.posts = response.result.map((post: { postId: any; }) => ({
-          ...post,
-          likes: response.likes.filter((like: { postId: any; }) => like.postId === post.postId)
-        }));
-
-        console.log("Posts with Likes:", this.posts);
-      },
-      (error) => {
-        console.error('Error fetching posts:', error);
-      }
-    );
-  }
-
-
-  fetchleaveData() {
-
+ 
+   fetchleaveData(){
     this.service.getLeaveData().subscribe(
       response => {
         console.log("leave data:- ", response);
@@ -189,22 +183,39 @@ export class DashboardComponent implements OnInit {
     this.service.getAllPosts().subscribe((response: any) => {
       console.log("posts ", response);
       if (response.status === 'SUCCESS') {
-        this.imageSrcList = response.result.map((item: any) => ({
-
-          base64Image: 'data:image/jpeg;base64,' + item.base64Image,
-          timeStamp: this.formatTime(item.timeStamp),
-          description: item.description,
-          postId: item.postId,
-
-          mentionEmployee: item.mentionEmployee
-
-        }));
+        this.imageSrcList = response.result.map((item: any) => {
+         
+          let emojiIds = item.likes.map((like: any) => like.emoji);
+          let emojiIdsCount = emojiIds.length;
+          let commentIds=item.comments.map((p:any)=>p.comment);
+          let commentIdsCount=commentIds.length;
+          return {
+            base64Image: 'data:image/jpeg;base64,' + item.base64Image,
+            timeStamp: this.formatTime(item.timeStamp),
+            description: item.description,
+            postId: item.postId,
+            likes: item.likes,
+            emojiIds: emojiIds,
+            emojiIdsCount: emojiIdsCount, 
+            mentionEmployee: item.mentionEmployee,
+            comments:item.comments,
+            commentIds:item.commentIds,
+            commentIdsCount:commentIdsCount,
+          };
+        });
+        console.log('Modified imageSrcList:', this.imageSrcList);
+      } else {
+        console.error('No result found in the response');
       }
     });
   }
-  extractAvailablePaidLeave(data: any) {
-    for (let leaveData of data) {
-      if (leaveData.leaveType === "Paid Leave") {
+  
+
+
+  
+  extractAvailablePaidLeave(data:any){
+    for(let leaveData of data){
+      if(leaveData.leaveType==="Paid Leave"){
         return leaveData.availableLeave;
       } else {
         console.error('No result found in the response');
@@ -281,13 +292,7 @@ export class DashboardComponent implements OnInit {
     this.showCommentBox[index] = !this.showCommentBox[index];
   }
 
-  // postComment(index: number, event?: Event): void {
-  //   if (event instanceof KeyboardEvent) {
-  //     event.preventDefault();
-  //   }
-  //   console.log(`Comment posted for image index: ${index}`);
-  //   this.showCommentBox[index] = false;
-  // }
+
   onEmojiClick(postId: number, emojiId: number): void {
 
     const empId = 1111;
@@ -443,7 +448,6 @@ export class DashboardComponent implements OnInit {
         })
       );
     } else {
-      // Handle case where this.files is null or empty as needed
       const file = null
       this.service.submitPostRequest(this.postRequestData, file);
       console.error('No files selected.');

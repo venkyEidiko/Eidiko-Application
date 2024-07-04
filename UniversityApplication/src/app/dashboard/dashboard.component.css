@@ -26,6 +26,7 @@
   border-radius: 5px;
   padding: 5px;
   z-index: 1;
+  cursor: pointer;
 }
 
 .hover-icons:hover .like-icons {
@@ -534,7 +535,100 @@ emoji-mart {
 }
 
 .anniversary-names span {
-
   text-align: center;
-
 }
+
+/* Post Request */
+.post-footer{
+  display: flex; 
+  justify-content: space-around;
+  margin-top: 30px;
+  margin-bottom: 0px;
+}
+.post-footer button{
+  margin-right: -50px;
+}
+.post-footer-content{
+  display:flex; 
+  margin-left: -140px; 
+  gap: 10px; 
+  text-align: center;
+ 
+}
+
+.post-select{
+  width: 150px;
+  height: 25px;
+  display: block; border: 
+  1px solid gray; 
+  
+}
+
+/* Announcement css */
+.announce-request{
+  display: flex;
+}
+.announce-request-content input{
+background-color: #333d4e;
+outline: none;
+border: none;
+
+min-width: 500px;
+width: auto;
+margin-bottom: 10px;
+border-bottom: 1px solid gray;
+padding-bottom: 10px;
+color: #fff;
+}
+
+.announce-request-content textarea{
+  background-color: #333d4e; 
+  min-width: 500px;
+  width: auto;
+  height: auto;
+  min-height: 70px;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  margin-top: 10px;
+  padding-top: 10px;
+  outline: none;
+  resize: none;
+  border-radius: 4px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+ 
+  scrollbar-width: none;
+  position: relative;
+  }
+  .announce-hide-date{
+    display: flex;
+  }
+  /* .announce-request-content input::placeholder {
+    color: #aaa9a9; 
+  }
+  .announce-request-content textarea::placeholder {
+    color: #aaa9a9;
+    font-size: large;
+  } */
+  .announce-hide-date input{
+width: 80px;
+background-color: #333d4e;
+color: #fff;
+  }
+  ::ng-deep .mat-calendar{
+    background-color: #333d4e;
+  }
+ ::ng-deep .mat-calendar-body-cell-content:not(--mat-datepicker-calendar-date-text-color){
+  color: #fff;
+}
+::ng-deep .mat-calendar-body-label:not(--mat-datepicker-calendar-body-label-text-color)
+{
+  color: #fff;
+}
+::ng-deep .mat-calendar-previous-button::after, .mat-calendar-next-button::after  {
+color: #fff;
+}
+::ng-deep .mat-calendar-next-button::after  {
+  color: #fff;
+  }

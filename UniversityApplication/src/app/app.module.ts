@@ -11,7 +11,7 @@ import { ResetpasswordComponent } from './resetpassword/resetpassword.component'
 import { ResetPasswordConfirmationComponent } from './reset-password-confirmation/reset-password-confirmation.component';
 import { FormsModule } from '@angular/forms';
 import { OtpComponent } from './otp/otp.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -76,6 +76,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SummaryComponent } from './summary/summary.component';
 import { CapatlizePipe } from '../pipes/capatlize.pipe';
 import { FirstletterPipe } from '../pipes/firstletter.pipe';
+import { InterceptorService } from './services/interceptor.service';
+
 
 @NgModule({
   declarations: [
@@ -169,7 +171,8 @@ import { FirstletterPipe } from '../pipes/firstletter.pipe';
     MatDatepickerModule,
     MatCardModule
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true } // Register interceptor
+  ],
+bootstrap: [AppComponent],
 })
 export class AppModule { }

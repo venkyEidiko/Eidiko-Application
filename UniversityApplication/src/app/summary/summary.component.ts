@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { SummaryService } from "../services/summary.service";
+import { DashbordService } from "../services/dashbord.service";
 
 @Component({
   selector: "app-summary",
@@ -8,14 +9,16 @@ import { SummaryService } from "../services/summary.service";
 })
 export class SummaryComponent implements OnInit {
 
-  constructor(private service: SummaryService){}
+  constructor(private Summaryservice: SummaryService, private dashBoradService:DashbordService){}
 
   ngOnInit(): void {
     this.fetchMyTeam();
+    this.fetchworkFromHome();
+    this.fetchOnLeaveToday()
   }
 
   fetchMyTeam(){
-    this.service.getMyTeam().subscribe(
+    this.Summaryservice.getMyTeam().subscribe(
       (response:any)=>{
         this.employees = response.result;
         console.log(this.employees);
@@ -24,6 +27,36 @@ export class SummaryComponent implements OnInit {
       (error:any)=>{
         console.log("error in fetchMyTeam()");
           
+      }
+    )
+  }
+
+  workFromHomeList:any[] = [];
+
+  fetchworkFromHome() {
+    this.dashBoradService.getWorkFromHome().subscribe(
+      (response:any) => {
+        this.workFromHomeList = response.result;
+        console.log("workFromHome ",this.workFromHomeList);
+        
+      },
+      (error:any)=>{
+        console.log("error in fetchworkFromHome()",error);
+      }
+    )
+  }
+
+  onLeaveToday:any[] = [];
+
+  fetchOnLeaveToday(){
+    this.dashBoradService.getOnLeaveToday().subscribe(
+      (response:any) => {
+        this.onLeaveToday = response.result;
+        console.log(this.onLeaveToday);
+        
+      },
+      (error:any)=>{
+        console.log("error in OnLeaveToday()",error);
       }
     )
   }

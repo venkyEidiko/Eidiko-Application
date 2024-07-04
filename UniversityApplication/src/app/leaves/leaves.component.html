@@ -235,7 +235,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <input class="search1" type="text" matInput placeholder="Search">
+                <input class="search1" type="text" matInput placeholder="Search" [(ngModel)]="search" (ngModelChange)="onChangeSearchLeave($event)">
             </div>
             <mat-card>
                 <mat-card-content>

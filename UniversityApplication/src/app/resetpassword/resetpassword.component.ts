@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { EmailCheckService } from '../services/email-check.service';
 
 @Component({
   selector: 'app-resetpassword',
@@ -10,12 +11,12 @@ import { AuthService } from '../services/auth.service';
 export class ResetpasswordComponent {
 
   
-  email: string = '';
+  email: string = this.emailService.getEmail();
   password: string = '';
   confirmPassword: string = '';
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router,private emailService:EmailCheckService) { }
 
   onSubmit() {
     if (this.password !== this.confirmPassword) {

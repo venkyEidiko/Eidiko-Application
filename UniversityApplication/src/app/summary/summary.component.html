@@ -3,10 +3,15 @@
         <mat-card class="card-item">
             <mat-card-content>
                 <h4>Who is off today</h4>
-                <div class="member-holder">
-                    <div class="member">A</div>
-                    <div class="member">B</div>
-                    <div class="member">C</div>
+                <div class="workFromHome">
+                    <div *ngFor = "let employee of onLeaveToday">
+                        <div class="member-holder">
+                            <div class="member">{{employee.requestedBy.charAt(0) | uppercase}}</div>
+                        </div>
+                        <div>
+                            {{employee.requestedBy}}
+                        </div>
+                    </div>
                 </div>
 
             </mat-card-content>
@@ -14,11 +19,16 @@
 
         <mat-card class="card-item">
             <mat-card-content>
-                <h4>Not in yet today</h4>
-                <div class="member-holder">
-                    <div class="member">A</div>
-                    <div class="member">B</div>
-                    <div class="member">C</div>
+                <h4>Working Remotely</h4>
+                <div class="workFromHome">
+                    <div *ngFor = "let employee of workFromHomeList">
+                        <div class="member-holder">
+                            <div class="member">{{employee.employeeName.charAt(0) | uppercase}}</div>
+                        </div>
+                        <div>
+                            {{employee.employeeName}}
+                        </div>
+                    </div>
                 </div>
             </mat-card-content>
         </mat-card>
@@ -66,8 +76,8 @@
                             <p>{{employee}}</p>
                         </div>
                         <div class="days">
-                            <div *ngFor="let day of getDaysArray(currentMonth)" class="day" 
-                            [ngClass]="{'highlight-weekoff': getDay(2024, currentMonth, day) === 'St' || getDay(2024, currentMonth, day) === 'Su'}">
+                            <div *ngFor="let day of getDaysArray(currentMonth)" class="day"
+                                [ngClass]="{'highlight-weekoff': getDay(2024, currentMonth, day) === 'St' || getDay(2024, currentMonth, day) === 'Su'}">
                                 {{day}}
                             </div>
                         </div>
@@ -92,7 +102,8 @@
                         <h3 style="color: rgb(228, 230, 233);">{{employee.firstName | capatlize}}
                             {{employee.lastName | capatlize}}
                             <br>
-                            <small style="font-size: 13px; color: rgb(228, 230, 233);">{{employee.jobTitlePrimary}}</small>
+                            <small
+                                style="font-size: 13px; color: rgb(228, 230, 233);">{{employee.jobTitlePrimary}}</small>
                         </h3>
                         <p>Location: <span>{{employee.location | capatlize}}</span></p>
                         <p>Department: <span>{{employee.department}}</span></p>
