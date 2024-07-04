@@ -21,11 +21,9 @@ export class SummaryComponent implements OnInit {
     this.Summaryservice.getMyTeam().subscribe(
       (response:any)=>{
         this.employees = response.result;
-        console.log(this.employees);
         
       },
       (error:any)=>{
-        console.log("error in fetchMyTeam()");
           
       }
     )
@@ -37,11 +35,10 @@ export class SummaryComponent implements OnInit {
     this.dashBoradService.getWorkFromHome().subscribe(
       (response:any) => {
         this.workFromHomeList = response.result;
-        console.log("workFromHome ",this.workFromHomeList);
         
       },
       (error:any)=>{
-        console.log("error in fetchworkFromHome()",error);
+        
       }
     )
   }
@@ -52,11 +49,9 @@ export class SummaryComponent implements OnInit {
     this.dashBoradService.getOnLeaveToday().subscribe(
       (response:any) => {
         this.onLeaveToday = response.result;
-        console.log(this.onLeaveToday);
         
       },
       (error:any)=>{
-        console.log("error in OnLeaveToday()",error);
       }
     )
   }

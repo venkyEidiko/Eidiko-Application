@@ -14,17 +14,14 @@ import lombok.ToString;
 @ToString
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Roles_Table {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer roleId;
-	private String name;
+	private String roleName;
 
-	public Roles_Table() {
-	}
-
-	public Roles_Table(Integer roleId, String name) {
-		this.name = name;
-		this.roleId = roleId;
-	}
+	
 }

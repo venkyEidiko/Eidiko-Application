@@ -70,5 +70,11 @@ export class LoginService {
       'Authorization': `Bearer ${token}`
     });
   }
-}
 
+  getTokenByRefreshToken():Observable<any>{
+    this.isAuthenticated = true
+    const url = this.url+"refresh/"+localStorage.getItem("refresh-token");
+    console.log(url);
+    return this.http.get<any>(url);
+  }
+}

@@ -1,5 +1,7 @@
 package com.eidiko.serviceimplementation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,4 +40,11 @@ public class CommentService {
 		commentRepo.delete(comments);
 		return "comment deleted successfully !";
 	}
+	
+	public List<Comments> getComentsForSpecificPost(Long postId) {
+		Posts posts=postsRepo.findById(postId).orElseThrow(()->new RuntimeException("Post is Not Available !!"));	
+		List<Comments> comments = posts.getComments();
+		return comments;
+	}
+	
 }

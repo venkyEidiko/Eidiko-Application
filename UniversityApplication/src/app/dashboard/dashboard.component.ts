@@ -55,6 +55,8 @@ export class DashboardComponent implements OnInit, OnChanges {
   todayBirthday: any;
   nextSevendaysBirthday: any;
   todayBirthdayCount: number = 0;
+  todayJoineesCount: number =0;
+
 
   noBirthdayMessage: String = ''
   ngOnInit(): void {
@@ -64,8 +66,14 @@ export class DashboardComponent implements OnInit, OnChanges {
     this.getAnniversaryAndAfterSevenDaysList();
     this.getBirthdayAndAfterSevenDaysList();
     this.loadAllPosts();
+
     this.fetchOnLeaveToday();
     this.workFromHomeList();
+
+    //this.fetchPostsAndLikes();
+    this.fetchOnLeaveToday();
+    this.fetchNewJoinees();
+
 
   }
  // employeeId=this.loginService.getEmployeeData().employeeId;
@@ -497,6 +505,32 @@ if(checkBox){
     )
   }
 
+
+
+
+  todaysNewJoinees: any;
+  lastSevenDaysNewJoinees: any;
+  fetchNewJoinees() {
+    this.service.getNewJoinees().subscribe(
+      (response: any) => {
+        const result = response.result[0];
+        this.todaysNewJoinees = result['new Joiners Today'];
+        this.lastSevenDaysNewJoinees = result['new Joiners Last 7 Days'];
+        this.todayJoineesCount = this.todaysNewJoinees.length;
+        console.log("Today's New Joinees: ", this.todaysNewJoinees);
+        console.log("Last 7 Days New Joinees: ", this.lastSevenDaysNewJoinees);
+      },
+      (error) => {
+        console.error('Error fetching new joinees:', error);
+      }
+    );
+  }
+
+
+
+
+
+
 }
 
 interface PostRequest {
@@ -504,4 +538,5 @@ interface PostRequest {
   postType: string | null
   mentionEmployee: string[]
   postEmployee: number
+
 }

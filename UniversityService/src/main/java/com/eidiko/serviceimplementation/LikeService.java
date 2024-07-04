@@ -1,5 +1,7 @@
 package com.eidiko.serviceimplementation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,4 +40,12 @@ public class LikeService {
 		likeRepo.delete(likes);
 		return "Likes deleted successfully !";
 	}
+	
+	public List<Likes> getLikesById(Long postId) {
+	
+		Posts posts = postRepo.findById(postId).orElseThrow(()->new RuntimeException("Post is Not Available !!"));
+		List<Likes> likes = posts.getLikes();	
+		return likes;
+	}
+	
 }

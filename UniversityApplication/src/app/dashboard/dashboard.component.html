@@ -1,3 +1,4 @@
+
 <div class="dashboard-container">
   <div class="quick-access">
     <h3>Quick Access</h3>
@@ -284,12 +285,17 @@
             <li>
               <i class="fa-solid fa-user-group"></i>
               <a href="#" (click)="showContent($event, 'newJoinees')"
-                [class.active]="selectedContent === 'newJoinees'">New Joinees</a>
+                [class.active]="selectedContent === 'newJoinees'">{{todayJoineesCount}} New Joinees</a>
             </li>
           </ul>
           <div class="content">
-            <div id="announcement" [class.active]="selectedContent === 'announcement'" class="content-item">Announcement
-              related data</div>
+            <div id="announcement" [class.active]="selectedContent === 'announcement'" class="content-item">
+              <div class="announcement-text">
+                No Announcements today
+              </div>
+            
+            </div>
+
             <!-- This is for birthdays and next seven days -->
             <div id="birthday" [class.active]="selectedContent === 'birthday'" class="content-item">
 
@@ -370,8 +376,52 @@
                 </div>
               </div>
             </div>
-            <div id="newJoinees" [class.active]="selectedContent === 'newJoinees'" class="content-item">New Joinees
-              related data</div>
+
+
+            <div id="newJoinees" [class.active]="selectedContent === 'newJoinees'" class="content-item">  
+
+
+              <div class="new-joinees-section">
+                <div class="todayNewJoinees-container">
+                  <h2>New Joinees Today</h2>
+                  <div *ngIf="todaysNewJoinees && todaysNewJoinees.length > 0; else noJoineesToday">
+                    <div *ngFor="let joinee of todaysNewJoinees">
+                      <!-- Display joinee details -->
+                      <div class="joinee">
+                        <img src="../../assets/profileimage.png" alt="{{joinee.firstName}} {{joinee.lastName}}" />
+                        <p>{{joinee.firstName}} {{joinee.lastName}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <ng-template #noJoineesToday>
+                    <img  alt="Image Not found" src="https://cdn.kekastatic.net/shared/assets/images/background/noone-work-anniversary.svg">
+                    <P>No New Joinees Today</P>
+                  </ng-template>
+                </div>
+            
+
+                <div class="lastSevenDays-container">
+                  <h2>Last 7 Days</h2>
+                  <div *ngIf="lastSevenDaysNewJoinees && lastSevenDaysNewJoinees.length > 0; else noJoineesLast7Days">
+                    <div *ngFor="let joinee of lastSevenDaysNewJoinees">
+                      <!-- Display joinee details -->
+                      <div class="joinee">
+                        <img src="../../assets/profileimage.png" alt="{{joinee.firstName}} {{joinee.lastName}}" />
+                        <p>{{joinee.firstName}} {{joinee.lastName}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <ng-template #noJoineesLast7Days>
+                    <img  alt="Image Not found" src="https://cdn.kekastatic.net/shared/assets/images/background/noone-work-anniversary.svg">
+                    <p>No Joinees For Last 7 Days</p>
+                  </ng-template>
+                </div>
+              </div>
+            
+
+            </div>
+
+
           </div>
         </mat-card-content>
       </mat-card>
