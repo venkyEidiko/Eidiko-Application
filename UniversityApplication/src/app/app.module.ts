@@ -74,6 +74,12 @@ import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.c
 import { PickerComponent,PickerModule } from '@ctrl/ngx-emoji-mart';
 import { TruncatePipe } from './turncate.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { Edit1Component } from './edit1/edit1.component';
+import { Edit2Component } from './edit2/edit2.component';
+import { Edit3Component } from './edit3/edit3.component';
+import { Edit4Component } from './edit4/edit4.component';
+
+
 
 @NgModule({
   declarations: [
@@ -95,6 +101,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MyteamComponent,
     MyfinancesComponent,
     OrgComponent,
+    Edit1Component,
   
     ClockComponent,
     DonutchartComponent,
@@ -126,6 +133,12 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     HolidayDialogComponent,
 
     CheckboxdropdownComponent,
+      Edit1Component,
+      Edit2Component,
+      Edit3Component,
+      Edit4Component,
+     
+      
       
 
 

@@ -1,0 +1,63 @@
+<div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
+    <div class="req">
+        <p>Contact Details</p>
+        <div class="close-icon">
+            <mat-icon (click)="closeDialog()">close</mat-icon>
+        </div>
+    </div>
+    <div mat-dialog-content class="custom-dialog-content">
+        <div class="form-field">
+            <div>
+                <label>Work Email</label><br />
+                <input matInput type="text" value="ravan">
+            </div>
+            <div>
+                <label>Personal Email</label><br />
+                <input matInput type="text" value="ravan">
+            </div>
+
+        </div>
+    
+        <div class="form-field">
+            <div>
+                <label>Mobile Number</label><br />
+                <input matInput type="text" value="ravan">
+              
+            </div>
+            <div>
+                <mat-label>Work Number</mat-label><br />
+                <input matInput type="text" value="ravan">
+            </div>
+        </div>
+        <div class="form-field">
+            <div>
+                <label>Residence Number</label><br />
+                <input matInput type="text" value="ravan">
+              
+            </div>
+            <div>
+                <mat-label>Skype</mat-label><br />
+                <input matInput type="text" value="ravan">
+            </div>
+        </div>
+        <div class="form-field">
+            <div>
+                <label>Emergency Contact Number</label><br />
+                <input matInput type="text" value="ravan">
+               
+            </div>
+           
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <div mat-dialog-actions class="custom-dialog-actions">
+        <button mat-button (click)="closeDialog()">Cancel</button>
+        <button mat-button class="confirm">Confirm</button>
+    </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
+    <div class="req">
+        <p>Address</p>
+        <div class="close-icon">
+            <mat-icon (click)="closeDialog()">close</mat-icon>
+        </div>
+    </div>
+    <div mat-dialog-content class="custom-dialog-content">
+        <div class="form-field">
+            <div>
+                <label>CURRENT ADDRESS</label><br />
+               
+            </div>
+            <div>
+                <label>PERMANENT ADDRESS</label><br />
+              
+            </div>
+
+        </div>
+    
+        <div class="form-field">
+            <div>
+                <label>Country</label><br />
+               
+                <select id="options" name="options" style="width:190px;height:30px;padding:5px;background-color:  #333d4e;;">
+                    <option value="option1">India</option>
+                    <option  value="option2">Pakistan</option>
+                    <option value="option3">Maldives</option>
+                    <option  value="option4">Mauritius</option>
+                    <option value="option5">Oman</option>
+                    <option  value="option6">Bangladesh</option>
+                    <option value="option7">Cuba</option>
+                    <option  value="option8">Greece</option>
+                </select>
+              
+            </div>
+            <div>
+                <mat-label>Country</mat-label><br />
+                <select id="options" name="options" style="width:190px;height:30px;padding:5px;background-color:  #333d4e;;">
+                    <option value="option1">India</option>
+                    <option  value="option2">Pakistan</option>
+                    <option value="option3">Maldives</option>
+                    <option  value="option4">Mauritius</option>
+                    <option value="option5">Oman</option>
+                    <option  value="option6">Bangladesh</option>
+                    <option value="option7">Cuba</option>
+                    <option  value="option8">Greece</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-field">
+            <div>
+                <label>Address Line 1</label><br />
+                <input matInput type="text" value="ravan">
+              
+            </div>
+            <div>
+                <mat-label>Address Line 1</mat-label><br />
+                <input matInput type="text" value="ravan">
+            </div>
+        </div>
+        <div class="form-field">
+            <div>
+                <label>Address Line2 </label><br />
+                <input matInput type="text" value="ravan">
+               
+            </div>
+            <div>
+                <mat-label>Address Line2</mat-label><br />
+                <input matInput type="text" value="ravan">
+            </div>
+           
+        </div>
+        <div class="form-field">
+            <div>
+                <label>City </label><br />
+                <input matInput type="text" value="ravan">
+               
+            </div>
+            <div>
+                <mat-label>City</mat-label><br />
+                <input matInput type="text" value="ravan">
+            </div>
+           
+        </div>
+        <div class="form-field">
+            <div>
+                <label>Pincode</label><br />
+                <input matInput type="text" value="ravan">
+               
+            </div>
+            <div>
+                <mat-label>Pincode</mat-label><br />
+                <input matInput type="text" value="ravan">
+            </div>
+           </div>
+        
+ <div mat-dialog-actions class="custom-dialog-actions">
+        <button mat-button (click)="closeDialog()">Cancel</button>
+        <button mat-button class="confirm">Confirm</button>
+    </div>
+</div>

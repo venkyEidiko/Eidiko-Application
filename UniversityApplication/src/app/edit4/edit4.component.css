@@ -1,0 +1,117 @@
+.custom-dialog-container {
+    position: fixed;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    
+    width: 600px;
+    height: 450px; 
+    background-color: #333d4e;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    
+
+   
+    display: none;
+    z-index: 1000;
+}
+
+.custom-dialog-container.open {
+    display: block; 
+}
+.req {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+   
+    color:white;
+    
+  }
+  
+  .req p {
+    margin: 0;
+    font-size: 16px;
+    color:white;
+  }
+  .compoff-data
+  {
+   font-size:12px;
+
+  }
+  .custom-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px;
+   margin-top:30px;
+   
+  }
+  .note1
+  {
+    width:250px;
+    height:28px;
+  }
+.icons 
+{
+    display:flex;
+   
+    gap:55px;
+
+ 
+}
+.note2
+{
+    width:700px;
+    height:45px;
+    margin-top:10px;
+}
+.notelabel
+{
+    margin-top:10px;
+    font-size: 12px;
+}
+mat-label
+{
+    font-size:12px;
+    margin-top:12px;
+}
+mat-icon
+{
+  margin-top:12px;
+ 
+}
+.form-field
+{
+    display: flex;
+    justify-content: space-between;
+}
+label{
+    font-size:12px;
+    margin-left:12px;
+}
+input{
+    width:145px;
+    height:25px;
+    background-color: #333d4e;
+}
+
+.custom-dialog-content{
+    height:auto;
+    scrollbar-width: 3px;
+    
+}
+.card-item
+{
+  width:200px;
+  height:100px;
+  background-color: #333d4e;
+  border:0px solid #ccc;
+  margin-bottom:10px;
+ 
+}
+select{
+    margin-left:15px;
+}
+input{
+    margin-left:13px;
+}

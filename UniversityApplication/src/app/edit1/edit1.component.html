@@ -1,0 +1,111 @@
+<div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
+    <div class="req">
+      <p >Primary Details</p>
+      <div class="close-icon">
+        <mat-icon (click)="closeDialog()">close</mat-icon>
+      </div>
+    </div>
+    <div mat-dialog-content class="custom-dialog-content">
+        <div class="form-field">
+     <div>
+        <label>First Name</label><br/>
+        <input matInput type="text" value="ravan" >
+     </div>
+     <div>
+        <label>Middle Name</label><br/>
+        <input matInput type="text" value="ravan" >
+     </div>
+     
+     </div>
+     <div class="form-field">
+     <div>
+        <label>Last Name</label><br/>
+        <input matInput type="text" value="ravan" >
+     </div>
+     <div>
+        <label>Display Name</label><br/>
+        <input matInput type="text" value="ravan" >
+     </div>
+     </div>
+     <div class="form-field">
+     <div>
+        <label>Gender</label><br/>
+        <select id="options" name="options" style="width:190px;height:30px;padding:5px;background-color:  #333d4e;;">
+            <option value="option1">Female</option>
+            <option  value="option2">Male</option>
+           
+            <option value="option3">Non-binary</option>
+            <option  value="option4">Prefer not to respond</option>
+            <option value="option5">Transgender</option>
+        </select>
+      </div>
+        <div>
+          <mat-label>Date of Birth</mat-label><br/>
+          <input matInput type="date" value="ravan" >
+            </div>
+            </div>
+            <div class="form-field">
+                <div>
+                   <label>Martial Status</label><br/>
+                  
+                   <select id="options" name="options" style="width:190px;height:30px;padding:5px;background-color:  #333d4e;;">
+                       <option value="option1">Single</option>
+                       <option  value="option2">Married</option>
+                      
+                       <option value="option3">widowed</option>
+                       <option  value="option4"> Seperated</option>
+                   </select>
+                 </div>
+                   <div>
+                     <mat-label>Blood Group</mat-label><br/>
+                     <select id="options" name="options" style="width:190px;height:30px;padding:5px;background-color:  #333d4e;;">
+                        <option value="option1">A+</option>
+                        <option  value="option2">A-</option>
+                       
+                        <option value="option3">B+</option>
+                        <option  value="option4">B-</option>
+                        <option value="option5">O+</option>
+                        <option value="option6">O-</option>
+                        <option  value="option7">A-</option>
+                       
+                        <option value="option8">AB+</option>
+                        <option  value="option9">AB-</option>
+                        <option value="option10">HH</option>
+                    </select>
+                       </div>
+                       </div> 
+                       <div class="form-field">
+                        <div>
+                           <label>Physically Handicapped</label><br/>
+                           <select id="options" name="options" style="width:190px;height:30px;padding:5px;background-color:  #333d4e;;">
+                               <option value="option1">Yes</option>
+                               <option  value="option2">No</option>
+                           </select>
+                         </div>
+                           <div>
+                            <label>Nationality</label><br/>
+                            <select id="options" name="options" style="width:190px;height:30px;padding:5px;background-color:  #333d4e;;">
+                                <option value="option1">India</option>
+                                <option  value="option2">Pakistan</option>
+                                <option value="option3">Maldives</option>
+                                <option  value="option4">Mauritius</option>
+                                <option value="option5">Oman</option>
+                                <option  value="option6">Bangladesh</option>
+                                <option value="option7">Cuba</option>
+                                <option  value="option8">Greece</option>
+                            </select>
+                               </div>
+                               </div>
+       
+     
+     </div>
+
+
+
+
+     
+    <div mat-dialog-actions class="custom-dialog-actions">
+      <button mat-button (click)="closeDialog()">Cancel</button>
+      <button mat-button class="confirm" >Confirm</button>
+    </div>
+  </div>

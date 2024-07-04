@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Address, Employee } from '../services/employee';
 import { LoginService } from '../services/login.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Dialog1Service } from '../services/dialog1.service';
+
+
 
 @Component({
   selector: 'app-profile-prfl',
@@ -10,7 +14,7 @@ import { LoginService } from '../services/login.service';
 export class ProfilePrflComponent {
   employee: Employee|null = null;
 
-  constructor(private loginService:LoginService){}
+  constructor(private loginService:LoginService,private dialog:MatDialog,private dialogService:Dialog1Service){}
   address:Address|null=null;
 currentAddress:Address|null=null;
 permanentAddress:Address|null=null;
@@ -31,4 +35,20 @@ ngOnInit(): void {
         })
     
   }
+ openDialog1()
+ {
+  this.dialogService.openDialog1();
+ }
+ openDialog2()
+ {
+  this.dialogService.openDialog2();
+ }
+ openDialog3()
+ {
+  this.dialogService.openDialog3();
+ }
+ openDialog4()
+ {
+  this.dialogService.openDialog4();
+ }
 }

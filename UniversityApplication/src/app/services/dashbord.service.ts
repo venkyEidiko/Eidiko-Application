@@ -103,7 +103,7 @@ export class DashbordService {
     }
     saveLike(postId: number, emojiId: number, empId: number): Observable < any > {
       const url = `${this.apiUrl1}/${postId}`;
-      const body = {
+      const body = { 
         emoji: emojiId,
         empId: empId
       };
