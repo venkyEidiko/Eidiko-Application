@@ -1,24 +1,22 @@
 package com.eidiko.serviceimplementation;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.apache.poi.hssf.record.PageBreakRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.eidiko.dto.BirtdayAndanniversaryDto;
-import com.eidiko.dto.EmployeeDto;
-import com.eidiko.entity.Address;
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.Roles_Table;
-//import com.eidiko.entity.Roles;
 import com.eidiko.exception_handler.BadRequestException;
 import com.eidiko.exception_handler.UserNotFoundException;
 import com.eidiko.repository.AddressRepo;
@@ -27,7 +25,6 @@ import com.eidiko.repository.RolesReposotory;
 import com.eidiko.service.EmployeeInterface;
 
 import lombok.extern.slf4j.Slf4j;
-
 
 @Slf4j
 @Service
@@ -53,12 +50,16 @@ public class EmployeeService implements EmployeeInterface {
 
 		Optional<Roles_Table> byRoleId = rolesReposotory.findByRoleId(employee.getRole().getRoleId());
 
-		Integer roleId = byRoleId.get().getRoleId();
-		if (employee.getRole().getRoleId() == roleId) {
-			Roles_Table save2 = rolesReposotory.save(employee.getRole());
-			employee.setRole(save2);
-
-		}
+//		Integer roleId = byRoleId.get().getRoleId();
+//		if (employee.getRole().getRoleId() == roleId) {
+//			Roles_Table save2 = rolesReposotory.save(employee.getRole());
+//			employee.setRole(save2);
+//
+//		}
+		
+		Roles_Table save2 = rolesReposotory.save(employee.getRole());
+		employee.setRole(save2);
+		
 		String encode = passwordEncoder.encode(employee.getPassword());
 		log.info("Encode password :{}", encode);
 		employee.setPassword(encode);
@@ -73,51 +74,46 @@ public class EmployeeService implements EmployeeInterface {
 
 	}
 
+
+
+	// for update the employee
 	@Override
 	public String updateEmployee(Long employeeId, Employee employee) throws UserNotFoundException {
 
 		log.info("Employee id :{}", employeeId);
 
-		Employee byEmployeeId = employeeRepo.findByEmployeeId(employeeId)
+		Employee existingEmployee = employeeRepo.findByEmployeeId(employeeId)
 				.orElseThrow(() -> new UserNotFoundException("User not found in database"));
 
-		byEmployeeId.setEmail(employee.getEmail());
-		byEmployeeId.setFirstName(employee.getFirstName());
-		byEmployeeId.setGender(employee.getGender());
-		byEmployeeId.setLastName(employee.getLastName());
-		// byEmployeeId.setRole(employee.getRole());
-		/*
-		 * // Update addresses List<Address> addresses = employee.getAddresses(); if
-		 * (addresses != null) { // Update existing addresses or add new addresses
-		 * List<Address> updatedAddress = new ArrayList<>();
-		 * 
-		 * // address.setEmployee(byEmployeeId);
-		 * 
-		 * for (Address address1 : byEmployeeId.getAddresses()) { for (Address address :
-		 * addresses) { if
-		 * (address1.getAddressType().equalsIgnoreCase(address.getAddressType())) {
-		 * 
-		 * address1.setAddressType(address.getAddressType());
-		 * address1.setArea(address.getArea()); address1.setCity(address.getCity());
-		 * address1.setDoorNumber(address.getDoorNumber());
-		 * address1.setLandmark(address.getLandmark());
-		 * address1.setPincode(address.getPincode());
-		 * address1.setState(address.getState());
-		 * address1.setStreetName(address.getStreetName());
-		 * updatedAddress.add(address1); } else { address.setEmployee(byEmployeeId);
-		 * updatedAddress.add(address); } } byEmployeeId.setAddresses(updatedAddress); }
-		 * }
-		 */
-		Employee updatedEmployee = employeeRepo.save(byEmployeeId);
+		updateNonNullFields(existingEmployee, employee);
+
+		Employee updatedEmployee = employeeRepo.save(existingEmployee);
 
 		if (updatedEmployee.getEmployeeId() != 0) {
-			return "User record has been updated ";
+			return "User record has been updated";
 		} else {
 			return "Failed to save the updated employee record";
 		}
 
 	}
 
+	// above update method used this method for if one field needs upadate then
+	// remaining should not be null
+	private void updateNonNullFields(Object target, Object source) {
+		Field[] fields = source.getClass().getDeclaredFields();
+		for (Field field : fields) {
+			try {
+				field.setAccessible(true);
+				Object value = field.get(source);
+				if (value != null) {
+					field.set(target, value);
+				}
+			} catch (IllegalAccessException e) {
+				log.error("Failed to update field: {}", field.getName(), e);
+			}
+		}
+	}
+	
 	public Employee getByEmail(String emial) throws UserNotFoundException {
 
 		Employee emp = employeeRepo.findByEmail(emial).orElseThrow(() -> new UserNotFoundException("User not found"));
@@ -235,6 +231,152 @@ public class EmployeeService implements EmployeeInterface {
 		}
 	}
 
+	// for birthdays and anniversaries
+	@Override
+	public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date) {
+		List<BirtdayAndanniversaryDto> employeesDataOfBirthList = employeeRepo.findBydateOfBirth(date.getMonthValue(),
+				date.getDayOfMonth());
+		List<BirtdayAndanniversaryDto> employeesDateOfJoiningList = employeeRepo
+				.findByDateOfJoining(date.getMonthValue(), date.getDayOfMonth());
+
+		// this loop is for count no of years employee completed
+		for (BirtdayAndanniversaryDto dto : employeesDateOfJoiningList) {
+
+			Employee employee = employeeRepo.findById(dto.getEmployeeId()).orElse(null);
+			if (employee != null) {
+				int yearsOfService = Period.between(employee.getDateOfJoining(), date).getYears();
+				dto.setNoOfYearsCompletedInThisCompany(yearsOfService);
+			}
+		}
+
+		Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
+		result.put("BirthDayToday", employeesDataOfBirthList);
+		result.put("WorkAnniversaries", employeesDateOfJoiningList);
+
+		return result;
+	}
+
+
+
+
+
+
+	//this method returns both present date and after 7 days birthdays
+	@Override
+	public Map<String, List<BirtdayAndanniversaryDto>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
+		LocalDate today = LocalDate.now();
+		LocalDate endDate = today.plusDays(7);
+
+		List<BirtdayAndanniversaryDto> todayBirthdays = employeeRepo.findBydateOfBirth(today.getMonthValue(), today.getDayOfMonth());
+
+		List<BirtdayAndanniversaryDto> nextSevenDaysBirthdays = new ArrayList<>();
+		List<Employee> allEmployees = employeeRepo.findAll();
+
+		for (Employee employee : allEmployees) {
+			LocalDate birthday = employee.getDateOfBirth();
+			if (birthday != null &&  (birthday.isAfter(today) && birthday.isBefore(endDate))) {
+				BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(
+						employee.getEmployeeId(),
+						employee.getFirstName(),
+						employee.getLastName()
+				);
+				nextSevenDaysBirthdays.add(dto);
+			}
+		}
+
+		Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
+		result.put("Today Birthdays", todayBirthdays);
+		result.put("Next Seven Days Birthdays", nextSevenDaysBirthdays);
+
+		return result;
+	}
+
+
+
+
+	//this will return both todays anniversary and next  7 days anniversary
+	@Override
+	public Map<String, List<Map<String, Object>>> getWorkAnniversariesForTodayAndNextSevenDays() {
+		LocalDate today = LocalDate.now();
+		LocalDate endDate = today.plusDays(7);
+
+		List<Employee> allEmployees = employeeRepo.findAll();
+
+		List<Map<String, Object>> todayAnniversaries = new ArrayList<>();
+		List<Map<String, Object>> nextSevenDaysAnniversaries = new ArrayList<>();
+
+		for (Employee employee : allEmployees) {
+			LocalDate joiningDate = employee.getDateOfJoining();
+			if (joiningDate != null) {
+				LocalDate anniversaryThisYear = joiningDate.withYear(today.getYear());
+
+				if (joiningDate.getYear() == today.getYear()) {
+					continue;
+				}
+
+				int years = today.getYear() - joiningDate.getYear();
+
+				Map<String, Object> anniversaryData = new HashMap<>();
+				anniversaryData.put("employeeId", employee.getEmployeeId());
+				anniversaryData.put("firstName", employee.getFirstName());
+				anniversaryData.put("lastName", employee.getLastName());
+				anniversaryData.put("years", years);
+
+				if (anniversaryThisYear.equals(today)) {
+					todayAnniversaries.add(anniversaryData);
+				}
+
+				if (anniversaryThisYear.isAfter(today) && anniversaryThisYear.isBefore(endDate)) {
+					nextSevenDaysAnniversaries.add(anniversaryData);
+				}
+			}
+		}
+
+		Map<String, List<Map<String, Object>>> result = new HashMap<>();
+		result.put("Today Anniversaries", todayAnniversaries);
+		result.put("Next Seven Days Anniversaries", nextSevenDaysAnniversaries);
+
+		return result;
+	}
+
+
+
+	//this will return both new joinees and last 7 days joinees
+	@Override
+	public Map<String, List<Map<String, Object>>> getNewJoinersForTodayAndLast7Days() {
+		LocalDate today = LocalDate.now();
+		LocalDate last7Days = today.minusDays(7);
+
+		List<Employee> newJoinersTodayAndLast7Days = employeeRepo.findByDateOfJoiningBetween(last7Days, today);
+
+		List<Map<String, Object>> newJoinersTodayList = new ArrayList<>();
+		List<Map<String, Object>> newJoinersLast7DaysList = new ArrayList<>();
+
+		for (Employee employee : newJoinersTodayAndLast7Days) {
+			LocalDate joiningDate = employee.getDateOfJoining();
+			if (joiningDate != null) {
+				Map<String, Object> newJoinerData = new HashMap<>();
+				newJoinerData.put("employeeId", employee.getEmployeeId());
+				newJoinerData.put("firstName", employee.getFirstName());
+				newJoinerData.put("lastName", employee.getLastName());
+				newJoinerData.put("joinDate", joiningDate);
+
+				if (joiningDate.equals(today)) {
+					newJoinersTodayList.add(newJoinerData);
+				} else if (joiningDate.isAfter(last7Days) && joiningDate.isBefore(today)) {
+					newJoinersLast7DaysList.add(newJoinerData);
+				}
+			}
+		}
+
+		Map<String, List<Map<String, Object>>> response = new HashMap<>();
+		response.put("new Joiners Today", newJoinersTodayList);
+		response.put("new Joiners Last 7 Days", newJoinersLast7DaysList);
+
+		return response;
+	}
+
+
 
 
 	@Override
@@ -243,44 +385,123 @@ public class EmployeeService implements EmployeeInterface {
 		return employeeList;
 	}
 
-//for birthdays and anniversaries giving 
-	@Override
-	public Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date) {
-		List<BirtdayAndanniversaryDto> employeesDataOfBirthList = employeeRepo.findBydateOfBirth(date.getMonthValue(),
-				date.getDayOfMonth());
-		List<BirtdayAndanniversaryDto> employeesDateOfJoiningList = employeeRepo
-				.findByDateOfJoining(date.getMonthValue(), date.getDayOfMonth());
+	// this method returns both present date and after 7 days birthdays
+		@Override
+		public Map<String, List<BirtdayAndanniversaryDto>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
+			LocalDate today = LocalDate.now();
+			LocalDate endDate = today.plusDays(8);
+			log.info("next 7 days date {}", endDate);
+			List<BirtdayAndanniversaryDto> todayBirthdays = employeeRepo.findBydateOfBirth(today.getMonthValue(),
+					today.getDayOfMonth());
 
-		Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
-		result.put("BirthDay Today ", employeesDataOfBirthList);
-		result.put("Work Anniversaries ", employeesDateOfJoiningList);
+			List<BirtdayAndanniversaryDto> nextSevenDaysBirthdays = new ArrayList<>();
+			List<Employee> allEmployees = employeeRepo.findAll();
 
-		return result;
+			for (Employee employee : allEmployees) {
+				LocalDate birthday = employee.getDateOfBirth();
+				if (birthday != null) {
+					// Set the birthday to the current year for comparison
+					// (This means the month and day stay the same, but the year is changed to the
+					// current year.)
+					LocalDate birthdayThisYear = birthday.withYear(today.getYear());
+					if (birthdayThisYear.isAfter(today) && birthdayThisYear.isBefore(endDate)) {
 
-	}
+						BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(
+								employee.getEmployeeId(),
+								employee.getFirstName(), 
+								employee.getLastName()
+							
 
+						);
+						nextSevenDaysBirthdays.add(dto);
+					}
+				}
+			}
+			//for add dateof birth in the response
+			for (BirtdayAndanniversaryDto dto : todayBirthdays) {
 
-	@Override
-	public List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays() {
+				Employee employee = employeeRepo.findById(dto.getEmployeeId()).orElse(null);
+				if (employee != null) {
+					LocalDate date  = employee.getDateOfBirth();
+					dto.setDateOfBirth(date);
+				}
+			}
+
+			//for add dateof birth in the response
+					for (BirtdayAndanniversaryDto dto : nextSevenDaysBirthdays) {
+
+						Employee employee = employeeRepo.findById(dto.getEmployeeId()).orElse(null);
+						if (employee != null) {
+							LocalDate date  = employee.getDateOfBirth();
+							dto.setDateOfBirth(date);
+						}
+					}
+			Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
+			result.put("TodayBirthdays", todayBirthdays);
+			result.put("NextSevenDaysBirthdays", nextSevenDaysBirthdays);
+
+			return result;
+		}
+
+	//this is for today and next seven days anniversary employee list along with count of they worked
+	public Map<String, List<BirtdayAndanniversaryDto>> getTodayAndSevenDaysAnniversaryList() {
 		LocalDate today = LocalDate.now();
-		LocalDate endDate = today.plusDays(7);
+		LocalDate endDate = today.plusDays(8);
+
+		List<BirtdayAndanniversaryDto> todayAnniversary = employeeRepo.findByDateOfJoining(today.getMonthValue(),
+				today.getDayOfMonth());
+		List<BirtdayAndanniversaryDto> nextSevenDaysAnniversaries = new ArrayList<>();
 
 		List<Employee> allEmployees = employeeRepo.findAll();
-		List<BirtdayAndanniversaryDto> employeesWithBirthdaysNextSevenDays = new ArrayList<>();
 
 		for (Employee employee : allEmployees) {
-			LocalDate birthday = employee.getDateOfBirth();
-			if (birthday != null
-					&& (birthday.isEqual(today) || (birthday.isAfter(today) && birthday.isBefore(endDate)))) {
-				BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(employee.getEmployeeId(),
-						employee.getFirstName(), employee.getLastName());
-				employeesWithBirthdaysNextSevenDays.add(dto);
+			LocalDate dateOfjoining = employee.getDateOfJoining();
+
+			if (dateOfjoining != null) {
+				// Set the birthday to the current year for comparison
+				// (This means the month and day stay the same, but the year is changed to the
+				// current year.)
+				LocalDate birthdayThisYear = dateOfjoining.withYear(today.getYear());
+				if (birthdayThisYear.isAfter(today) && birthdayThisYear.isBefore(endDate)) {
+
+					BirtdayAndanniversaryDto dto = new BirtdayAndanniversaryDto(
+							employee.getEmployeeId(),
+							employee.getFirstName(), 
+							employee.getLastName()
+						
+
+					);
+					nextSevenDaysAnniversaries.add(dto);
+				}
 			}
 		}
 
-		return employeesWithBirthdaysNextSevenDays;
-	}
+		//the below counts next sevendays anniversary employees worked how many years
+		for (BirtdayAndanniversaryDto dto : nextSevenDaysAnniversaries) {
 
+			Employee employee = employeeRepo.findById(dto.getEmployeeId()).orElse(null);
+			if (employee != null) {
+				int yearsOfService = Period.between(employee.getDateOfJoining(), today).getYears();
+				dto.setNoOfYearsCompletedInThisCompany(yearsOfService);
+			}
+		}
+
+		//the below counts today anniversary employees worked how many years
+		for (BirtdayAndanniversaryDto dto : todayAnniversary) {
+
+			Employee employee = employeeRepo.findById(dto.getEmployeeId()).orElse(null);
+			if (employee != null) {
+				int yearsOfService = Period.between(employee.getDateOfJoining(), today).getYears();
+				dto.setNoOfYearsCompletedInThisCompany(yearsOfService);
+			}
+		}
+
+		Map<String, List<BirtdayAndanniversaryDto>> result = new HashMap<>();
+		result.put("TodayAnniversary", todayAnniversary);
+		result.put("NextSevenDaysAnniversary", nextSevenDaysAnniversaries);
+
+		return result;
+	}
 	@Override
 	public Employee getByEmployeeId(Long employeeId) {
 
@@ -298,5 +519,14 @@ public class EmployeeService implements EmployeeInterface {
 		}
 
 	}
+
+
+
+	@Override
+	public List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

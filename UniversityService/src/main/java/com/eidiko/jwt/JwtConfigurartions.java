@@ -100,9 +100,10 @@ public class JwtConfigurartions {
 	public SecurityFilterChain config(HttpSecurity httpSecurity) throws Exception {
 		log.info("http security");
 		return httpSecurity.csrf(AbstractHttpConfigurer::disable)
-				.authorizeHttpRequests(req -> req.requestMatchers("/login1", "/refresh/**", "/api/**", "/api/leave/**",
-						"/leave/**", "/leave/**", "/posts/**").permitAll().anyRequest().authenticated())
-//		    	.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))
+				.authorizeHttpRequests(req -> 
+				req.requestMatchers("/login1", "/refresh/**","/api/save").permitAll()
+						.anyRequest().authenticated())
+		    	.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))
 				// .sessionManagement(session ->
 				// session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider())

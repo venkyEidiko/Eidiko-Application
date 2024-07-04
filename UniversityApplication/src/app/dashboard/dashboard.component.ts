@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DashbordService } from '../services/dashbord.service';
 import { Holiday } from '../holiday';
 
@@ -16,7 +16,9 @@ import { LoginService } from '../services/login.service';
 })
 
 
-export class DashboardComponent implements OnInit {
+
+export class DashboardComponent implements OnInit, OnChanges {
+
   post: any;
   like: any;
   showEmoticonPicker = false;
@@ -29,16 +31,24 @@ export class DashboardComponent implements OnInit {
   files: File[] | null = null;
   textMessage: string | null = null;
   showCommentBox: boolean[] = [];
+  hideDate:Date|null=null;
+  selectPostTo:string='organization'
+
   postRequestData: PostRequest =
     {
       description: "",
-      postType: this.selectedTab,
+      postType: this.selectPostTo,
       mentionEmployee: [],
       postEmployee: this.service.getEmpId()
     }
 
   constructor(private service: DashbordService, private loginService: LoginService) {
     this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+      this.fetchOnLeaveToday()
+      this.workFromHomeList()
+      this.loadAllPosts()
   }
 
   todayAnniversaryCount: number = 0;
@@ -47,6 +57,8 @@ export class DashboardComponent implements OnInit {
   todayBirthday: any;
   nextSevendaysBirthday: any;
   todayBirthdayCount: number = 0;
+  todayJoineesCount: number =0;
+
 
   noBirthdayMessage: String = ''
   ngOnInit(): void {
@@ -57,6 +69,11 @@ export class DashboardComponent implements OnInit {
     this.getBirthdayAndAfterSevenDaysList();
     this.loadAllPosts();
 
+    // this.fetchPostsAndLikes();
+    this.fetchOnLeaveToday();
+    this.fetchNewJoinees();
+
+
     
   }
  // employeeId=this.loginService.getEmployeeData().employeeId;
@@ -64,6 +81,7 @@ export class DashboardComponent implements OnInit {
   showIcons: boolean = false;
   isCardExpanded: boolean = false;
   insertedSymbol: string = ''; 
+
 
  
 
@@ -74,6 +92,7 @@ export class DashboardComponent implements OnInit {
 
 
   
+
   openHoliday(): void {
     this.service.openDialog();
   }
@@ -87,9 +106,15 @@ export class DashboardComponent implements OnInit {
     imageName: ""
   }
 
-
   selectTab(tab: string) {
     this.selectedTab = tab;
+  }
+
+  updateSelection(selectPostTo:string, checkBox:boolean){
+if(checkBox){
+  this.selectPostTo=selectPostTo
+  console.log("selectPostTo value : ",this.selectPostTo)
+}
   }
   expandCard() {
     this.isCardExpanded = true;
@@ -97,7 +122,6 @@ export class DashboardComponent implements OnInit {
   collapseCard() {
     this.isCardExpanded = false;
   }
-
 
   showContent(event: Event, content: string) {
     event.preventDefault();
@@ -180,9 +204,8 @@ export class DashboardComponent implements OnInit {
           let emojiIds = item.likes.map((like: any) => like.emoji);
           let emojiIdsCount = emojiIds.length;
           let commentIds=item.comments.map((p:any)=>p.comment);
-          
-          let commentIdsCount=commentIds.length
-  
+          let commentIdsCount=commentIds.length;
+
           return {
             base64Image: 'data:image/jpeg;base64,' + item.base64Image,
             timeStamp: this.formatTime(item.timeStamp),
@@ -197,12 +220,15 @@ export class DashboardComponent implements OnInit {
             commentIdsCount:commentIdsCount,
 
 
+
           };
         });
   
         // Log the entire imageSrcList for verification
         console.log('Modified imageSrcList:', this.imageSrcList);
         
+
+
       } else {
         console.error('No result found in the response');
       }
@@ -447,7 +473,6 @@ export class DashboardComponent implements OnInit {
         })
       );
     } else {
-      // Handle case where this.files is null or empty as needed
       const file = null
       this.service.submitPostRequest(this.postRequestData, file);
       console.error('No files selected.');
@@ -497,6 +522,32 @@ export class DashboardComponent implements OnInit {
     )
   }
 
+
+
+
+  todaysNewJoinees: any;
+  lastSevenDaysNewJoinees: any;
+  fetchNewJoinees() {
+    this.service.getNewJoinees().subscribe(
+      (response: any) => {
+        const result = response.result[0];
+        this.todaysNewJoinees = result['new Joiners Today'];
+        this.lastSevenDaysNewJoinees = result['new Joiners Last 7 Days'];
+        this.todayJoineesCount = this.todaysNewJoinees.length;
+        console.log("Today's New Joinees: ", this.todaysNewJoinees);
+        console.log("Last 7 Days New Joinees: ", this.lastSevenDaysNewJoinees);
+      },
+      (error) => {
+        console.error('Error fetching new joinees:', error);
+      }
+    );
+  }
+
+
+
+
+
+
 }
 
 interface PostRequest {
@@ -504,4 +555,5 @@ interface PostRequest {
   postType: string | null
   mentionEmployee: string[]
   postEmployee: number
+
 }

@@ -1,3 +1,4 @@
+
 <div class="dashboard-container">
   <div class="quick-access">
     <h3>Quick Access</h3>
@@ -42,15 +43,15 @@
               <p class="card-info">{{ holiday.description }} &nbsp; &nbsp;
                 {{ holiday.dateOfHoliday | date:'EEE, dd MMMM, yyyy' }} </p>
             </div>
-
           </div>
         </mat-card-content>
       </mat-card>
 
-
       <mat-card class="card-item" style="height:auto">
-        <mat-card-content><span>On Leave Today</span>
+        <span>On Leave Today</span>
+        <mat-card-content>
           <div class="today-birthdays">
+
             <div *ngFor="let onLeave of onLeaveToday" class="today-birthdays-items">
               <div class="birthdays-profile">
                 <img src="../../assets/elephant.png">
@@ -58,6 +59,11 @@
               <div class="birthdays-names">
                 <span>{{onLeave.requestedBy}}</span>
               </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;" *ngIf="onLeaveToday?.length===0">
+              <img class="elephantimg" src="../../assets/elephant.png" alt="elephantimage" width="100px" height="100px">
+              <p>Nothing here!<br />Working hard yeah?? <br />Request time off on right&gt;&gt;&gt;</p>
             </div>
           </div>
         </mat-card-content>
@@ -73,6 +79,10 @@
 
               </div>
             </div>
+          </div>
+          <div style="display: flex; justify-content: space-between;" *ngIf="workFromHomeList?.length===0">
+            <img class="elephantimg" src="../../assets/elephant.png" alt="elephantimage" width="100px" height="100px">
+            <p>Nothing here!<br />Working hard yeah?? <br />Request time off on right&gt;&gt;&gt;</p>
           </div>
         </mat-card-content>
       </mat-card>
@@ -107,7 +117,7 @@
           <ul class="nav-list">
             <li>
               <a href="#" (click)="showContent($event, 'post')" [class.active]="selectedContent === 'post'">Post</a>
-              
+
             </li>
             <li>
               <a href="#" (click)="showContent($event, 'announcement')"
@@ -122,81 +132,136 @@
             </li>
           </ul>
           <div class="org-content">
-             <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item">
-                <div class="form-container">
-                  <textarea class="textarea" #textarea (input)="onTextChange($event)"
-                    placeholder="Write your post here and mention your peers"></textarea>
-                  <div class="actions">
-                    <button mat-icon-button (click)="addAtSymbol(textarea)"><mat-icon>alternate_email</mat-icon></button>
-                    <button mat-icon-button (click)="fileInput.click()" ><mat-icon>image</mat-icon></button>
-                    <input type="file" #fileInput multiple (change)="onFileSelected($event)" hidden >
-                    <button mat-icon-button (click)="toggleEmoticonPicker()"><mat-icon>insert_emoticon</mat-icon></button>
+
+            <!-- Post request  field -->
+            <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item">
+              <div class="form-container">
+                <textarea class="textarea" #textarea (input)="onTextChange($event)"
+                  placeholder="Write your post here and mention your peers"></textarea>
+                <div class="actions">
+                  <button mat-icon-button (click)="addAtSymbol(textarea)"><mat-icon>alternate_email</mat-icon></button>
+                  <button mat-icon-button (click)="fileInput.click()"><mat-icon>image</mat-icon></button>
+                  <input type="file" #fileInput multiple (change)="onFileSelected($event)" hidden>
+                  <button mat-icon-button (click)="toggleEmoticonPicker()"><mat-icon>insert_emoticon</mat-icon></button>
+                </div>
+                <div class="emoticon-picker" *ngIf="showEmoticonPicker">
+                  <div class="emoji-picker-header">
+                    <button (click)="selectEmojiCategory('frequentlyUsed')">⏰</button>
+                    <button (click)="selectEmojiCategory('smileys')">😊</button>
+                    <button (click)="selectEmojiCategory('animals')">🐻</button>
+                    <button (click)="selectEmojiCategory('foods')">🍏</button>
+                    <button (click)="selectEmojiCategory('activity')">🏀</button>
+                    <button (click)="selectEmojiCategory('places')">🚗</button>
+                    <button (click)="selectEmojiCategory('objects')">📑</button>
+                    <button (click)="selectEmojiCategory('symbols')">🔣</button>
+                    <button (click)="selectEmojiCategory('flags')">🏳️</button>
+                    <button (click)="selectEmojiCategory('custom')">✨</button>
                   </div>
-                  <div class="emoticon-picker" *ngIf="showEmoticonPicker">
-                    <div class="emoji-picker-header">
-                      <button (click)="selectEmojiCategory('frequentlyUsed')">⏰</button>
-                      <button (click)="selectEmojiCategory('smileys')">😊</button>
-                      <button (click)="selectEmojiCategory('animals')">🐻</button>
-                      <button (click)="selectEmojiCategory('foods')">🍏</button>
-                      <button (click)="selectEmojiCategory('activity')">🏀</button>
-                      <button (click)="selectEmojiCategory('places')">🚗</button>
-                      <button (click)="selectEmojiCategory('objects')">📑</button>
-                      <button (click)="selectEmojiCategory('symbols')">🔣</button>
-                      <button (click)="selectEmojiCategory('flags')">🏳️</button>
-                      <button (click)="selectEmojiCategory('custom')">✨</button>
-                    </div>
-                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'frequentlyUsed'">
-                      <emoji-mart set="apple" [include]="['frequently_used']"
-                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
-                    </div>
-                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'smileys'">
-                      <emoji-mart set="apple" [include]="['people']"
-                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
-                    </div>
-                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'animals'">
-                      <emoji-mart set="apple" [include]="['nature']"
-                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
-                    </div>
-                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'foods'">
-                      <emoji-mart set="apple" [include]="['foods']"
-                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
-                    </div>
-                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'activity'">
-                      <emoji-mart set="apple" [include]="['activity']"
-                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
-                    </div>
-                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'places'">
-                      <emoji-mart set="apple" [include]="['places']"
-                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
-                    </div>
-                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'objects'">
-                      <emoji-mart set="apple" [include]="['objects']"
-                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
-                    </div>
-                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'symbols'">
-                      <emoji-mart set="apple" [include]="['symbols']"
-                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
-                    </div>
-                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'flags'">
-                      <emoji-mart set="apple" [include]="['flags']"
-                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
-                    </div>
-                    <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'custom'">
-                      <emoji-mart set="apple" [include]="['custom']"
-                        (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
-                    </div>
-                    <!-- Add more divs for other categories as needed -->
+                  <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'frequentlyUsed'">
+                    <emoji-mart set="apple" [include]="['frequently_used']"
+                      (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
                   </div>
+                  <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'smileys'">
+                    <emoji-mart set="apple" [include]="['people']"
+                      (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                  </div>
+                  <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'animals'">
+                    <emoji-mart set="apple" [include]="['nature']"
+                      (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                  </div>
+                  <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'foods'">
+                    <emoji-mart set="apple" [include]="['foods']"
+                      (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                  </div>
+                  <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'activity'">
+                    <emoji-mart set="apple" [include]="['activity']"
+                      (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                  </div>
+                  <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'places'">
+                    <emoji-mart set="apple" [include]="['places']"
+                      (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                  </div>
+                  <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'objects'">
+                    <emoji-mart set="apple" [include]="['objects']"
+                      (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                  </div>
+                  <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'symbols'">
+                    <emoji-mart set="apple" [include]="['symbols']"
+                      (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                  </div>
+                  <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'flags'">
+                    <emoji-mart set="apple" [include]="['flags']"
+                      (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                  </div>
+                  <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'custom'">
+                    <emoji-mart set="apple" [include]="['custom']"
+                      (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
+                  </div>
+                  <!-- Add more divs for other categories as needed -->
+                </div>
+                <div class="post-footer">
+                  <div class="post-footer-content">
+                    <span>posting to</span>
+                    <mat-select class="post-select">
+                      <mat-option value="search">
+                        <mat-checkbox>Organization</mat-checkbox><br />
+                        <mat-checkbox>Java</mat-checkbox>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                  <div>
+                    <button mat-raised-button color="primary" (click)="postRequest()">Post</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- Announcement Request field  -->
+            <div id="announcement" [class.active]="selectedContent === 'announcement'" class="org-content-item">
+              <div class="announce-request-content">
+                <input type="text" placeholder="title of announcement"><br />
+                <textarea #textarea placeholder="Announcement details"></textarea>
+              </div>
+              <div class="announce-request">
+                <mat-checkbox>Notify employees</mat-checkbox>
+                <mat-checkbox>Requier Acknowledgement</mat-checkbox>
+                <mat-checkbox>Hide After</mat-checkbox>
+                <div class="announce-hide-date">
+                  <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <div style="margin-top: 10px;">
+                    <input [(ngModel)]="hideDate" name="hideDate" [matDatepicker]="picker" required>
+                  </div>
+                  <mat-datepicker #picker></mat-datepicker>
+                </div>
+              </div>
+              <div class="post-footer">
+                <div class="post-footer-content">
+                  <span>posting to</span>
+                  <mat-select class="post-select" [ngModel]="selectPostTo">
+                    <mat-option >
+                      <mat-checkbox >Organization</mat-checkbox>
+                    </mat-option>
+                    <mat-option >
+                      <mat-checkbox >Java</mat-checkbox>
+                    </mat-option>
+                   
+                  </mat-select>
+                </div>
+                <div style="margin-right: -80px;">
                   <button mat-raised-button color="primary" (click)="postRequest()">Post</button>
                 </div>
-              
+              </div>
+
             </div>
-            <div id="announcement" [class.active]="selectedContent === 'announcement'" class="org-content-item">Hello
-            </div>
+
+            <!-- Poll request field  -->
             <div id="poll" [class.active]="selectedContent === 'poll'" class="org-content-item">Poll related content
             </div>
+
+            <!-- Praise request field -->
             <div id="praise" [class.active]="selectedContent === 'praise'" class="org-content-item">Praise related
               content</div>
+
           </div>
         </mat-card-content>
       </mat-card>
@@ -220,12 +285,17 @@
             <li>
               <i class="fa-solid fa-user-group"></i>
               <a href="#" (click)="showContent($event, 'newJoinees')"
-                [class.active]="selectedContent === 'newJoinees'">New Joinees</a>
+                [class.active]="selectedContent === 'newJoinees'">{{todayJoineesCount}} New Joinees</a>
             </li>
           </ul>
           <div class="content">
-            <div id="announcement" [class.active]="selectedContent === 'announcement'" class="content-item">Announcement
-              related data</div>
+            <div id="announcement" [class.active]="selectedContent === 'announcement'" class="content-item">
+              <div class="announcement-text">
+                No Announcements today
+              </div>
+            
+            </div>
+
             <!-- This is for birthdays and next seven days -->
             <div id="birthday" [class.active]="selectedContent === 'birthday'" class="content-item">
 
@@ -277,7 +347,7 @@
                       <div class="anniversary-names">
                         <span>{{t_Annivarsary.firstName}} {{t_Annivarsary.lastName}} </span>
                         <br>
-                          <span>{{t_Annivarsary.noOfYearsCompletedInThisCompany}}{{'yrs'}}</span>
+                        <span>{{t_Annivarsary.noOfYearsCompletedInThisCompany}}{{'yrs'}}</span>
                       </div>
                     </div>
 
@@ -288,7 +358,7 @@
                   <div class="nextSeven-Anniversary">
                     <div *ngFor="let nextSeven_Annivarsary of nextSevendaysAnniversarys; let i = index"
                       class="nextSeven-Anniversary-items">
-                      <div *ngIf = "(i<11)">
+                      <div *ngIf="(i<11)">
                         <div class="Anniversary-profile">
                           <img src="../../assets/elephant.png">
                         </div>
@@ -299,15 +369,59 @@
                         </div>
                       </div>
                     </div>
-                    <div *ngIf = "nextSevendaysAnniversarys.length>11" class="extra-Anniversary-items">
+                    <div *ngIf="nextSevendaysAnniversarys.length>11" class="extra-Anniversary-items">
                       {{nextSevendaysAnniversarys.length - 11}}+more
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div id="newJoinees" [class.active]="selectedContent === 'newJoinees'" class="content-item">New Joinees
-              related data</div>
+
+
+            <div id="newJoinees" [class.active]="selectedContent === 'newJoinees'" class="content-item">  
+
+
+              <div class="new-joinees-section">
+                <div class="todayNewJoinees-container">
+                  <h2>New Joinees Today</h2>
+                  <div *ngIf="todaysNewJoinees && todaysNewJoinees.length > 0; else noJoineesToday">
+                    <div *ngFor="let joinee of todaysNewJoinees">
+                      <!-- Display joinee details -->
+                      <div class="joinee">
+                        <img src="../../assets/profileimage.png" alt="{{joinee.firstName}} {{joinee.lastName}}" />
+                        <p>{{joinee.firstName}} {{joinee.lastName}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <ng-template #noJoineesToday>
+                    <img  alt="Image Not found" src="https://cdn.kekastatic.net/shared/assets/images/background/noone-work-anniversary.svg">
+                    <P>No New Joinees Today</P>
+                  </ng-template>
+                </div>
+            
+
+                <div class="lastSevenDays-container">
+                  <h2>Last 7 Days</h2>
+                  <div *ngIf="lastSevenDaysNewJoinees && lastSevenDaysNewJoinees.length > 0; else noJoineesLast7Days">
+                    <div *ngFor="let joinee of lastSevenDaysNewJoinees">
+                      <!-- Display joinee details -->
+                      <div class="joinee">
+                        <img src="../../assets/profileimage.png" alt="{{joinee.firstName}} {{joinee.lastName}}" />
+                        <p>{{joinee.firstName}} {{joinee.lastName}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <ng-template #noJoineesLast7Days>
+                    <img  alt="Image Not found" src="https://cdn.kekastatic.net/shared/assets/images/background/noone-work-anniversary.svg">
+                    <p>No Joinees For Last 7 Days</p>
+                  </ng-template>
+                </div>
+              </div>
+            
+
+            </div>
+
+
           </div>
         </mat-card-content>
       </mat-card>
@@ -316,16 +430,18 @@
         <mat-card class="org-card" *ngFor="let image of imageSrcList; let i = index" style="margin-top:10px;">
           <mat-card-content>
             <div style="display:flex;">
-              <img src="../../assets/profileimage.png" style="height: 55px; width: 60px; border-radius: 30px; margin-top: 10px; margin-bottom: 10px;">
+              <img src="../../assets/profileimage.png"
+                style="height: 55px; width: 60px; border-radius: 30px; margin-top: 10px; margin-bottom: 10px;">
               <p style="margin-top:35px;margin-left:10px">{{ image.timeStamp }}</p>
             </div>
 
 
-            <p>{{image.description}}</p>
-           
-           
 
-          
+            <p>{{image.description}}</p>
+
+
+
+
             <p style="color:dodgerblue">{{image.mentionEmployee.join(',')}}</p>
             <img [src]="image.base64Image" alt="Image from base64" style="margin-bottom:20px;max-width:600px">
             <div style="display: flex; gap: 30px;">
@@ -333,30 +449,37 @@
                 <i class="fa-regular fa-thumbs-up" (click)="onEmojiClick(image.postId, 1)"></i>Like
                 <div class="like-icons">
                   <p title="Like"><i class="fa-solid fa-thumbs-up" (click)="onEmojiClick(image.postId, 1)"></i></p>
-                  <p title="Haha"><i class="fa-solid fa-face-laugh-beam" (click)="onEmojiClick(image.postId, 2)"></i></p>
+                  <p title="Haha"><i class="fa-solid fa-face-laugh-beam" (click)="onEmojiClick(image.postId, 2)"></i>
+                  </p>
                   <p title="Love"><i class="fa-solid fa-heart" (click)="onEmojiClick(image.postId, 3)"></i></p>
-                  <p title="Claps"><i class="fa-solid fa-hands-clapping" (click)="onEmojiClick(image.postId, 4)"></i></p>
-                  <p title="Insightful"><i class="fa-solid fa-lightbulb" (click)="onEmojiClick(image.postId, 5)"></i></p>
-                  <p title="Curious"><i class="fa-brands fa-cloudversify" (click)="onEmojiClick(image.postId, 6)"></i></p>
+                  <p title="Claps"><i class="fa-solid fa-hands-clapping" (click)="onEmojiClick(image.postId, 4)"></i>
+                  </p>
+                  <p title="Insightful"><i class="fa-solid fa-lightbulb" (click)="onEmojiClick(image.postId, 5)"></i>
+                  </p>
+                  <p title="Curious"><i class="fa-brands fa-cloudversify" (click)="onEmojiClick(image.postId, 6)"></i>
+                  </p>
                 </div>
               </div>
-              <p (click)="toggleCommentBox(i)"><i class="fa-regular fa-message"></i>Comment</p>
-              <p style="margin-left:200px">{{image.emojiIdsCount}} reactions <span style="font-size: 15px;margin-left:20px"><b>.</b></span></p>
+              <p (click)="toggleCommentBox(i)" style="cursor: pointer;"><i class="fa-regular fa-message"></i>Comment</p>
+              <p style="margin-left:200px;cursor: pointer;">{{image.emojiIdsCount}} reactions <span
+                  style="font-size: 15px;margin-left:20px"><b>.</b></span></p>
+
               <p>{{image.commentIdsCount}} Comments</p>
             </div>
             <div *ngIf="showCommentBox[i]">
               <form #commentForm="ngForm" (ngSubmit)="postComment1(i, commentForm.value.comment, $event)">
                 <textarea rows="3" cols="50" placeholder="Write a comment..." name="comment" ngModel
-                          (keydown.enter)="postComment1(i, commentForm.value.comment, $event)">
+                  (keydown.enter)="postComment1(i, commentForm.value.comment, $event)">
                 </textarea>
-                <button type="submit" style="display:none;"></button> 
+                <button type="submit" style="display:none;"></button>
               </form>
-             </div>
+            </div>
+
 
           </mat-card-content>
         </mat-card>
       </div>
-      
+
       <mat-card class="org-card" *ngIf="selectedTab === 'java'">
         <mat-card-content>Java related post</mat-card-content>
       </mat-card>

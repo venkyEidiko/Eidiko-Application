@@ -26,6 +26,7 @@ public class ForgotPasswordController {
     private ForgotPasswordService forgotPasswordService;
 
 
+    //this api is save the forgot password
     @PostMapping("/password/forgotPassword")
     public ResponseEntity<?> forgotPassword(@RequestBody ForgotPassword forgotPassword) {
         try {

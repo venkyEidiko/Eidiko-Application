@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.eidiko.entity.Posts;
 import com.eidiko.exception_handler.FileUploadException;
 import com.eidiko.repository.PostRepo;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,13 +29,13 @@ public class PostService {
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	// saving purpose
-	public String saveImage(Posts posts, MultipartFile file) throws IOException, SQLException, FileUploadException {
+	public String saveImage(Posts posts) throws IOException, SQLException, FileUploadException {
 
-		if (file != null) {
-			byte[] fileData = genareteImageTobyteArray(file);
-			posts.setImage(fileData);
-
-		}
+//		if (file != null) {
+//			byte[] fileData = genareteImageTobyteArray(file);
+//			posts.setImage(fileData);
+//
+//		}
 
 		// for setting time (post created time)
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -47,13 +46,12 @@ public class PostService {
 		postRepo.save(posts);
 		return "saved !";
 
+	
 	}
 
 	// this checks file/image format,saveImage method uses this method
 	public byte[] genareteImageTobyteArray(MultipartFile file) throws IOException {
-
-		// System.out.println("==================================================");
-
+		
 		String contentType = file.getContentType();
 		if (!contentType.equals("image/jpeg") && !contentType.equals("application/pdf")
 				&& !contentType.equals("image/png")) {
@@ -100,17 +98,49 @@ public class PostService {
 		return postRepo.save(posts);
 	}
 
-	// Get all posts ordered by timestamp
-//    public List<Posts> getAllPostsByTimeStamp() {
-//    List<Posts> byTimeStampDesc = postRepo.findAllByOrderByTimeStampDesc();
-//         if (byTimeStampDesc.isEmpty()) {
-//        	 throw new RuntimeException("data no found");
-//         }
-//         else {
-//        	 return byTimeStampDesc;
-//         }
-//    }
+	
+	
+	//get the all posts based on latest time
+	public List<Posts> getAllPostsByTimeStamp() {
+	    // Fetch all posts from the repository ordered by timestamp in descending order
+	    List<Posts> byTimeStampDesc = postRepo.findAllByOrderByTimeStampDesc();
 
+	    // If the list is empty, throw a RuntimeException with the message "Data not found"
+	    if (byTimeStampDesc.isEmpty()) {
+	        throw new RuntimeException("Data not found");
+	    } else {
+	        // Create a new ArrayList to hold modified Posts objects
+	        List<Posts> data = new ArrayList<>();
+
+	        // Iterate through each post in the list
+	        for (Posts post : byTimeStampDesc) {
+	            // If the post has an image (i.e., the image byte array is not null)
+	            if (post.getImage() != null) {
+	                // Get the image bytes from the post
+	                byte[] imageBytes = post.getImage();
+	                // Encode the image bytes to a Base64 string
+	                String encodedImage = Base64.getEncoder().encodeToString(imageBytes);
+	                // Set the Base64 encoded string to a new field in Posts
+	                post.setBase64Image(encodedImage);
+	                System.out.println(" encode image : "+encodedImage);
+	              
+	            }
+	            // Add the modified post to the new ArrayList
+	            data.add(post);
+	        }
+
+	        // Return the new list of posts with Base64 encoded images
+	        return data;
+	    }
+	}
+
+}
+	  
+	
+
+
+
+/*
 	public List<Posts> getAllPostsByTimeStamp() {
 		// Fetch all posts from the repository ordered by timestamp in descending order
 		List<Posts> byTimeStampDesc = postRepo.findAllByOrderByTimeStampDesc();
@@ -142,6 +172,7 @@ public class PostService {
 			// Return the new list of posts with Base64 encoded images
 			return byTimeStampDesc;
 		}
-	}
-
+	
 }
+}
+*/
