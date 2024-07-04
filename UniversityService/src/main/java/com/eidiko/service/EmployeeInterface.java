@@ -32,22 +32,18 @@ public interface EmployeeInterface {
 	public String updateEmployeeTimeDetails(Long empLoyeeId,Employee employee)throws UserNotFoundException;
 	
 	public String updateEmployeeOrganizationDetails(Long empLoyeeId,Employee employee)throws UserNotFoundException;
+	
 	Map<String, List<BirtdayAndanniversaryDto>> bithDayMethod(LocalDate date);
 
-
+	Map<String, List<Map<String, Object>>> getNewJoinersForTodayAndLast7Days();
 
 	Map<String, List<BirtdayAndanniversaryDto>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays();
-	
-
 
     public Employee getByEmployeeId(Long employeeId)throws UserNotFoundException;
 
 	List<BirtdayAndanniversaryDto> getEmployeesWithBirthdaysNextSevenDays();
 
 	Map<String, List<Map<String, Object>>> getWorkAnniversariesForTodayAndNextSevenDays();
-
-
-	Map<String, List<Map<String, Object>>> getNewJoinersForTodayAndLast7Days();
 
 
 

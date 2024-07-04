@@ -10,10 +10,12 @@ import { catchError } from 'rxjs/operators';
 export class AuthService {
 
   private apiUrl = 'http://10.0.0.38:8082/api/password/forgotPassword';
+  private isAuthenticated: boolean = false;
 
   constructor(private http: HttpClient) { }
 
   resetPassword(requestBody: any): Observable<any> {
+    this.isAuthenticated = true
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -41,4 +43,12 @@ export class AuthService {
     ); 
 
   }
+
+  setUnAuthenticatedUser(){
+    this.isAuthenticated = false;
+  }
+  isAuthenticatedUser(): boolean {
+    return this.isAuthenticated;
+  }
+
 }

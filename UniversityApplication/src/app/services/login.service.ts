@@ -22,25 +22,18 @@ export class LoginService {
     this.isAuthenticated = true
     return this.http.post<any>(this.url + "login1", data);
   }
+
   isAuthenticatedUser(): boolean {
     return this.isAuthenticated;
   }
-  unAuthenticated(){
-    this.isAuthenticated=false;
+
+
+  setUnAuthenticatedUser() {
+    this.isAuthenticated = false;
   }
-generateTokenByRefreshtoken():string{
- this.isAuthenticated=true
-  const token=localStorage.getItem("refresh-token")
- let result:string='';
-   this.http.get(`${this.url}refresh/${token}`).subscribe((response:any)=>{
-     result=response.result[0]
-    
-   });
-  return result;
-}
 
   setEmployeeData(data: any) {
-    this.employeeData = data ;
+    this.employeeData = data;
     localStorage.setItem('employee-data', JSON.stringify(data));
   }
   searchEmployee(search: any): Observable<any[]> {
@@ -79,5 +72,12 @@ generateTokenByRefreshtoken():string{
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
+  }
+
+  getTokenByRefreshToken(): Observable<any> {
+    this.isAuthenticated = true
+    const url = this.url + "refresh/" + localStorage.getItem("refresh-token");
+    console.log(url);
+    return this.http.get<any>(url);
   }
 }

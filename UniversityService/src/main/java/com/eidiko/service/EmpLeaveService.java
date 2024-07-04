@@ -1,5 +1,6 @@
 package com.eidiko.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +22,7 @@ public interface EmpLeaveService {
 
 	public Page<EmpLeave> findByLeaveTypesAndStatuses(Long employeeId, List<String> leaveTypes, List<String> statuses, Pageable pageable);
 
-
+	public List<EmpLeave> searchByKeyword(String keyword,Long employeeId);
 
 	public List<EmpLeaveDto> getEmployeesOnLeaveToday();
 

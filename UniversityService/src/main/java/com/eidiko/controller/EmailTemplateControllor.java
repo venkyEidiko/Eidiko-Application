@@ -63,6 +63,8 @@ public class EmailTemplateControllor {
 	@GetMapping("/sendMail")
 	public ResponseEntity<ResponseModel<Object>> sendMail(@RequestParam("toMail") String to) {
 
+		
+		System.out.println(" send mail "+ to);
 		try {
 			String sendEmailWithOtp = emailTemplateImp.sendEmailWithOtp(to);
 			return new CommonResponse<>().prepareSuccessResponseObject(sendEmailWithOtp);
