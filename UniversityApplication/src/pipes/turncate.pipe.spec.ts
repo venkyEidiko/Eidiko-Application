@@ -1,4 +1,4 @@
-import { TurncatePipe } from './turncate.pipe';
+import { TurncatePipe } from '../pipes/turncate.pipe';
 
 describe('TurncatePipe', () => {
   it('create an instance', () => {

@@ -58,7 +58,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgChartsModule } from 'ng2-charts';
 import { Dialog1Component } from './dialog1/dialog1.component';
 import { CompDialogComponent } from './comp-dialog/comp-dialog.component';
-
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DropdowntableComponent } from './dropdowntable/dropdowntable.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -72,9 +71,13 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HolidayDialogComponent } from './holiday-dialog/holiday-dialog.component'; // Import CarouselModule
 import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-import { TruncatePipe } from './turncate.pipe';
+import { TruncatePipe } from '../pipes/turncate.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SummaryComponent } from './summary/summary.component';
+import { CapatlizePipe } from '../pipes/capatlize.pipe';
+import { FirstletterPipe } from '../pipes/firstletter.pipe';
 import { InterceptorService } from './services/interceptor.service';
+
 
 @NgModule({
   declarations: [
@@ -117,18 +120,13 @@ import { InterceptorService } from './services/interceptor.service';
     DialogComponent,
     Dialog1Component,
     CompDialogComponent,
-    
     DropdowntableComponent,
-   
     ShiftRequestFormComponent,
-
     HolidayDialogComponent,
-
     CheckboxdropdownComponent,
-      
-
-
-    
+    SummaryComponent,
+    CapatlizePipe,
+    FirstletterPipe
   ],
   imports: [
     PickerComponent,
@@ -173,9 +171,8 @@ import { InterceptorService } from './services/interceptor.service';
     MatDatepickerModule,
     MatCardModule
   ],
-
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true } // Register interceptor
   ],
-  bootstrap: [AppComponent],
+bootstrap: [AppComponent],
 })
 export class AppModule { }

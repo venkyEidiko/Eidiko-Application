@@ -74,9 +74,14 @@ export class DashboardComponent implements OnInit, OnChanges {
     this.getAnniversaryAndAfterSevenDaysList();
     this.getBirthdayAndAfterSevenDaysList();
     this.loadAllPosts();
-    // this.fetchPostsAndLikes();
+
+    this.fetchOnLeaveToday();
+    this.workFromHomeList();
+
+    //this.fetchPostsAndLikes();
     this.fetchOnLeaveToday();
     this.fetchNewJoinees();
+
   }
 
   // employeeId=this.loginService.getEmployeeData().employeeId;

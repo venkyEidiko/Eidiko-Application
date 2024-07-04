@@ -9,7 +9,7 @@ export class LoginService {
   private employeeData: any = null;
   private jwtToken: string | null = null;
   private isAuthenticated: boolean = false;
-  url = "http://10.0.0.38:8082/";
+  url = "http://10.0.0.60:8080/";
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +24,9 @@ export class LoginService {
   }
   isAuthenticatedUser(): boolean {
     return this.isAuthenticated;
+  }
+  setUnAuthenticatedUser(){
+    this.isAuthenticated = false;
   }
 
   setEmployeeData(data: any) {
@@ -66,5 +69,12 @@ export class LoginService {
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
+  }
+
+  getTokenByRefreshToken():Observable<any>{
+    this.isAuthenticated = true
+    const url = this.url+"refresh/"+localStorage.getItem("refresh-token");
+    console.log(url);
+    return this.http.get<any>(url);
   }
 }

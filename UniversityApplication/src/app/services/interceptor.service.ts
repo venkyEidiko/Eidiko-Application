@@ -1,39 +1,78 @@
-import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
-import { LoginService } from './login.service';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpHeaders,
+  HttpInterceptor,
+  HttpRequest,
+} from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable, catchError, switchMap, tap, throwError } from "rxjs";
+import { LoginService } from "./login.service";
+import { Router } from "@angular/router";
+import { EmailCheckService } from "./email-check.service";
+import { OtpService } from "./otp.service";
+import { AuthService } from "./auth.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class InterceptorService implements HttpInterceptor {
+  constructor(
+    private loginService: LoginService,
+    private emailCheckService: EmailCheckService,
+    private otpService: OtpService,
+    private authService: AuthService
+  ) {}
 
-  constructor(private loginService:LoginService){}
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    if (
+      this.loginService.isAuthenticatedUser() ||
+      this.emailCheckService.isAuthenticatedUser() ||
+      this.authService.isAuthenticatedUser() ||
+      this.otpService.isAuthenticatedUser()
+    ) {
+      console.log("calling free api");
+      this.loginService.setUnAuthenticatedUser();
+      this.authService.setUnAuthenticatedUser();
+      this.otpService.setUnAuthenticatedUser();
+      this.emailCheckService.setUnAuthenticatedUser();
+      return next.handle(request);
+    }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return this.addToken(localStorage.getItem("jwt-token"), request, next).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error("Interceptor - Error:", error);
+        if (error.status === 401) {
+          return this.loginService.getTokenByRefreshToken().pipe(
+            switchMap((response: any) => {
+              const token = response.result[0];
+              localStorage.setItem("jwt-token", token);
+              return this.addToken(token, request, next);
+            }),
+            catchError((refreshError: any) => {
+              console.error("Refresh token error:", refreshError);
 
-if(this.loginService.isAuthenticatedUser()){
-return next.handle(request);
-}
-
-
-    // Customize headers here based on your needs
-    const token = localStorage.getItem("jwt-token");
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Custom-Header': 'value'  // Add additional headers as needed
-    });
-
-    // Clone the request and attach headers
-    const modifiedRequest = request.clone({ headers });
-    console.log('Interceptor - Request intercepted:', modifiedRequest);
-
-    // Pass the cloned request instead of the original request to the next handle
-    return next.handle(modifiedRequest).pipe(
-      tap(
-        event => console.log('Interceptor - Response received:', event),
-        error => console.error('Interceptor - Error:', error)
-      )
+              return throwError(refreshError);
+            })
+          );
+        } else {
+          return throwError(error);
+        }
+      })
     );
+  }
+
+  addToken(token: any, request: any, next: any): any {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      "Custom-Header": "value",
+    });
+    const modifiedRequest = request.clone({ headers });
+    console.log("Interceptor - Request intercepted:", modifiedRequest);
+    return next.handle(modifiedRequest);
   }
 }
