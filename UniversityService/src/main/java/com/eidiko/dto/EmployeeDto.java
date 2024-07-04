@@ -36,6 +36,11 @@ public class EmployeeDto {
     private String phoneNu;
     private Integer employeeId;
     private String gender;
+    //my team side navBar response 
+    private String location;
+    private String jobTitlePrimary;
+    private String department;
+    
     @ManyToOne(fetch = FetchType.EAGER)
     private Roles_Table role;
     

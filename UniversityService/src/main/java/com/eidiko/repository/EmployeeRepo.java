@@ -42,13 +42,8 @@ public interface EmployeeRepo extends JpaRepository<Employee, Long> {
 			+ "FROM Employee e WHERE MONTH(e.dateOfJoining) = :month AND DAY(e.dateOfJoining) = :day")
 	List<BirtdayAndanniversaryDto> findByDateOfJoining(@Param("month") int monthValue, @Param("day") int dayOfMonth);
 
-
-
 	List<Employee> findAll();
 
-
-
 	List<Employee> findByDateOfJoiningBetween(LocalDate startDate, LocalDate endDate);
-
 
 }

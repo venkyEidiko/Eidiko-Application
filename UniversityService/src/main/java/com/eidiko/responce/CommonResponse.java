@@ -86,7 +86,7 @@ public class CommonResponse<T> {
 	public ResponseEntity<ResponseModel<T>> prepareFailedResponse2(String error) {
 		ResponseModel<T> response = new ResponseModel<>();
 		response.setStatus("FAILED");
-		response.setStatusCode(HttpStatus.NOT_FOUND.value());
+		response.setStatusCode(HttpStatus.BAD_REQUEST.value());
 		response.setResult(null);
 		response.setError(error);
 		response.setEmail(null);

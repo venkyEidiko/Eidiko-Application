@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,7 +30,7 @@ import com.eidiko.serviceimplementation.PostService;
 @RestController
 @RequestMapping("/posts")
 
-@CrossOrigin(origins = "*",allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 
 public class PostController {
 
@@ -39,44 +38,38 @@ public class PostController {
 	private PostService postService;
 	@Autowired
 	private CommonResponse<String> commonResponse;
-	
 
 	// saves data and file in db
 	@PostMapping("/saveimage")
-	public ResponseEntity<ResponseModel<Object>> saveImage(@RequestParam(value="description",required = false) String description,
-			@RequestParam(value="postType",required = false) String postType, 
-			@RequestParam(value="mentionEmployee", required = false) List<String> mentionEmployee,
-			@RequestParam(value = "postEmployee",required = false) Long postEmployee,
-			@RequestParam(value = "file",required = false) MultipartFile file
-			
-			)
-			throws IOException, SQLException, FileUploadException {
-		
-		System.out.println("saveImage :"+description);
-		
-		System.out.println("saveImage :"+postEmployee);
-	
-		
-		if (file!=null && file.getSize() > 20 * 1024 * 1024) { // 20MB in bytes
+
+	public ResponseEntity<ResponseModel<Object>> saveImage(
+			@RequestParam(value = "description", required = false) String description,
+			@RequestParam(value = "postType", required = false) String postType,
+			@RequestParam(value = "mentionEmployee", required = false) List<String> mentionEmployee,
+			@RequestParam(value = "postEmployee", required = false) Long postEmployee,
+			@RequestParam(value = "file", required = false) MultipartFile file
+
+	) throws IOException, SQLException, FileUploadException {
+		System.out.println("saveImage :" + description);
+		System.out.println("saveImage :" + postEmployee);
+		if (file != null && file.getSize() > 20 * 1024 * 1024) { // 20MB in bytes
 			throw new FileUploadException("File size should not exceed 5MB.");
-			
-		}
- 
-		try {
-			
-		Posts posts = new Posts();
-		posts.setDescription(description);
-		posts.setMentionEmployee(mentionEmployee);
-		posts.setPostEmployee(postEmployee);
-		posts.setPostType(postType);
-		if(file!=null) {
-        posts.setImage(file.getBytes());
 		}
 
-		String res = postService.saveImage(posts);
-		return new CommonResponse<>().prepareSuccessResponseObject(res);
-		}
-		catch (IllegalArgumentException e) {
+		try {
+
+			Posts posts = new Posts();
+			posts.setDescription(description);
+			posts.setMentionEmployee(mentionEmployee);
+			posts.setPostEmployee(postEmployee);
+			posts.setPostType(postType);
+			if (file != null) {
+				posts.setImage(file.getBytes());
+			}
+			String res = postService.saveImage(posts);
+			return new CommonResponse<>().prepareSuccessResponseObject(res);
+
+		} catch (IllegalArgumentException e) {
 			return new CommonResponse<>().prepareErrorResponseObject(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -113,31 +106,30 @@ public class PostController {
 	@DeleteMapping("/deletePost/{id}")
 	public ResponseEntity<ResponseModel<Object>> deletePosts(@PathVariable long id) throws SQLException {
 		try {
-		String message = postService.deletePost(id);
-		
-		return new CommonResponse<>().prepareSuccessResponseObject(message);
-		}
-		catch (RuntimeException e) {
+			String message = postService.deletePost(id);
+
+			return new CommonResponse<>().prepareSuccessResponseObject(message);
+		} catch (RuntimeException e) {
 			return new CommonResponse<Object>().prepareFailedResponse(e.getMessage());
 		}
-		
-	}
 
+	}
 
 	// update the posts
 	@PutMapping("updatePost/{postId}")
 	public ResponseEntity<ResponseModel<Object>> updatePostByPostId(@PathVariable Long postId, @RequestBody Posts post)
 			throws SQLException {
 		try {
-		
+
 			Posts upadtedPost = postService.updatePostById(postId, post);
 			return new CommonResponse<>().prepareSuccessResponseObject(upadtedPost);
 		} catch (RuntimeException e) {
-			
+
 			return new CommonResponse<>().prepareFailedResponse(e.getMessage());
 		}
 	}
 
+	
 	
 	//get all the posts
 	@GetMapping("/getAllPostByTime")
@@ -152,10 +144,7 @@ public class PostController {
 	       
 	        return new CommonResponse<>().prepareFailedResponse1(e.getMessage());
 	    }
+
 	}
-
-
-	
-
 
 }
