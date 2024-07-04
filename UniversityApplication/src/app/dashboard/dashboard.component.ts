@@ -213,10 +213,7 @@ if(checkBox){
       }
     });
   }
-  
-
-
-  
+ 
   extractAvailablePaidLeave(data:any){
     for(let leaveData of data){
       if(leaveData.leaveType==="Paid Leave"){
@@ -231,7 +228,6 @@ if(checkBox){
     const date = new Date(timestamp);
     return date.toLocaleTimeString();
   }
-
 
   getBirthdayAndAfterSevenDaysList() {
 
@@ -290,7 +286,6 @@ if(checkBox){
       'July', 'August', 'September', 'October', 'November', 'December'];
     return `${date.getDate()} ${months[date.getMonth()]}`;
   }
-
 
   toggleCommentBox(index: number): void {
     this.showCommentBox[index] = !this.showCommentBox[index];

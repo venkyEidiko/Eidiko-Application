@@ -9,7 +9,7 @@ export class LoginService {
   private employeeData: any = null;
   private jwtToken: string | null = null;
   private isAuthenticated: boolean = false;
-  url = "http://10.0.0.38:8082/";
+  url = "http://10.0.0.60:8080/";
 
   constructor(private http: HttpClient) { }
 
@@ -25,6 +25,19 @@ export class LoginService {
   isAuthenticatedUser(): boolean {
     return this.isAuthenticated;
   }
+  unAuthenticated(){
+    this.isAuthenticated=false;
+  }
+generateTokenByRefreshtoken():string{
+ this.isAuthenticated=true
+  const token=localStorage.getItem("refresh-token")
+ let result:string='';
+   this.http.get(`${this.url}refresh/${token}`).subscribe((response:any)=>{
+     result=response.result[0]
+    
+   });
+  return result;
+}
 
   setEmployeeData(data: any) {
     this.employeeData = data ;

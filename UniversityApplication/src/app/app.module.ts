@@ -75,6 +75,8 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { TruncatePipe } from './turncate.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InterceptorService } from './services/interceptor.service';
+import { LoaderComponent } from './loader/loader.component';
+import { LoaderService } from './services/loader.service';
 
 @NgModule({
   declarations: [
@@ -125,6 +127,7 @@ import { InterceptorService } from './services/interceptor.service';
     HolidayDialogComponent,
 
     CheckboxdropdownComponent,
+      LoaderComponent,
       
 
 
@@ -174,7 +177,7 @@ import { InterceptorService } from './services/interceptor.service';
     MatCardModule
   ],
 
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true } // Register interceptor
+  providers: [LoaderService,{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true } // Register interceptor
   ],
   bootstrap: [AppComponent],
 })
