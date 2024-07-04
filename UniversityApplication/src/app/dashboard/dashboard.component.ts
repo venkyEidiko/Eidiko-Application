@@ -15,7 +15,6 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./dashboard.component.css']
 })
 
-
 export class DashboardComponent implements OnInit, OnChanges {
   post: any;
   like: any;
@@ -29,36 +28,45 @@ export class DashboardComponent implements OnInit, OnChanges {
   files: File[] | null = null;
   textMessage: string | null = null;
   showCommentBox: boolean[] = [];
-  hideDate:Date|null=null;
-  selectPostTo:string='organization'
-
-  postRequestData: PostRequest =
-    {
-      description: "",
-      postType: this.selectPostTo,
-      mentionEmployee: [],
-      postEmployee: this.service.getEmpId()
-    }
-
-  constructor(private service: DashbordService, private loginService: LoginService) {
-    this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-      this.fetchOnLeaveToday()
-      this.workFromHomeList()
-      this.loadAllPosts()
-  }
-
+  hideDate: Date | null = null;
+  selectPostTo: string = 'organization'
+  workFromHomeList: any;
+  onLeaveToday: any[] = [];
+  holidayList: any;
+  todaynewJoiners: any
+  todayNewJoinersCount: number = 0
+  lastSevenDaysNewjoiners: any;
   todayAnniversaryCount: number = 0;
   todayAnniversary: any;
   nextSevendaysAnniversarys: any;
   todayBirthday: any;
   nextSevendaysBirthday: any;
   todayBirthdayCount: number = 0;
-  todayJoineesCount: number =0;
-
-
+  todayJoineesCount: number = 0;
   noBirthdayMessage: String = ''
+  noJoinersToday: String = ''
+
+  showIcons: boolean = false;
+  isCardExpanded: boolean = false;
+  insertedSymbol: string = '';
+
+  postRequestData: PostRequest = {
+    description: "",
+    postType: this.selectPostTo,
+    mentionEmployee: [],
+    postEmployee: this.service.getEmpId()
+  }
+
+  constructor(private service: DashbordService, private loginService: LoginService) {
+    this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.fetchOnLeaveToday()
+    this.workFromHomeList()
+    this.loadAllPosts()
+  }
+
   ngOnInit(): void {
     this.fetchworkFromHome();
     this.fethHoliday();
@@ -69,24 +77,29 @@ export class DashboardComponent implements OnInit, OnChanges {
     // this.fetchPostsAndLikes();
     this.fetchOnLeaveToday();
     this.fetchNewJoinees();
-
-    
   }
- // employeeId=this.loginService.getEmployeeData().employeeId;
-  imageSrcList: { base64Image: string, timeStamp: string ,description:string,postId:number,mentionEmployee:any,likes:any,emojiIds:any,emojiIdsCount:any,commentIdsCount:any,commentIds:any,comments:any,showComments:any}[] = [];
-  showIcons: boolean = false;
-  isCardExpanded: boolean = false;
-  insertedSymbol: string = ''; 
+
+  // employeeId=this.loginService.getEmployeeData().employeeId;
+  imageSrcList: {
+    base64Image: string,
+    timeStamp: string,
+    description: string, postId: number,
+    mentionEmployee: any, likes: any,
+    emojiIds: any,
+    emojiIdsCount: any,
+    commentIdsCount: any,
+    commentIds: any,
+    comments: any,
+    showComments: any
+  }[] = [];
 
   insertSymbol(symbol: string) {
     this.insertedSymbol = symbol;
-  } 
+  }
   openHoliday(): void {
     this.service.openDialog();
   }
 
-  workFromHomeList: any;
-  holidayList: any;
   holiday: Holiday = {
     id: 12,
     dateOfHoliday: "",
@@ -98,15 +111,17 @@ export class DashboardComponent implements OnInit, OnChanges {
     this.selectedTab = tab;
   }
 
-  updateSelection(selectPostTo:string, checkBox:boolean){
-if(checkBox){
-  this.selectPostTo=selectPostTo
-  console.log("selectPostTo value : ",this.selectPostTo)
-}
+  updateSelection(selectPostTo: string, checkBox: boolean) {
+    if (checkBox) {
+      this.selectPostTo = selectPostTo
+      console.log("selectPostTo value : ", this.selectPostTo)
+    }
   }
+
   expandCard() {
     this.isCardExpanded = true;
   }
+
   collapseCard() {
     this.isCardExpanded = false;
   }
@@ -124,7 +139,15 @@ if(checkBox){
       }
     )
   }
-
+    fetchOnLeaveToday() {
+    this.service.getOnLeaveToday().subscribe(
+      (response: any) => {
+        console.log("onLeaveTpday respoanse ", response);
+        this.onLeaveToday = response.result;
+      }
+    )
+  }
+ 
   fethHoliday() {
     this.service.getHolidays().subscribe(
       response => {
@@ -172,8 +195,7 @@ if(checkBox){
     }
   }
 
- 
-   fetchleaveData(){
+  fetchleaveData() {
     this.service.getLeaveData().subscribe(
       response => {
         console.log("leave data:- ", response);
@@ -183,16 +205,17 @@ if(checkBox){
       }
     )
   }
+
   loadAllPosts(): void {
     this.service.getAllPosts().subscribe((response: any) => {
       console.log("posts ", response);
       if (response.status === 'SUCCESS') {
         this.imageSrcList = response.result.map((item: any) => {
-         
+
           let emojiIds = item.likes.map((like: any) => like.emoji);
           let emojiIdsCount = emojiIds.length;
-          let commentIds=item.comments.map((p:any)=>p.comment);
-          let commentIdsCount=commentIds.length;
+          let commentIds = item.comments.map((p: any) => p.comment);
+          let commentIdsCount = commentIds.length;
           return {
             base64Image: 'data:image/jpeg;base64,' + item.base64Image,
             timeStamp: this.formatTime(item.timeStamp),
@@ -200,11 +223,11 @@ if(checkBox){
             postId: item.postId,
             likes: item.likes,
             emojiIds: emojiIds,
-            emojiIdsCount: emojiIdsCount, 
+            emojiIdsCount: emojiIdsCount,
             mentionEmployee: item.mentionEmployee,
-            comments:item.comments,
-            commentIds:item.commentIds,
-            commentIdsCount:commentIdsCount,
+            comments: item.comments,
+            commentIds: item.commentIds,
+            commentIdsCount: commentIdsCount,
           };
         });
         console.log('Modified imageSrcList:', this.imageSrcList);
@@ -213,13 +236,10 @@ if(checkBox){
       }
     });
   }
-  
 
-
-  
-  extractAvailablePaidLeave(data:any){
-    for(let leaveData of data){
-      if(leaveData.leaveType==="Paid Leave"){
+  extractAvailablePaidLeave(data: any) {
+    for (let leaveData of data) {
+      if (leaveData.leaveType === "Paid Leave") {
         return leaveData.availableLeave;
       } else {
         console.error('No result found in the response');
@@ -232,18 +252,13 @@ if(checkBox){
     return date.toLocaleTimeString();
   }
 
-
   getBirthdayAndAfterSevenDaysList() {
-
     this.service.getBirthdays().subscribe(
-
       (response: any) => {
-
         this.todayBirthday = response.result[0].TodayBirthdays;
         this.nextSevendaysBirthday = response.result[0].NextSevenDaysBirthdays;
         this.todayBirthdayCount = this.todayBirthday.length;
       }
-
     );
     if (this.todayBirthday === 0) {
       this.noBirthdayMessage = 'No birthdays today';
@@ -251,25 +266,22 @@ if(checkBox){
   }
 
   getAnniversaryAndAfterSevenDaysList() {
-
     this.service.getAnniversary().subscribe(
-
       (response: any) => {
         console.log("Annivwersary", response);
         this.todayAnniversary = response.result[0].TodayAnniversary;
         this.nextSevendaysAnniversarys = response.result[0].NextSevenDaysAnniversary;
         this.todayAnniversaryCount = this.todayAnniversary.length;
         console.log("next seven annevewsiry ", this.nextSevendaysAnniversarys);
-
       }
     );
   }
+
   getBirthdayDisplayText(birthday: string): string {
     const birthdayDate = new Date(birthday);
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-
     if (this.isSameDay(birthdayDate, tomorrow)) {
       return 'Tomorrow';
     } else {
@@ -291,35 +303,26 @@ if(checkBox){
     return `${date.getDate()} ${months[date.getMonth()]}`;
   }
 
-
   toggleCommentBox(index: number): void {
     this.showCommentBox[index] = !this.showCommentBox[index];
   }
 
-
   onEmojiClick(postId: number, emojiId: number): void {
-
     const empId = 1111;
     this.service.saveLike(postId, emojiId, empId).subscribe(
       response => {
         console.log('Like saved successfully', response);
-
       },
       error => {
         console.error('Error saving like', error);
-
       }
     );
   }
-
-
-
 
   postComment1(index: number, comment: string, event?: Event): void {
     if (event instanceof KeyboardEvent && event.key !== 'Enter') {
       return;
     }
-
     const empId = 1111;
     const postId = this.imageSrcList[index]?.postId;
     this.service.postComment(postId, comment, empId).subscribe(
@@ -332,7 +335,6 @@ if(checkBox){
       }
     );
   }
-
 
   public chartOptions1 = {
     series: [12 - this.totalAvailableLeave, 12],
@@ -400,7 +402,6 @@ if(checkBox){
     console.log(inputElement.value);
   }
 
-
   addAtSymbol(textarea: HTMLTextAreaElement) {
     textarea.setRangeText('@', textarea.selectionStart, textarea.selectionEnd, 'end');
     textarea.focus();
@@ -408,7 +409,6 @@ if(checkBox){
     this.postRequestData.description = this.textMessage;
     console.log("addAtSymbol method text area: ", textarea.value)
   }
-
 
   onFileSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
@@ -423,11 +423,9 @@ if(checkBox){
     }
   }
 
-
   toggleEmoticonPicker() {
     this.showEmoticonPicker = !this.showEmoticonPicker;
   }
-
 
   addEmoticon(textarea: HTMLTextAreaElement, event: any) {
     const emoji = event.emoji.native;
@@ -448,7 +446,6 @@ if(checkBox){
       },
         (error => {
           console.log(error);
-
         })
       );
     } else {
@@ -469,7 +466,6 @@ if(checkBox){
     if (atIndex !== -1 && search.length > atIndex + 1) {
       // Extract text after '@' symbol
       const searchText = search.substring(atIndex + 1);
-
       if (searchText.length > 1) {
         console.log("Search Data : ", searchText)
         this.showDropdown = true;
@@ -491,27 +487,14 @@ if(checkBox){
     }
   }
 
-  onLeaveToday:any[] = [];
-  fetchOnLeaveToday(){
-    this.service.getOnLeaveToday().subscribe(
-      (response:any) => {
-        console.log("onLeaveTpday respoanse ",response);
-        this.onLeaveToday = response.result;
-      }
-    )
-  }
-
-
-
-
   todaysNewJoinees: any;
   lastSevenDaysNewJoinees: any;
   fetchNewJoinees() {
     this.service.getNewJoinees().subscribe(
       (response: any) => {
         const result = response.result[0];
-        this.todaysNewJoinees = result['new Joiners Today'];
-        this.lastSevenDaysNewJoinees = result['new Joiners Last 7 Days'];
+        this.todaysNewJoinees = result['newJoinersToday'];
+        this.lastSevenDaysNewJoinees = result['newJoinersLast7Days'];
         this.todayJoineesCount = this.todaysNewJoinees.length;
         console.log("Today's New Joinees: ", this.todaysNewJoinees);
         console.log("Last 7 Days New Joinees: ", this.lastSevenDaysNewJoinees);
@@ -521,12 +504,6 @@ if(checkBox){
       }
     );
   }
-
-
-
-
-
-
 }
 
 interface PostRequest {

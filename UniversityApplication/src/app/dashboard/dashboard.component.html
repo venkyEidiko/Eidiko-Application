@@ -1,4 +1,3 @@
-
 <div class="dashboard-container">
   <div class="quick-access">
     <h3>Quick Access</h3>
@@ -51,7 +50,6 @@
         <span>On Leave Today</span>
         <mat-card-content>
           <div class="today-birthdays">
-
             <div *ngFor="let onLeave of onLeaveToday" class="today-birthdays-items">
               <div class="birthdays-profile">
                 <img src="../../assets/elephant.png">
@@ -60,7 +58,6 @@
                 <span>{{onLeave.requestedBy}}</span>
               </div>
             </div>
-
             <div style="display: flex; justify-content: space-between;" *ngIf="onLeaveToday?.length===0">
               <img class="elephantimg" src="../../assets/elephant.png" alt="elephantimage" width="100px" height="100px">
               <p>Nothing here!<br />Working hard yeah?? <br />Request time off on right&gt;&gt;&gt;</p>
@@ -68,6 +65,7 @@
           </div>
         </mat-card-content>
       </mat-card>
+
       <mat-card class="card-item">
         <mat-card-content>
           Working Remotely
@@ -132,7 +130,7 @@
             </li>
           </ul>
           <div class="org-content">
-
+           
             <!-- Post request  field -->
             <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item">
               <div class="form-container">
@@ -216,6 +214,7 @@
               </div>
 
             </div>
+
             <!-- Announcement Request field  -->
             <div id="announcement" [class.active]="selectedContent === 'announcement'" class="org-content-item">
               <div class="announce-request-content">
@@ -227,7 +226,7 @@
                 <mat-checkbox>Requier Acknowledgement</mat-checkbox>
                 <mat-checkbox>Hide After</mat-checkbox>
                 <div class="announce-hide-date">
-                  <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <div style="margin-top: 10px;">
                     <input [(ngModel)]="hideDate" name="hideDate" [matDatepicker]="picker" required>
                   </div>
@@ -238,13 +237,12 @@
                 <div class="post-footer-content">
                   <span>posting to</span>
                   <mat-select class="post-select" [ngModel]="selectPostTo">
-                    <mat-option >
-                      <mat-checkbox >Organization</mat-checkbox>
+                    <mat-option>
+                      <mat-checkbox>Organization</mat-checkbox>
                     </mat-option>
-                    <mat-option >
-                      <mat-checkbox >Java</mat-checkbox>
+                    <mat-option>
+                      <mat-checkbox>Java</mat-checkbox>
                     </mat-option>
-                   
                   </mat-select>
                 </div>
                 <div style="margin-right: -80px;">
@@ -261,7 +259,6 @@
             <!-- Praise request field -->
             <div id="praise" [class.active]="selectedContent === 'praise'" class="org-content-item">Praise related
               content</div>
-
           </div>
         </mat-card-content>
       </mat-card>
@@ -293,9 +290,7 @@
               <div class="announcement-text">
                 No Announcements today
               </div>
-            
             </div>
-
             <!-- This is for birthdays and next seven days -->
             <div id="birthday" [class.active]="selectedContent === 'birthday'" class="content-item">
 
@@ -326,6 +321,7 @@
                       <div class="nextSeven-bithdays">
                         <span>{{afterSeven.firstName}} {{afterSeven.lastName}}</span>
                         <br>
+                       
                         <span>{{ getBirthdayDisplayText(afterSeven.dateOfBirth) }}</span>
                       </div>
                     </div>
@@ -336,7 +332,6 @@
             <div id="workAnniversary" [class.active]="selectedContent === 'workAnniversary'" class="content-item">
 
               <div class="todayAnniversary-NextSevenAnniversary">
-
                 <div class="todayAnniversary-container">
                   <h4>Work anniversaries today</h4>
                   <div class="today-Anniversary">
@@ -358,7 +353,9 @@
                   <div class="nextSeven-Anniversary">
                     <div *ngFor="let nextSeven_Annivarsary of nextSevendaysAnniversarys; let i = index"
                       class="nextSeven-Anniversary-items">
+
                       <div *ngIf="(i<11)">
+
                         <div class="Anniversary-profile">
                           <img src="../../assets/elephant.png">
                         </div>
@@ -369,59 +366,62 @@
                         </div>
                       </div>
                     </div>
+
                     <div *ngIf="nextSevendaysAnniversarys.length>11" class="extra-Anniversary-items">
                       {{nextSevendaysAnniversarys.length - 11}}+more
+
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-
-            <div id="newJoinees" [class.active]="selectedContent === 'newJoinees'" class="content-item">  
-
-
+            <div id="newJoinees" [class.active]="selectedContent === 'newJoinees'" class="content-item">
               <div class="new-joinees-section">
                 <div class="todayNewJoinees-container">
                   <h2>New Joinees Today</h2>
-                  <div *ngIf="todaysNewJoinees && todaysNewJoinees.length > 0; else noJoineesToday">
-                    <div *ngFor="let joinee of todaysNewJoinees">
+                  <div *ngIf="todaysNewJoinees && todaysNewJoinees.length > 0; else noJoineesToday" class="todayNewJoinees">
+                    <div *ngFor="let joinee of todaysNewJoinees" class="todayNewJoinees-items">
                       <!-- Display joinee details -->
-                      <div class="joinee">
-                        <img src="../../assets/profileimage.png" alt="{{joinee.firstName}} {{joinee.lastName}}" />
+                      <div class="joinee-profile">
+                        <img src="../../assets/profileimage.png" alt="No image" />
+                      </div>
+                      <div>
                         <p>{{joinee.firstName}} {{joinee.lastName}}</p>
                       </div>
                     </div>
                   </div>
                   <ng-template #noJoineesToday>
-                    <img  alt="Image Not found" src="https://cdn.kekastatic.net/shared/assets/images/background/noone-work-anniversary.svg">
+                    <img alt="Image Not found"
+                      src="https://cdn.kekastatic.net/shared/assets/images/background/noone-work-anniversary.svg">
                     <P>No New Joinees Today</P>
                   </ng-template>
                 </div>
-            
 
                 <div class="lastSevenDays-container">
                   <h2>Last 7 Days</h2>
-                  <div *ngIf="lastSevenDaysNewJoinees && lastSevenDaysNewJoinees.length > 0; else noJoineesLast7Days">
-                    <div *ngFor="let joinee of lastSevenDaysNewJoinees">
+                  <div *ngIf="lastSevenDaysNewJoinees && lastSevenDaysNewJoinees.length > 0; else noJoineesLast7Days" class="lastSevenDaysJoiners">
+                    <div *ngFor="let joinee of lastSevenDaysNewJoinees" class="lastSevenDaysJoiners-items">
                       <!-- Display joinee details -->
-                      <div class="joinee">
-                        <img src="../../assets/profileimage.png" alt="{{joinee.firstName}} {{joinee.lastName}}" />
-                        <p>{{joinee.firstName}} {{joinee.lastName}}</p>
+                      <div class="joinee-profile">
+                        <img src="../../assets/profileimage.png" alt="Image not found" />
+                      </div>
+                      <div class="lastSevenNames">
+                        <span>{{joinee.firstName}} {{joinee.lastName}}</span>
+                        <br>
+                        <span>{{ getBirthdayDisplayText(joinee.joinDate) }}</span>
                       </div>
                     </div>
                   </div>
                   <ng-template #noJoineesLast7Days>
-                    <img  alt="Image Not found" src="https://cdn.kekastatic.net/shared/assets/images/background/noone-work-anniversary.svg">
+                    <img alt="Image Not found"
+                      src="https://cdn.kekastatic.net/shared/assets/images/background/noone-work-anniversary.svg">
                     <p>No Joinees For Last 7 Days</p>
                   </ng-template>
                 </div>
               </div>
-            
+
 
             </div>
-
-
           </div>
         </mat-card-content>
       </mat-card>
@@ -434,12 +434,7 @@
                 style="height: 55px; width: 60px; border-radius: 30px; margin-top: 10px; margin-bottom: 10px;">
               <p style="margin-top:35px;margin-left:10px">{{ image.timeStamp }}</p>
             </div>
-
-
             <p>{{image.description}}</p>
-
-
-
 
             <p style="color:dodgerblue">{{image.mentionEmployee.join(',')}}</p>
             <img [src]="image.base64Image" alt="Image from base64" style="margin-bottom:20px;max-width:600px">

@@ -7,6 +7,7 @@ import com.eidiko.exception_handler.BadRequestException;
 import com.eidiko.repository.EmployeeRepo;
 import com.eidiko.service.ForgotPasswordInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,6 +17,8 @@ public class ForgotPasswordService implements ForgotPasswordInterface {
 
     @Autowired
     private EmployeeRepo employeeRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public String updatePassword(ForgotPassword forgotPassword) throws BadRequestException {
@@ -26,7 +29,10 @@ public class ForgotPasswordService implements ForgotPasswordInterface {
         Optional<Employee> userOptional = employeeRepository.findByEmail(forgotPassword.getEmail());
         if (userOptional.isPresent()) {
             Employee employee = userOptional.get();
-            employee.setPassword(forgotPassword.getNewPassword());
+            
+            String encodePassword = passwordEncoder.encode(forgotPassword.getNewPassword());
+            
+            employee.setPassword(encodePassword);
             employeeRepository.save(employee);
             return forgotPassword.getNewPassword();
         } else {

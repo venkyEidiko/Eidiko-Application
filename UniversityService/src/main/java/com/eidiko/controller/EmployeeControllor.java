@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eidiko.dto.BirtdayAndanniversaryDto;
+import com.eidiko.dto.EmployeeDto;
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.ResponseModel;
 import com.eidiko.entity.Roles_Table;
@@ -79,9 +80,9 @@ public class EmployeeControllor {
 		}
 
 	}
-
+    //@PatchMapping
 	// this method is main update method
-	@PatchMapping("/updateEmployee/{empId}")
+	@PutMapping("/updateEmployee/{empId}")
 	public ResponseEntity<ResponseModel<Object>> updateEmployee(@PathVariable("empId") Long empID,
 			@RequestBody Employee employee) throws UserNotFoundException, SaveFailureException {
 		log.info("updateEmployee empId :" + empID);
@@ -125,7 +126,7 @@ public class EmployeeControllor {
 	public ResponseEntity<ResponseModel<Object>> getByEmail(@PathVariable String email) throws UserNotFoundException {
 
 		Employee byEmail = employeeService.getByEmail(email);
-		return new CommonResponse<>().prepareSuccessResponseEmail(byEmail);
+		return new CommonResponse<>().prepareSuccessResponseEmail(byEmail.getEmail());
 	}
 
 	@PutMapping("/updateEmployeeContactDetailsByEmpId/{empId}")
@@ -177,7 +178,7 @@ public class EmployeeControllor {
 		}
 	}
 
-	// this api returns both present and after 7 days birthday details
+//This api returns both present and after 7 days birthday details
 	@GetMapping("/todayAndNextSevenDaysBirthdaysList")
 	public ResponseEntity<ResponseModel<Object>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
 		try {
@@ -201,6 +202,7 @@ public class EmployeeControllor {
 		}
 	}
 
+
 	@GetMapping("/nextSevenDaysBirthdays")
 	public ResponseEntity<ResponseModel<Object>> getNextSevenDaysBirthdays() {
 		List<BirtdayAndanniversaryDto> employeesWithBirthdays = employeeService
@@ -214,23 +216,34 @@ public class EmployeeControllor {
 	}
 
 
+	@GetMapping("/getByAllEmployeeByEmployeeRportsTo/{employeeID}")
+	public ResponseEntity<ResponseModel<Object>> getByAllEmployeeByEmployeeRportsTo(
+			@PathVariable("employeeID") Long employeeId) {
 
-
-
-
-	//this api returns both present and after 7 days birthday details
-	@GetMapping("/todayAndNext7Daysbirthdays")
-	public ResponseEntity<ResponseModel<Object>> getBirthdaysAndAnniversariesForTodayAndNextSevenDays() {
 		try {
-			Map<String, List<BirtdayAndanniversaryDto>> response = employeeService.getBirthdaysAndAnniversariesForTodayAndNextSevenDays();
-			return new CommonResponse<>().prepareSuccessResponseObject(response);
-		} catch (Exception e) {
-			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
+			List<EmployeeDto> allEmployee = employeeService.getAllEmployee(employeeId);
+			return new CommonResponse<>().prepareSuccessResponseObject(allEmployee);
+		} catch (BadRequestException e) {
+
+			return new CommonResponse<>().prepareFailedResponse2(e.getMessage());
+		} catch (UserNotFoundException e) {
+
+			return new CommonResponse<>().prepareFailedResponse1(e);
 		}
+
 	}
-
-
-
+	
+	
+	//this api is used for fetching new joinees and last 7 days joinees also
+		@GetMapping("/newJoineesAndLast7Days")
+		public ResponseEntity<ResponseModel<Object>> getNewJoinersForTodayAndLast7Days() {
+			try {
+				Map<String, List<Map<String, Object>>> response = employeeService.getNewJoinersForTodayAndLast7Days();
+				return new CommonResponse<>().prepareSuccessResponseObject(response);
+			} catch (Exception e) {
+				return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
+			}
+		}
 
 	//this api is used for fetching both work anniversary today and next 7 days also
 	@GetMapping("/workAnniversaries")
@@ -248,17 +261,4 @@ public class EmployeeControllor {
 
 
 
-	//this api is used for fetching new joinees and last 7 days joinees also
-	@GetMapping("/newJoineesAndLast7Days")
-	public ResponseEntity<ResponseModel<Object>> getNewJoinersForTodayAndLast7Days() {
-		try {
-			Map<String, List<Map<String, Object>>> response = employeeService.getNewJoinersForTodayAndLast7Days();
-			return new CommonResponse<>().prepareSuccessResponseObject(response);
-		} catch (Exception e) {
-			return new CommonResponse<>().prepareErrorResponseObject("something went wrong", HttpStatus.BAD_REQUEST);
-		}
 	}
-
-
-
-}
