@@ -64,7 +64,6 @@ public class CommonResponse<T> {
 		response.setStatusCode(HttpStatus.OK.value());
 		response.setStatus("SUCCESS");
 
-//		response.setEmail((String) result);
 		if (result instanceof List<?>) {
 			response.setResult((List<T>) result);
 		} else {
@@ -76,12 +75,12 @@ public class CommonResponse<T> {
 	public ResponseEntity<ResponseModel<T>> prepareFailedResponse1(T error) {
 		ResponseModel<T> response = new ResponseModel<>();
 		response.setStatus("FAILED");
-		response.setStatusCode(HttpStatus.NOT_FOUND.value());
+		response.setStatusCode(HttpStatus.BAD_REQUEST.value());
 		response.setResult(null);
 		response.setError(error.toString());
 		response.setEmail(null);
 
-		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 
 	public ResponseEntity<ResponseModel<T>> prepareFailedResponse2(String error) {

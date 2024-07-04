@@ -2,6 +2,8 @@ package com.eidiko.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -34,12 +36,12 @@ public class Posts {
 
 	// file or img for post
 	@Lob
-	// @JsonSerialize(using = ByteArrayToBase64Serializer.class)
 	@Column(name = "image", columnDefinition = "LONGBLOB")
+	@JsonIgnore
 	private byte[] image;
-	// private Clob image;
 	private String base64Image;
-	// content of post
+
+
 	private String description;
 
 	// private LocalDateTime timeStamp;
@@ -49,7 +51,7 @@ public class Posts {
 	private String postType;
 
 	// mentioning list of emp names
-	//@ElementCollection
+	// @ElementCollection
 	private List<String> mentionEmployee;
 
 	// employee id who posted

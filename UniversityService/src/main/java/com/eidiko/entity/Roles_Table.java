@@ -19,6 +19,6 @@ public class Roles_Table {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer roleId;
 	private String roleName;
-    
+
 	
 }

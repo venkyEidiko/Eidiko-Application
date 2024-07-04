@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DashbordService } from '../services/dashbord.service';
 import { Holiday } from '../holiday';
 
+import { Employee } from '../services/employee';
+
 import { timestamp } from 'rxjs';
+
 import { LoginService } from '../services/login.service';
 
 
@@ -11,31 +14,59 @@ import { LoginService } from '../services/login.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
 
-
-  constructor(private service: DashbordService,private loginService:LoginService){
-    this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
-  }
-
-
-  
+export class DashboardComponent implements OnInit, OnChanges {
   post: any;
   like: any;
-  
-  todaynewJoiners:any
-  todayNewJoinersCount:number=0
-  lastSevenDaysNewjoiners:any;
+  showEmoticonPicker = false;
+  LeaveResponse: any;
+  totalAvailableLeave = 12;
+  selectedTab: string = 'organization';
+  selectedContent: string = 'post';
+  currentDate = new Date();
+  selectedEmojiCategory = 'frequentlyUsed';
+  files: File[] | null = null;
+  textMessage: string | null = null;
+  showCommentBox: boolean[] = [];
+  hideDate: Date | null = null;
+  selectPostTo: string = 'organization'
+  workFromHomeList: any;
+  onLeaveToday: any[] = [];
+  holidayList: any;
+  todaynewJoiners: any
+  todayNewJoinersCount: number = 0
+  lastSevenDaysNewjoiners: any;
   todayAnniversaryCount: number = 0;
   todayAnniversary: any;
   nextSevendaysAnniversarys: any;
   todayBirthday: any;
   nextSevendaysBirthday: any;
   todayBirthdayCount: number = 0;
+  todayJoineesCount: number = 0;
+  noBirthdayMessage: String = ''
+  noJoinersToday: String = ''
 
+  showIcons: boolean = false;
+  isCardExpanded: boolean = false;
+  insertedSymbol: string = '';
 
-  noBirthdayMessage:String=''
-  noJoinersToday:String=''
+  postRequestData: PostRequest = {
+    description: "",
+    postType: this.selectPostTo,
+    mentionEmployee: [],
+    postEmployee: this.service.getEmpId()
+  }
+
+  constructor(private service: DashbordService, private loginService: LoginService) {
+    this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.fetchOnLeaveToday()
+    this.workFromHomeList()
+    this.loadAllPosts()
+  }
+
   ngOnInit(): void {
     this.fetchworkFromHome();
     this.fethHoliday();
@@ -43,60 +74,57 @@ export class DashboardComponent implements OnInit {
     this.getAnniversaryAndAfterSevenDaysList();
     this.getBirthdayAndAfterSevenDaysList();
     this.loadAllPosts();
-    this.fetchPostsAndLikes();
+    // this.fetchPostsAndLikes();
     this.fetchOnLeaveToday();
-    this.getNewJoiners();
+    this.fetchNewJoinees();
   }
- // employeeId=this.loginService.getEmployeeData().employeeId;
-  imageSrcList: { base64Image: string, timeStamp: string ,description:string,postId:number,mentionEmployee:any}[] = [];
-  showIcons: boolean = false;
-  isCardExpanded: boolean = false;
-  insertedSymbol: string = ''; 
-  posts: any[] = [];
+
+  // employeeId=this.loginService.getEmployeeData().employeeId;
+  imageSrcList: {
+    base64Image: string,
+    timeStamp: string,
+    description: string, postId: number,
+    mentionEmployee: any, likes: any,
+    emojiIds: any,
+    emojiIdsCount: any,
+    commentIdsCount: any,
+    commentIds: any,
+    comments: any,
+    showComments: any
+  }[] = [];
 
   insertSymbol(symbol: string) {
     this.insertedSymbol = symbol;
   }
-
-
-
-  //   this.convertImageToBase64('assets/your-image.jpg');
-  // }
   openHoliday(): void {
     this.service.openDialog();
   }
 
-  workFromHomeList:any;
-  showCommentBox: boolean[] = [];
-  onLeaveToday:any[] = [];
-  holidayList:any;
-  holiday:Holiday={
+  holiday: Holiday = {
     id: 12,
-    dateOfHoliday:"",
-    description:"",
-    imageName:"",
+    dateOfHoliday: "",
+    description: "",
+    imageName: ""
   }
-  LeaveResponse: any;
-  totalAvailableLeave = 12;
-  selectedTab: string = 'organization';
-  selectedContent: string = 'announcement';
-  currentDate = new Date();
-
-
-  
-
-  
 
   selectTab(tab: string) {
     this.selectedTab = tab;
   }
+
+  updateSelection(selectPostTo: string, checkBox: boolean) {
+    if (checkBox) {
+      this.selectPostTo = selectPostTo
+      console.log("selectPostTo value : ", this.selectPostTo)
+    }
+  }
+
   expandCard() {
     this.isCardExpanded = true;
   }
+
   collapseCard() {
     this.isCardExpanded = false;
   }
-
 
   showContent(event: Event, content: string) {
     event.preventDefault();
@@ -111,16 +139,15 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
-
-  fetchOnLeaveToday(){
+    fetchOnLeaveToday() {
     this.service.getOnLeaveToday().subscribe(
-      (response:any) => {
-        console.log("onLeaveTpday respoanse ",response);
+      (response: any) => {
+        console.log("onLeaveTpday respoanse ", response);
         this.onLeaveToday = response.result;
       }
     )
   }
-
+ 
   fethHoliday() {
     this.service.getHolidays().subscribe(
       response => {
@@ -138,23 +165,22 @@ export class DashboardComponent implements OnInit {
     this.holiday = this.holidayList[this.currentHolidayIndex];
     this.convertImageToBase64(this.holidayList[this.currentHolidayIndex].imageBase64);
   }
+
   convertImageToBase64(imagePath: string): void {
     const img = new Image();
     img.onload = () => {
       const canvas = document.createElement('canvas');
       canvas.width = img.width;
       canvas.height = img.height;
-  
       const ctx = canvas.getContext('2d');
       ctx?.drawImage(img, 0, 0); // Draw the entire image starting from (0, 0)
-  
       // Convert canvas content to base64 URL and assign to base64Image
       this.base64Image = canvas.toDataURL('image/jpeg');
     };
-    
     // Set src attribute of the image to load from the base64 string directly
     img.src = 'data:image/jpeg;base64,' + imagePath;
   }
+
   previousHoliday() {
     if (this.currentHolidayIndex > 0) {
       this.currentHolidayIndex--;
@@ -168,25 +194,8 @@ export class DashboardComponent implements OnInit {
       this.updateCurrentHoliday();
     }
   }
-  fetchPostsAndLikes(): void {
-    this.service.getPostsAndLikes().subscribe(
-      (response) => {
-        this.posts = response.result.map((post: { postId: any; }) => ({
-          ...post,
-          likes: response.likes.filter((like: { postId: any; }) => like.postId === post.postId)
-        }));
-  
-        console.log("Posts with Likes:", this.posts);
-      },
-      (error) => {
-        console.error('Error fetching posts:', error);
-      }
-    );
-  }
-  
- 
-  fetchleaveData(){
 
+  fetchleaveData() {
     this.service.getLeaveData().subscribe(
       response => {
         console.log("leave data:- ", response);
@@ -196,92 +205,83 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
+
   loadAllPosts(): void {
     this.service.getAllPosts().subscribe((response: any) => {
-      console.log("posts ",response);
+      console.log("posts ", response);
       if (response.status === 'SUCCESS') {
-        this.imageSrcList = response.result.map((item: any) => ({
-          
-          base64Image: 'data:image/jpeg;base64,' + item.base64Image,
-          timeStamp: this.formatTime(item.timeStamp),
-          description:item.description,
-          postId:item.postId,
-          
-          mentionEmployee:item.mentionEmployee
+        this.imageSrcList = response.result.map((item: any) => {
 
-        }));
+          let emojiIds = item.likes.map((like: any) => like.emoji);
+          let emojiIdsCount = emojiIds.length;
+          let commentIds = item.comments.map((p: any) => p.comment);
+          let commentIdsCount = commentIds.length;
+          return {
+            base64Image: 'data:image/jpeg;base64,' + item.base64Image,
+            timeStamp: this.formatTime(item.timeStamp),
+            description: item.description,
+            postId: item.postId,
+            likes: item.likes,
+            emojiIds: emojiIds,
+            emojiIdsCount: emojiIdsCount,
+            mentionEmployee: item.mentionEmployee,
+            comments: item.comments,
+            commentIds: item.commentIds,
+            commentIdsCount: commentIdsCount,
+          };
+        });
+        console.log('Modified imageSrcList:', this.imageSrcList);
       } else {
         console.error('No result found in the response');
       }
     });
   }
 
-
-formatTime(timestamp: string): string {
-  const date = new Date(timestamp);
-  return date.toLocaleTimeString();
-}
-  
-  extractAvailablePaidLeave(data:any){
-    for(let leaveData of data){
-      if(leaveData.leaveType==="Paid Leave"){
-
+  extractAvailablePaidLeave(data: any) {
+    for (let leaveData of data) {
+      if (leaveData.leaveType === "Paid Leave") {
         return leaveData.availableLeave;
+      } else {
+        console.error('No result found in the response');
       }
     }
   }
 
-  getNewJoiners(){
-    this.service.getNewJoiners().subscribe(
-      (response:any)=>{
-        this.todaynewJoiners = response.result[0].newJoinersToday;
-        this.lastSevenDaysNewjoiners = response.result[0].newJoinersLast7Days;
-        this.todayNewJoinersCount = this.todaynewJoiners.length;
-      }
-    );
-    if(this.todaynewJoiners===0){
-      this.noJoinersToday='No New Joinings!!'
-    }
+  formatTime(timestamp: string): string {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString();
   }
 
   getBirthdayAndAfterSevenDaysList() {
-
     this.service.getBirthdays().subscribe(
-
       (response: any) => {
-
         this.todayBirthday = response.result[0].TodayBirthdays;
         this.nextSevendaysBirthday = response.result[0].NextSevenDaysBirthdays;
         this.todayBirthdayCount = this.todayBirthday.length;
       }
-     
     );
-    if(this.todayBirthday=== 0)
-      {
-        this.noBirthdayMessage ='No birthdays today';
-      }
+    if (this.todayBirthday === 0) {
+      this.noBirthdayMessage = 'No birthdays today';
+    }
   }
 
   getAnniversaryAndAfterSevenDaysList() {
-
     this.service.getAnniversary().subscribe(
-
       (response: any) => {
-             console.log("Annivwersary",response);
+        console.log("Annivwersary", response);
         this.todayAnniversary = response.result[0].TodayAnniversary;
         this.nextSevendaysAnniversarys = response.result[0].NextSevenDaysAnniversary;
         this.todayAnniversaryCount = this.todayAnniversary.length;
-        console.log("next seven annevewsiry ",this.nextSevendaysAnniversarys);
-        
+        console.log("next seven annevewsiry ", this.nextSevendaysAnniversarys);
       }
     );
   }
+
   getBirthdayDisplayText(birthday: string): string {
     const birthdayDate = new Date(birthday);
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-
     if (this.isSameDay(birthdayDate, tomorrow)) {
       return 'Tomorrow';
     } else {
@@ -303,57 +303,38 @@ formatTime(timestamp: string): string {
     return `${date.getDate()} ${months[date.getMonth()]}`;
   }
 
-
   toggleCommentBox(index: number): void {
     this.showCommentBox[index] = !this.showCommentBox[index];
   }
 
-  // postComment(index: number, event?: Event): void {
-  //   if (event instanceof KeyboardEvent) {
-  //     event.preventDefault(); 
-  //   }
-  //   console.log(`Comment posted for image index: ${index}`);
-  //   this.showCommentBox[index] = false; 
-  // }
   onEmojiClick(postId: number, emojiId: number): void {
-    
-   const empId=1111;
+    const empId = 1111;
     this.service.saveLike(postId, emojiId, empId).subscribe(
       response => {
         console.log('Like saved successfully', response);
-
       },
       error => {
         console.error('Error saving like', error);
-
       }
     );
   }
-
- 
-  
 
   postComment1(index: number, comment: string, event?: Event): void {
     if (event instanceof KeyboardEvent && event.key !== 'Enter') {
       return;
     }
-
-    const empId = 1111; 
+    const empId = 1111;
     const postId = this.imageSrcList[index]?.postId;
     this.service.postComment(postId, comment, empId).subscribe(
       response => {
         console.log('Comment posted successfully', response);
-        this.showCommentBox[index] = false; 
+        this.showCommentBox[index] = false;
       },
       error => {
         console.error('Error posting comment', error);
       }
     );
   }
-
-  
-
-  
 
   public chartOptions1 = {
     series: [12 - this.totalAvailableLeave, 12],
@@ -414,6 +395,121 @@ formatTime(timestamp: string): string {
     }
   };
 
+  onTextChange(event: Event) {
+    const inputElement = event.target as HTMLTextAreaElement;
+    this.textMessage = inputElement.value;
+    this.postRequestData.description = this.textMessage;
+    console.log(inputElement.value);
+  }
 
+  addAtSymbol(textarea: HTMLTextAreaElement) {
+    textarea.setRangeText('@', textarea.selectionStart, textarea.selectionEnd, 'end');
+    textarea.focus();
+    this.textMessage = textarea.value;
+    this.postRequestData.description = this.textMessage;
+    console.log("addAtSymbol method text area: ", textarea.value)
+  }
+
+  onFileSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const selectedFiles: File[] = [];
+    if (inputElement.files) {
+      for (let i = 0; i < inputElement.files.length; i++) {
+        const file = inputElement.files[i];
+        selectedFiles.push(file);
+      }
+      this.files = selectedFiles
+      console.log(this.files);
+    }
+  }
+
+  toggleEmoticonPicker() {
+    this.showEmoticonPicker = !this.showEmoticonPicker;
+  }
+
+  addEmoticon(textarea: HTMLTextAreaElement, event: any) {
+    const emoji = event.emoji.native;
+    textarea.setRangeText(emoji, textarea.selectionStart, textarea.selectionEnd, 'end');
+    textarea.focus();
+    this.textMessage = textarea.value;
+    this.postRequestData.description = this.textMessage;
+  }
+  selectEmojiCategory(category: string) {
+    this.selectedEmojiCategory = category;
+  }
+
+  postRequest() {
+    if (this.files && this.files.length > 0) {
+      const file: File = this.files[0];
+      this.service.submitPostRequest(this.postRequestData, file).subscribe(response => {
+        console.log("PostRequset response : ", response)
+      },
+        (error => {
+          console.log(error);
+        })
+      );
+    } else {
+      const file = null
+      this.service.submitPostRequest(this.postRequestData, file);
+      console.error('No files selected.');
+    }
+  }
+
+  searchData: any = [];
+  searchData1: Employee[] = [];
+  showDropdown: boolean = false;
+  emp = this.loginService.getEmployeeData();
+  empName = this.emp.firstName + " " + this.emp.lastName
+
+  onChange(search: string) {
+    const atIndex = search.indexOf('@');
+    if (atIndex !== -1 && search.length > atIndex + 1) {
+      // Extract text after '@' symbol
+      const searchText = search.substring(atIndex + 1);
+      if (searchText.length > 1) {
+        console.log("Search Data : ", searchText)
+        this.showDropdown = true;
+        this.loginService.searchEmployee(searchText).subscribe(data => {
+          this.searchData = data
+          this.searchData1 = this.searchData.result[0]
+          console.log("Search DataList : ", this.searchData1)
+          this.searchData1?.forEach(emp => {
+            console.log("Search Data first name : ", emp.firstName)
+          })
+        });
+      } else {
+        this.searchData1 = [];
+        this.showDropdown = false;
+      }
+    } else {
+      this.searchData1 = [];
+      this.showDropdown = false;
+    }
+  }
+
+  todaysNewJoinees: any;
+  lastSevenDaysNewJoinees: any;
+  fetchNewJoinees() {
+    this.service.getNewJoinees().subscribe(
+      (response: any) => {
+        const result = response.result[0];
+        this.todaysNewJoinees = result['newJoinersToday'];
+        this.lastSevenDaysNewJoinees = result['newJoinersLast7Days'];
+        this.todayJoineesCount = this.todaysNewJoinees.length;
+        console.log("Today's New Joinees: ", this.todaysNewJoinees);
+        console.log("Last 7 Days New Joinees: ", this.lastSevenDaysNewJoinees);
+      },
+      (error) => {
+        console.error('Error fetching new joinees:', error);
+      }
+    );
+  }
+}
+
+interface PostRequest {
+  description: string
+  postType: string | null
+  mentionEmployee: string[]
+  postEmployee: number
 
 }

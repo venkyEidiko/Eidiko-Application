@@ -8,7 +8,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +31,11 @@ import lombok.extern.slf4j.Slf4j;
 public class ExcelReader {
 
 	private static final LocalTime COMPANY_START_MORNING_TIME = LocalTime.of(10, 0);
-	
+
 	private static final LocalTime COMPANY_START_AFTERNOON_TIME = LocalTime.of(14, 0);
-	
+
 	private static final LocalTime COMPANY_START_NIGHT_TIME = LocalTime.of(21, 0);
-	
+
 	public static final String[] HEADERS = { "empName", "employeeId", "date", "in-time", "out-time", "status" };
 
 	public static boolean checkExcelFormat(MultipartFile file) {
@@ -50,8 +49,7 @@ public class ExcelReader {
 		SimpleDateFormat outputFormat = new SimpleDateFormat("hh:mm:ss a");
 
 		List<EmployeeAttendance> attendanceList = new ArrayList<>();
-		try (InputStream inputStream = file.getInputStream();
-				Workbook workbook = new XSSFWorkbook(inputStream)) {
+		try (InputStream inputStream = file.getInputStream(); Workbook workbook = new XSSFWorkbook(inputStream)) {
 
 			Sheet sheet = workbook.getSheetAt(0);
 			Map<String, Integer> headerMap = new HashMap<>();
@@ -174,7 +172,7 @@ public class ExcelReader {
 					attendance.setStatus("No in-time or out-time");
 				}
 
-      log.info("Attendance entity {}",attendance);
+				log.info("Attendance entity {}", attendance);
 				attendanceList.add(attendance);
 			}
 		}

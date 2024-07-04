@@ -208,7 +208,21 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 		return leaveSummaries;
 	}
 
-	/*@Override
+	/*
+	 * @Override public Page<EmpLeave> findByLeaveTypesAndStatuses(Long employeeId,
+	 * List<String> leaveTypes, List<String> statuses, Pageable pageable) {
+	 * log.info("Fetching records with leaveTypes: {} and statuses: {}", leaveTypes,
+	 * statuses);
+	 * 
+	 * Page<EmpLeave> leaves =
+	 * empLeaveRepo.findByEmployeeIdAndLeaveTypeInAndStatusIn(employeeId,
+	 * leaveTypes, statuses, pageable);
+	 * 
+	 * 
+	 * leaves.getTotalElements(); log.info("Fetched records: {}", leaves); return
+	 * leaves; }
+	 */
+	@Override
 	public Page<EmpLeave> findByLeaveTypesAndStatuses(Long employeeId, List<String> leaveTypes, List<String> statuses,
 			Pageable pageable) {
 		log.info("Fetching records with leaveTypes: {} and statuses: {}", leaveTypes, statuses);
@@ -216,28 +230,16 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 		Page<EmpLeave> leaves = empLeaveRepo.findByEmployeeIdAndLeaveTypeInAndStatusIn(employeeId, leaveTypes, statuses,
 				pageable);
 
-		
-		leaves.getTotalElements();
-		log.info("Fetched records: {}", leaves);
-		return leaves;
+		// Filter out leaves with status "pending"
+		List<EmpLeave> filteredLeaves = leaves.getContent().stream()
+				.filter(leave -> !leave.getStatus().equalsIgnoreCase("pending")).collect(Collectors.toList());
+
+		Page<EmpLeave> filteredPage = new PageImpl<>(filteredLeaves, pageable, filteredLeaves.size());
+
+		log.info("Fetched filter records: {}", filteredLeaves);
+		return filteredPage;
 	}
-*/
-	@Override
-	public Page<EmpLeave> findByLeaveTypesAndStatuses(Long employeeId, List<String> leaveTypes, List<String> statuses, Pageable pageable) {
-	    log.info("Fetching records with leaveTypes: {} and statuses: {}", leaveTypes, statuses);
 
-	    Page<EmpLeave> leaves = empLeaveRepo.findByEmployeeIdAndLeaveTypeInAndStatusIn(employeeId, leaveTypes, statuses, pageable);
-
-	    // Filter out leaves with status "pending"
-	    List<EmpLeave> filteredLeaves = leaves.getContent().stream()
-	        .filter(leave -> !leave.getStatus().equalsIgnoreCase("pending"))
-	        .collect(Collectors.toList());
-             
-	    Page<EmpLeave> filteredPage = new PageImpl<>(filteredLeaves, pageable, filteredLeaves.size());
-
-	    log.info("Fetched filter records: {}", filteredLeaves);
-	    return filteredPage;
-	}
 	@Override
 	public List<EmpLeaveDto> getEmployeesOnLeaveToday() {
 		LocalDate today = LocalDate.now();
@@ -252,21 +254,21 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 		}).filter(dto -> dto != null).collect(Collectors.toList());
 	}
 
+//this method is used to get the details by their leavetype
 	@Override
 	public List<EmpLeaveDto> getEmployeeDetailsByRequestType(String leaveType) {
 		List<EmpLeave> empLeaveList = empLeaveRepo.findByLeaveType(leaveType);
 		return empLeaveList.stream().map(empLeave -> this.mapper.empLeaveToEmpLeaveDto(empLeave))
 				.collect(Collectors.toList());
 	}
+
 	@Override
-	public List<EmpLeave> searchByKeyword(String keyword,Long employeeId) {
+	public List<EmpLeave> searchByKeyword(String keyword, Long employeeId) {
 
-		List<EmpLeave> searchKeyword = 
+		List<EmpLeave> searchKeyword =
 
-                empLeaveRepo.searchByLeaveTypeOrStatusAndEmployeeId(keyword, employeeId).orElse(null);
+				empLeaveRepo.searchByLeaveTypeOrStatusAndEmployeeId(keyword, employeeId).orElse(null);
 		return searchKeyword;
 	}
-
-
 
 }

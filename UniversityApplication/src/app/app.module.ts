@@ -11,7 +11,7 @@ import { ResetpasswordComponent } from './resetpassword/resetpassword.component'
 import { ResetPasswordConfirmationComponent } from './reset-password-confirmation/reset-password-confirmation.component';
 import { FormsModule } from '@angular/forms';
 import { OtpComponent } from './otp/otp.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -69,11 +69,12 @@ import { ShiftRequestFormComponent } from './shift-request-form/shift-request-fo
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
 import { HolidayDialogComponent } from './holiday-dialog/holiday-dialog.component'; // Import CarouselModule
 import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.component';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { TruncatePipe } from './turncate.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { InterceptorService } from './services/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -130,7 +131,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     
   ],
   imports: [
-
+    PickerComponent,
     MatDatepickerModule,
     BrowserModule,
     MatButtonModule,
@@ -173,7 +174,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatCardModule
   ],
 
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true } // Register interceptor
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
