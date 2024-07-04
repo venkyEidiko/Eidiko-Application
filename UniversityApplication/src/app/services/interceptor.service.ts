@@ -1,18 +1,13 @@
-import {
-  HttpErrorResponse,
-  HttpEvent,
-  HttpHandler,
-  HttpHeaders,
-  HttpInterceptor,
-  HttpRequest,
-} from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable, catchError, switchMap, tap, throwError } from "rxjs";
-import { LoginService } from "./login.service";
-import { Router } from "@angular/router";
-import { EmailCheckService } from "./email-check.service";
-import { OtpService } from "./otp.service";
-import { AuthService } from "./auth.service";
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, catchError, switchMap, tap, throwError } from 'rxjs';
+import { LoginService } from './login.service';
+import { LoaderService } from './loader.service';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { AuthService } from './auth.service';
+import { OtpService } from './otp.service';
+import { EmailCheckService } from './email-check.service';
+
 
 @Injectable({
   providedIn: "root",
@@ -22,8 +17,20 @@ export class InterceptorService implements HttpInterceptor {
     private loginService: LoginService,
     private emailCheckService: EmailCheckService,
     private otpService: OtpService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService, private loaderService: LoaderService, private router: Router
+  ) { 
+    this.initialize();
+  }
+  private initialize() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.loaderService.showLoading();
+      } else if (event instanceof NavigationEnd) {
+        this.loaderService.hideLoading();
+      }
+    });
+  }
+  
 
   intercept(
     request: HttpRequest<any>,
@@ -59,10 +66,12 @@ export class InterceptorService implements HttpInterceptor {
               return throwError(refreshError);
             })
           );
+
         } else {
           return throwError(error);
         }
       })
+
     );
   }
 

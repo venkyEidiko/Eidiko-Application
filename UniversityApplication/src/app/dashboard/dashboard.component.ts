@@ -242,9 +242,10 @@ export class DashboardComponent implements OnInit, OnChanges {
     });
   }
 
-  extractAvailablePaidLeave(data: any) {
-    for (let leaveData of data) {
-      if (leaveData.leaveType === "Paid Leave") {
+ 
+  extractAvailablePaidLeave(data:any){
+    for(let leaveData of data){
+      if(leaveData.leaveType==="Paid Leave"){
         return leaveData.availableLeave;
       } else {
         console.error('No result found in the response');

@@ -130,7 +130,7 @@
             </li>
           </ul>
           <div class="org-content">
-           
+
             <!-- Post request  field -->
             <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item">
               <div class="form-container">
@@ -321,7 +321,7 @@
                       <div class="nextSeven-bithdays">
                         <span>{{afterSeven.firstName}} {{afterSeven.lastName}}</span>
                         <br>
-                       
+
                         <span>{{ getBirthdayDisplayText(afterSeven.dateOfBirth) }}</span>
                       </div>
                     </div>
@@ -379,7 +379,8 @@
               <div class="new-joinees-section">
                 <div class="todayNewJoinees-container">
                   <h2>New Joinees Today</h2>
-                  <div *ngIf="todaysNewJoinees && todaysNewJoinees.length > 0; else noJoineesToday" class="todayNewJoinees">
+                  <div *ngIf="todaysNewJoinees && todaysNewJoinees.length > 0; else noJoineesToday"
+                    class="todayNewJoinees">
                     <div *ngFor="let joinee of todaysNewJoinees" class="todayNewJoinees-items">
                       <!-- Display joinee details -->
                       <div class="joinee-profile">
@@ -399,7 +400,8 @@
 
                 <div class="lastSevenDays-container">
                   <h2>Last 7 Days</h2>
-                  <div *ngIf="lastSevenDaysNewJoinees && lastSevenDaysNewJoinees.length > 0; else noJoineesLast7Days" class="lastSevenDaysJoiners">
+                  <div *ngIf="lastSevenDaysNewJoinees && lastSevenDaysNewJoinees.length > 0; else noJoineesLast7Days"
+                    class="lastSevenDaysJoiners">
                     <div *ngFor="let joinee of lastSevenDaysNewJoinees" class="lastSevenDaysJoiners-items">
                       <!-- Display joinee details -->
                       <div class="joinee-profile">
@@ -419,7 +421,6 @@
                   </ng-template>
                 </div>
               </div>
-
 
             </div>
           </div>

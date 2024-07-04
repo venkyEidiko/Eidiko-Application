@@ -77,6 +77,8 @@ import { SummaryComponent } from './summary/summary.component';
 import { CapatlizePipe } from '../pipes/capatlize.pipe';
 import { FirstletterPipe } from '../pipes/firstletter.pipe';
 import { InterceptorService } from './services/interceptor.service';
+import { LoaderComponent } from './loader/loader.component';
+import { LoaderService } from './services/loader.service';
 
 
 @NgModule({
@@ -92,7 +94,7 @@ import { InterceptorService } from './services/interceptor.service';
     ForgotpasswordComponent,
     ResetpasswordComponent,
     ResetPasswordConfirmationComponent,
-     DashboardComponent,
+    DashboardComponent,
     WelcomeComponent,
     MeComponent,
     InboxComponent,
@@ -124,9 +126,12 @@ import { InterceptorService } from './services/interceptor.service';
     ShiftRequestFormComponent,
     HolidayDialogComponent,
     CheckboxdropdownComponent,
+
+    LoaderComponent,
     SummaryComponent,
     CapatlizePipe,
     FirstletterPipe
+
   ],
   imports: [
     PickerComponent,
@@ -171,8 +176,9 @@ import { InterceptorService } from './services/interceptor.service';
     MatDatepickerModule,
     MatCardModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true } // Register interceptor
+
+  providers: [LoaderService, { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true } // Register interceptor
   ],
-bootstrap: [AppComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
