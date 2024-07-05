@@ -230,7 +230,7 @@ export class LeavesComponent implements OnInit {
               this.updateChartOptions();
             } else if (leave.leaveType === 'comp offs') {
               this.consumedCompOffs = leave.consumedLeave;
-              this.availableCompOffs = this.totalLeave - leave.consumedLeave;
+             
               this.updateMonthlyChartData(leave.monthlyLeaveData);
                 this.updateChartOptions();
             } else if (leave.leaveType == 'unpaid') {
@@ -438,10 +438,10 @@ export class LeavesComponent implements OnInit {
       height: 220
     },
     labels: ['AvailableCompOffLeaves', 'ConsumedCompOffLeaves'],
-    colors: ['#cdfaf6', '#1eebe7'],
+    colors: ['#f2d8f0', '#f2d8f0'],
     fill: {
       type: 'solid',
-      colors: ['#cdfaf6', '#1eebe7']
+      colors: ['#e68ee0', '#e68ee0']
     },
     legend: {
       show: false

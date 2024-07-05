@@ -426,6 +426,8 @@
                 style="height: 55px; width: 60px; border-radius: 30px; margin-top: 10px; margin-bottom: 10px;">
               <p style="margin-top:35px;margin-left:10px">{{ image.timeStamp }}</p>
             </div>
+
+
             <p>{{image.description}}</p>
 
             <p style="color:dodgerblue">{{image.mentionEmployee.join(',')}}</p>
@@ -449,6 +451,7 @@
               <p (click)="toggleCommentBox(i)" style="cursor: pointer;"><i class="fa-regular fa-message"></i>Comment</p>
               <p style="margin-left:200px;cursor: pointer;">{{image.emojiIdsCount}} reactions <span
                   style="font-size: 15px;margin-left:20px"><b>.</b></span></p>
+
               <p>{{image.commentIdsCount}} Comments</p>
             </div>
             <div *ngIf="showCommentBox[i]">
@@ -459,6 +462,7 @@
                 <button type="submit" style="display:none;"></button>
               </form>
             </div>
+
 
           </mat-card-content>
         </mat-card>

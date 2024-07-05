@@ -64,6 +64,9 @@ export interface Employee {
     city: string;
     pincode: number;
     state: string;
+    addressLine1:any;
+    addressLine2:any;
+
   }  
   
   export interface Role {
