@@ -1,21 +1,28 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-
 export class EmailCheckService {
+  constructor(private http: HttpClient) {}
+  private isAuthenticated: boolean = false;
 
-  constructor(private http: HttpClient) { }
-   email='';
- checkEmail(email: string) {
-  this.email=email;
+  email = "";
+  checkEmail(email: string) {
+    this.isAuthenticated = true;
+    this.email = email;
     return this.http.get<any>(`http://10.0.0.38:8082/api/getByEmail/${email}`);
+  }
+  getEmail() {
+    this.isAuthenticated = true;
+    return this.email;
+  }
 
-}
-getEmail(){
-  return this.email;
-}
+  setUnAuthenticatedUser() {
+    this.isAuthenticated = false;
+  }
+  isAuthenticatedUser(): boolean {
+    return this.isAuthenticated;
+  }
 }

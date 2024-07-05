@@ -155,7 +155,7 @@ public class PostService {
 
 			// Iterate through each post in the list
 			for (Posts post : byTimeStampDesc) {
-				// If the post has an image (i.e., the image byte array is not null)
+			
 				if (post.getImage() != null) {
 					log.info("list employee post {} :", post.getMentionEmployee());
 					// Get the image bytes from the post

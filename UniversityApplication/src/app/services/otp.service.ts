@@ -7,9 +7,18 @@ import { Observable } from 'rxjs';
 })
 export class OtpService {
   private apiUrl = 'http://10.0.0.38:8082/api/sendMail';
+  private isAuthenticated: boolean = false;
 
   constructor(private http: HttpClient) { }
   sendOtpEmail(toEmail: string): Observable<any> {
+    this.isAuthenticated = true
     return this.http.get<any>(`${this.apiUrl}?toMail=${toEmail}`);
+  }
+
+  setUnAuthenticatedUser(){
+    this.isAuthenticated = false;
+  }
+  isAuthenticatedUser(): boolean {
+    return this.isAuthenticated;
   }
 }
