@@ -17,6 +17,7 @@ import { LoginService } from '../services/login.service';
 
 export class DashboardComponent implements OnInit {
 
+
   showEmoticonPicker = false;
   LeaveResponse: any;
   totalAvailableLeave = 12;
@@ -74,11 +75,13 @@ export class DashboardComponent implements OnInit {
     this.getAnniversaryAndAfterSevenDaysList();
     this.getBirthdayAndAfterSevenDaysList();
     this.loadAllPosts();
+
     this.fetchOnLeaveToday();
     this.workFromHomeList();
     //this.fetchPostsAndLikes();
     this.fetchOnLeaveToday();
     this.fetchNewJoinees();
+
 
   }
 
@@ -95,6 +98,9 @@ export class DashboardComponent implements OnInit {
     comments: any,
     showComments: any
   }[] = [];
+
+
+ 
 
   insertSymbol(symbol: string) {
     this.insertedSymbol = symbol;
@@ -210,8 +216,11 @@ export class DashboardComponent implements OnInit {
 
           let emojiIds = item.likes.map((like: any) => like.emoji);
           let emojiIdsCount = emojiIds.length;
-          let commentIds = item.comments.map((p: any) => p.comment);
-          let commentIdsCount = commentIds.length;
+
+          let commentIds=item.comments.map((p:any)=>p.comment);
+          let commentIdsCount=commentIds.length;
+
+
           return {
             base64Image: 'data:image/jpeg;base64,' + item.base64Image,
             timeStamp: this.formatTime(item.timeStamp),
@@ -221,12 +230,22 @@ export class DashboardComponent implements OnInit {
             emojiIds: emojiIds,
             emojiIdsCount: emojiIdsCount,
             mentionEmployee: item.mentionEmployee,
-            comments: item.comments,
-            commentIds: item.commentIds,
-            commentIdsCount: commentIdsCount,
+
+            comments:item.comments,
+            commentIds:item.commentIds,
+            commentIdsCount:commentIdsCount,
+
+
+
+
           };
         });
+  
+        // Log the entire imageSrcList for verification
         console.log('Modified imageSrcList:', this.imageSrcList);
+        
+
+
       } else {
         console.error('No result found in the response');
       }

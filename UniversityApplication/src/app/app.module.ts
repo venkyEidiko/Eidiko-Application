@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { ResetPasswordConfirmationComponent } from './reset-password-confirmation/reset-password-confirmation.component';
-import { FormsModule } from '@angular/forms';
+
 import { OtpComponent } from './otp/otp.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -58,6 +58,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgChartsModule } from 'ng2-charts';
 import { Dialog1Component } from './dialog1/dialog1.component';
 import { CompDialogComponent } from './comp-dialog/comp-dialog.component';
+
+import { FormsModule } from '@angular/forms';
+
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DropdowntableComponent } from './dropdowntable/dropdowntable.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -70,14 +73,22 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HolidayDialogComponent } from './holiday-dialog/holiday-dialog.component'; // Import CarouselModule
 import { CheckboxdropdownComponent } from './checkboxdropdown/checkboxdropdown.component';
-import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-import { TruncatePipe } from '../pipes/turncate.pipe';
+
+import { PickerComponent,PickerModule } from '@ctrl/ngx-emoji-mart';
+import { TruncatePipe } from 'src/pipes/turncate.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
+
+import { Edit1Component } from './edit1/edit1.component';
+import { Edit2Component } from './edit2/edit2.component';
+import { Edit3Component } from './edit3/edit3.component';
+import { Edit4Component } from './edit4/edit4.component';
 import { SummaryComponent } from './summary/summary.component';
 import { CapatlizePipe } from '../pipes/capatlize.pipe';
 import { FirstletterPipe } from '../pipes/firstletter.pipe';
+
 import { InterceptorService } from './services/interceptor.service';
-import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
+
 
 
 @NgModule({
@@ -100,6 +111,8 @@ import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
     MyteamComponent,
     MyfinancesComponent,
     OrgComponent,
+    Edit1Component,
+  
     ClockComponent,
     DonutchartComponent,
     OtpComponent,
@@ -121,10 +134,18 @@ import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
     DialogComponent,
     Dialog1Component,
     CompDialogComponent,
+
     DropdowntableComponent,
     ShiftRequestFormComponent,
     HolidayDialogComponent,
     CheckboxdropdownComponent,
+
+      Edit1Component,
+      Edit2Component,
+      Edit3Component,
+      Edit4Component,
+     
+
 
    SummaryComponent,
     CapatlizePipe,
@@ -132,7 +153,8 @@ import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 
   ],
   imports: [
-    PickerComponent,
+    PickerModule,
+    FormsModule,
     MatDatepickerModule,
     BrowserModule,
     MatButtonModule,

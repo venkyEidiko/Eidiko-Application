@@ -74,9 +74,12 @@ export class DashbordService {
 
   getBirthdays(): Observable<any> {
 
+
     return this.http.get<any[]>("http://10.0.0.60:8080/api/todayAndNextSevenDaysBirthdaysList");
 
   }
+
+
 
   getAnniversary(): Observable<any> {
     return this.http.get<any>("http://10.0.0.60:8080/api/todayAndNextSevenDaysAnniversaryList");
@@ -143,6 +146,7 @@ export class DashbordService {
     return this.http.get<any>("http://localhost:8082/api/newJoineesAndLast7Days");
   }
 }
+
 
 
 
