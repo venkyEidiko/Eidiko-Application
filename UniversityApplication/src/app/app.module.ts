@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { ResetPasswordConfirmationComponent } from './reset-password-confirmation/reset-password-confirmation.component';
-import { FormsModule } from '@angular/forms';
+
 import { OtpComponent } from './otp/otp.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -58,7 +58,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgChartsModule } from 'ng2-charts';
 import { Dialog1Component } from './dialog1/dialog1.component';
 import { CompDialogComponent } from './comp-dialog/comp-dialog.component';
-
+import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DropdowntableComponent } from './dropdowntable/dropdowntable.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -150,6 +150,7 @@ import { InterceptorService } from './services/interceptor.service';
   ],
   imports: [
     PickerModule,
+    FormsModule,
     MatDatepickerModule,
     BrowserModule,
     MatButtonModule,

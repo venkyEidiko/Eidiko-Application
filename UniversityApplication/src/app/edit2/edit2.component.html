@@ -9,11 +9,11 @@
         <div class="form-field">
             <div>
                 <label>Work Email</label><br />
-                <input matInput type="text" value="ravan">
+                <input [(ngModel)]="data.employee.workEmail" matInput type="text">
             </div>
             <div>
                 <label>Personal Email</label><br />
-                <input matInput type="text" value="ravan">
+                <input [(ngModel)]="data.employee.personalEmail" matInput type="text" >
             </div>
 
         </div>
@@ -21,43 +21,34 @@
         <div class="form-field">
             <div>
                 <label>Mobile Number</label><br />
-                <input matInput type="text" value="ravan">
+                <input [(ngModel)]="data.employee.mobileNumber" matInput type="text" >
               
             </div>
             <div>
                 <mat-label>Work Number</mat-label><br />
-                <input matInput type="text" value="ravan">
+                <input [(ngModel)]="data.employee.workNumber" matInput type="text" >
             </div>
         </div>
         <div class="form-field">
             <div>
                 <label>Residence Number</label><br />
-                <input matInput type="text" value="ravan">
+                <input [(ngModel)]="data.employee.residenceNumber" matInput type="text" >
               
             </div>
             <div>
                 <mat-label>Skype</mat-label><br />
-                <input matInput type="text" value="ravan">
+                <input  [(ngModel)]="data.employee.skype"matInput type="text">
             </div>
         </div>
         <div class="form-field">
             <div>
                 <label>Emergency Contact Number</label><br />
-                <input matInput type="text" value="ravan">
-               
-            </div>
-           
-        </div>
-
-
-    </div>
-
-
-
-
-
+                <input [(ngModel)]="data.employee.contactNumber" matInput type="text" >
+                </div>
+          </div>
+      </div>
     <div mat-dialog-actions class="custom-dialog-actions">
         <button mat-button (click)="closeDialog()">Cancel</button>
-        <button mat-button class="confirm">Confirm</button>
+        <button mat-button class="confirm"  [mat-dialog-close]="data" >Confirm</button>
     </div>
 </div>

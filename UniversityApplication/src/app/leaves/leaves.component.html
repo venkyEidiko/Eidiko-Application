@@ -100,17 +100,17 @@
                         Comp Offs
                         <span (click)="openDialog1()">View details</span>
                     </div>
-                    <!-- <div class="donut-container">
-         <div class="donut-text1">{{this.availableCompOffs}} Days Available</div>
+                    <div class="donut-container">
+         <div class="donut-text1" style="color:white;margin-left:15px"> ∞  Days Available</div>
                         <app-donut1 [chartOptions]="chartOptions4">
 
 
                         </app-donut1>
-                    </div> -->
+                    </div>
 
                     
 
-                    <div class="balance-line1">
+                    <div class="balance-line">
                         <hr />
                     </div>
 
@@ -119,19 +119,19 @@
                         <div class="available">
 
                             Available <br />
-                            <!-- {{this.availableCompOffs}} -->
-                             0 days
+                            ∞ Days
+                             
 
                         </div>
                         <div class="line"></div>
                         <div class="consumed">
-                            Consumed <br />0 Days
-                            <!-- {{this.consumedCompOffs}} -->
+                            Consumed <br />
+                            {{this.consumedCompOffs}} days
                         </div>
                     </div>
                     <hr class="line-break">
                     <div class="annual quota">
-                        Annual Quota <br /> 0 Days
+                        Annual Quota <br />    ∞ Days
                     </div>
                 </mat-card-content>
             </mat-card>
