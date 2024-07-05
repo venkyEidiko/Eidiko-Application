@@ -211,12 +211,14 @@ mat-card-content {
   padding: 0;
   gap: 8px;
   border-bottom: 1px solid #A2A9B4;
+  
 }
 
 .org-card-short ul.nav-list li,
 .org-card ul.nav-list li {
   display: flex;
   align-items: center;
+ 
 }
 
 .org-card-short ul.nav-list li i {
@@ -230,6 +232,7 @@ mat-card-content {
   justify-content: center;
   color: #FFFFFF;
   background: #c29be8;
+
 }
 
 .org-card-short ul.nav-list li a,
@@ -238,8 +241,8 @@ mat-card-content {
   padding: 10px;
   color: #A2A9B4;
   cursor: pointer;
-}
 
+}
 .org-card-short ul.nav-list li a.active,
 .org-card ul.nav-list li a.active {
   color: #FFFFFF;
@@ -479,12 +482,11 @@ emoji-mart {
   flex-wrap: wrap;
   gap: 20px;
 }
-
 .today-Anniversary {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-}
+} 
 
 .todayAnniversary-container h4 {
   font-size: 1.2em;
@@ -503,7 +505,6 @@ emoji-mart {
   flex-direction: column;
   text-align: center;
 }
-
 .nextSeven-Anniversary-items {
   display: flex;
   flex-wrap: wrap;

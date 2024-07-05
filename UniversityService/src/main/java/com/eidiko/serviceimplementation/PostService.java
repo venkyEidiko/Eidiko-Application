@@ -12,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.eidiko.entity.Employee;
 import com.eidiko.entity.Posts;
 import com.eidiko.exception_handler.FileUploadException;
+import com.eidiko.exception_handler.UserNotFoundException;
+import com.eidiko.repository.EmployeeRepo;
 import com.eidiko.repository.PostRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,11 +28,14 @@ public class PostService {
 
 	@Autowired
 	private PostRepo postRepo;
+	
+	@Autowired
+	private EmployeeRepo employeeRepo;
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	// saving purpose
-	public String saveImage(Posts posts) throws IOException, SQLException, FileUploadException {
+	public String saveImage(Posts posts) throws IOException, SQLException, FileUploadException, UserNotFoundException {
 
 //		if (file != null) {
 //			byte[] fileData = genareteImageTobyteArray(file);
@@ -37,12 +43,14 @@ public class PostService {
 //
 //		}
 
+		
+		Employee emp=employeeRepo.findById(posts.getPostEmployee()).orElseThrow(()->new UserNotFoundException("Useris not avalable !"));
 		// for setting time (post created time)
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		String format = LocalDateTime.now().format(dateFormat);
 		System.out.println("Date format: " + format);
 		posts.setTimeStamp(format);
-
+           posts.setPostEmployeeName(emp);  
 		postRepo.save(posts);
 		return "saved !";
 

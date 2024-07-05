@@ -101,7 +101,7 @@ public class JwtConfigurartions {
 		log.info("http security");
 		return httpSecurity.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(req -> 
-				req.requestMatchers("/login1", "/refresh/**","/api/save").permitAll()
+				req.requestMatchers("/login1", "/refresh/**","/api/save","/api/password/forgotPassword","/api/getByEmail/**","/api/sendMail").permitAll()
 						.anyRequest().authenticated())
 		    	.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))
 				// .sessionManagement(session ->
@@ -116,5 +116,5 @@ public class JwtConfigurartions {
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
-
+	
 }

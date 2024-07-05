@@ -31,8 +31,8 @@ import { CalenderComponent } from "./calender/calender.component";
 import { SummaryComponent } from "./summary/summary.component";
 
 const routes: Routes = [
-  { path: "", component: RegistrationComponent },
-  { path: "login", component: LoginComponent },
+  { path: "", component: LoginComponent},
+  { path: "register", component: RegistrationComponent },
 
   { path: "forgotpassword", component: ForgotpasswordComponent },
   { path: "reset", component: ResetpasswordComponent },
