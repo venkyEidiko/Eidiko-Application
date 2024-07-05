@@ -49,8 +49,10 @@ td {
 .card-item, .card-item1, .card-item2 {
     background-color: #333d4e;
     border: 0.1px solid #525455;
+
     /* height: 30vh; */
     height: auto;
+
     border-radius: 2px;
     padding: 10px;
     box-sizing: border-box;
@@ -81,6 +83,7 @@ td {
  .days{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap:10px;
  }
 

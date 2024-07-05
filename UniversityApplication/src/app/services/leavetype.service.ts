@@ -26,11 +26,11 @@ export class LeavetypeService {
     return this.http.get<LeaveStats>(`${this.apiUrl}getEmpLeaveSummaryByEmpId/${this.employeeId}`);
   }
   fetchMonthlyLeaveData(employeeId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${this.employeeId}`);
+    return this.http.get<any>(`${this.apiUrl}getEmpLeaveSummaryByEmpId/${this.employeeId}`);
   }
   getEmployeeLeaveData(employeeId: number): Observable<any> {
 
-    return this.http.get<any>(`${this.apiUrl}/${this.employeeId}`);
+    return this.http.get<any>(`${this.apiUrl}getEmpLeaveSummaryByEmpId/${this.employeeId}`);
   }
  
   fetchLeaveData(employeeId: number, pageNumber: number, pageSize: number): Observable<any> {

@@ -49,7 +49,11 @@ export class NavbarComponent implements OnInit {
     this.showDropdown = false;
   }
 
-
+logout(){
+  localStorage.removeItem('jwt-token');
+  localStorage.removeItem('employee-data');
+  localStorage.removeItem('refresh-token');
+}
 
   @HostListener('document:click', ['$event'])
   onOutsideClick(event: MouseEvent): void {

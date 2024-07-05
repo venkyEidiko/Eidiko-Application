@@ -363,11 +363,22 @@ emoji-mart {
   display: none;
 }
 
-
 .emoji-picker-content.active {
   display: block;
+  cursor: pointer;
 }
-
+::ng-deep .emoji-mart-search {
+  display: none; /* Hide the search input */
+}
+::ng-deep span.emoji-mart-anchor.emoji-mart-anchor-selected.ng-star-inserted {
+  display: none;
+}
+::ng-deep .emoji-mart-preview-emoji {
+  display: none;
+}
+::ng-deep .emoji-mart-emoji ng-star-inserted{
+  display: none;
+}
 /* text area  */
 .textarea {
   min-width: 700px;
@@ -602,17 +613,26 @@ emoji-mart {
   margin-left: -140px; 
   gap: 10px; 
   text-align: center;
- 
+  background-color: #333d4e;
 }
-
+.post-footer-content span{
+  font-size: 17px;
+  margin-top: 5px;
+}
 .post-select{
-  width: 150px;
+  width: 140px;
+  padding: 2.5px 5px;
   height: 25px;
-  display: block; border: 
-  1px solid gray; 
-  
+  display: block; 
+  border: 1px solid gray; 
+  background-color: #333d4e;
 }
-
+::ng-deep .cdk-overlay-pane:not(.mat-mdc-select-panel-above) div.mat-mdc-select-panel {
+  background-color: #333d4e;
+}
+::ng-deep .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text:not(.--mat-option-selected-state-label-text-color){
+  color: #c29be8;
+}
 /* Announcement css */
 .announce-request{
   display: flex;
@@ -653,13 +673,7 @@ color: #fff;
   .announce-hide-date{
     display: flex;
   }
-  /* .announce-request-content input::placeholder {
-    color: #aaa9a9; 
-  }
-  .announce-request-content textarea::placeholder {
-    color: #aaa9a9;
-    font-size: large;
-  } */
+  
   .announce-hide-date input{
 width: 80px;
 background-color: #333d4e;
@@ -681,3 +695,29 @@ color: #fff;
 ::ng-deep .mat-calendar-next-button::after  {
   color: #fff;
   }
+
+  /* Search Dropdown Styles */
+.search-dropdown {
+  position: absolute;
+  width: 40%;
+  margin-top: -20%;
+  top: calc(100%);
+  left: 0;
+  right: 0;
+  background-color: #333d4e;
+  box-shadow: 0 0 5px rgba(255, 243, 243, 0.1);
+  border-radius: 3px;
+  z-index: 1001;
+  padding: 10px;
+}
+
+
+.search-dropdown div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+
+.search-dropdown div:hover {
+  background-color: #201f1f;
+}

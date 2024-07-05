@@ -280,7 +280,7 @@ export class LeavesComponent implements OnInit {
               const keys = Object.keys(monthlyData);
               console.log("Leave Type: ", leaveType);
               console.log("Month keys: ", keys);
-  
+
               // Update monthly chart data for each leave type
               this.updateMonthlyChartData(monthlyData);
   
@@ -298,6 +298,7 @@ export class LeavesComponent implements OnInit {
                     this.dayIndexCountMap.set(dayIndex, 1);
                   }
                 });
+                
               });
             } else {
               console.warn(`No monthly leave data available for ${leaveType}`);
