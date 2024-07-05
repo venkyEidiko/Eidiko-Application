@@ -77,8 +77,7 @@ import { SummaryComponent } from './summary/summary.component';
 import { CapatlizePipe } from '../pipes/capatlize.pipe';
 import { FirstletterPipe } from '../pipes/firstletter.pipe';
 import { InterceptorService } from './services/interceptor.service';
-import { LoaderComponent } from './loader/loader.component';
-import { LoaderService } from './services/loader.service';
+import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 
 
 @NgModule({
@@ -127,8 +126,7 @@ import { LoaderService } from './services/loader.service';
     HolidayDialogComponent,
     CheckboxdropdownComponent,
 
-    LoaderComponent,
-    SummaryComponent,
+   SummaryComponent,
     CapatlizePipe,
     FirstletterPipe
 
@@ -174,10 +172,16 @@ import { LoaderService } from './services/loader.service';
     MatFormFieldModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatCardModule
+    MatCardModule,
+    NgxUiLoaderModule,
+    NgxUiLoaderHttpModule.forRoot({
+      showForeground:true,
+      exclude: ["http://10.0.0.60:8080/api/searchByKeyword/"]
+    }),
+    
   ],
 
-  providers: [LoaderService, { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true } // Register interceptor
+  providers: [ { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true } // Register interceptor
   ],
   bootstrap: [AppComponent],
 })

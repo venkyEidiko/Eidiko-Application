@@ -2,7 +2,6 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor
 import { Injectable } from '@angular/core';
 import { Observable, catchError, switchMap, tap, throwError } from 'rxjs';
 import { LoginService } from './login.service';
-import { LoaderService } from './loader.service';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { OtpService } from './otp.service';
@@ -17,19 +16,19 @@ export class InterceptorService implements HttpInterceptor {
     private loginService: LoginService,
     private emailCheckService: EmailCheckService,
     private otpService: OtpService,
-    private authService: AuthService, private loaderService: LoaderService, private router: Router
+    private authService: AuthService, private router: Router
   ) { 
-    this.initialize();
+    // this.initialize();
   }
-  private initialize() {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this.loaderService.showLoading();
-      } else if (event instanceof NavigationEnd) {
-        this.loaderService.hideLoading();
-      }
-    });
-  }
+  // private initialize() {
+  //   this.router.events.subscribe(event => {
+  //     if (event instanceof NavigationStart) {
+  //       this.loaderService.showLoading();
+  //     } else if (event instanceof NavigationEnd) {
+  //       this.loaderService.hideLoading();
+  //     }
+  //   });
+  // }
   
 
   intercept(
