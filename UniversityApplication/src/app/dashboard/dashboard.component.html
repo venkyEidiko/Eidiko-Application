@@ -138,13 +138,17 @@
                   placeholder="Write your post here and mention your peers"></textarea>
                 <div class="actions">
                   <button mat-icon-button (click)="addAtSymbol(textarea)"><mat-icon>alternate_email</mat-icon></button>
+                  <div class="search-dropdown" *ngIf="showDropdown" (click)="$event.stopPropagation()">
+                    <div *ngFor="let result of searchData1" (click)="selectResult(result,textarea)">
+                      {{result.firstName+" "+result.lastName|| "-No Result-"}}
+                    </div>
+                  </div>
                   <button mat-icon-button (click)="fileInput.click()"><mat-icon>image</mat-icon></button>
                   <input type="file" #fileInput multiple (change)="onFileSelected($event)" hidden>
                   <button mat-icon-button (click)="toggleEmoticonPicker()"><mat-icon>insert_emoticon</mat-icon></button>
                 </div>
                 <div class="emoticon-picker" *ngIf="showEmoticonPicker">
                   <div class="emoji-picker-header">
-                    <button (click)="selectEmojiCategory('frequentlyUsed')">⏰</button>
                     <button (click)="selectEmojiCategory('smileys')">😊</button>
                     <button (click)="selectEmojiCategory('animals')">🐻</button>
                     <button (click)="selectEmojiCategory('foods')">🍏</button>
@@ -153,12 +157,8 @@
                     <button (click)="selectEmojiCategory('objects')">📑</button>
                     <button (click)="selectEmojiCategory('symbols')">🔣</button>
                     <button (click)="selectEmojiCategory('flags')">🏳️</button>
-                    <button (click)="selectEmojiCategory('custom')">✨</button>
                   </div>
-                  <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'frequentlyUsed'">
-                    <emoji-mart set="apple" [include]="['frequently_used']"
-                      (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
-                  </div>
+                
                   <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'smileys'">
                     <emoji-mart set="apple" [include]="['people']"
                       (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
@@ -191,20 +191,15 @@
                     <emoji-mart set="apple" [include]="['flags']"
                       (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
                   </div>
-                  <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'custom'">
-                    <emoji-mart set="apple" [include]="['custom']"
-                      (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
-                  </div>
+                  
                   <!-- Add more divs for other categories as needed -->
                 </div>
                 <div class="post-footer">
                   <div class="post-footer-content">
                     <span>posting to</span>
-                    <mat-select class="post-select">
-                      <mat-option value="search">
-                        <mat-checkbox>Organization</mat-checkbox><br />
-                        <mat-checkbox>Java</mat-checkbox>
-                      </mat-option>
+                    <mat-select class="post-select" [(value)]="selectedOption">
+                      <mat-option value="Organization"> Organization </mat-option>
+                      <mat-option value="Java"> Java</mat-option>
                     </mat-select>
                   </div>
                   <div>
@@ -236,20 +231,16 @@
               <div class="post-footer">
                 <div class="post-footer-content">
                   <span>posting to</span>
-                  <mat-select class="post-select" [ngModel]="selectPostTo">
-                    <mat-option>
-                      <mat-checkbox>Organization</mat-checkbox>
-                    </mat-option>
-                    <mat-option>
-                      <mat-checkbox>Java</mat-checkbox>
-                    </mat-option>
+                  <mat-select class="post-select" [(value)]="selectedOption">
+                    <mat-option value="Organization"> Organization </mat-option>
+                    <mat-option value="Java"> Java</mat-option>
                   </mat-select>
+                
                 </div>
                 <div style="margin-right: -80px;">
                   <button mat-raised-button color="primary" (click)="postRequest()">Post</button>
                 </div>
               </div>
-
             </div>
 
             <!-- Poll request field  -->
