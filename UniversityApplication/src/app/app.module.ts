@@ -92,7 +92,7 @@ import { InterceptorService } from './services/interceptor.service';
     ForgotpasswordComponent,
     ResetpasswordComponent,
     ResetPasswordConfirmationComponent,
-     DashboardComponent,
+    DashboardComponent,
     WelcomeComponent,
     MeComponent,
     InboxComponent,
