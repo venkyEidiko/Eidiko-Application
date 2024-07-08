@@ -15,27 +15,27 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./dashboard.component.css']
 })
 
-export class DashboardComponent implements OnInit, OnChanges {
-  post: any;
-  like: any;
+export class DashboardComponent implements OnInit {
+
+
   showEmoticonPicker = false;
   LeaveResponse: any;
   totalAvailableLeave = 12;
   selectedTab: string = 'organization';
   selectedContent: string = 'post';
+  option1Checked: boolean = true;
+  option2Checked: boolean = false;
+  selectedOption: string = 'Organization';
   currentDate = new Date();
-  selectedEmojiCategory = 'frequentlyUsed';
+  selectedEmojiCategory = 'smileys';
   files: File[] | null = null;
   textMessage: string | null = null;
   showCommentBox: boolean[] = [];
   hideDate: Date | null = null;
-  selectPostTo: string = 'organization'
+ 
   workFromHomeList: any;
   onLeaveToday: any[] = [];
   holidayList: any;
-  todaynewJoiners: any
-  todayNewJoinersCount: number = 0
-  lastSevenDaysNewjoiners: any;
   todayAnniversaryCount: number = 0;
   todayAnniversary: any;
   nextSevendaysAnniversarys: any;
@@ -45,26 +45,27 @@ export class DashboardComponent implements OnInit, OnChanges {
   todayJoineesCount: number = 0;
   noBirthdayMessage: String = ''
   noJoinersToday: String = ''
-
+  searchStatus:boolean=false
   showIcons: boolean = false;
   isCardExpanded: boolean = false;
   insertedSymbol: string = '';
+  searchData: any = [];
+  searchData1: Employee[] = [];
+  showDropdown: boolean = false;
+  emp = this.loginService.getEmployeeData();
+  empName = this.emp.firstName + " " + this.emp.lastName
+  todaysNewJoinees: any;
+  lastSevenDaysNewJoinees: any;
 
   postRequestData: PostRequest = {
     description: "",
-    postType: this.selectPostTo,
+    postType: this.selectedOption,
     mentionEmployee: [],
     postEmployee: this.service.getEmpId()
   }
 
   constructor(private service: DashbordService, private loginService: LoginService) {
     this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.fetchOnLeaveToday()
-    this.workFromHomeList()
-    this.loadAllPosts()
   }
 
   ngOnInit(): void {
@@ -77,10 +78,10 @@ export class DashboardComponent implements OnInit, OnChanges {
 
     this.fetchOnLeaveToday();
     this.workFromHomeList();
-
     //this.fetchPostsAndLikes();
     this.fetchOnLeaveToday();
     this.fetchNewJoinees();
+
 
   }
 
@@ -98,6 +99,9 @@ export class DashboardComponent implements OnInit, OnChanges {
     showComments: any
   }[] = [];
 
+
+ 
+
   insertSymbol(symbol: string) {
     this.insertedSymbol = symbol;
   }
@@ -114,13 +118,6 @@ export class DashboardComponent implements OnInit, OnChanges {
 
   selectTab(tab: string) {
     this.selectedTab = tab;
-  }
-
-  updateSelection(selectPostTo: string, checkBox: boolean) {
-    if (checkBox) {
-      this.selectPostTo = selectPostTo
-      console.log("selectPostTo value : ", this.selectPostTo)
-    }
   }
 
   expandCard() {
@@ -144,7 +141,7 @@ export class DashboardComponent implements OnInit, OnChanges {
       }
     )
   }
-    fetchOnLeaveToday() {
+  fetchOnLeaveToday() {
     this.service.getOnLeaveToday().subscribe(
       (response: any) => {
         console.log("onLeaveTpday respoanse ", response);
@@ -152,7 +149,7 @@ export class DashboardComponent implements OnInit, OnChanges {
       }
     )
   }
- 
+
   fethHoliday() {
     this.service.getHolidays().subscribe(
       response => {
@@ -219,8 +216,11 @@ export class DashboardComponent implements OnInit, OnChanges {
 
           let emojiIds = item.likes.map((like: any) => like.emoji);
           let emojiIdsCount = emojiIds.length;
-          let commentIds = item.comments.map((p: any) => p.comment);
-          let commentIdsCount = commentIds.length;
+
+          let commentIds=item.comments.map((p:any)=>p.comment);
+          let commentIdsCount=commentIds.length;
+
+
           return {
             base64Image: 'data:image/jpeg;base64,' + item.base64Image,
             timeStamp: this.formatTime(item.timeStamp),
@@ -230,17 +230,28 @@ export class DashboardComponent implements OnInit, OnChanges {
             emojiIds: emojiIds,
             emojiIdsCount: emojiIdsCount,
             mentionEmployee: item.mentionEmployee,
-            comments: item.comments,
-            commentIds: item.commentIds,
-            commentIdsCount: commentIdsCount,
+
+            comments:item.comments,
+            commentIds:item.commentIds,
+            commentIdsCount:commentIdsCount,
+
+
+
+
           };
         });
+  
+        // Log the entire imageSrcList for verification
         console.log('Modified imageSrcList:', this.imageSrcList);
+        
+
+
       } else {
         console.error('No result found in the response');
       }
     });
   }
+
 
   extractAvailablePaidLeave(data: any) {
     for (let leaveData of data) {
@@ -400,16 +411,57 @@ export class DashboardComponent implements OnInit, OnChanges {
     }
   };
 
+  selectResult(result: any, textarea: HTMLTextAreaElement): void {
+    let name: string = result.firstName + " " + result.lastName;
+    let textValue: string = textarea.value;
+    let lastIndex: number = textValue.lastIndexOf('@');
+    let newTextValue: string = textValue.slice(0, lastIndex + 1) + name;
+    textarea.value = newTextValue;
+    textarea.selectionStart = textarea.selectionEnd = lastIndex + 1 + name.length; // Place cursor after inserted name
+    textarea.focus();  
+    this.showDropdown = false;
+    this.searchStatus = false;
+    this.textMessage = newTextValue;
+    this.postRequestData.description = newTextValue;
+    this.postRequestData.mentionEmployee.push(name);
+}
+
   onTextChange(event: Event) {
     const inputElement = event.target as HTMLTextAreaElement;
+    const search = inputElement.value
+    const atIndex = search.lastIndexOf('@');
+    console.log(inputElement.value);
+    if (atIndex !== -1 && search.length > atIndex + 1 && this.searchStatus==true) {
+      // Extract text after '@' symbol
+      const searchText = search.substring(atIndex + 1);
+      if (searchText.length > 1) {
+        console.log("Search Data : ", searchText)
+        this.showDropdown = true;
+        this.loginService.searchEmployee(searchText).subscribe(data => {
+          this.searchData = data
+          this.searchData1 = this.searchData.result[0]
+          console.log("Search DataList : ", this.searchData1)
+          this.searchData1?.forEach(emp => {
+            console.log("Search Data first name : ", emp.firstName)
+          })
+        });
+      } else {
+        this.searchData1 = [];
+        this.showDropdown = false;
+      }
+    } else {
+      this.searchData1 = [];
+      this.showDropdown = false;
+    }
     this.textMessage = inputElement.value;
     this.postRequestData.description = this.textMessage;
-    console.log(inputElement.value);
+   
   }
 
   addAtSymbol(textarea: HTMLTextAreaElement) {
     textarea.setRangeText('@', textarea.selectionStart, textarea.selectionEnd, 'end');
     textarea.focus();
+    this.searchStatus=true
     this.textMessage = textarea.value;
     this.postRequestData.description = this.textMessage;
     console.log("addAtSymbol method text area: ", textarea.value)
@@ -460,40 +512,7 @@ export class DashboardComponent implements OnInit, OnChanges {
     }
   }
 
-  searchData: any = [];
-  searchData1: Employee[] = [];
-  showDropdown: boolean = false;
-  emp = this.loginService.getEmployeeData();
-  empName = this.emp.firstName + " " + this.emp.lastName
 
-  onChange(search: string) {
-    const atIndex = search.indexOf('@');
-    if (atIndex !== -1 && search.length > atIndex + 1) {
-      // Extract text after '@' symbol
-      const searchText = search.substring(atIndex + 1);
-      if (searchText.length > 1) {
-        console.log("Search Data : ", searchText)
-        this.showDropdown = true;
-        this.loginService.searchEmployee(searchText).subscribe(data => {
-          this.searchData = data
-          this.searchData1 = this.searchData.result[0]
-          console.log("Search DataList : ", this.searchData1)
-          this.searchData1?.forEach(emp => {
-            console.log("Search Data first name : ", emp.firstName)
-          })
-        });
-      } else {
-        this.searchData1 = [];
-        this.showDropdown = false;
-      }
-    } else {
-      this.searchData1 = [];
-      this.showDropdown = false;
-    }
-  }
-
-  todaysNewJoinees: any;
-  lastSevenDaysNewJoinees: any;
   fetchNewJoinees() {
     this.service.getNewJoinees().subscribe(
       (response: any) => {

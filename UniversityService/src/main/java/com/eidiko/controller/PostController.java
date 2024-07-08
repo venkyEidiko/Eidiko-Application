@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.eidiko.entity.Posts;
 import com.eidiko.entity.ResponseModel;
 import com.eidiko.exception_handler.FileUploadException;
+import com.eidiko.exception_handler.UserNotFoundException;
 import com.eidiko.responce.CommonResponse;
 import com.eidiko.serviceimplementation.PostService;
 
@@ -49,7 +50,7 @@ public class PostController {
 			@RequestParam(value = "postEmployee", required = false) Long postEmployee,
 			@RequestParam(value = "file", required = false) MultipartFile file
 
-	) throws IOException, SQLException, FileUploadException {
+	) throws IOException, SQLException, FileUploadException, UserNotFoundException {
 		System.out.println("saveImage :" + description);
 		System.out.println("saveImage :" + postEmployee);
 		if (file != null && file.getSize() > 20 * 1024 * 1024) { // 20MB in bytes

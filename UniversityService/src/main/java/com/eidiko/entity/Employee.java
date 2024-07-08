@@ -48,6 +48,8 @@ public class Employee implements UserDetails {
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Address> addresses;
 
+	@OneToMany(mappedBy = "postEmployeeName", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	private List<Posts>posts;
 	//contact details
 	private String workEmail;
     private String personalEmail;

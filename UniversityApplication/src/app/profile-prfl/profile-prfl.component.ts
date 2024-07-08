@@ -1,6 +1,13 @@
 import { Component } from '@angular/core';
 import { Address, Employee } from '../services/employee';
 import { LoginService } from '../services/login.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Dialog1Service } from '../services/dialog1.service';
+import { Edit1Component } from '../edit1/edit1.component';
+import { Edit2Component } from '../edit2/edit2.component';
+import { Edit3Component } from '../edit3/edit3.component';
+
+
 
 @Component({
   selector: 'app-profile-prfl',
@@ -8,9 +15,9 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./profile-prfl.component.css']
 })
 export class ProfilePrflComponent {
+  
+  constructor(private loginService:LoginService,private dialog:MatDialog,private dialogService:Dialog1Service){}
   employee: Employee|null = null;
-
-  constructor(private loginService:LoginService){}
   address:Address|null=null;
 currentAddress:Address|null=null;
 permanentAddress:Address|null=null;
@@ -31,4 +38,41 @@ ngOnInit(): void {
         })
     
   }
+ 
+  openDialog1(): void {
+    const dialogRef = this.dialog.open(Edit1Component, {
+      width: '400px',
+      data: {
+        employee: this.employee,
+        currentAddress: this.currentAddress,
+        permanentAddress: this.permanentAddress
+      }
+    });
+  }
+ openDialog2()
+ {
+  const dialogRef = this.dialog.open(Edit2Component, {
+    width: '400px',
+    data: {
+      employee: this.employee,
+      currentAddress: this.currentAddress,
+      permanentAddress: this.permanentAddress
+    }
+  });
+ }
+ openDialog3()
+ {
+  const dialogRef = this.dialog.open(Edit3Component, {
+    width: '400px',
+    data: {
+      employee: this.employee,
+      currentAddress: this.currentAddress,
+      permanentAddress: this.permanentAddress
+    }
+  });
+ }
+ openDialog4()
+ {
+  this.dialogService.openDialog4();
+ }
 }

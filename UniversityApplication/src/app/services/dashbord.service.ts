@@ -29,11 +29,11 @@ export class DashbordService {
   }
 
   getOnLeaveToday(): Observable<any> {
-    return this.http.get<any>('http://10.0.0.38:8082/leave/empOnLeaveToday');
+    return this.http.get<any>('http://localhost:8082/leave/empOnLeaveToday');
   }
 
   getHolidays(): Observable<any[]> {
-    return this.http.get<any>("http://10.0.0.38:8082/api/getAllHolidays");
+    return this.http.get<any>("http://localhost:8082/api/getAllHolidays");
 
   }
   getLeaveData(): Observable<any[]> {
@@ -74,9 +74,12 @@ export class DashbordService {
 
   getBirthdays(): Observable<any> {
 
+
     return this.http.get<any[]>("http://10.0.0.60:8080/api/todayAndNextSevenDaysBirthdaysList");
 
   }
+
+
 
   getAnniversary(): Observable<any> {
     return this.http.get<any>("http://10.0.0.60:8080/api/todayAndNextSevenDaysAnniversaryList");
@@ -143,6 +146,7 @@ export class DashbordService {
     return this.http.get<any>("http://localhost:8082/api/newJoineesAndLast7Days");
   }
 }
+
 
 
 
