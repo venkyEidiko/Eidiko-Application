@@ -130,7 +130,7 @@ public class PostService {
 	                String encodedImage = Base64.getEncoder().encodeToString(imageBytes);
 	                // Set the Base64 encoded string to a new field in Posts
 	                post.setBase64Image(encodedImage);
-	                System.out.println(" encode image : "+encodedImage);
+	               
 	              
 	            }
 	            // Add the modified post to the new ArrayList
