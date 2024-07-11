@@ -85,14 +85,18 @@ td {
     flex-direction: row;
     flex-wrap: wrap;
     gap:10px;
+    width: 100%;
  }
 
 .day{
-height: 20px;
-width: 20px;
+height: 15px;
+width: 15px;
   padding:10px;
   border:1px solid #dad8d8;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .bar{
   margin-top: 40px;

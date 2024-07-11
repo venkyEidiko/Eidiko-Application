@@ -7,7 +7,9 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -21,12 +23,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@ToString
 @Entity
 @Data
 @Table(name = "Employee_DETAILS_TABLE")
 @AllArgsConstructor
 @NoArgsConstructor
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "employeeId")
 public class Employee implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -43,13 +46,14 @@ public class Employee implements UserDetails {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Roles_Table role;
 
-	@ToString.Exclude
+	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	
 	private List<Address> addresses;
 
-	@OneToMany(mappedBy = "postEmployeeName", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	private List<Posts>posts;
+	@OneToMany(mappedBy = "postEmployeeName", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Posts> posts;
 	//contact details
 	private String workEmail;
     private String personalEmail;
@@ -91,6 +95,7 @@ public class Employee implements UserDetails {
     //Organization
     private String businessUnit;
     private String department;
+    private String subDepartment;
     private String location;
     private String costCenter;
     private String legalEntity;

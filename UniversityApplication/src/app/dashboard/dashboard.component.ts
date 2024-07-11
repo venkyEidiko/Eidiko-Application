@@ -210,10 +210,14 @@ export class DashboardComponent implements OnInit {
 
   loadAllPosts(): void {
     this.service.getAllPosts().subscribe((response: any) => {
+
       console.log("posts ", response);
+
       if (response.status === 'SUCCESS') {
         this.imageSrcList = response.result.map((item: any) => {
 
+          console.log("Image ",this.imageSrcList);
+          
           let emojiIds = item.likes.map((like: any) => like.emoji);
           let emojiIdsCount = emojiIds.length;
 

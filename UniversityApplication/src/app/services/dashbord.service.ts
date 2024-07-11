@@ -14,26 +14,26 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class DashbordService {
-  private apiUrl1 = 'http://10.0.0.60:8080/posts/savelike';
-  private apiUrl2 = 'http://10.0.0.60:8080/posts/saveComment'
-  private apiUrl3 = 'http://10.0.0.60:8080/posts/saveimage'
-  private apiUrl4 = 'http://10.0.0.60:8080/posts/savelike/${postId}'
+  private apiUrl1 = 'http://localhost:8082/';
+  private apiUrl2 = 'http://10.0.0.38:8082/posts/saveComment'
+  private apiUrl3 = 'http://10.0.0.38:8082/posts/saveimage'
+  private apiUrl4 = 'http://10.0.0.38:8082/posts/savelike/${postId}'
 
   constructor(private http: HttpClient, private loginService: LoginService, private dialog: MatDialog,) { }
-  url = "http://10.0.0.60:8080/api/";
+  url = "http://10.0.0.38:8082/";
 
   getWorkFromHome(): Observable<any[]> {
-    return this.http.get<any>(this.url + "getemployeesdata/Work From Home");
+    return this.http.get<any>(this.url + "api/getemployeesdata/Work From Home");
 
 
   }
 
   getOnLeaveToday(): Observable<any> {
-    return this.http.get<any>('http://localhost:8082/leave/empOnLeaveToday');
+    return this.http.get<any>(this.apiUrl1+'leave/empOnLeaveToday');
   }
 
   getHolidays(): Observable<any[]> {
-    return this.http.get<any>("http://localhost:8082/api/getAllHolidays");
+    return this.http.get<any>(this.apiUrl1+"api/getAllHolidays");
 
   }
   getLeaveData(): Observable<any[]> {
@@ -42,7 +42,7 @@ export class DashbordService {
     console.log("employeeid - ", empId);
 
 
-    return this.http.get<any>("http://10.0.0.38:8082/leave/getEmpLeaveSummaryByEmpId/" + empId);
+    return this.http.get<any>(this.apiUrl1+"leave/getEmpLeaveSummaryByEmpId/" + empId);
   }
 
   getEmpId() {
@@ -68,21 +68,21 @@ export class DashbordService {
 
 
     console.log("submitPostRequestData requestData : ", requestData)
-    return this.http.post<any>(`http://10.0.0.60:8080/posts/saveimage`, formData);
+    return this.http.post<any>(this.url+`posts/saveimage`, formData);
   }
 
 
   getBirthdays(): Observable<any> {
 
 
-    return this.http.get<any[]>("http://10.0.0.60:8080/api/todayAndNextSevenDaysBirthdaysList");
+    return this.http.get<any[]>(this.url+"api/todayAndNextSevenDaysBirthdaysList");
 
   }
 
 
 
   getAnniversary(): Observable<any> {
-    return this.http.get<any>("http://10.0.0.60:8080/api/todayAndNextSevenDaysAnniversaryList");
+    return this.http.get<any>(this.url+"api/todayAndNextSevenDaysAnniversaryList");
   }
 
   openDialog(): void {
@@ -97,22 +97,18 @@ export class DashbordService {
     });
   }
 
-
-
-
-
   getAllPosts(): Observable<any[]> {
-    return this.http.get<any>("http://10.0.0.60:8080/posts/getAllPostByTime")
+    return this.http.get<any>("http://localhost:8082/posts/getAllPostByTime")
   }
   saveLike(postId: number, emojiId: number, empId: number): Observable<any> {
-    const url = `${this.apiUrl1}/${postId}`;
+  
     const body = {
       emoji: emojiId,
       empId: empId
     };
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this.http.post(url, body, { headers });
+    return this.http.post(`${this.apiUrl1}posts/savelike/${postId}`, body, { headers });
   }
   postComment(postId: number, comment: string, empId: number): Observable<any> {
     const payload = { comment, empId };
@@ -135,7 +131,7 @@ export class DashbordService {
 
   getPostsAndLikes(): Observable<any> {
     console.log("inside service")
-    return this.http.get<any>('http://10.0.0.60:8080/posts/getAllPostByTime');
+    return this.http.get<any>(this.url+'posts/getAllPostByTime');
 
   }
 
@@ -143,7 +139,7 @@ export class DashbordService {
 
   getNewJoinees(): Observable<any> {
     
-    return this.http.get<any>("http://localhost:8082/api/newJoineesAndLast7Days");
+    return this.http.get<any>(this.apiUrl1+"api/newJoineesAndLast7Days");
   }
 }
 
