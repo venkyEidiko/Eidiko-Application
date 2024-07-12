@@ -158,7 +158,7 @@
                     <button (click)="selectEmojiCategory('symbols')">🔣</button>
                     <button (click)="selectEmojiCategory('flags')">🏳️</button>
                   </div>
-                
+
                   <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'smileys'">
                     <emoji-mart set="apple" [include]="['people']"
                       (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
@@ -191,7 +191,7 @@
                     <emoji-mart set="apple" [include]="['flags']"
                       (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
                   </div>
-                  
+
                   <!-- Add more divs for other categories as needed -->
                 </div>
                 <div class="post-footer">
@@ -235,7 +235,7 @@
                     <mat-option value="Organization"> Organization </mat-option>
                     <mat-option value="Java"> Java</mat-option>
                   </mat-select>
-                
+
                 </div>
                 <div style="margin-right: -80px;">
                   <button mat-raised-button color="primary" (click)="postRequest()">Post</button>
@@ -424,13 +424,16 @@
             <div style="display:flex;">
               <img src="../../assets/profileimage.png"
                 style="height: 55px; width: 60px; border-radius: 30px; margin-top: 10px; margin-bottom: 10px;">
-              <p style="margin-top:35px;margin-left:10px">{{ image.timeStamp }}</p>
+              <div class="imageName">
+                <span>{{image.postBy | capatlize}}</span>
+                <span>{{image.timeStamp }}</span>
+            </div>
             </div>
 
 
             <p>{{image.description}}</p>
 
-            <p style="color:dodgerblue">{{image.mentionEmployee.join(',')}}</p>
+            <p style="color:dodgerblue">{{image.mentionEmployee.join(', ')}}</p>
             <img [src]="image.base64Image" alt="Image from base64" style="margin-bottom:20px;max-width:600px">
             <div style="display: flex; gap: 30px;">
               <div class="hover-icons">
