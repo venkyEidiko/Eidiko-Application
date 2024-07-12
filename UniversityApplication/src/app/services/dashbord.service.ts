@@ -98,8 +98,9 @@ export class DashbordService {
   }
 
   getAllPosts(): Observable<any[]> {
-    return this.http.get<any>("http://localhost:8082/posts/getAllPostByTime")
+    return this.http.get<any>("http://10.0.0.38:8082/posts/getAllPostByTime")
   }
+  
   saveLike(postId: number, emojiId: number, empId: number): Observable<any> {
   
     const body = {

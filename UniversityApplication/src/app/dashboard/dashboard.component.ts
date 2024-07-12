@@ -96,7 +96,8 @@ export class DashboardComponent implements OnInit {
     commentIdsCount: any,
     commentIds: any,
     comments: any,
-    showComments: any
+    showComments: any,
+    postBy: any
   }[] = [];
 
 
@@ -211,16 +212,14 @@ export class DashboardComponent implements OnInit {
   loadAllPosts(): void {
     this.service.getAllPosts().subscribe((response: any) => {
 
-      console.log("posts ", response);
+      console.log("posts ", response.result);
 
       if (response.status === 'SUCCESS') {
         this.imageSrcList = response.result.map((item: any) => {
-
-          console.log("Image ",this.imageSrcList);
           
           let emojiIds = item.likes.map((like: any) => like.emoji);
           let emojiIdsCount = emojiIds.length;
-
+          
           let commentIds=item.comments.map((p:any)=>p.comment);
           let commentIdsCount=commentIds.length;
 
@@ -238,6 +237,9 @@ export class DashboardComponent implements OnInit {
             comments:item.comments,
             commentIds:item.commentIds,
             commentIdsCount:commentIdsCount,
+            postBy: (item.postEmployeeName.firstName +" "+ item.postEmployeeName.lastName)
+
+          
 
 
 

@@ -7,6 +7,7 @@ import { DashbordService } from "../services/dashbord.service";
   templateUrl: "./summary.component.html",
   styleUrls: ["./summary.component.css"],
 })
+
 export class SummaryComponent implements OnInit {
 
   constructor(private Summaryservice: SummaryService, private dashBoradService:DashbordService){}
