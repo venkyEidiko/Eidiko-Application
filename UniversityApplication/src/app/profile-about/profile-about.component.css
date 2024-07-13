@@ -1,0 +1,30 @@
+.about-container{
+    padding: 20px;
+    margin-top: 0px;
+}
+
+.about-container mat-card{
+     background-color: #333d4e;
+     border: 0.5px solid #4c4c5c;
+     width: 100%;
+}
+ul{
+    display: flex;
+    flex-direction: row;
+    list-style-type: none; 
+    padding: 0;
+    margin: 0;
+}
+ul li{
+    margin-right: 20px; 
+    
+}
+ul li a{
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: none; 
+}
+.active{
+   
+    border-bottom:4px solid #7e5991;
+}

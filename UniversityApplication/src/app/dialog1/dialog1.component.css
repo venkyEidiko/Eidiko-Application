@@ -1,0 +1,88 @@
+.custom-dialog-container {
+  width:1275px;
+  height:100% ;
+  top:0;
+  right:0;
+  position:fixed;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+ 
+}
+
+.custom-dialog-content {
+  display: flex;
+  flex-direction: row;
+}
+.close-icon {
+  cursor: pointer;
+}
+
+.side-panel {
+  width: 200px; 
+  padding: 10px;
+  border-right: 1px solid #ccc; 
+  display:flex;
+}
+
+.leavelist {
+  margin-bottom: 20px;
+}
+
+.leavelist ul {
+  list-style-type: none;
+  padding: 0;
+  width:200px;
+}
+
+.leavelist li {
+  margin-bottom: 5px;
+}
+
+.options {
+  margin-top: 20px;
+}
+
+.details-display {
+  flex: 1; /* Take remaining space */
+  padding: 10px;
+}
+
+.policy-info {
+  /* Style policy information area */
+}
+.req {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  
+}
+
+.req p {
+  margin: 0;
+  font-size: 16px;
+}
+.displayitems
+{
+  display:flex;
+  justify-content: space-between;
+}
+.balance
+{
+  margin-left:50px;
+ 
+}
+app-table
+{
+  margin-top:20px;
+}
+.accordian
+{
+  margin-top:50px;
+  margin-left:50px;
+}
+mat-expansion-panel
+{
+margin-top:10px;
+}

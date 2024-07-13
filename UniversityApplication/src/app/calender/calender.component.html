@@ -1,0 +1,43 @@
+<div class="calendar-container">
+
+
+  <div class="calendar-header">
+    <div class="month-nav">
+      <button mat-button (click)="prevMonth()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>&nbsp;
+      <span>{{ currentMonth }} {{ currentYear }}</span>
+      &nbsp;&nbsp;
+      <button mat-button (click)="nextMonth()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+    <div style="display: flex;">
+      <div class="calendarheader-button">
+        <button mat-button (click)="openShiftRequest()">Request Shift Change</button>
+      </div>&nbsp;
+      <div class="calendarheader-button">
+        <button mat-button (click)="openShiftRequest()">Request Weekly Off</button>
+      </div>&nbsp;
+      <div class="calendarheader-button">
+        <button mat-button (click)="goToToday()">today</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="calendar">
+    <div class="calendar-header">
+      <div *ngFor="let day of days" class="calendar-header-item">{{ day }}</div>
+    </div>
+    <div class="calendar-body">
+      <div *ngFor="let week of weeks" class="calendar-week">
+        <div *ngFor="let day of week" class="calendar-day"
+          [ngStyle]="{'background-color': day.date == onlyDate && currentMonth == getMonthName(onlyMonth) ? '#141516' : ''}">
+          <div class="date">{{ day.date }}</div>
+          <div class="shift" *ngIf="day.shift">{{ day.shift }}</div>
+          <div class="w-off" *ngIf="day.wOff">W-OFF</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

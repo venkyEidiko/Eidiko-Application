@@ -1,0 +1,86 @@
+<div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
+    <div class="req">
+        <p>Relations</p>
+        <div class="close-icon">
+            <mat-icon (click)="closeDialog()">close</mat-icon>
+        </div>
+    </div>
+    <div mat-dialog-content class="custom-dialog-content">
+        <div style="display: flex; align-items: flex-start;">
+            <div>
+                <mat-card appearance="outlined" class="card-item" (click)="setRelation('Father', 'Male')">
+                    <mat-card-content>
+                        <div>
+                            Father
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card appearance="outlined" class="card-item" (click)="setRelation('Mother', 'Female')">
+                    <mat-card-content>
+                        <div>
+                            Mother
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div style="margin-left: 16px;">
+                <div style="display: flex; gap: 16px;">
+                    <div>
+                        <label>Relation</label><br/>
+                        <select id="relation" name="relation" [value]="selectedRelation" style="width:150px;height:30px;padding:5px;background-color: #333d4e;">
+                            <option value="Father">Father</option>
+                            <option value="Mother">Mother</option>
+                            <option value="Child">Child</option>
+                            <option value="Spouse">Spouse</option>
+                            <option value="Father in Law">Father in Law</option>
+                            <option value="Mother in Law">Mother in Law</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Gender</label><br/>
+                        <select id="gender" name="gender" [value]="selectedGender" style="width:150px;height:30px;padding:5px;background-color: #333d4e;">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display:flex;gap:16px;">
+                    <div>
+                      <label>First Name</label>
+                      <input matInput type="text" value="">
+                    </div>
+                    <div>
+                      <label>Last Name</label>
+                      <input matInput type="text" value="">
+                    </div>
+                </div>
+                <div style="display:flex;gap:16px;">
+                    <div>
+                      <label>Email</label>
+                      <input matInput type="text" value="">
+                    </div>
+                    <div>
+                      <label>Mobile Number</label>
+                      <input matInput type="text" value="">
+                    </div>
+                </div>
+                <div style="display:flex;gap:16px;">
+                    <div>
+                      <label>Profession</label>
+                      <input matInput type="text" value="">
+                    </div>
+                    <div>
+                      <label>Date Of Birth</label>
+                      <input matInput type="date" value="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions class="custom-dialog-actions">
+        <button mat-button (click)="closeDialog()">Cancel</button>
+        <button mat-button class="confirm">Confirm</button>
+    </div>
+</div>
