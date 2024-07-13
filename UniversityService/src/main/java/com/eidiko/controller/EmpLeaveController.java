@@ -170,4 +170,34 @@ public class EmpLeaveController {
 
 	}
 
+	//update leave status
+	@PutMapping("/updateEmployeeLeaveStatus/{empId}")
+	public ResponseEntity<ResponseModel<Object>> updateEmployeeLeaveStatus(@PathVariable("empId") Long empId
+			,@RequestBody EmpLeave empLeave ) throws UserNotFoundException{
+
+		log.info("updateEmployeeLeaveStatus {}",empLeave);
+		log.info("updateEmployeeLeaveStatus {}",empId);
+		String updateEmployee = leaveService.updateEmployeeLeave(empId, empLeave);
+
+		if (updateEmployee != null) {
+
+			return new CommonResponse<>().prepareSuccessResponseObject(updateEmployee);
+		} else {
+			return new CommonResponse<>().prepareFailedResponse("Failed to Fetch");
+		}
+	}
+	@GetMapping("getPendingLeaveByNotifiedEmployee/{empId}")
+	public ResponseEntity<ResponseModel<Object>> getPendingLeaveByNotifiedEmployee(@PathVariable("empId") Long empId
+	) throws UserNotFoundException{
+
+		List<EmpLeaveDto>empLeaveDtos = leaveService.getPendingLeaveByNotifiedEmployee(empId);
+
+		if (empLeaveDtos != null) {
+
+			return new CommonResponse<>().prepareSuccessResponseObject(empLeaveDtos);
+		} else {
+			return new CommonResponse<>().prepareFailedResponse("Failed to Fetch");
+		}
+	}
+
 }
