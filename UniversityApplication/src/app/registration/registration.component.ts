@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { Address, RegistrationForm } from '../registratioRequest';
 import { Router } from '@angular/router';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -39,7 +40,7 @@ export class RegistrationComponent implements OnInit {
       gender: ['Male', [Validators.required]],
       employeeId: ['', [Validators.required, Validators.max(9999)]],
       phoneNu: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
-      doorNu: ['', [Validators.required]],
+      doorNu: ['', [Validators.required,minValueValidator(1)]],
       streetName: ['', [Validators.required]],
       landmark: ['', [Validators.required]],
       area: ['', [Validators.required]],
@@ -90,7 +91,7 @@ export class RegistrationComponent implements OnInit {
     this.loginService.register(registrationData).subscribe(
       (response: any) => {
         if(response.error == null){
-        this.router.navigate(['/login'])
+        this.router.navigate(['/'])
         }
         else{
           console.log(response.error);
@@ -105,4 +106,13 @@ export class RegistrationComponent implements OnInit {
   onLogin(){
     this.router.navigate(['/']);
   }
+}
+
+export function minValueValidator(min: number): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (control.value !== null && control.value < min) {
+      return { minValue: { requiredValue: min, actualValue: control.value } };
+    }
+    return null;
+  };
 }

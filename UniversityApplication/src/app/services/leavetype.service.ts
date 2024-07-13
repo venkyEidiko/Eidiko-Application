@@ -16,7 +16,7 @@ interface LeaveStats {
 })
 export class LeavetypeService {
 
-  private apiUrl = 'http://10.0.0.38:8082/leave/'
+  private apiUrl = 'http://localhost:8082/leave/'
 
   constructor(private http: HttpClient, private loginService: LoginService) { }
    employee = this.loginService.getEmployeeData();

@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class AuthService {
 
-  private apiUrl = 'http://10.0.0.38:8082/api/password/forgotPassword';
+  private apiUrl = 'http://localhost:8082/api/password/forgotPassword';
   private isAuthenticated: boolean = false;
 
   constructor(private http: HttpClient) { }
