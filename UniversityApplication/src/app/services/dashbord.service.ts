@@ -44,7 +44,7 @@ export class DashbordService {
 
     return this.http.get<any>(this.apiUrl1+"leave/getEmpLeaveSummaryByEmpId/" + empId);
   }
-  
+
   getEmpId() {
     return this.loginService.getEmployeeData().employeeId;
   }

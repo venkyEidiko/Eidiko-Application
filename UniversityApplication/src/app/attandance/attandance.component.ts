@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ShiftRequestService } from '../services/shift-request.service';
-
-
-
+import { DialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-attandance',
@@ -28,7 +26,8 @@ teamArrival:string='';
   weekdata = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
 
-  constructor(private shiftService:ShiftRequestService) {
+
+  constructor(private shiftService:ShiftRequestService,private dialogService:DialogService) {
     this.currentDate = new Date();
   }
 
@@ -90,5 +89,7 @@ this.teamArrival=attandStatus.avgArivalPerTeam
     this.attandanceLog=false;
     this.shiftSehedule = !this.shiftSehedule;
   }
- 
+  openDialog(): void {
+    this.dialogService.openWorkFromHomeDialog();
+  }
 }

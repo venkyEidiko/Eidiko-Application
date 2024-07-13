@@ -32,6 +32,7 @@ export class LoginService {
     this.isAuthenticated = false;
   }
 
+
   setEmployeeData(employeeId: number) {
     //this.employeeData = data;
     this.http.get(`${this.url}api/getBybyEmployeeID/${employeeId}`).subscribe(res=>{
@@ -39,7 +40,7 @@ export class LoginService {
       this.employeeData=this.employeeData.result[0];
       localStorage.setItem('employee-data', JSON.stringify(this.employeeData));
     })
-    
+
   }
   searchEmployee(search: any): Observable<any[]> {
     return this.http.get<any[]>(this.url + "api/searchByKeyword/" + search)

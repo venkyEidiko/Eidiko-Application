@@ -5,6 +5,7 @@ import { Address, RegistrationForm } from '../registratioRequest';
 import { Router } from '@angular/router';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -107,7 +108,6 @@ export class RegistrationComponent implements OnInit {
     this.router.navigate(['/']);
   }
 }
-
 export function minValueValidator(min: number): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (control.value !== null && control.value < min) {
@@ -116,3 +116,4 @@ export function minValueValidator(min: number): ValidatorFn {
     return null;
   };
 }
+

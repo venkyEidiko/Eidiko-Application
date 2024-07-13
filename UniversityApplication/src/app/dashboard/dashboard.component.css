@@ -633,6 +633,7 @@ emoji-mart {
 ::ng-deep .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text:not(.--mat-option-selected-state-label-text-color){
   color: #c29be8;
 }
+
 .image-container {
   display: flex;
   gap: 10px;
@@ -685,7 +686,6 @@ emoji-mart {
 .plus-box span {
   font-size: 24px;
 }
-
 /* Announcement css */
 .announce-request{
   display: flex;
