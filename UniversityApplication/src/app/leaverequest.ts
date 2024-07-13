@@ -12,4 +12,5 @@ export interface LeaveRequest {
     "leaveNote": any,
     "rejectionReason": any,
     "employeeId": any
+    
 }
