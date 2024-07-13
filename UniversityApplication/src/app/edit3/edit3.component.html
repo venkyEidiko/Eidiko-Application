@@ -1,0 +1,98 @@
+<div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
+    <div class="req">
+      <p>Address</p>
+      <div class="close-icon">
+        <mat-icon (click)="closeDialog()">close</mat-icon>
+      </div>
+    </div>
+    <div mat-dialog-content class="custom-dialog-content">
+      <div class="form-field">
+        <div>
+          <label>CURRENT ADDRESS</label><br />
+        </div>
+        <div>
+          <label>PERMANENT ADDRESS</label><br />
+        </div>
+      </div>
+  
+      <div class="form-field">
+        <div>
+          <label>Country</label><br />
+          <select [(ngModel)]="data.currentAddress.country" id="options" name="options" style="width:190px;height:30px;padding:5px;background-color: #333d4e;">
+            <option value="India">India</option>
+            <option value="Pakistan">Pakistan</option>
+            <option value="Maldives">Maldives</option>
+            <option value="Mauritius">Mauritius</option>
+            <option value="Oman">Oman</option>
+            <option value="Bangladesh">Bangladesh</option>
+            <option value="Cuba">Cuba</option>
+            <option value="Greece">Greece</option>
+          </select>
+        </div>
+        <div>
+          <label>Country</label><br />
+          <select [(ngModel)]="data.permanentAddress.country" id="options" name="options" style="width:190px;height:30px;padding:5px;background-color: #333d4e;">
+            <option value="India">India</option>
+            <option value="Pakistan">Pakistan</option>
+            <option value="Maldives">Maldives</option>
+            <option value="Mauritius">Mauritius</option>
+            <option value="Oman">Oman</option>
+            <option value="Bangladesh">Bangladesh</option>
+            <option value="Cuba">Cuba</option>
+            <option value="Greece">Greece</option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="form-field">
+        <div>
+          <label>Address Line 1</label><br />
+          <input [(ngModel)]="data.currentAddress.addressLine1" matInput type="text">
+        </div>
+        <div>
+          <label>Address Line 1</label><br />
+          <input [(ngModel)]="data.permanentAddress.addressLine1" matInput type="text">
+        </div>
+      </div>
+  
+      <div class="form-field">
+        <div>
+          <label>Address Line 2</label><br />
+          <input [(ngModel)]="data.currentAddress.addressLine2" matInput type="text">
+        </div>
+        <div>
+          <label>Address Line 2</label><br />
+          <input [(ngModel)]="data.permanentAddress.addressLine2" matInput type="text">
+        </div>
+      </div>
+  
+      <div class="form-field">
+        <div>
+          <label>City</label><br />
+          <input [(ngModel)]="data.currentAddress.city" matInput type="text">
+        </div>
+        <div>
+          <label>City</label><br />
+          <input [(ngModel)]=" data.permanentAddress.city" matInput type="text">
+        </div>
+      </div>
+  
+      <div class="form-field">
+        <div>
+          <label>Pincode</label><br />
+          <input [(ngModel)]="data.currentAddress.pincode" matInput type="text">
+        </div>
+        <div>
+          <label>Pincode</label><br />
+          <input [(ngModel)]="data.permanentAddress.pincode" matInput type="text">
+          <p>{{this.permanentAddress?.pincode}}</p>
+        </div>
+      </div>
+  
+      <div mat-dialog-actions class="custom-dialog-actions">
+        <button mat-button (click)="closeDialog()">Cancel</button>
+        <button mat-button [mat-dialog-close]="data" (click)="onclick()" class="confirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+  

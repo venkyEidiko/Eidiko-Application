@@ -1,0 +1,24 @@
+.image-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .centered-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    font-size: 27px;
+    color: white; 
+    padding: 10px;
+    border-radius: 5px; 
+  }
+  

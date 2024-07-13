@@ -1,0 +1,21 @@
+
+<div class="checkbox-dropdown">
+  <div class="dropdown-toggle" (click)="toggleDropdown()">
+    <span>Filter by Leave Type</span>
+    <mat-icon>{{ isOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+  </div>
+  <div class="dropdown-options" *ngIf="isOpen">
+    <mat-checkbox
+      *ngFor="let option of options; let i = index; trackBy: trackByFn"
+      [checked]="selectedOptions.has(option)"
+      (change)="toggleOption(option)"
+
+    >
+      {{ option }}
+    </mat-checkbox>
+   
+  </div>
+</div>
+
+
+

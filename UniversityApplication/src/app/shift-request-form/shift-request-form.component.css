@@ -1,0 +1,51 @@
+.form-group {
+    display: flex;
+    justify-content: space-between;
+  }
+  .shift-request-head{
+    padding-top: 5px;
+    background-color: #1b2531;
+    display: flex;
+    justify-content: space-between;
+  }
+ 
+ 
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+   
+  }
+ 
+  mat-dialog-content {
+    background-color:rgb(39 49 67);
+   
+  }
+ 
+  mat-dialog-actions {
+    display: flex;
+    justify-content: end;
+    background-color:rgb(39 49 67);
+   
+  }
+  mat-dialog-actions button{
+    background-color: #2986ce;
+  margin-right: 15px;
+  }
+ 
+  mat-icon {
+    margin-right: 5px;
+  }
+  ::ng-deep .ShiftScheduleClass .mdc-text-field--filled:not(.mdc-text-field--disabled){
+    background-color: transparent !important;
+  }
+  ::ng-deep div.mat-mdc-select-panel{
+    background-color: #4a5363;
+    color: #fff;
+  }
+  ::ng-deep .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text{
+    color: #fff;
+    font-weight: 700;
+  }
+  ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: #fff;
+}

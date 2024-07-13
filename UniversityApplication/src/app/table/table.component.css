@@ -1,0 +1,17 @@
+.table-container {
+    overflow-x: auto;
+    box-shadow: 0 4px 8px rgba(12, 12, 12, 0.1); 
+  }
+ 
+  .table-container th{
+    background-color: rgb(27, 37, 49);
+  }
+  .table-container td{
+    background-color: #333d4e;
+  }
+  .table-container mat-paginator{
+    background-color: #333d4e;
+  }
+  
+  
+  

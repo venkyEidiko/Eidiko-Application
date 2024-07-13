@@ -1,0 +1,22 @@
+
+html,body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow-x: hidden;
+    
+}
+
+body { margin: 0; 
+    background-color: #151517;
+    
+}
+* {
+    color: #A2A9B4;
+
+}
+.blur {
+    filter: blur(5px);
+    pointer-events: none;
+  }
+
