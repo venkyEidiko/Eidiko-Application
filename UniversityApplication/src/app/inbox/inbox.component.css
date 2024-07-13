@@ -1,24 +1,34 @@
 .image-container {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .image-container img {
-    width: 100%;
-    height: auto;
-  }
-  
-  .centered-message {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin: 0;
-    font-size: 27px;
-    color: white; 
-    padding: 10px;
-    border-radius: 5px; 
-  }
-  
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+}
+
+.centered-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-size: 27px;
+  color: white; 
+  padding: 10px;
+  border-radius: 5px; 
+}
+
+
+.mat-tab-group {
+  margin-bottom: 48px;
+}
+
+.indox{
+  justify-content: center;
+  text-align: center;
+color: red;
+}
