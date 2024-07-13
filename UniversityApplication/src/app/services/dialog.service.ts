@@ -20,12 +20,25 @@ export class DialogService {
 
    employee =this.loginService.getEmployeeData()
     url="http://localhost:8082/api/"
-   updateProfileDetails(employee:any) : Observable<any>{
+   updateProfileDetails(employee:any) {
     console.log("Employee primary details : ",employee);
     console.log("Employee primary details employeeId : ",employee);
-    return this.http.put(`${this.url}updateEmployeePrimaryDetailsByEmpId/${employee.employeeId}`, employee);  
+     this.http.put<any>(`${this.url}updateEmployeePrimaryDetailsByEmpId/${employee.employeeId}`, employee).subscribe(res=>{
+      console.log("updateProfileDetail response: ",res)
+      this.loginService.setEmployeeData(employee.employeeId)
+    });  
+   }
 
-    
+   updateContactDetails(employee:any){
+    console.log("Employee Contact details : ",employee);
+    this.http.put<any>(`${this.url}updateEmployeeContactDetailsByEmpId/${employee.employeeId}`, employee).subscribe(res=>{
+      console.log("updateProfileDetail response: ",res)
+      this.loginService.setEmployeeData(employee.employeeId)
+    }); 
+   }
+   updateAddressDetails(employee:any){
+console.log('Employee Address details : ',employee);
+this.loginService.setEmployeeData(employee.employeeId)
    }
   }
 

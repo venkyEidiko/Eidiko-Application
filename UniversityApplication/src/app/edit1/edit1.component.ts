@@ -11,7 +11,7 @@ import { DialogService } from '../services/dialog.service';
 
 export class Edit1Component {
   isOpen:boolean=true
-   employee: Employee | null = null;
+  employee: Employee | null = null;
   currentAddress: Address | null = null;
   permanentAddress: Address | null = null;
   
@@ -23,6 +23,8 @@ export class Edit1Component {
   }
  
   onClick(){
+    console.log("edit1 e,ployee data preinting - ", this.employee);
+    
     this.dialogService.updateProfileDetails(this.employee)
   }
 
