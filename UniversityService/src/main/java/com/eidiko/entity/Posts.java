@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "postId")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "postId")
 //this entity of posts for add posts ,delete,update(on the keka portal dashboard page)
 public class Posts {
 
@@ -60,8 +60,8 @@ public class Posts {
 	// employee id who posted
 	
 	private Long postEmployee;
-	
-	@ManyToOne
+	@JsonManagedReference
+    @ManyToOne
     @JoinColumn(name = "employeeId")
     private Employee postEmployeeName;
 	

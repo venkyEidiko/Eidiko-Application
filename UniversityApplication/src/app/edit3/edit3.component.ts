@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Address, Employee } from '../services/employee';
+import { DialogService } from '../services/dialog.service';
+
 
 @Component({
   selector: 'app-edit3',
@@ -16,7 +18,9 @@ export class Edit3Component {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<Edit3Component>
+    private dialogRef: MatDialogRef<Edit3Component>,
+    private dialogService:DialogService
+
   ) {
     if (data) {
       this.employee = data.employee || null;
@@ -35,14 +39,9 @@ export class Edit3Component {
   }
 }
 
-  
-
-
-
-
-
-
-  
+onclick(){
+  this.dialogService.updateAddressDetails(this.employee)
+}
   closeDialog(): void {
     this.dialogRef.close();
   }

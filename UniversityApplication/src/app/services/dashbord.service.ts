@@ -63,10 +63,6 @@ export class DashbordService {
     if (file) {
       formData.append('file', file, file.name);
     }
-
-
-
-
     console.log("submitPostRequestData requestData : ", requestData)
     return this.http.post<any>(this.url+`posts/saveimage`, formData);
   }
@@ -124,7 +120,7 @@ export class DashbordService {
     for (let i = 0; i < files.length; i++) {
       formData1.append('files', files[i])
     }
-    return this.http.post<any>(this.apiUrl3, formData1);
+    return this.http.post<any>(this.apiUrl3, formData1)
   }
 
 

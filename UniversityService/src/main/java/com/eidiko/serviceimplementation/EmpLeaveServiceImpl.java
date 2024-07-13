@@ -1,11 +1,13 @@
 package com.eidiko.serviceimplementation;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import com.eidiko.dto.EmpLeaveDto;
 import com.eidiko.dto.LeaveSummary;
 import com.eidiko.dto.MonthlyLeaveData;
 import com.eidiko.entity.EmpLeave;
+import com.eidiko.exception_handler.UserNotFoundException;
 import com.eidiko.mapper.Mapper;
 import com.eidiko.repository.EmpLeaveRepo;
 import com.eidiko.service.EmpLeaveService;
@@ -99,54 +102,6 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 				.map((empLeave) -> this.mapper.empLeaveToEmpLeaveDto(empLeave)).collect(Collectors.toList());
 		return empLeaveDtoList;
 	}
-	/*
-	 * 
-	 * @Override public List<LeaveSummary> getEmpLeaveSummaryByEmpId(Long
-	 * employeeId) { log.info("Id :{}",employeeId); List<EmpLeave>
-	 * empLeaveList=empLeaveRepo.findAllByEmployeeId(employeeId);
-	 * 
-	 * List<EmpLeave> pendingLeaveList =
-	 * empLeaveList.stream().filter(leave->leave.getStatus().equals("Pending")).
-	 * collect(Collectors.toList()); List<EmpLeave> approvedLeaveList =
-	 * empLeaveList.stream().filter(leave->leave.getStatus().equals("Approved")).
-	 * collect(Collectors.toList()); // Grouping leaves by type and summing the
-	 * durations of the leaves Map<String, Double> leaveDurationByType =
-	 * empLeaveList.stream() .collect(Collectors.groupingBy( EmpLeave::getLeaveType,
-	 * Collectors.summingDouble(leave -> { double duration =
-	 * leave.getDurationInDays(); if
-	 * (!leave.getCustomDayStatus().equalsIgnoreCase("Full Day")) { return duration
-	 * - 0.5; // Subtract 0.5 days for half day } else { return duration; // Full
-	 * day or other statuses, no change } })));
-	 * 
-	 * // Grouping leaves by month DateTimeFormatter formatter =
-	 * DateTimeFormatter.ofPattern("yyyy-MM"); Map<String, Map<String,
-	 * MonthlyLeaveData>> leaveDataByTypeAndMonth = approvedLeaveList.stream()
-	 * .collect(Collectors.groupingBy(EmpLeave::getLeaveType,
-	 * Collectors.groupingBy(leave -> leave.getFromDate().format(formatter),
-	 * Collectors.collectingAndThen(Collectors.toList(), leaves -> { double
-	 * totalLeaveTaken = leaves.stream() .mapToDouble(EmpLeave::getDurationInDays)
-	 * .sum(); List<LocalDate> leaveDays = leaves.stream() .flatMap(leave ->
-	 * leave.getFromDate().datesUntil(leave.getToDate().plusDays(1)))
-	 * .collect(Collectors.toList()); return new MonthlyLeaveData(totalLeaveTaken,
-	 * leaveDays); }))));
-	 * 
-	 * Map<String, Double> totalLeaveByType = new HashMap<>();
-	 * totalLeaveByType.put("Paid Leave", 12.0); // Example for paid leave
-	 * totalLeaveByType.put("Other Leave Type", Double.POSITIVE_INFINITY); //
-	 * Creating a response model to hold the leave details
-	 * 
-	 * // Constructing the result list List<LeaveSummary> leaveSummaries =
-	 * leaveDurationByType.entrySet().stream().map(entry -> { String leaveType =
-	 * entry.getKey(); double consumedLeave = entry.getValue(); double
-	 * availableLeave = totalLeaveByType.getOrDefault(leaveType,
-	 * Double.POSITIVE_INFINITY) - consumedLeave; Map<String, MonthlyLeaveData>
-	 * monthlyLeaveData = leaveDataByTypeAndMonth.get(leaveType); return new
-	 * LeaveSummary(leaveType, consumedLeave, availableLeave,
-	 * totalLeaveByType.getOrDefault(leaveType, 0.0), pendingLeaveList,
-	 * monthlyLeaveData); }).collect(Collectors.toList());
-	 * 
-	 * return leaveSummaries; }
-	 */
 
 	@Override
 	public List<LeaveSummary> getEmpLeaveSummaryByEmpId(Long employeeId) {
@@ -177,7 +132,7 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 		// Grouping leaves by month
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
 		Map<String, Map<String, MonthlyLeaveData>> leaveDataByTypeAndMonth = approvedLeaveList.stream().filter(
-				leave -> leave.getLeaveType() != null && leave.getFromDate() != null && leave.getToDate() != null)
+						leave -> leave.getLeaveType() != null && leave.getFromDate() != null && leave.getToDate() != null)
 				.collect(Collectors.groupingBy(EmpLeave::getLeaveType,
 						Collectors.groupingBy(leave -> leave.getFromDate().format(formatter),
 								Collectors.collectingAndThen(Collectors.toList(), leaves -> {
@@ -186,7 +141,7 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 										return duration != null ? duration : 0.0;
 									}).sum();
 									List<LocalDate> leaveDays = leaves.stream().flatMap(
-											leave -> leave.getFromDate().datesUntil(leave.getToDate().plusDays(1)))
+													leave -> leave.getFromDate().datesUntil(leave.getToDate().plusDays(1)))
 											.collect(Collectors.toList());
 									return new MonthlyLeaveData(totalLeaveTaken, leaveDays);
 								}))));
@@ -213,18 +168,18 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 	 * List<String> leaveTypes, List<String> statuses, Pageable pageable) {
 	 * log.info("Fetching records with leaveTypes: {} and statuses: {}", leaveTypes,
 	 * statuses);
-	 * 
+	 *
 	 * Page<EmpLeave> leaves =
 	 * empLeaveRepo.findByEmployeeIdAndLeaveTypeInAndStatusIn(employeeId,
 	 * leaveTypes, statuses, pageable);
-	 * 
-	 * 
+	 *
+	 *
 	 * leaves.getTotalElements(); log.info("Fetched records: {}", leaves); return
 	 * leaves; }
 	 */
 	@Override
 	public Page<EmpLeave> findByLeaveTypesAndStatuses(Long employeeId, List<String> leaveTypes, List<String> statuses,
-			Pageable pageable) {
+													  Pageable pageable) {
 		log.info("Fetching records with leaveTypes: {} and statuses: {}", leaveTypes, statuses);
 
 		Page<EmpLeave> leaves = empLeaveRepo.findByEmployeeIdAndLeaveTypeInAndStatusIn(employeeId, leaveTypes, statuses,
@@ -254,9 +209,10 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 		}).filter(dto -> dto != null).collect(Collectors.toList());
 	}
 
-//this method is used to get the details by their leavetype
+	//this method is used to get the details by their leavetype
 	@Override
 	public List<EmpLeaveDto> getEmployeeDetailsByRequestType(String leaveType) {
+
 		List<EmpLeave> empLeaveList = empLeaveRepo.findByLeaveType(leaveType);
 		return empLeaveList.stream().map(empLeave -> this.mapper.empLeaveToEmpLeaveDto(empLeave))
 				.collect(Collectors.toList());
@@ -271,4 +227,51 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 		return searchKeyword;
 	}
 
+	//leave status update
+	@Override
+	public String updateEmployeeLeave(Long empId, EmpLeave empLeave) throws UserNotFoundException {
+
+		EmpLeave existingDate = empLeaveRepo.findByEmployeeId(empId);
+
+		log.info("updateEmployeeLeave{}", existingDate);
+
+		if (existingDate == null) {
+			throw new UserNotFoundException("User not found in database");
+		}
+
+		updateNonNullFields(existingDate, empLeave);
+
+		EmpLeave updatedEmployeeLeaveStatus = empLeaveRepo.save(existingDate);
+
+		if (updatedEmployeeLeaveStatus.getEmployeeId() != 0) {
+			return "User record has been updated";
+		} else {
+			return "Failed to save the updated employee record";
+		}
+	}
+	//to update only the non-null fields.
+	private void updateNonNullFields(EmpLeave target, EmpLeave source) {
+		Field[] fields = source.getClass().getDeclaredFields();
+		for (Field field : fields) {
+			try {
+				field.setAccessible(true);
+				Object value = field.get(source);
+				if (value != null && !field.getName().equals("leaveId") && !field.getName().equals("employeeId")) {
+					field.set(target, value);
+				}
+			} catch (IllegalAccessException e) {
+				log.error("Failed to update field: {}", field.getName(), e);
+			}
+		}
+	}
+
+	@Override
+	public List<EmpLeaveDto> getPendingLeaveByNotifiedEmployee(Long empId) {
+		List<EmpLeave>leaveList=empLeaveRepo.findAllByNotifyToContainEmployeeIdAndStatus(empId,"Pending");
+
+		return leaveList.stream().map(empLeave -> this.mapper.empLeaveToEmpLeaveDto(empLeave))
+				.collect(Collectors.toList());
+	}
+
 }
+

@@ -103,6 +103,7 @@ public class JwtConfigurartions {
 				.authorizeHttpRequests(req -> 
 				req.requestMatchers("/login1", "/refresh/**","/api/save","/api/password/forgotPassword","/api/getByEmail/**","/api/sendMail").permitAll()
 						.anyRequest().authenticated())
+
 		    	.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))
 				// .sessionManagement(session ->
 				// session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

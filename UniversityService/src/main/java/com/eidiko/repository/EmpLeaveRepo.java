@@ -17,17 +17,17 @@ import com.eidiko.entity.EmpLeave;
 public interface EmpLeaveRepo extends JpaRepository<EmpLeave, Long> {
 
 	Optional<EmpLeave> findByleaveIdAndStatus(Long leaveId, String status);
-
+	EmpLeave findByEmployeeId(Long empId);
 	List<EmpLeave> findAllByEmployeeId(Long employeeId);
 
-//	 List<EmpLeave> findByLeaveType(String leaveType);
+	//	 List<EmpLeave> findByLeaveType(String leaveType);
 	List<EmpLeave> findByLeaveTypeIn(List<String> leaveTypes);
 
 	@Query("SELECT e FROM EmpLeave e WHERE e.employeeId = :employeeId "
 			+ "AND (:leaveTypes IS NULL OR e.leaveType IN :leaveTypes) "
 			+ "AND (:statuses IS NULL OR e.status IN :statuses)")
 	Page<EmpLeave> findByEmployeeIdAndLeaveTypeInAndStatusIn(@Param("employeeId") Long employeeId,
-			@Param("leaveTypes") List<String> leaveTypes, @Param("statuses") List<String> statuses, Pageable pageable);
+															 @Param("leaveTypes") List<String> leaveTypes, @Param("statuses") List<String> statuses, Pageable pageable);
 
 	List<EmpLeave> findByFromDateLessThanEqualAndToDateGreaterThanEqual(LocalDate fromDate, LocalDate toDate);
 
@@ -39,6 +39,9 @@ public interface EmpLeaveRepo extends JpaRepository<EmpLeave, Long> {
 			+ "OR lower(l.leaveNote) LIKE lower(concat('%', :key, '%')) "
 			+ "OR CAST(l.leaveDates AS string) LIKE concat('%', :key, '%'))")
 	Optional<List<EmpLeave>> searchByLeaveTypeOrStatusAndEmployeeId(@Param("key") String keyword,
-			@Param("employeeId") Long employeeId);
+																	@Param("employeeId") Long employeeId);
+
+	@Query("SELECT e FROM EmpLeave e WHERE :empId MEMBER OF e.notifyTo AND e.status = :status")
+	List<EmpLeave> findAllByNotifyToContainEmployeeIdAndStatus(@Param("empId") Long empId, @Param("status") String status);
 
 }

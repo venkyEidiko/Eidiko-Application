@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -80,7 +81,7 @@ const employee=this.loginService.getEmployeeData();
       rejectionReason: this.rejectionReason,
       employeeId: this.employeeId
     };
-    console.log("leave request - ",leave);
+
     this.leaveRequestService.submitLeaveRequest(leave).subscribe(
       (response) => {
         console.log('Request submitted successfully', response);
@@ -126,6 +127,6 @@ const employee=this.loginService.getEmployeeData();
     this.notifyTo.setValue(`${employee.firstName} ${employee.lastName}`);
     this.searchResults = [];
   }
-  
+
 }
 

@@ -3,9 +3,6 @@ import { Subscription } from 'rxjs';
 import { ShiftRequestService } from '../services/shift-request.service';
 import { DialogService } from '../services/dialog.service';
 
-
-
-
 @Component({
   selector: 'app-attandance',
   templateUrl: './attandance.component.html',
@@ -27,6 +24,7 @@ arrival:String='';
 teamAverageHour:string=""
 teamArrival:string='';
   weekdata = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
 
 
   constructor(private shiftService:ShiftRequestService,private dialogService:DialogService) {
@@ -94,5 +92,4 @@ this.teamArrival=attandStatus.avgArivalPerTeam
   openDialog(): void {
     this.dialogService.openWorkFromHomeDialog();
   }
- 
 }
