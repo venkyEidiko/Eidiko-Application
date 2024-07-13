@@ -23,7 +23,9 @@ export class DialogService {
    updateProfileDetails(employee:any) : Observable<any>{
     console.log("Employee primary details : ",employee);
     console.log("Employee primary details employeeId : ",employee);
-    return this.http.put(`${this.url}updateEmployeePrimaryDetailsByEmpId/${employee.employeeId}`, employee);
+    return this.http.put(`${this.url}updateEmployeePrimaryDetailsByEmpId/${employee.employeeId}`, employee);  
+
+    
    }
   }
 
