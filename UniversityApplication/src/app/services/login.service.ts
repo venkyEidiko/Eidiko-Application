@@ -10,6 +10,7 @@ export class LoginService {
   private jwtToken: string | null = null;
   private isAuthenticated: boolean = false;
   url = "http://localhost:2000/";
+  // url = "http://localhost:8082/";
 
   constructor(private http: HttpClient) { }
 
@@ -32,9 +33,14 @@ export class LoginService {
     this.isAuthenticated = false;
   }
 
-  setEmployeeData(data: any) {
-    this.employeeData = data;
-    localStorage.setItem('employee-data', JSON.stringify(data));
+  setEmployeeData(employeeId: number) {
+    //this.employeeData = data;
+    this.http.get(`${this.url}api/getBybyEmployeeID/${employeeId}`).subscribe(res=>{
+      this.employeeData=res;
+      this.employeeData=this.employeeData.result[0];
+      localStorage.setItem('employee-data', JSON.stringify(this.employeeData));
+    })
+    
   }
   searchEmployee(search: any): Observable<any[]> {
     return this.http.get<any[]>(this.url + "api/searchByKeyword/" + search)
