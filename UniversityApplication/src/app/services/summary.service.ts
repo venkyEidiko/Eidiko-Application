@@ -8,7 +8,7 @@ import { LoginService } from './login.service';
 })
 export class SummaryService {
 
-  baseUrl = "http://10.0.0.38:8082/api/";
+  baseUrl = "http://localhost:8082/api/";
 
   constructor(private http: HttpClient,private loginService : LoginService) { }
 

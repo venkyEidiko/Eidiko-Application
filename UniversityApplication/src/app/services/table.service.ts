@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TableService {
-  private baseUrl = 'http://10.0.0.38:8082';
+  private baseUrl = 'http://localhost:8082';
 
   constructor(private http: HttpClient) {}
 

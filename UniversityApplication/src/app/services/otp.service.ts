@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OtpService {
-  private apiUrl = 'http://10.0.0.38:8082/api/sendMail';
+  private apiUrl = 'http://localhost:8082/api/sendMail';
   private isAuthenticated: boolean = false;
 
   constructor(private http: HttpClient) { }

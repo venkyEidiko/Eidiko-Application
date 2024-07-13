@@ -15,12 +15,12 @@ import { map } from 'rxjs/operators';
 })
 export class DashbordService {
   private apiUrl1 = 'http://localhost:8082/';
-  private apiUrl2 = 'http://10.0.0.38:8082/posts/saveComment'
-  private apiUrl3 = 'http://10.0.0.38:8082/posts/saveimage'
-  private apiUrl4 = 'http://10.0.0.38:8082/posts/savelike/${postId}'
+  private apiUrl2 = 'http://localhost:8082/posts/saveComment'
+  private apiUrl3 = 'http://localhost:8082/posts/saveimage'
+  private apiUrl4 = 'http://localhost:8082/posts/savelike/${postId}'
 
   constructor(private http: HttpClient, private loginService: LoginService, private dialog: MatDialog,) { }
-  url = "http://10.0.0.38:8082/";
+  url = "http://localhost:8082/";
 
   getWorkFromHome(): Observable<any[]> {
     return this.http.get<any>(this.url + "api/getemployeesdata/Work From Home");
@@ -44,7 +44,7 @@ export class DashbordService {
 
     return this.http.get<any>(this.apiUrl1+"leave/getEmpLeaveSummaryByEmpId/" + empId);
   }
-
+  
   getEmpId() {
     return this.loginService.getEmployeeData().employeeId;
   }
@@ -63,10 +63,6 @@ export class DashbordService {
     if (file) {
       formData.append('file', file, file.name);
     }
-
-
-
-
     console.log("submitPostRequestData requestData : ", requestData)
     return this.http.post<any>(this.url+`posts/saveimage`, formData);
   }
@@ -98,7 +94,7 @@ export class DashbordService {
   }
 
   getAllPosts(): Observable<any[]> {
-    return this.http.get<any>("http://10.0.0.38:8082/posts/getAllPostByTime")
+    return this.http.get<any>("http://localhost:8082/posts/getAllPostByTime")
   }
   
   saveLike(postId: number, emojiId: number, empId: number): Observable<any> {
