@@ -18,7 +18,7 @@ public class EmpLeaveDto {
 	private String status;
 	private String leaveType;
 	private String requestedBy;
-	private Set<String> notifyTo;
+	private Set<Long> notifyTo;
 	private String actionTakenBy;
 	private String leaveNote;
 	private String rejectionReason;

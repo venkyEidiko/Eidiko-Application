@@ -124,7 +124,17 @@ export class DashbordService {
   }
 
 
+pendingRequest():Observable<any>{
+return this.http.get<any>(`${this.url}leave/getPendingLeaveByNotifiedEmployee/${this.getEmpId()}`)
+}
 
+updateLeaveByApprover(leaveId: number, empLeaveDto: any): Observable<any> {
+  const actionTakenBy=this.loginService.getEmployeeData().firstName+" "+this.loginService.getEmployeeData().lastName
+  return this.http.put<any>(
+    `${this.url}leave/updateLeaveByApprover/${leaveId}/${actionTakenBy}`,
+    empLeaveDto
+  );
+}
 
   getPostsAndLikes(): Observable<any> {
     console.log("inside service")
