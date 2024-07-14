@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
+
+import { WorkFromHomeDialogeComponent } from '../work-from-home-dialoge/work-from-home-dialoge.component';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoginService } from './login.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +20,12 @@ export class DialogService {
       
       })
    }
+
+   openWorkFromHomeDialog(): void {
+    this.dialog.open(WorkFromHomeDialogeComponent, {
+
+    })
+  }
 
    employee =this.loginService.getEmployeeData()
     url="http://localhost:8082/api/"
@@ -41,4 +50,3 @@ console.log('Employee Address details : ',employee);
 this.loginService.setEmployeeData(employee.employeeId)
    }
   }
-

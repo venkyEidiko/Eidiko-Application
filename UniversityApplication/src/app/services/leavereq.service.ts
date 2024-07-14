@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class LeavereqService {
   private apiUrl = 'http://localhost:8082/leave/saveEmpLeave';
   private apiUrl1 = 'http://localhost:8082/api/leave/requestCompensatory';
+  private baseUrl = 'http://localhost:8082/';
 
   constructor(private http: HttpClient) {}
 
@@ -27,4 +28,11 @@ export class LeavereqService {
 
     return this.http.post<any>(this.apiUrl1, formData);
   }
+
+  workfromHomeRequest(requestBody:any):Observable<any>{
+    const url = this.baseUrl + 'api/wfh';
+    return this.http.post<any>(url, requestBody);
+
+  }
+
 }

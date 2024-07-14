@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -9,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LoginService } from '../services/login.service';
+import { DatePipe } from '@angular/common';
 
 interface Employee {
   employeeId: number;
@@ -19,12 +19,11 @@ interface Employee {
 
 
 @Component({
-  selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.css']
+  selector: 'app-work-from-home-dialoge',
+  templateUrl: './work-from-home-dialoge.component.html',
+  styleUrls: ['./work-from-home-dialoge.component.css']
 })
-
-export class DialogComponent implements OnInit {
+export class WorkFromHomeDialogeComponent {
   isOpen: boolean = true;
   fromDate!: Date;
   toDate!: Date;
@@ -37,10 +36,11 @@ export class DialogComponent implements OnInit {
   searchResults: Employee[] = [];
 
   constructor(
-    private dialogRef: MatDialogRef<DialogComponent>,
+    private dialogRef: MatDialogRef<WorkFromHomeDialogeComponent>,
     private leaveRequestService: LeavereqService,
     private http: HttpClient,
-    private loginService:LoginService
+    private loginService:LoginService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -67,22 +67,33 @@ const employee=this.loginService.getEmployeeData();
   actionTakenBy:string='';
   rejectionReason:string='';         
   submitRequest(): void {
-    const leave: LeaveRequest = {
-      leaveDates: new Date(),
-      fromDate: this.fromDate,
-      toDate: this.toDate,
-      status: this.status,
-      leaveType: this.leaveType,
-      requestedBy: '',
-      notifyTo: [this.notifyTo.value],
-      actionTakenBy: this.actionTakenBy,
-      customDayStatus: this.selectedHalfDay,
-      leaveNote: this.leaveNote,
-      rejectionReason: this.rejectionReason,
-      employeeId: this.employeeId
+    let fromhalfRequest;
+    let toHalfrequest;
+    if(this.selectedHalfDay == "fullDay"){
+      fromhalfRequest = 'first half';
+      toHalfrequest = 'secondhalf';
+    }
+    else{
+      fromhalfRequest = this.selectedHalfDay;
+      toHalfrequest = this.selectedHalfDay;
+    }
+    console.log("date - ",this.fromDate );
+    
+    const leave: WorkFromHomeRequest = {
+      fromDate: this.datePipe.transform(this.fromDate,"yyyy-MM-dd"),
+      toDate: this.datePipe.transform(this.toDate,"yyyy-MM-dd"),
+      requestType: "WORK FROM HOME",
+      notify: this.notifyTo.value,
+      reason: this.leaveNote,
+      employeeId: this.employeeId,
+      fromHalf: fromhalfRequest,
+      toHalf: toHalfrequest
     };
 
-    this.leaveRequestService.submitLeaveRequest(leave).subscribe(
+    console.log("work from request body - ",leave);
+    
+
+    this.leaveRequestService.workfromHomeRequest(leave).subscribe(
       (response) => {
         console.log('Request submitted successfully', response);
         this.dialogRef.close();
@@ -107,7 +118,7 @@ const employee=this.loginService.getEmployeeData();
       return of([]);
     }
 
-    const apiUrl =`http://10.0.0.38:8082/api/searchByKeyword/${keyword}`;
+    const apiUrl =`http://localhost:8082/api/searchByKeyword/${keyword}`;
 
       
     return this.http.get<any>(apiUrl).pipe(
@@ -127,6 +138,14 @@ const employee=this.loginService.getEmployeeData();
     this.notifyTo.setValue(`${employee.firstName} ${employee.lastName}`);
     this.searchResults = [];
   }
-
 }
-
+export interface WorkFromHomeRequest {
+    "fromDate": any,
+    "toDate": any,
+    "requestType": string,
+    "notify": any,
+    "fromHalf":any,
+    "toHalf":any,
+    "reason": any,
+    "employeeId": any
+}

@@ -472,6 +472,7 @@ export class DashboardComponent implements OnInit {
     this.postRequestData.description = this.textMessage;
     console.log("addAtSymbol method text area: ", textarea.value)
   }
+
    selectedFiles: File[] = [];
    base64Images: string[] = [];
   onFileSelected(event: Event) {
@@ -500,6 +501,7 @@ export class DashboardComponent implements OnInit {
     this.selectedFiles.splice(index, 1);
     this.base64Images.splice(index, 1);
   }
+
   toggleEmoticonPicker() {
     this.showEmoticonPicker = !this.showEmoticonPicker;
   }
@@ -520,11 +522,13 @@ export class DashboardComponent implements OnInit {
       const file: File = this.files[0];
       this.service.submitPostRequest(this.postRequestData, file).subscribe(response => {
         console.log("PostRequset response : ", response)
+
         this.postRequestData={
           description: "",
           postType: this.selectedOption,
           mentionEmployee: [],
           postEmployee: this.service.getEmpId()}
+
       },
         (error => {
           console.log(error);

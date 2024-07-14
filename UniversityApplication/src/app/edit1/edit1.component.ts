@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Employee, Address } from '../services/employee';
 import { DialogService } from '../services/dialog.service';
+
 @Component({
   selector: 'app-edit1',
   templateUrl: './edit1.component.html',
@@ -21,7 +22,6 @@ export class Edit1Component {
     this.currentAddress = data.currentAddress;
     this.permanentAddress = data.permanentAddress;
   }
- 
   onClick(){
     console.log("edit1 e,ployee data preinting - ", this.employee);
     
