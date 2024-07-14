@@ -42,12 +42,12 @@ export class RegistrationComponent implements OnInit {
       employeeId: ['', [Validators.required, Validators.max(9999)]],
       phoneNu: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
       doorNu: ['', [Validators.required,minValueValidator(1)]],
-      streetName: ['', [Validators.required]],
-      landmark: ['', [Validators.required]],
-      area: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      state: ['', [Validators.required]],
-      pincode: ['', [Validators.required]],
+      streetName: ['', [Validators.required,Validators.pattern(/^[A-Za-z0-9\s]+$/)]],
+      landmark: ['', [Validators.required,Validators.pattern(/^[A-Za-z0-9\s]+$/)]],
+      area: ['', [Validators.required,Validators.pattern(/^[A-Za-z\s]+$/)]],
+      city: ['', [Validators.required,Validators.pattern(/^[A-Za-z\s]+$/)]],
+      state: ['', [Validators.required,Validators.pattern(/^[A-Za-z\s]+$/)]],
+      pincode: ['', [Validators.required,Validators.pattern(/^\d{6}$/)]],
     }, { validators: this.passwordMatchValidator });
   }
 

@@ -1,7 +1,6 @@
-
 <div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
   <div class="req">
-    <p >Request leave</p>
+    <p>Request leave</p>
     <div class="close-icon">
       <mat-icon (click)="closeDialog()">close</mat-icon>
     </div>
@@ -10,51 +9,52 @@
     <div class="firstrow">
       <div>
         <span>From</span><br/>
-        <div class="calen">
+        <div class="calen" style="display:block">
           <mat-form-field style="width:140px;">
-          <input matInput [(ngModel)]="fromDate" name="fromDate" [matDatepicker]="picker1" class="customwidth">
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
+            <input matInput [(ngModel)]="fromDate" name="fromDate" #fromDateInput="ngModel" [matDatepicker]="picker1" class="customwidth" required>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
+          <div *ngIf="fromDateInput.invalid && (fromDateInput.dirty || fromDateInput.touched)">
+            <div *ngIf="fromDateInput.errors?.['required']" style="color:red">Please enter the date.</div>
+          </div>
         </div>
       </div>
-        <span class="days">{{calculateDays()}} days</span>
+      <span class="days">{{calculateDays()}} days</span>
       <div>
         <span>To</span><br/>
-        <div class="calen">
+        <div class="calen" style="display:block">
           <mat-form-field style="width:140px">
-          <input matInput [(ngModel)]="toDate" name="toDate" [matDatepicker]="picker2" class="customwidth">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2 color="primary"></mat-datepicker>
+            <input matInput [(ngModel)]="toDate" name="toDate" #toDateInput="ngModel" [matDatepicker]="picker2" class="customwidth" required>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2 color="primary"></mat-datepicker>
           </mat-form-field>
+          <div *ngIf="toDateInput.invalid && (toDateInput.dirty || toDateInput.touched)">
+            <div *ngIf="toDateInput.errors?.['required']" style="color:red">Please enter the date.</div>
         </div>
       </div>
     </div>
-    
+  </div>
+
     <div class="typeofleave">
       <p>Select type of leave you want to apply</p>
-       <mat-form-field>
+      <mat-form-field>
         <mat-label>Leave Type</mat-label>
-        
         <mat-select [(ngModel)]="leaveType" name="leaveType">
           <mat-option value="Paid Leave">Paid Leave</mat-option>
           <mat-option value="Comp Offs">Comp Offs</mat-option>
           <mat-option value="unpaid">Unpaid Leave</mat-option>
-          <mat-option value="Maternity ">Maternity Leave</mat-option>
+          <mat-option value="Maternity">Maternity Leave</mat-option>
           <mat-option value="Optional">Optional Leave</mat-option>
-          
         </mat-select>
       </mat-form-field>
-      
     </div>
-    
-  
+
     <div *ngIf="fromDate && toDate && fromDate.toISOString() === toDate.toISOString()">
       <div>
         <button mat-button>Full Day</button>
         <button mat-button (click)="toggleCustomDropdown()">Custom</button>
       </div>
-      
       <div *ngIf="showCustomDropdown">
         <mat-form-field>
           <mat-label>Select Half Day</mat-label>
@@ -65,11 +65,17 @@
         </mat-form-field>
       </div>
     </div>
-    
+
     <div>
-      <p class="note">Note </p>
-      <input matInput [(ngModel)]="leaveNote" name="note" placeholder="Type Here">
+      <p class="note">Note</p>
+      <mat-form-field>
+        <input matInput [(ngModel)]="leaveNote" name="note" #note="ngModel" placeholder="Type Here" required>
+      </mat-form-field>
+      <div *ngIf="note.invalid && (note.dirty || note.touched)">
+        <div *ngIf="note.errors?.['required']" style="font-size: 11px;color:red;">Note is required.</div>
+      </div>
     </div>
+
     <div>
       <p class="note1">Notify</p>
       <input matInput [formControl]="notifyTo" class="input1" placeholder="Search Employee">
@@ -77,19 +83,16 @@
         <ul>
           <li *ngFor="let result of searchResults" (click)="selectEmployee(result)">
             <div>
-            <img src="../../assets/profileimage.png" style="height:25px;width:30px;">
-            {{ result.employeeId }} - {{ result.firstName }} {{ result.lastName }}
+              <img src="../../assets/profileimage.png" style="height:25px;width:30px;">
+              {{ result.employeeId }} - {{ result.firstName }} {{ result.lastName }}
             </div>
           </li>
         </ul>
       </div>
     </div>
   </div>
-  <div mat-dialog-actions class="custom-dialog-actions" >
-    <button mat-button (click)="closeDialog()" >Cancel</button>
+  <div mat-dialog-actions class="custom-dialog-actions">
+    <button mat-button (click)="closeDialog()">Cancel</button>
     <button mat-button class="request" (click)="submitRequest()">Request</button>
   </div>
 </div>
-
-
-

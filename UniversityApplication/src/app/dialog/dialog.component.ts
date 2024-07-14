@@ -35,6 +35,7 @@ export class DialogComponent implements OnInit {
   showCustomDropdown: boolean = false;
   selectedHalfDay: string = 'fullDay';
   searchResults: Employee[] = [];
+fromDateInput: any;
 
   constructor(
     private dialogRef: MatDialogRef<DialogComponent>,
