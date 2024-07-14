@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
         console.log("Login component Login empId : ",empId);
         
         this.loginService.setEmployeeData(empId);
-        
+        localStorage.setItem('employee-data', JSON.stringify(response.result[0].employee));
         //localStorage.setItem('jwt-token', response.result[0].jwtToken);
         localStorage.setItem('refresh-token', response.result[0].refreshToken);
         this.router.navigate(['/layout/home/dashboard']);

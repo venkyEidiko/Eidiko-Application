@@ -67,12 +67,12 @@ public class Posts {
 	
 
 	// for Likes
-	@JsonManagedReference
+	
 	@OneToMany(mappedBy = "posts", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Likes> likes;
 
 	// for comments
-	@JsonManagedReference
+	
 	@OneToMany(mappedBy = "posts", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Comments> comments;
 
