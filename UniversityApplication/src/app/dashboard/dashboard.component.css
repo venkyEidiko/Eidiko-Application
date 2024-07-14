@@ -780,3 +780,7 @@ color: #fff;
   display: flex;
   flex-direction: column;
 }
+
+.inbox-data p{
+  color: rgb(186, 125, 243);
+}

@@ -10,9 +10,17 @@
               <img src="../../assets/email.jpg" alt="not found" />
             </div>
             <div>
-              <p>Good job!</p>
-              <p>You have no pending actions</p>
+              <p *ngIf="pendingLeaves.length === 0">Good job!</p>
+              <p *ngIf="pendingLeaves.length === 0">
+                You have no pending actions
+              </p>
+              <div *ngIf="pendingLeaves.length" class="inbox-data">
+                <p>You have {{pendingLeaves.length}} pending requests</p>
+                <p>Please check in Inbox </p> 
+                <p style="padding-left: 50px;">Thank you !!</p>
+              </div>
             </div>
+
           </div>
         </mat-card-content>
       </mat-card>
@@ -137,20 +145,24 @@
               <div class="form-container">
                 <textarea class="textarea" #textarea (input)="onTextChange($event)"
                   placeholder="Write your post here and mention your peers"></textarea>
-                  <div *ngIf="base64Image">
-                    <img [src]="base64Image" alt="Selected Image" width="90%" height="40%"/>
+
+                <div *ngIf="base64Image">
+                  <img [src]="base64Image" alt="Selected Image" width="90%" height="40%" />
+                </div>
+                <div class="image-container">
+                  <div class="image-box" *ngFor="let img of base64Images; let i = index">
+                    <img [src]="img" alt="Selected Image">
+                    <button class="delete-btn" (click)="removeImage(i)">&#10005;</button>
+
                   </div>
-                  <div class="image-container">
-                    <div class="image-box" *ngFor="let img of base64Images; let i = index">
-                      <img [src]="img" alt="Selected Image">
-                      <button class="delete-btn" (click)="removeImage(i)">&#10005;</button>
-                    </div>
-                    <div *ngIf="base64Images.length > 0" class="plus-box" (click)="triggerFileInput(fileInput)">
-                      <span>+</span>
-                    </div>
-                    <input type="file" #fileInput (change)="onFileSelected($event)" multiple style="display: none;">
+                  <div *ngIf="base64Images.length > 0" class="plus-box" (click)="triggerFileInput(fileInput)">
+                    <span>+</span>
                   </div>
-                  
+
+                  <input type="file" #fileInput (change)="onFileSelected($event)" multiple style="display: none;">
+                </div>
+
+
                 <div class="actions">
                   <button mat-icon-button (click)="addAtSymbol(textarea)"><mat-icon>alternate_email</mat-icon></button>
                   <div class="search-dropdown" *ngIf="showDropdown" (click)="$event.stopPropagation()">
@@ -373,13 +385,8 @@
                         </div>
                       </div>
                     </div>
-
-
                     <div *ngIf="nextSevendaysAnniversarys.length>11" class="extra-Anniversary-items">
-
-
-                      {{nextSevendaysAnniversarys.length - 11}}+more
-
+               {{nextSevendaysAnniversarys.length - 11}}+more
                     </div>
                   </div>
                 </div>
@@ -446,7 +453,7 @@
               <div class="imageName">
                 <span>{{image.postBy | capatlize}}</span>
                 <span>{{image.timeStamp }}</span>
-            </div>
+              </div>
             </div>
 
 

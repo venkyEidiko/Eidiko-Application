@@ -130,3 +130,13 @@
   .search-results li{
     list-style-type: none;
   }
+  .searchdata{
+    background-color:rgb(51, 61, 78);
+      cursor: pointer; 
+      width: 100%;
+      padding: 5px 20px;
+      
+  }
+  .searchdata:hover{
+background-color: #3d3c3b;
+  }

@@ -43,11 +43,11 @@ fromDateInput: any;
     private http: HttpClient,
     private loginService:LoginService
   ) {}
-
+employee:any='';
   ngOnInit(): void {
     
-const employee=this.loginService.getEmployeeData();
-   this.employeeId=employee.employeeId;
+ this.employee=this.loginService.getEmployeeData();
+   this.employeeId=this.employee?.employeeId;
     this.notifyTo.valueChanges.pipe(
       debounceTime(300), 
       switchMap(value => this.searchEmployees(value))
@@ -74,7 +74,7 @@ const employee=this.loginService.getEmployeeData();
       toDate: this.toDate,
       status: this.status,
       leaveType: this.leaveType,
-      requestedBy: '',
+      requestedBy: this.employee?.firstName +" "+this.employee.lastName,
       notifyTo: [this.notifyTo.value],
       actionTakenBy: this.actionTakenBy,
       customDayStatus: this.selectedHalfDay,
@@ -108,7 +108,7 @@ const employee=this.loginService.getEmployeeData();
       return of([]);
     }
 
-    const apiUrl =`http://10.0.0.38:8082/api/searchByKeyword/${keyword}`;
+    const apiUrl =`http://localhost:8082/api/searchByKeyword/${keyword}`;
 
       
     return this.http.get<any>(apiUrl).pipe(
@@ -125,7 +125,7 @@ const employee=this.loginService.getEmployeeData();
   }
 
   selectEmployee(employee: Employee): void {
-    this.notifyTo.setValue(`${employee.firstName} ${employee.lastName}`);
+    this.notifyTo.setValue(employee.employeeId);
     this.searchResults = [];
   }
 

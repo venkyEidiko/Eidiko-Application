@@ -82,9 +82,11 @@
       <div *ngIf="searchResults.length > 0" class="search-results">
         <ul>
           <li *ngFor="let result of searchResults" (click)="selectEmployee(result)">
-            <div>
-              <img src="../../assets/profileimage.png" style="height:25px;width:30px;">
-              {{ result.employeeId }} - {{ result.firstName }} {{ result.lastName }}
+
+            <div class="searchdata">
+            <img src="../../assets/profileimage.png" style="height:25px;width:30px; ">
+            {{ result.employeeId }} - {{ result.firstName }} {{ result.lastName }}
+
             </div>
           </li>
         </ul>

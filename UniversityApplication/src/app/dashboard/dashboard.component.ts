@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
   textMessage: string | null = null;
   showCommentBox: boolean[] = [];
   hideDate: Date | null = null;
- 
+
   workFromHomeList: any;
   onLeaveToday: any[] = [];
   holidayList: any;
@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
   todayJoineesCount: number = 0;
   noBirthdayMessage: String = ''
   noJoinersToday: String = ''
-  searchStatus:boolean=false
+  searchStatus: boolean = false
   showIcons: boolean = false;
   isCardExpanded: boolean = false;
   insertedSymbol: string = '';
@@ -75,7 +75,8 @@ export class DashboardComponent implements OnInit {
     this.getAnniversaryAndAfterSevenDaysList();
     this.getBirthdayAndAfterSevenDaysList();
     this.loadAllPosts();
-
+    
+    this.fetchPendingLeaves()
     this.fetchOnLeaveToday();
     this.workFromHomeList();
     //this.fetchPostsAndLikes();
@@ -101,7 +102,7 @@ export class DashboardComponent implements OnInit {
   }[] = [];
 
 
- 
+
 
   insertSymbol(symbol: string) {
     this.insertedSymbol = symbol;
@@ -216,12 +217,12 @@ export class DashboardComponent implements OnInit {
 
       if (response.status === 'SUCCESS') {
         this.imageSrcList = response.result.map((item: any) => {
-          
+
           let emojiIds = item.likes.map((like: any) => like.emoji);
           let emojiIdsCount = emojiIds.length;
-          
-          let commentIds=item.comments.map((p:any)=>p.comment);
-          let commentIdsCount=commentIds.length;
+
+          let commentIds = item.comments.map((p: any) => p.comment);
+          let commentIdsCount = commentIds.length;
 
 
           return {
@@ -234,22 +235,22 @@ export class DashboardComponent implements OnInit {
             emojiIdsCount: emojiIdsCount,
             mentionEmployee: item.mentionEmployee,
 
-            comments:item.comments,
-            commentIds:item.commentIds,
-            commentIdsCount:commentIdsCount,
-            postBy: (item.postEmployeeName.firstName +" "+ item.postEmployeeName.lastName)
+            comments: item.comments,
+            commentIds: item.commentIds,
+            commentIdsCount: commentIdsCount,
+            postBy: (item.postEmployeeName.firstName + " " + item.postEmployeeName.lastName)
 
-          
+
 
 
 
 
           };
         });
-  
+
         // Log the entire imageSrcList for verification
         console.log('Modified imageSrcList:', this.imageSrcList);
-        
+
 
 
       } else {
@@ -424,20 +425,20 @@ export class DashboardComponent implements OnInit {
     let newTextValue: string = textValue.slice(0, lastIndex + 1) + name;
     textarea.value = newTextValue;
     textarea.selectionStart = textarea.selectionEnd = lastIndex + 1 + name.length; // Place cursor after inserted name
-    textarea.focus();  
+    textarea.focus();
     this.showDropdown = false;
     this.searchStatus = false;
     this.textMessage = newTextValue;
     this.postRequestData.description = newTextValue;
     this.postRequestData.mentionEmployee.push(name);
-}
+  }
 
   onTextChange(event: Event) {
     const inputElement = event.target as HTMLTextAreaElement;
     const search = inputElement.value
     const atIndex = search.lastIndexOf('@');
     console.log(inputElement.value);
-    if (atIndex !== -1 && search.length > atIndex + 1 && this.searchStatus==true) {
+    if (atIndex !== -1 && search.length > atIndex + 1 && this.searchStatus == true) {
       // Extract text after '@' symbol
       const searchText = search.substring(atIndex + 1);
       if (searchText.length > 1) {
@@ -461,28 +462,28 @@ export class DashboardComponent implements OnInit {
     }
     this.textMessage = inputElement.value;
     this.postRequestData.description = this.textMessage;
-   
+
   }
 
   addAtSymbol(textarea: HTMLTextAreaElement) {
     textarea.setRangeText('@', textarea.selectionStart, textarea.selectionEnd, 'end');
     textarea.focus();
-    this.searchStatus=true
+    this.searchStatus = true
     this.textMessage = textarea.value;
     this.postRequestData.description = this.textMessage;
     console.log("addAtSymbol method text area: ", textarea.value)
   }
 
-   selectedFiles: File[] = [];
-   base64Images: string[] = [];
+  selectedFiles: File[] = [];
+  base64Images: string[] = [];
   onFileSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    
+
     if (inputElement.files) {
       for (let i = 0; i < inputElement.files.length; i++) {
         const file = inputElement.files[i];
         this.selectedFiles.push(file);
-        
+
         // Read the file to display the image
         const reader = new FileReader();
         reader.onload = (e: any) => {
@@ -496,7 +497,7 @@ export class DashboardComponent implements OnInit {
   }
   triggerFileInput(fileInput: HTMLInputElement): void {
     fileInput.click();
-  }  
+  }
   removeImage(index: number): void {
     this.selectedFiles.splice(index, 1);
     this.base64Images.splice(index, 1);
@@ -523,11 +524,12 @@ export class DashboardComponent implements OnInit {
       this.service.submitPostRequest(this.postRequestData, file).subscribe(response => {
         console.log("PostRequset response : ", response)
 
-        this.postRequestData={
+        this.postRequestData = {
           description: "",
           postType: this.selectedOption,
           mentionEmployee: [],
-          postEmployee: this.service.getEmpId()}
+          postEmployee: this.service.getEmpId()
+        }
 
       },
         (error => {
@@ -557,6 +559,16 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+  pendingLeaves: any[] = [];
+  showRejectionReason: number | null = null;
+  rejectionReason: string = '';
+
+  fetchPendingLeaves() {
+    this.service.pendingRequest().subscribe(res => {
+      console.log("Dashboard component pending request : ", res);
+this.pendingLeaves=res.result
+    })
+  }    
 }
 
 interface PostRequest {

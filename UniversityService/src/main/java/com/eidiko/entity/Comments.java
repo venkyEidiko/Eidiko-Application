@@ -2,6 +2,7 @@ package com.eidiko.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,8 +33,12 @@ public class Comments {
 	// which emp giving comment
 	private int empId;
 
-	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "postId")
 	private Posts posts;
+	
+	@JsonIgnore
+	public Posts getPosts() {
+		return posts;
+	}
 }
