@@ -136,8 +136,7 @@
               <div class="form-container">
                 <textarea class="textarea" #textarea (input)="onTextChange($event)"
                   placeholder="Write your post here and mention your peers"></textarea>
-<<<<<<< HEAD
-=======
+
                   <div *ngIf="base64Image">
                     <img [src]="base64Image" alt="Selected Image" width="90%" height="40%"/>
                   </div>
@@ -152,7 +151,7 @@
                     <input type="file" #fileInput (change)="onFileSelected($event)" multiple style="display: none;">
                   </div>
                   
->>>>>>> e56ea07a6e5f9deec44080c925482dff757e5f57
+
                 <div class="actions">
                   <button mat-icon-button (click)="addAtSymbol(textarea)"><mat-icon>alternate_email</mat-icon></button>
                   <div class="search-dropdown" *ngIf="showDropdown" (click)="$event.stopPropagation()">
@@ -160,10 +159,6 @@
                       {{result.firstName+" "+result.lastName|| "-No Result-"}}
                     </div>
                   </div>
-<<<<<<< HEAD
-=======
-                
->>>>>>> e56ea07a6e5f9deec44080c925482dff757e5f57
                   <button mat-icon-button (click)="fileInput.click()"><mat-icon>image</mat-icon></button>
                   <input type="file" #fileInput multiple (change)="onFileSelected($event)" hidden>
                   <button mat-icon-button (click)="toggleEmoticonPicker()"><mat-icon>insert_emoticon</mat-icon></button>
@@ -378,14 +373,8 @@
                         </div>
                       </div>
                     </div>
-
-<<<<<<< HEAD
-                    <div *ngIf="nextSevendaysAnniversarys.length>11" class="extra-Anniversary-items">
-=======
                     <div *ngIf="nextSevendaysAnniversarys?.length>11" class="extra-Anniversary-items">
->>>>>>> e56ea07a6e5f9deec44080c925482dff757e5f57
                       {{nextSevendaysAnniversarys.length - 11}}+more
-
                     </div>
                   </div>
                 </div>
