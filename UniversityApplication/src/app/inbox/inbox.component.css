@@ -1,3 +1,7 @@
+.inbox{
+  width: 100%;
+  height: 100%;
+}
 .image-container {
     position: relative;
     display: inline-block;
@@ -21,4 +25,75 @@
     padding: 10px;
     border-radius: 5px; 
   }
+
+  .inbox-container{
+    width: 100%;
+    height: 100%;
+  }
+  .leave-update-container{
+    width: 100%;
+    background-color:#4c5366;
+    margin: 10px;
+    padding: 10px;
+    
+  }
+
+  .requestedBy{
+    display: flex;
+  }
+  .requested-profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #c8cae2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 10px;
+    background-repeat: no-repeat;
+    margin-bottom: 10px;
+  }
   
+  .requested-profile img {
+    width: 90%;
+    height: 90%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .leaveNote{
+    padding-left:120px ;
+  }
+
+.leave-duration{
+  text-align: center;
+}
+
+  .leave-button{
+    padding-left: 700px;
+    right: 0%;
+  }
+  .leave-button button,.rejection-box button{
+    background-color: rgb(89, 56, 251);
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+ }
+ .leave-button button:hover,.rejection-box button:hover{
+   background-color: rgb(58, 21, 245);
+ } button{
+     background-color: rgb(89, 56, 251);
+     padding: 10px 20px;
+     border-radius: 10px;
+     margin-left: 10px;
+     cursor: pointer;
+  }
+  .leave-button button:hover{
+    background-color: rgb(58, 21, 245);
+  }
+  .rejection-box input{
+padding: 10px 20px;
+background-color: #4c5366;
+color: #c8cae2;
+  }

@@ -1,4 +1,44 @@
-<div class="image-container">
-    <img class="w-100" src="https://cdn.kekastatic.net/shared/assets/images/background/no-requests-light.png" alt="No Requests">
+<div class="inbox">
+  <div class="image-container" *ngIf="pendingLeaves?.length==0">
+    <img class="w-100" src="https://cdn.kekastatic.net/shared/assets/images/background/no-requests-light.png"
+      alt="No Requests">
     <p class="centered-message">No Pending Requests</p>
   </div>
+  <div class="inbox-container">
+    <div *ngIf="pendingLeaves.length">
+      <h3>You have Some pending Task here</h3>
+      <div class="leave-update-container" *ngFor="let leave of pendingLeaves">
+        <div style="display: flex; justify-content: space-between;">
+          <div class="requestedBy">
+            <div class="requested-profile"><img src="../../assets/elephant.png"></div>
+            <span>{{ leave.requestedBy}} has requested leave </span>
+            <span>{{leave.leaveDates | date:'d MMM y'}}</span>
+          </div>
+          <div class="leave-duration">
+            <span>{{leave.fromDate | date:'d MMM y'}} To {{leave.toDate | date:'d MMM y'}}</span>
+            <br />
+            <span>Total Days {{ leave.durationInDays}}</span>
+            <p></p>
+          </div>
+          <div>
+            <span>
+              <p>Leave Type </p>
+              <b>{{leave.leaveType}} &nbsp;&nbsp;&nbsp;&nbsp;{{leave.customDayStatus | capatlize}}</b>
+            </span>
+          </div>
+        </div>
+        <div class="leaveNote">
+          <p>{{ leave.leaveNote }}</p>
+        </div>
+        <div *ngIf="showRejectionReason === leave.leaveId" class="rejection-box">
+          <input type="text" [(ngModel)]="leave.rejectionReason" placeholder="Enter rejection reason" />
+          <button (click)="rejectLeave(leave.leaveId, leave.rejectionReason)">Submit</button>
+        </div>
+        <div class="leave-button">
+          <button (click)="approveLeave(leave.leaveId)">Approve</button>
+          <button (click)="toggleRejectionReason(leave.leaveId)">Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
