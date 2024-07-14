@@ -12,7 +12,7 @@ export class EmailCheckService {
   checkEmail(email: string) {
     this.isAuthenticated = true;
     this.email = email;
-    return this.http.get<any>(`http://10.0.0.38:8082/api/getByEmail/${email}`);
+    return this.http.get<any>(`http://localhost:8082/api/getByEmail/${email}`);
   }
   getEmail() {
     this.isAuthenticated = true;

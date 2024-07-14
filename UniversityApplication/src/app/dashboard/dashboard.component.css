@@ -633,6 +633,59 @@ emoji-mart {
 ::ng-deep .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text:not(.--mat-option-selected-state-label-text-color){
   color: #c29be8;
 }
+
+.image-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.image-box {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-box img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.plus-box {
+  width: 100px;
+  height: 100px;
+  border: 1px dashed #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.plus-box span {
+  font-size: 24px;
+}
 /* Announcement css */
 .announce-request{
   display: flex;
@@ -720,4 +773,10 @@ color: #fff;
 
 .search-dropdown div:hover {
   background-color: #201f1f;
+}
+.imageName{
+  margin-top: 12px;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
 }

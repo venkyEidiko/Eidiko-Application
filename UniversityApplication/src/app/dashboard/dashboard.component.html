@@ -137,6 +137,23 @@
               <div class="form-container">
                 <textarea class="textarea" #textarea (input)="onTextChange($event)"
                   placeholder="Write your post here and mention your peers"></textarea>
+<<<<<<< HEAD
+=======
+                  <div *ngIf="base64Image">
+                    <img [src]="base64Image" alt="Selected Image" width="90%" height="40%"/>
+                  </div>
+                  <div class="image-container">
+                    <div class="image-box" *ngFor="let img of base64Images; let i = index">
+                      <img [src]="img" alt="Selected Image">
+                      <button class="delete-btn" (click)="removeImage(i)">&#10005;</button>
+                    </div>
+                    <div *ngIf="base64Images.length > 0" class="plus-box" (click)="triggerFileInput(fileInput)">
+                      <span>+</span>
+                    </div>
+                    <input type="file" #fileInput (change)="onFileSelected($event)" multiple style="display: none;">
+                  </div>
+                  
+>>>>>>> e56ea07a6e5f9deec44080c925482dff757e5f57
                 <div class="actions">
                   <button mat-icon-button (click)="addAtSymbol(textarea)"><mat-icon>alternate_email</mat-icon></button>
                   <div class="search-dropdown" *ngIf="showDropdown" (click)="$event.stopPropagation()">
@@ -144,6 +161,10 @@
                       {{result.firstName+" "+result.lastName|| "-No Result-"}}
                     </div>
                   </div>
+<<<<<<< HEAD
+=======
+                
+>>>>>>> e56ea07a6e5f9deec44080c925482dff757e5f57
                   <button mat-icon-button (click)="fileInput.click()"><mat-icon>image</mat-icon></button>
                   <input type="file" #fileInput multiple (change)="onFileSelected($event)" hidden>
                   <button mat-icon-button (click)="toggleEmoticonPicker()"><mat-icon>insert_emoticon</mat-icon></button>
@@ -159,7 +180,7 @@
                     <button (click)="selectEmojiCategory('symbols')">🔣</button>
                     <button (click)="selectEmojiCategory('flags')">🏳️</button>
                   </div>
-                
+
                   <div class="emoji-picker-content" [class.active]="selectedEmojiCategory === 'smileys'">
                     <emoji-mart set="apple" [include]="['people']"
                       (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
@@ -192,7 +213,7 @@
                     <emoji-mart set="apple" [include]="['flags']"
                       (emojiClick)="addEmoticon(textarea, $event)"></emoji-mart>
                   </div>
-                  
+
                   <!-- Add more divs for other categories as needed -->
                 </div>
                 <div class="post-footer">
@@ -236,7 +257,7 @@
                     <mat-option value="Organization"> Organization </mat-option>
                     <mat-option value="Java"> Java</mat-option>
                   </mat-select>
-                
+
                 </div>
                 <div style="margin-right: -80px;">
                   <button mat-raised-button color="primary" (click)="postRequest()">Post</button>
@@ -359,7 +380,11 @@
                       </div>
                     </div>
 
+<<<<<<< HEAD
                     <div *ngIf="nextSevendaysAnniversarys.length>11" class="extra-Anniversary-items">
+=======
+                    <div *ngIf="nextSevendaysAnniversarys?.length>11" class="extra-Anniversary-items">
+>>>>>>> e56ea07a6e5f9deec44080c925482dff757e5f57
                       {{nextSevendaysAnniversarys.length - 11}}+more
 
                     </div>
@@ -425,13 +450,16 @@
             <div style="display:flex;">
               <img src="../../assets/profileimage.png"
                 style="height: 55px; width: 60px; border-radius: 30px; margin-top: 10px; margin-bottom: 10px;">
-              <p style="margin-top:35px;margin-left:10px">{{ image.timeStamp }}</p>
+              <div class="imageName">
+                <span>{{image.postBy | capatlize}}</span>
+                <span>{{image.timeStamp }}</span>
+            </div>
             </div>
 
 
             <p>{{image.description}}</p>
 
-            <p style="color:dodgerblue">{{image.mentionEmployee.join(',')}}</p>
+            <p style="color:dodgerblue">{{image.mentionEmployee.join(', ')}}</p>
             <img [src]="image.base64Image" alt="Image from base64" style="margin-bottom:20px;max-width:600px">
             <div style="display: flex; gap: 30px;">
               <div class="hover-icons">

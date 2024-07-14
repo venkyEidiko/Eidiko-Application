@@ -91,7 +91,7 @@
   
       <div mat-dialog-actions class="custom-dialog-actions">
         <button mat-button (click)="closeDialog()">Cancel</button>
-        <button mat-button [mat-dialog-close]="data" class="confirm">Confirm</button>
+        <button mat-button [mat-dialog-close]="data" (click)="onclick()" class="confirm">Confirm</button>
       </div>
     </div>
   </div>

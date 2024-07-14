@@ -2,14 +2,14 @@ package com.eidiko.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "postId")
 //this entity of posts for add posts ,delete,update(on the keka portal dashboard page)
 public class Posts {
 
@@ -58,10 +58,12 @@ public class Posts {
 	
 
 	// employee id who posted
+	
 	private Long postEmployee;
-	@ManyToOne
-	@JoinColumn(name = "employeeId")
-	private Employee postEmployeeName;
+	@JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "employeeId")
+    private Employee postEmployeeName;
 	
 
 	// for Likes

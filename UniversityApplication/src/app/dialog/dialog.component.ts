@@ -127,5 +127,6 @@ const employee=this.loginService.getEmployeeData();
     this.notifyTo.setValue(`${employee.firstName} ${employee.lastName}`);
     this.searchResults = [];
   }
+
 }
 

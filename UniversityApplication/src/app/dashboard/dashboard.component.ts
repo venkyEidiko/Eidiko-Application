@@ -96,7 +96,8 @@ export class DashboardComponent implements OnInit {
     commentIdsCount: any,
     commentIds: any,
     comments: any,
-    showComments: any
+    showComments: any,
+    postBy: any
   }[] = [];
 
 
@@ -210,13 +211,15 @@ export class DashboardComponent implements OnInit {
 
   loadAllPosts(): void {
     this.service.getAllPosts().subscribe((response: any) => {
-      console.log("posts ", response);
+
+      console.log("posts ", response.result);
+
       if (response.status === 'SUCCESS') {
         this.imageSrcList = response.result.map((item: any) => {
-
+          
           let emojiIds = item.likes.map((like: any) => like.emoji);
           let emojiIdsCount = emojiIds.length;
-
+          
           let commentIds=item.comments.map((p:any)=>p.comment);
           let commentIdsCount=commentIds.length;
 
@@ -234,6 +237,9 @@ export class DashboardComponent implements OnInit {
             comments:item.comments,
             commentIds:item.commentIds,
             commentIdsCount:commentIdsCount,
+            postBy: (item.postEmployeeName.firstName +" "+ item.postEmployeeName.lastName)
+
+          
 
 
 
@@ -467,17 +473,33 @@ export class DashboardComponent implements OnInit {
     console.log("addAtSymbol method text area: ", textarea.value)
   }
 
+   selectedFiles: File[] = [];
+   base64Images: string[] = [];
   onFileSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    const selectedFiles: File[] = [];
+    
     if (inputElement.files) {
       for (let i = 0; i < inputElement.files.length; i++) {
         const file = inputElement.files[i];
-        selectedFiles.push(file);
+        this.selectedFiles.push(file);
+        
+        // Read the file to display the image
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.base64Images.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
       }
-      this.files = selectedFiles
+      this.files = this.selectedFiles;
       console.log(this.files);
     }
+  }
+  triggerFileInput(fileInput: HTMLInputElement): void {
+    fileInput.click();
+  }  
+  removeImage(index: number): void {
+    this.selectedFiles.splice(index, 1);
+    this.base64Images.splice(index, 1);
   }
 
   toggleEmoticonPicker() {
@@ -500,6 +522,13 @@ export class DashboardComponent implements OnInit {
       const file: File = this.files[0];
       this.service.submitPostRequest(this.postRequestData, file).subscribe(response => {
         console.log("PostRequset response : ", response)
+
+        this.postRequestData={
+          description: "",
+          postType: this.selectedOption,
+          mentionEmployee: [],
+          postEmployee: this.service.getEmpId()}
+
       },
         (error => {
           console.log(error);
