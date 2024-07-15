@@ -9,6 +9,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LoginService } from '../services/login.service';
+import { LeavesComponent } from '../leaves/leaves.component';
+import { Router } from '@angular/router';
 
 interface Employee {
   employeeId: number;
@@ -40,8 +42,10 @@ fromDateInput: any;
   constructor(
     private dialogRef: MatDialogRef<DialogComponent>,
     private leaveRequestService: LeavereqService,
+    private leaveComponent:LeavesComponent,
     private http: HttpClient,
-    private loginService:LoginService
+    private loginService:LoginService,
+    private router:Router,
   ) {}
 employee:any='';
   ngOnInit(): void {
@@ -58,6 +62,7 @@ employee:any='';
 
   closeDialog(): void {
     this.dialogRef.close();
+   
   }
 
   toggleCustomDropdown(): void {
@@ -86,7 +91,10 @@ employee:any='';
     this.leaveRequestService.submitLeaveRequest(leave).subscribe(
       (response) => {
         console.log('Request submitted successfully', response);
+        this.router.navigate(['/layout/me/leaves'])
         this.dialogRef.close();
+        
+        console.log("after calling  this.leaveComponent.fetchLeaveBalance(this.employeeId) ", this.employeeId);
       },
       (error) => {
         console.error('Error submitting request', error);

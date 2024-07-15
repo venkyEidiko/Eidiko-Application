@@ -195,7 +195,8 @@ import { WorkFromHomeDialogeComponent } from './work-from-home-dialoge/work-from
 
 
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }, // Register interceptor
-    DatePipe
+    DatePipe,
+    LeavesComponent
   ],
   bootstrap: [AppComponent],
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { LeaveService } from '../services/leave.service';
@@ -8,6 +8,7 @@ import { DialogService } from '../services/dialog.service';
 import { LeavetypeService } from '../services/leavetype.service';
 import { TableService } from '../services/table.service';
 import { LoginService } from '../services/login.service';
+import { Router } from '@angular/router';
 interface PendingLeave {
   leaveId: number;
   leaveDates: string;
@@ -136,9 +137,11 @@ export class LeavesComponent implements OnInit {
     private compdialogService: CompdialogService,
     private leavetypeService: LeavetypeService,
     private tableService:TableService,
+   
   ) {}
    employeeId = this.loginService.getEmployeeData().employeeId;
    
+  
   ngOnInit(): void {
    
     const pageSize = 5;
@@ -248,7 +251,8 @@ export class LeavesComponent implements OnInit {
             this.pendingLeave?.forEach(pending => {
               console.log("Pending leave Object: ", pending);
             });
-          });
+          });      
+         
         } else {
           console.error('Failed to fetch leave balance or no data available');
         }

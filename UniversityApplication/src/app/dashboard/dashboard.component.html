@@ -143,7 +143,7 @@
             <!-- Post request  field -->
             <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item">
               <div class="form-container">
-                <textarea class="textarea" #textarea  [(ngModel)]="textMessage" name="textMessage"(input)="onTextChange($event)"
+                <textarea class="textarea" #textarea  [(ngModel)]="textMessage" name="textMessage" (input)="onTextChange($event)"
                   placeholder="Write your post here and mention your peers"></textarea>
 
                 <div *ngIf="base64Image">
