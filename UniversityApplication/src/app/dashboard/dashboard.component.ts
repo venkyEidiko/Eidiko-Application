@@ -523,13 +523,9 @@ export class DashboardComponent implements OnInit {
       const file: File = this.files[0];
       this.service.submitPostRequest(this.postRequestData, file).subscribe(response => {
         console.log("PostRequset response : ", response)
-
-        this.postRequestData = {
-          description: "",
-          postType: this.selectedOption,
-          mentionEmployee: [],
-          postEmployee: this.service.getEmpId()
-        }
+        
+        this.base64Images=[];
+        this.textMessage='';
 
       },
         (error => {
