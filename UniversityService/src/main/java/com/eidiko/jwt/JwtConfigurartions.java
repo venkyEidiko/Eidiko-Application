@@ -102,7 +102,7 @@ public class JwtConfigurartions {
 		return httpSecurity.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(req -> 
 				req.requestMatchers("/login1", "/refresh/**","/api/save","/api/password/forgotPassword","/api/getByEmail/**","/api/sendMail").permitAll()
-						.anyRequest().permitAll())
+						.anyRequest().authenticated())
 
 		    	.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))
 				// .sessionManagement(session ->

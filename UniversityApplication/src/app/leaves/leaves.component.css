@@ -258,6 +258,7 @@ flex-direction: column;
 .leave-policy {
     margin-top: 12px;
     color: deepskyblue;
+    cursor: pointer;
 
 }
 

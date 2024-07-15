@@ -4,6 +4,7 @@ import { LoginService } from '../services/login.service';
 import { Address, RegistrationForm } from '../registratioRequest';
 import { Router } from '@angular/router';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { SnackbarService } from '../snackbar.service';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
-    public router :Router
+    public router :Router,
+    private snackbarservice:SnackbarService
   ) { }
 
   ngOnInit(): void {
@@ -68,6 +70,7 @@ export class RegistrationComponent implements OnInit {
     const formValues = this.registrationForm.value;
 
     const addresses: Address[] = [{
+      addressType:"Current Address",
       doorNumber: formValues.doorNu,
       streetName: formValues.streetName,
       landmark: formValues.landmark,
@@ -91,7 +94,9 @@ export class RegistrationComponent implements OnInit {
     console.log(registrationData);
     this.loginService.register(registrationData).subscribe(
       (response: any) => {
-        if(response.error == null){
+        console.log("reg ",response);
+        if(response.error == null && response.statusCode==201){
+          this.snackbarservice.showSuccess("Registration Successful!")
         this.router.navigate(['/'])
         }
         else{

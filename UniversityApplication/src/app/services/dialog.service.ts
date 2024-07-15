@@ -15,12 +15,6 @@ export class DialogService {
 
   constructor(private dialog: MatDialog,private http:HttpClient,private loginService:LoginService) { }
 
-  openDialog(): void {
-    this.dialog.open(DialogComponent, {
-      
-      })
-   }
-
    openWorkFromHomeDialog(): void {
     this.dialog.open(WorkFromHomeDialogeComponent, {
 

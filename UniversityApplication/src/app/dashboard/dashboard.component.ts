@@ -477,7 +477,7 @@ export class DashboardComponent implements OnInit {
   }
 
   selectedFiles: File[] = [];
-  base64Images: string[] = [];
+  selectedbase64Images: string[] = [];
   onFileSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
 
@@ -489,7 +489,7 @@ export class DashboardComponent implements OnInit {
         // Read the file to display the image
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.base64Images.push(e.target.result);
+          this.selectedbase64Images.push(e.target.result);
         };
         reader.readAsDataURL(file);
       }
@@ -502,7 +502,7 @@ export class DashboardComponent implements OnInit {
   }
   removeImage(index: number): void {
     this.selectedFiles.splice(index, 1);
-    this.base64Images.splice(index, 1);
+    this.selectedbase64Images.splice(index, 1);
   }
 
   toggleEmoticonPicker() {
@@ -526,7 +526,7 @@ export class DashboardComponent implements OnInit {
       this.service.submitPostRequest(this.postRequestData, file).subscribe(response => {
         console.log("PostRequset response : ", response)
         
-        this.base64Images=[];
+        this.selectedbase64Images=[];
         this.textMessage='';
 this.loadAllPosts();
       },

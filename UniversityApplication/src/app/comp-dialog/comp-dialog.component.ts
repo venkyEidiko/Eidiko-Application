@@ -51,7 +51,7 @@ export class CompDialogComponent {
     this.compdialogService.postCompoff( formattedFromDate, formattedToDate, this.note, this.files,this.employeeId).subscribe(
       response => {
         console.log('POST request successful:', response);
-        this.dialogRef.close();
+        this.dialogRef.close("success");
       },
       error => {
         console.error('Error in POST request:', error);
