@@ -335,6 +335,7 @@ export class DashboardComponent implements OnInit {
     this.service.saveLike(postId, emojiId, empId).subscribe(
       response => {
         console.log('Like saved successfully', response);
+        this.loadAllPosts()
       },
       error => {
         console.error('Error saving like', error);
@@ -346,12 +347,13 @@ export class DashboardComponent implements OnInit {
     if (event instanceof KeyboardEvent && event.key !== 'Enter') {
       return;
     }
-    const empId = 1111;
+    const empId = this.service.getEmpId();
     const postId = this.imageSrcList[index]?.postId;
     this.service.postComment(postId, comment, empId).subscribe(
       response => {
         console.log('Comment posted successfully', response);
         this.showCommentBox[index] = false;
+        this.loadAllPosts()
       },
       error => {
         console.error('Error posting comment', error);
@@ -526,7 +528,7 @@ export class DashboardComponent implements OnInit {
         
         this.base64Images=[];
         this.textMessage='';
-
+this.loadAllPosts();
       },
         (error => {
           console.log(error);
