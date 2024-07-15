@@ -74,7 +74,7 @@ public class EmployeeService implements EmployeeInterface {
 		Employee save = employeeRepo.save(employee);
 
 		if (save != null && save.getEmployeeId() != 0) {
-			return "200";
+			return "your record has been created";
 		} else {
 
 			throw new BadRequestException("Failed to create User");
