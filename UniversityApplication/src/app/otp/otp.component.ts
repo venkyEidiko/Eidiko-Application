@@ -14,7 +14,7 @@ export class OtpComponent {
 
   errorMessage: string = '';
   toEmail: string =this.emailService.getEmail();
-  generatedOtp: string = '';
+  generatedOtp:string|null='';
 
   constructor(private router: Router, private otpService: OtpService,private emailService:EmailCheckService) { }
 
@@ -23,7 +23,9 @@ export class OtpComponent {
       next: (response) => {
         console.log('OTP sent successfully:', response);
         if (response.status === 'SUCCESS' && response.result && response.result.length > 0) {
-          this.generatedOtp = response.result[0];
+          this.generatedOtp=response.result[0];
+          localStorage.setItem('generatedOtp',JSON.stringify(this.generateOtp));
+          this.generatedOtp=localStorage.getItem('generatedOtp');
           console.log('Generated OTP:', this.generatedOtp);
         } else {
           console.log('Failed to send OTP');
@@ -31,11 +33,13 @@ export class OtpComponent {
         }
       },
       error: (error) => {
-        console.error('Error sending OTP:', error);
+        console.error('Error sending OTP:', error.errorMessage);
         this.errorMessage = 'Error sending OTP. Please try again later.';
       }
     });
   }
+
+   
 
  onSubmit() {
     if (this.otp === this.generatedOtp) {

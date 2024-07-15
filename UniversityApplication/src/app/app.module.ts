@@ -83,6 +83,7 @@ import { FirstletterPipe } from '../pipes/firstletter.pipe';
 import { InterceptorService } from './services/interceptor.service';
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 import { WorkFromHomeDialogeComponent } from './work-from-home-dialoge/work-from-home-dialoge.component';
+import {  MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -162,6 +163,7 @@ import { WorkFromHomeDialogeComponent } from './work-from-home-dialoge/work-from
     MatProgressBarModule,
     MatMenuModule,
     RouterModule,
+    MatSnackBarModule,
     NgApexchartsModule,
     NgChartsModule,
     AppRoutingModule,

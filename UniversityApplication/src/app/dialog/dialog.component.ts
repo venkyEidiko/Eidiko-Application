@@ -42,10 +42,9 @@ fromDateInput: any;
   constructor(
     private dialogRef: MatDialogRef<DialogComponent>,
     private leaveRequestService: LeavereqService,
-    private leaveComponent:LeavesComponent,
     private http: HttpClient,
     private loginService:LoginService,
-    private router:Router,
+  
   ) {}
 employee:any='';
   ngOnInit(): void {
@@ -91,8 +90,7 @@ employee:any='';
     this.leaveRequestService.submitLeaveRequest(leave).subscribe(
       (response) => {
         console.log('Request submitted successfully', response);
-        this.router.navigate(['/layout/me/leaves'])
-        this.dialogRef.close();
+        this.dialogRef.close("sucess");
         
         console.log("after calling  this.leaveComponent.fetchLeaveBalance(this.employeeId) ", this.employeeId);
       },
