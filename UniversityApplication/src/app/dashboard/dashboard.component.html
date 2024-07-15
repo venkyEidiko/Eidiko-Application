@@ -103,7 +103,8 @@
           <span>Leave Balances</span>
           <div class="charts">
             <div class="donut-container">
-              <div class="donut-text">{{totalAvailableLeave}} Days Available</div>
+              <div class="donut-text">
+                {{totalAvailableLeave}} Days Available</div>
               <app-donutchart [chartOptions]="chartOptions1">
               </app-donutchart>
             </div>
@@ -152,10 +153,12 @@
                   <div class="image-box" *ngFor="let img of base64Images; let i = index">
                     <img [src]="img" alt="Selected Image">
                     <button class="delete-btn" (click)="removeImage(i)">&#10005;</button>
+
                   </div>
                   <div *ngIf="base64Images.length > 0" class="plus-box" (click)="triggerFileInput(fileInput)">
                     <span>+</span>
                   </div>
+
                   <input type="file" #fileInput (change)="onFileSelected($event)" multiple style="display: none;">
                 </div>
 
@@ -167,6 +170,7 @@
                       {{result.firstName+" "+result.lastName|| "-No Result-"}}
                     </div>
                   </div>
+
                   <button mat-icon-button (click)="fileInput.click()"><mat-icon>image</mat-icon></button>
                   <input type="file" #fileInput multiple (change)="onFileSelected($event)" hidden>
                   <button mat-icon-button (click)="toggleEmoticonPicker()"><mat-icon>insert_emoticon</mat-icon></button>
@@ -381,8 +385,8 @@
                         </div>
                       </div>
                     </div>
-                    <div *ngIf="nextSevendaysAnniversarys?.length>11" class="extra-Anniversary-items">
-                      {{nextSevendaysAnniversarys.length - 11}}+more
+                    <div *ngIf="nextSevendaysAnniversarys.length>11" class="extra-Anniversary-items">
+               {{nextSevendaysAnniversarys.length - 11}}+more
                     </div>
                   </div>
                 </div>

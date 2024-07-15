@@ -9,25 +9,40 @@
     <div class="compoff-data">
       Choose the date on which you have worked for to avail Compensatory Off
     </div>
-    <div class="icons">  
-      <mat-form-field>
-        <mat-label>From Date</mat-label>
-        <input matInput [(ngModel)]="fromDate" name="fromDate" [matDatepicker]="picker" required>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>To Date</mat-label>
-        <input matInput [(ngModel)]="toDate" name="toDate" [matDatepicker]="picker2" class="customwidth" required>
-        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-        <mat-datepicker #picker2 color="primary"></mat-datepicker>
-      </mat-form-field>
+    <div class="icons" style="display:flex; gap:50px;">  
+      <div>
+        <mat-form-field>
+          <mat-label>From Date</mat-label>
+          <input matInput [(ngModel)]="fromDate" name="fromDate"  #fromDateIn="ngModel" [matDatepicker]="picker" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="fromDateIn.invalid && (fromDateIn.dirty || fromDateIn.touched)">
+            Please enter the date.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>To Date</mat-label>
+          <input matInput [(ngModel)]="toDate" name="toDate" [matDatepicker]="picker2" #toDateIn="ngModel" class="customwidth" required>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2 color="primary"></mat-datepicker>
+          <mat-error *ngIf="toDateIn.invalid && (toDateIn.dirty || toDateIn.touched)">
+            Please enter the date.
+          </mat-error>
+        </mat-form-field>
+      </div>
     </div>
     <div class="notelabel">
       Note
     </div>
     <div>
-      <input matInput [(ngModel)]="note" name="note" class="note2" required>
+      <mat-form-field style="width:800px">
+        <input matInput [(ngModel)]="note" name="note" #note1="ngModel" class="note2" required>
+        <mat-error *ngIf="note1.invalid && (note1.dirty || note1.touched)">
+          Note is required.
+        </mat-error>
+      </mat-form-field>
     </div>
     <div class="att">
       <mat-icon>attachment</mat-icon>

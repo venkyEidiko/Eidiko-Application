@@ -5,7 +5,7 @@
     transform: translate(-50%, -50%); 
     
     width: 900px;
-    height: 450px; 
+    height: 400px; 
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     
@@ -42,7 +42,8 @@
     display: flex;
     justify-content: flex-end;
     padding: 5px;
-   margin-top:30px;
+   /* margin-top:30px; */
+   background-color:rgb(51, 61, 78);
    
   }
   .note1
@@ -103,4 +104,8 @@ mat-icon
 {
     margin-top:15px;
 
+}
+.custom-dialog-content 
+{
+background-color:rgb(51, 61, 78); ;
 }

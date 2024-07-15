@@ -100,29 +100,29 @@
                 <div class="form-row">
                     <input type="text" formControlName="area" id="area" class="form-control" placeholder="Area">
                     <small
-                        *ngIf="registrationForm.get('area')?.invalid && registrationForm.get('area')?.touched">*required</small>
+                        *ngIf="registrationForm.get('area')?.invalid && registrationForm.get('area')?.touched">Enter the valid area name</small>
                 </div>
                 <div class="form-row">
                     <input type="text" formControlName="landmark" id="landmark" class="form-control"
                         placeholder="Landmark">
                     <small
-                        *ngIf="registrationForm.get('landmark')?.invalid && registrationForm.get('landmark')?.touched">*required</small>
+                        *ngIf="registrationForm.get('landmark')?.invalid && registrationForm.get('landmark')?.touched">Enter the landmark</small>
                 </div>
                 <div class="form-row">
                     <input type="text" formControlName="city" id="city" class="form-control" placeholder="City">
                     <small
-                        *ngIf="registrationForm.get('city')?.invalid && registrationForm.get('city')?.touched">*required</small>
+                        *ngIf="registrationForm.get('city')?.invalid && registrationForm.get('city')?.touched">Enter the valid city</small>
                 </div>
                 <div class="form-row">
                     <input type="text" formControlName="state" id="state" class="form-control" placeholder="State">
                     <small
-                        *ngIf="registrationForm.get('state')?.invalid && registrationForm.get('state')?.touched">*required</small>
+                        *ngIf="registrationForm.get('state')?.invalid && registrationForm.get('state')?.touched">Enter the state name</small>
                 </div>
                 <div class="form-row">
                     <input type="number" formControlName="pincode" id="pincode" class="form-control"
                         placeholder="Pincode">
                     <small
-                        *ngIf="registrationForm.get('pincode')?.invalid && registrationForm.get('pincode')?.touched">*required</small>
+                        *ngIf="registrationForm.get('pincode')?.invalid && registrationForm.get('pincode')?.touched">It should contain 6 numbers</small>
                 </div>
                 <button class="btn-primary" type="submit" [disabled]="registrationForm.invalid">Register</button>
            
