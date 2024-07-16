@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CompDialogComponent } from '../comp-dialog/comp-dialog.component';
+import { WorkFromHomeRequest } from '../work-from-home-dialoge/work-from-home-dialoge.component';
 interface PendingLeave {
   leaveId: number;
   leaveDates: string;
@@ -36,6 +37,8 @@ export interface LeaveRequest {
   status: string;
   toDate: Date;
 }
+
+
 
 interface MonthlyLeaveData {
   totalLeaveTaken: number;
@@ -113,6 +116,7 @@ export class LeavesComponent implements OnInit {
   availableLeaves = 0;
   totalLeave = 12;
   pendingLeave: LeaveRequest[] | null = null;
+  pendingWfh:WorkFromHomeRequest[] | null=null;
   consumedPaidLeave = 0;
   availablePaidLeave = 0;
   consumedCompOffs = 0;
@@ -140,7 +144,9 @@ export class LeavesComponent implements OnInit {
     private compdialogService: CompdialogService,
     private leavetypeService: LeavetypeService,
     private tableService:TableService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    // private wfh: WorkFromHomeRequest
+
    
   ) {}
    employeeId = this.loginService.getEmployeeData().employeeId;
@@ -149,7 +155,7 @@ export class LeavesComponent implements OnInit {
   ngOnInit(): void {
    
     const pageSize = 5;
-   
+   this.fetchWfhrequest();
     this.fetchLeaveBalance(this.employeeId);
     this.fetchMonthlyChartData(this.employeeId);
     this.fetchLeaveData([],[],0,pageSize);
@@ -266,7 +272,12 @@ export class LeavesComponent implements OnInit {
       }
     );
   }
-  
+  fetchWfhrequest(){
+    this.leavetypeService.fetchWfhrequest().subscribe(response =>{
+      console.log("wfh check:",response);
+      this.pendingWfh=response.result;
+    });
+  }
   weekday = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   getDayOfWeek(date: Date): string {
 

@@ -15,6 +15,7 @@ public interface WorkFromHomeRequestRepository extends JpaRepository<WorkFromHom
     List<WorkFromHomeRequest> findByStatusAndToDateGreaterThanEqual(String status, LocalDate toDate);
 
 
+   public List<WorkFromHomeRequest> findAllByNotifyAndStatus(String notify,String status);
 
-
+   public List<WorkFromHomeRequest> findAllByEmployeeIDAndStatus(Long empId, String pending);
 }

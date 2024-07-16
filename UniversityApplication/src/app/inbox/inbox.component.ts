@@ -15,6 +15,7 @@ constructor(private service:DashbordService){}
 
 ngOnInit(): void {
   this.fetchPendingLeaves();
+  this.getWorkfromHomeRequest()
 }  
 empLeaveDto: EmpLeaveDto = {
   leaveId: 0,
@@ -67,7 +68,40 @@ console.log("Inbox component pending request : ", this.pendingLeaves)
   }
   toggleRejectionReason(leaveId: number): void {
     this.showRejectionReason = this.showRejectionReason === leaveId ? null : leaveId;
-  }                                                                                                                                                                                                
+  }   
+  
+  // for work from home 
+
+  workFromHomeData:any=[];
+  getWorkfromHomeRequest(){
+this.service.getPendingWFHRequest().subscribe(res=>{
+  console.log("In Inbox getWorkfromHomeRequest data : ",res)
+  this.workFromHomeData=res;
+this.workFromHomeData=this.workFromHomeData.result;
+})
+  }
+
+  //for update work from home
+  wfhRequest:any ={
+    status:'',
+    rejectReason:'', 
+    actionTakenBy:''
+  };
+  updateWFHRequest(wfhId:number){
+    this.wfhRequest.status="Approved";
+this.service.updateWFHRequest(wfhId,this.wfhRequest).subscribe(res=>{
+  console.log("updated Work From Home Data : ",res)
+  this.getWorkfromHomeRequest();
+
+})
+  }
+  updateWFHRequestRejected(wfhId:number,rejectReason:string){
+    //this.wfhRequest?.status="Rejected";
+this.service.updateWFHRequest(wfhId,this.wfhRequest).subscribe(res=>{
+  console.log("updated Work From Home Data : ",res)
+  this.getWorkfromHomeRequest();
+});
+  }
     
 }
 interface EmpLeaveDto {
@@ -90,4 +124,11 @@ interface EmpLeaveDto {
 
 interface Attachment {
   // Define properties of Attachment interface based on your Java class
+}
+
+interface WfhRequest {
+status:string;
+rejectReason:string;
+actionTakenBy:string;
+
 }

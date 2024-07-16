@@ -28,7 +28,7 @@
     gap: 1.5%;
 }
 
-.card1 {
+.card1 , .wfh-cards{
     flex: 1;
     min-width: 250px;
     max-width: 880px;

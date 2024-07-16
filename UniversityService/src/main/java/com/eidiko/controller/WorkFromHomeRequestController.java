@@ -69,4 +69,40 @@ public class WorkFromHomeRequestController {
             return commonResponse.prepareSuccessResponseObject(employeeDetails);
         }
     }
+
+    @GetMapping("findPendingRequestByEmpId/{empId}")
+    public ResponseEntity<?> findPendingRequestByEmpId(@PathVariable Long empId) {
+        List<WorkFromHomeRequest> request = service.findPendingRequestByEmpId(empId);
+        if (request == null) {
+            return commonResponse.prepareFailedResponse("No Pending Request.");
+        } else {
+            return commonResponse.prepareSuccessResponseObject(request);
+        }
+    }
+
+    @GetMapping("findPendingRequestByNotify/{notify}")
+    public ResponseEntity<?> findPendingRequestByNotify(@PathVariable String notify) {
+        List<WorkFromHomeRequest> request = service.findPendingRequestByNotify(notify);
+        if (request == null) {
+            return commonResponse.prepareFailedResponse("No employees on leave today.");
+        } else {
+            return commonResponse.prepareSuccessResponseObject(request);
+        }
+    }
+
+    @PutMapping("updateStatusByWfhId/{id}")
+    public ResponseEntity<?> updateWFHBywfhId(@PathVariable long id, @RequestBody WorkFromHomeRequest wfhRequest) {
+        WorkFromHomeRequest success = service.updateWFHBywfhId(id, wfhRequest);
+
+    if(success==null)
+
+    {
+        return commonResponse.prepareFailedResponse("No employees Request Available.");
+    } else
+
+    {
+        return commonResponse.prepareSuccessResponseObject(success);
+    }
+}
+
 }
