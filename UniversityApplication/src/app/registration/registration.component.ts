@@ -102,6 +102,9 @@ export class RegistrationComponent implements OnInit {
         else{
           console.log(response.error);
           
+            this.snackbarservice.showError("Registration Unsuccessful!Try Again")
+          
+        
         }
       },
       (error: any) => {
