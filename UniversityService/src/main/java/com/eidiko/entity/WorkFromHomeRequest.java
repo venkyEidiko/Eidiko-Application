@@ -27,9 +27,10 @@ public class WorkFromHomeRequest {
     private String reason;
     @Column(columnDefinition = "LONGBLOB")
     private String notify;
-    private String status = "PENDING"; // Default status to PENDING
+    private String status = "Pending"; // Default status to PENDING
     private String requestType;
-
+    private String rejectReason;
+    private String actionTakenBy;
     public double getRequestedDays() {
         double days = fromDate.until(toDate).getDays() + 1; // Calculate total days inclusive
         if ("Second Half".equals(fromHalf)) days -= 0.5;

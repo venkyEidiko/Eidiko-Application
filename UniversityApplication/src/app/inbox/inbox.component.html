@@ -1,12 +1,12 @@
 <div class="inbox">
-  <div class="image-container" *ngIf="pendingLeaves?.length==0">
+  <div class="image-container" *ngIf="pendingLeaves?.length==0 && workFromHomeData?.length==0">
     <img class="w-100" src="https://cdn.kekastatic.net/shared/assets/images/background/no-requests-light.png"
       alt="No Requests">
     <p class="centered-message">No Pending Requests</p>
   </div>
   <div class="inbox-container">
     <div *ngIf="pendingLeaves.length">
-      <h3>You have Some pending Task here</h3>
+      <h3>Leave Request</h3>
       <div class="leave-update-container" *ngFor="let leave of pendingLeaves">
         <div style="display: flex; justify-content: space-between;">
           <div class="requestedBy">
@@ -42,7 +42,7 @@
     </div>
 
     <div *ngIf="workFromHomeData.length">
-      <h3>You have Some pending Task here</h3>
+      <h3>Work From Home Request</h3>
       <div class="leave-update-container" *ngFor="let wfh of workFromHomeData">
         <div style="display: flex; justify-content: space-between;">
           <div class="requestedBy">
@@ -64,15 +64,15 @@
           </div>
         </div>
         <div class="leaveNote">
-          <p>{{ wfh.leaveNote }}</p>
+          <p>{{ wfh.reason }}</p>
         </div>
-        <div *ngIf="showRejectionReason === wfh.leaveId" class="rejection-box">
+        <div *ngIf="showRejectionReason === wfh.id" class="rejection-box">
           <input type="text" [(ngModel)]="wfh.rejectionReason" placeholder="Enter rejection reason" />
-          <button (click)="rejectLeave(wfh.leaveId, wfh.rejectionReason)">Submit</button>
+          <button (click)="rejectLeave(wfh.id, wfh.rejectionReason)">Submit</button>
         </div>
         <div class="leave-button">
-          <button (click)="approveLeave(wfh.leaveId)">Approve</button>
-          <button (click)="toggleRejectionReason(wfh.leaveId)">Reject</button>
+          <button (click)="updateWFHRequest(wfh.id)">Approve</button>
+          <button (click)="toggleRejectionReason(wfh.id)">Reject</button>
         </div>
       </div>
     </div>

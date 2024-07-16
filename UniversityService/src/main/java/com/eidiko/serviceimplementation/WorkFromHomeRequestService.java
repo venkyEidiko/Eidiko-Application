@@ -32,13 +32,13 @@ public class WorkFromHomeRequestService {
 
     //this method is for the notify field
     public WorkFromHomeRequest createRequest(WorkFromHomeRequest request) {
-        request.setStatus("PENDING");
+        request.setStatus("Pending");
 
         // Fetch employee details based on notify field
-        Employee employee = fetchEmployeeDetails(request.getNotify());
-        if (employee != null) {
-            request.setNotify(employee.toString()); // Set the notify field with employee details
-        }
+//        Employee employee = fetchEmployeeDetails(request.getNotify());
+//        if (employee != null) {
+//            request.setNotify(employee.toString()); // Set the notify field with employee details
+//        }
 
         return repository.save(request);
     }
@@ -84,5 +84,26 @@ public class WorkFromHomeRequestService {
             }
             return "unknown";
         }
+    }
+
+    public List<WorkFromHomeRequest> findPendingRequestByNotify(String notify){
+        List<WorkFromHomeRequest> request=repository.findAllByNotifyAndStatus(notify,"Pending");
+        return request;
+    }
+    public List<WorkFromHomeRequest> findPendingRequestByEmpId(Long empId){
+        List<WorkFromHomeRequest> request=repository.findAllByEmployeeIDAndStatus(empId,"Pending");
+        return request;
+    }
+
+    public WorkFromHomeRequest updateWFHBywfhId(long id, WorkFromHomeRequest wfhRequest) {
+        WorkFromHomeRequest request=repository.findById(id).orElseThrow(null);
+
+        if(request!=null){
+            request.setStatus(wfhRequest.getStatus());
+            request.setRejectReason(wfhRequest.getRejectReason());
+
+        }
+        WorkFromHomeRequest updateRequest= repository.save(request);
+        return updateRequest;
     }
 }
