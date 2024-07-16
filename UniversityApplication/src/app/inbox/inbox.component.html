@@ -40,5 +40,42 @@
         </div>
       </div>
     </div>
+
+    <div *ngIf="workFromHomeData.length">
+      <h3>You have Some pending Task here</h3>
+      <div class="leave-update-container" *ngFor="let wfh of workFromHomeData">
+        <div style="display: flex; justify-content: space-between;">
+          <div class="requestedBy">
+            <div class="requested-profile"><img src="../../assets/elephant.png"></div>
+            <span>{{ wfh.employeeName}} has requested  </span><br/>
+            <span>{{wfh.applyDate | date:'d MMM y'}}</span>
+          </div>
+          <div class="leave-duration">
+            <span>{{wfh.fromDate | date:'d MMM y'}} To {{wfh.toDate | date:'d MMM y'}}</span>
+            <br />
+            <span>Total Days {{ wfh.durationInDays}}</span>
+            <p></p>
+          </div>
+          <div>
+            <span>
+              <p>Leave Type </p>
+              <b>{{wfh.leaveType}} &nbsp;&nbsp;&nbsp;&nbsp;{{wfh.customDayStatus | capatlize}}</b>
+            </span>
+          </div>
+        </div>
+        <div class="leaveNote">
+          <p>{{ wfh.leaveNote }}</p>
+        </div>
+        <div *ngIf="showRejectionReason === wfh.leaveId" class="rejection-box">
+          <input type="text" [(ngModel)]="wfh.rejectionReason" placeholder="Enter rejection reason" />
+          <button (click)="rejectLeave(wfh.leaveId, wfh.rejectionReason)">Submit</button>
+        </div>
+        <div class="leave-button">
+          <button (click)="approveLeave(wfh.leaveId)">Approve</button>
+          <button (click)="toggleRejectionReason(wfh.leaveId)">Reject</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

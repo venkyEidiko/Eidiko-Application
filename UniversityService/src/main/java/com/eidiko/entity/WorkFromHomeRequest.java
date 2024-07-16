@@ -22,6 +22,7 @@ public class WorkFromHomeRequest {
     private LocalDate fromDate;
     private LocalDate toDate;
     private String fromHalf;
+    private LocalDate applyDate=LocalDate.now();
     private String toHalf;
     private String reason;
     @Column(columnDefinition = "LONGBLOB")

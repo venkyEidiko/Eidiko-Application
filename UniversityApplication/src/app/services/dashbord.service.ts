@@ -123,11 +123,11 @@ export class DashbordService {
     return this.http.post<any>(this.apiUrl3, formData1)
   }
 
-
+//for pending leave
 pendingRequest():Observable<any>{
 return this.http.get<any>(`${this.url}leave/getPendingLeaveByNotifiedEmployee/${this.getEmpId()}`)
 }
-
+//for updating leave 
 updateLeaveByApprover(leaveId: number, empLeaveDto: any): Observable<any> {
   const actionTakenBy=this.loginService.getEmployeeData().firstName+" "+this.loginService.getEmployeeData().lastName
   return this.http.put<any>(
@@ -136,6 +136,10 @@ updateLeaveByApprover(leaveId: number, empLeaveDto: any): Observable<any> {
   );
 }
 
+//for pending work Form home request
+getPendingWFHRequest(){
+  return this.http.get<any>(`${this.url}api/getPendingLeaveByNotifiedEmployee/${this.getEmpId()}`)
+}
   getPostsAndLikes(): Observable<any> {
     console.log("inside service")
     return this.http.get<any>(this.url+'posts/getAllPostByTime');

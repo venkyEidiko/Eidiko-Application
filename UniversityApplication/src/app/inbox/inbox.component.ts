@@ -67,7 +67,14 @@ console.log("Inbox component pending request : ", this.pendingLeaves)
   }
   toggleRejectionReason(leaveId: number): void {
     this.showRejectionReason = this.showRejectionReason === leaveId ? null : leaveId;
-  }                                                                                                                                                                                                
+  }   
+  
+  // for work from home 
+
+  workFromHomeData:any=null;
+  getWorkfromHomeRequest(){
+
+  }
     
 }
 interface EmpLeaveDto {
