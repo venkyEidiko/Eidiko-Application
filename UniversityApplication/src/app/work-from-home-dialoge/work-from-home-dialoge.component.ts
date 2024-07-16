@@ -9,6 +9,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LoginService } from '../services/login.service';
 import { DatePipe } from '@angular/common';
+import { SnackbarService } from '../snackbar.service';
 
 interface Employee {
   employeeId: number;
@@ -40,7 +41,8 @@ export class WorkFromHomeDialogeComponent {
     private leaveRequestService: LeavereqService,
     private http: HttpClient,
     private loginService:LoginService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private snackbarservice:SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -95,7 +97,15 @@ const employee=this.loginService.getEmployeeData();
 
     this.leaveRequestService.workfromHomeRequest(leave).subscribe(
       (response) => {
-        console.log('Request submitted successfully', response);
+
+        console.log('Wfh  submitted successfully', response);
+        if (response.error == null && response.statusCode == 201)
+        {
+          this.snackbarservice.showSuccess("Work from home request sent!")
+        }
+        else{
+          this.snackbarservice.showError("Wfh request not sent try again!")
+        }
         this.dialogRef.close();
       },
       (error) => {
