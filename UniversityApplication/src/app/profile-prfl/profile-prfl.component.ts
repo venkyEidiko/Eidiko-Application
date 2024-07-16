@@ -28,7 +28,7 @@ ngOnInit(): void {
    this.employee?.addresses.forEach(adr=>{
    this.address=adr
    console.log("AddressData: ",adr)
-    if(this.address?.addressType=="current address"){
+    if(this.address?.addressType=="Current Address"){
     this.currentAddress=adr
     console.log("Current Address Data : ",this.currentAddress.area)
     }else if(this.address?.addressType=="Permanent Address"){

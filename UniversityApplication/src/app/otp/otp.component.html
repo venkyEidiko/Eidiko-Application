@@ -9,14 +9,17 @@
     <div class="left">
         <div class="content">
             <h2>OTP</h2>
+             <p *ngIf="this.otp != this.generatedOtp && this.otp.length===6" style="color: red;">
+                OTP Mismatch Please type correct otp .
+            </p> 
             <form #otpForm="ngForm">
-                <input type="text" name="otp" [(ngModel)]="otp" #otpInput="ngModel" required minlength="4" maxlength="6">
+                <input type="text" name="otp" [(ngModel)]="otp" #otpInput="ngModel" required minlength="6" maxlength="6">
                 <div *ngIf="otpInput.invalid && (otpInput.dirty || otpInput.touched)">
                     <p *ngIf="otpInput.errors?.['required']" class="size">
                         OTP is required.
                     </p>
                     <p *ngIf="otpInput.errors?.['minlength']" class="size">
-                        OTP must be at least 4 characters long.
+                        OTP must be at least 6 characters long.
                     </p>
                     <p *ngIf="otpInput.errors?.['maxlength']" class="size">
                         OTP cannot be more than 6 characters long.

@@ -335,6 +335,7 @@ export class DashboardComponent implements OnInit {
     this.service.saveLike(postId, emojiId, empId).subscribe(
       response => {
         console.log('Like saved successfully', response);
+        this.loadAllPosts()
       },
       error => {
         console.error('Error saving like', error);
@@ -346,12 +347,13 @@ export class DashboardComponent implements OnInit {
     if (event instanceof KeyboardEvent && event.key !== 'Enter') {
       return;
     }
-    const empId = 1111;
+    const empId = this.service.getEmpId();
     const postId = this.imageSrcList[index]?.postId;
     this.service.postComment(postId, comment, empId).subscribe(
       response => {
         console.log('Comment posted successfully', response);
         this.showCommentBox[index] = false;
+        this.loadAllPosts()
       },
       error => {
         console.error('Error posting comment', error);
@@ -475,7 +477,7 @@ export class DashboardComponent implements OnInit {
   }
 
   selectedFiles: File[] = [];
-  base64Images: string[] = [];
+  selectedbase64Images: string[] = [];
   onFileSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
 
@@ -487,7 +489,7 @@ export class DashboardComponent implements OnInit {
         // Read the file to display the image
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.base64Images.push(e.target.result);
+          this.selectedbase64Images.push(e.target.result);
         };
         reader.readAsDataURL(file);
       }
@@ -500,7 +502,7 @@ export class DashboardComponent implements OnInit {
   }
   removeImage(index: number): void {
     this.selectedFiles.splice(index, 1);
-    this.base64Images.splice(index, 1);
+    this.selectedbase64Images.splice(index, 1);
   }
 
   toggleEmoticonPicker() {
@@ -523,14 +525,10 @@ export class DashboardComponent implements OnInit {
       const file: File = this.files[0];
       this.service.submitPostRequest(this.postRequestData, file).subscribe(response => {
         console.log("PostRequset response : ", response)
-
-        this.postRequestData = {
-          description: "",
-          postType: this.selectedOption,
-          mentionEmployee: [],
-          postEmployee: this.service.getEmpId()
-        }
-
+        
+        this.selectedbase64Images=[];
+        this.textMessage='';
+this.loadAllPosts();
       },
         (error => {
           console.log(error);

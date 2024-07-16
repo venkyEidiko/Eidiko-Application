@@ -143,19 +143,17 @@
             <!-- Post request  field -->
             <div id="post" [class.active]="selectedContent === 'post'" class="org-content-item">
               <div class="form-container">
-                <textarea class="textarea" #textarea (input)="onTextChange($event)"
+                <textarea class="textarea" #textarea  [(ngModel)]="textMessage" name="textMessage" (input)="onTextChange($event)"
                   placeholder="Write your post here and mention your peers"></textarea>
 
-                <div *ngIf="base64Image">
-                  <img [src]="base64Image" alt="Selected Image" width="90%" height="40%" />
-                </div>
+                
                 <div class="image-container">
-                  <div class="image-box" *ngFor="let img of base64Images; let i = index">
-                    <img [src]="img" alt="Selected Image">
+                  <div class="image-box" *ngFor="let imge of selectedbase64Images; let i = index">
+                    <img [src]="imge" alt="Selected Image">
                     <button class="delete-btn" (click)="removeImage(i)">&#10005;</button>
 
                   </div>
-                  <div *ngIf="base64Images.length > 0" class="plus-box" (click)="triggerFileInput(fileInput)">
+                  <div *ngIf="selectedbase64Images.length > 0" class="plus-box" (click)="triggerFileInput(fileInput)">
                     <span>+</span>
                   </div>
 

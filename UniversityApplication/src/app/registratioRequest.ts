@@ -3,6 +3,7 @@ export interface Role {
   }
   
   export interface Address {
+    addressType:string,
     doorNumber: string;
     streetName: string;
     landmark: string;

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { LeaveService } from '../services/leave.service';
@@ -8,6 +8,10 @@ import { DialogService } from '../services/dialog.service';
 import { LeavetypeService } from '../services/leavetype.service';
 import { TableService } from '../services/table.service';
 import { LoginService } from '../services/login.service';
+import { Router } from '@angular/router';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CompDialogComponent } from '../comp-dialog/comp-dialog.component';
 interface PendingLeave {
   leaveId: number;
   leaveDates: string;
@@ -136,9 +140,12 @@ export class LeavesComponent implements OnInit {
     private compdialogService: CompdialogService,
     private leavetypeService: LeavetypeService,
     private tableService:TableService,
+    private dialog: MatDialog
+   
   ) {}
    employeeId = this.loginService.getEmployeeData().employeeId;
    
+  
   ngOnInit(): void {
    
     const pageSize = 5;
@@ -248,7 +255,8 @@ export class LeavesComponent implements OnInit {
             this.pendingLeave?.forEach(pending => {
               console.log("Pending leave Object: ", pending);
             });
-          });
+          });      
+         
         } else {
           console.error('Failed to fetch leave balance or no data available');
         }
@@ -552,15 +560,28 @@ export class LeavesComponent implements OnInit {
   };
 
   openDialog(): void {
-    this.dialogService.openDialog();
-  }
+    const dialogRef = this.dialog.open(DialogComponent);
+
+   dialogRef.afterClosed().subscribe(result => {
+     if(result === 'sucess'){
+       this.fetchLeaveBalance(this.employeeId);
+     }
+   });
+ }
 
   openDialog1(): void {
     this.dialogService1.openDialog();
   }
 
   openDialog2(): void {
-    this.compdialogService.openDialog();
+    const dialogRef1 = this.dialog.open(CompDialogComponent);
+    
+    dialogRef1.afterClosed().subscribe(result => {
+      if(result === 'success'){
+        this.fetchLeaveBalance(this.employeeId);
+      }
+    });
+
   }
 
   applyFilter(): void {

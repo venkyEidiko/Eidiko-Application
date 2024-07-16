@@ -45,6 +45,7 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 		EmpLeave empLeave = mapper.empLeaveDtoToEmpLeave(empLeaveDto);
 
 		empLeave.setStatus("Pending");
+
 		empLeave.setLeaveDates(LocalDate.now());
 		if (empLeave.getFromDate() != null && empLeave.getToDate() != null) {
 			empLeave.setDurationInDays(1 + ChronoUnit.DAYS.between(empLeave.getFromDate(), empLeave.getToDate()));
@@ -60,17 +61,14 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 	public EmpLeaveDto updateLeaveByEmployee(Long leaveId, EmpLeaveDto empLeaveDto) {
 		EmpLeave empLeave = empLeaveRepo.findById(leaveId)
 				.orElseThrow(() -> new UsernameNotFoundException("This Leave Id is not available !"));
-
 		empLeave.setStatus("Pending");
 		empLeave.setFromDate(empLeaveDto.getFromDate());
 		empLeave.setToDate(empLeaveDto.getToDate());
 		empLeave.setLeaveNote(empLeaveDto.getLeaveNote());
 		empLeave.setLeaveType(empLeaveDto.getLeaveType());
 		empLeave.setNotifyTo(empLeaveDto.getNotifyTo());
-
 		empLeaveRepo.save(empLeave);
 		return mapper.empLeaveToEmpLeaveDto(empLeave);
-
 	}
 
 	@Override
@@ -162,6 +160,7 @@ public class EmpLeaveServiceImpl implements EmpLeaveService {
 
 		return leaveSummaries;
 	}
+
 
 	/*
 	 * @Override public Page<EmpLeave> findByLeaveTypesAndStatuses(Long employeeId,
