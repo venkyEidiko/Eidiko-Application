@@ -1,79 +1,84 @@
-
 <div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
-    <div class="req">
-      <p >Request work from home</p>
-      <div class="close-icon">
-        <mat-icon (click)="closeDialog()">close</mat-icon>
-      </div>
+  <div class="req">
+    <p>Request work from home</p>
+    <div class="close-icon">
+      <mat-icon (click)="closeDialog()">close</mat-icon>
     </div>
-    <div mat-dialog-content class="custom-dialog-content">
-      <div class="firstrow">
-        <div>
-          <span>From</span><br/>
-          <div class="calen">
-            <mat-form-field style="width:140px;">
-            <input matInput [(ngModel)]="fromDate" name="fromDate" [matDatepicker]="picker1" class="customwidth">
+  </div>
+  <div mat-dialog-content class="custom-dialog-content">
+    <div class="firstrow">
+      <div>
+        <span>From</span><br/>
+        <div class="calen" style="display: block;">
+          <mat-form-field style="width:140px;">
+            <input matInput [(ngModel)]="fromDate" name="fromDate" [matDatepicker]="picker1" #fromDateInput1="ngModel" class="customwidth" required>
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
-            </mat-form-field>
+          </mat-form-field>
+          <div *ngIf="fromDateInput1.invalid && (fromDateInput1.dirty || fromDateInput1.touched)">
+            <div *ngIf="fromDateInput1.errors?.['required']" style="color:red">Please enter the date.</div>
           </div>
         </div>
-          <span class="days">{{calculateDays()}} days</span>
-        <div>
-          <span>To</span><br/>
-          <div class="calen">
-            <mat-form-field style="width:140px">
-            <input matInput [(ngModel)]="toDate" name="toDate" [matDatepicker]="picker2" class="customwidth">
+      </div>
+      <span class="days">{{calculateDays()}} days</span>
+      <div>
+        <span>To</span><br/>
+        <div class="calen" style="display: block;">
+          <mat-form-field style="width:140px;">
+            <input matInput [(ngModel)]="toDate" name="toDate" #toDateInput1="ngModel" [matDatepicker]="picker2" class="customwidth" required>
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2 color="primary"></mat-datepicker>
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-      
-      
-      <div *ngIf="fromDate && toDate && fromDate.toISOString() === toDate.toISOString()">
-        <div>
-          <button mat-button>Full Day</button>
-          <button mat-button (click)="toggleCustomDropdown()">Custom</button>
-        </div>
-        
-        <div *ngIf="showCustomDropdown">
-          <mat-form-field>
-            <mat-label>Select Half Day</mat-label>
-            <mat-select [(ngModel)]="selectedHalfDay">
-              <mat-option value="firstHalf">First Half</mat-option>
-              <mat-option value="secondHalf">Second Half</mat-option>
-            </mat-select>
           </mat-form-field>
-        </div>
-      </div>
-      
-      <div>
-        <p class="note">Reason </p>
-        <input matInput [(ngModel)]="leaveNote" name="note" placeholder="Type Here">
-      </div>
-      <div>
-        <p class="note1">Notify</p>
-        <input matInput [formControl]="notifyTo" class="input1" placeholder="Search Employee">
-        <div *ngIf="searchResults.length > 0" class="search-results">
-          <ul>
-            <li *ngFor="let result of searchResults" (click)="selectEmployee(result)">
-              <div>
-              <img src="../../assets/profileimage.png" style="height:25px;width:30px;">
-              {{ result.employeeId }} - {{ result.firstName }} {{ result.lastName }}
-              </div>
-            </li>
-          </ul>
+          <div *ngIf="toDateInput1.invalid && (toDateInput1.dirty || toDateInput1.touched)">
+            <div *ngIf="toDateInput1.errors?.['required']" style="color:red">Please enter the date.</div>
+          </div>
         </div>
       </div>
     </div>
-    <div mat-dialog-actions class="custom-dialog-actions" >
-      <button mat-button (click)="closeDialog()" >Cancel</button>
-      <button mat-button class="request" (click)="submitRequest()">Request</button>
+    
+    <div *ngIf="fromDate && toDate && fromDate.toISOString() === toDate.toISOString()">
+      <div>
+        <button mat-button>Full Day</button>
+        <button mat-button (click)="toggleCustomDropdown()">Custom</button>
+      </div>
+      
+      <div *ngIf="showCustomDropdown">
+        <mat-form-field>
+          <mat-label>Select Half Day</mat-label>
+          <mat-select [(ngModel)]="selectedHalfDay">
+            <mat-option value="firstHalf">First Half</mat-option>
+            <mat-option value="secondHalf">Second Half</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    
+    <div>
+      <p class="note">Reason</p>
+      <input matInput [(ngModel)]="leaveNote" name="note" #note2="ngModel" placeholder="Type Here" required>
+      <div *ngIf="note2.invalid && (note2.dirty || note2.touched)">
+        <div *ngIf="note2.errors?.['required']" style="color:red;font-size: 11px;">Please enter the reason.</div>
+      </div>
+    </div>
+    
+    <div>
+      <p class="note1">Notify</p>
+      <input matInput [formControl]="notifyTo" class="input1" placeholder="Search Employee">
+      <div *ngIf="searchResults.length > 0" class="search-results">
+        <ul>
+          <li *ngFor="let result of searchResults" (click)="selectEmployee(result)">
+            <div>
+              <img src="../../assets/profileimage.png" style="height:25px;width:30px;">
+              {{ result.employeeId }} - {{ result.firstName }} {{ result.lastName }}
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
   
-  
-  
-  
+  <div mat-dialog-actions class="custom-dialog-actions">
+    <button mat-button (click)="closeDialog()">Cancel</button>
+    <button mat-button class="request" (click)="submitRequest()">Request</button>
+  </div>
+</div>

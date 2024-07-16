@@ -11,6 +11,7 @@ import { catchError, map } from 'rxjs/operators';
 import { LoginService } from '../services/login.service';
 import { LeavesComponent } from '../leaves/leaves.component';
 import { Router } from '@angular/router';
+import { SnackbarService } from '../snackbar.service';
 
 interface Employee {
   employeeId: number;
@@ -44,6 +45,7 @@ fromDateInput: any;
     private leaveRequestService: LeavereqService,
     private http: HttpClient,
     private loginService:LoginService,
+    private snackbarservice:SnackbarService
   
   ) {}
 employee:any='';
@@ -90,6 +92,12 @@ employee:any='';
     this.leaveRequestService.submitLeaveRequest(leave).subscribe(
       (response) => {
         console.log('Request submitted successfully', response);
+        if(response.error == null && response.statusCode==201){
+         this.snackbarservice.showSuccess("Request sent Successfully!")
+        }
+        else{
+          this.snackbarservice.showError("Request not sent!")
+        }
         this.dialogRef.close("sucess");
         
         console.log("after calling  this.leaveComponent.fetchLeaveBalance(this.employeeId) ", this.employeeId);

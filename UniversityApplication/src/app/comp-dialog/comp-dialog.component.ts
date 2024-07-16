@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { LeavereqService } from '../services/leavereq.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { LoginService } from '../services/login.service';
+import { SnackbarService } from '../snackbar.service';
 
 @Component({
   selector: 'app-comp-dialog',
@@ -20,7 +21,8 @@ export class CompDialogComponent {
   constructor(
     private dialogRef: MatDialogRef<CompDialogComponent>,
     private compdialogService: LeavereqService,
-    private loginService:LoginService
+    private loginService:LoginService,
+    private snackbarservice:SnackbarService
   ) {}
   employeeId = this.loginService.getEmployeeData().employeeId;
   
@@ -51,6 +53,13 @@ export class CompDialogComponent {
     this.compdialogService.postCompoff( formattedFromDate, formattedToDate, this.note, this.files,this.employeeId).subscribe(
       response => {
         console.log('POST request successful:', response);
+        if(response.error == null && response.statusCode == 200)
+        {
+          this.snackbarservice.showSuccess("Request for Compoff is Successful!")
+        }
+        else{
+          this.snackbarservice.showError("Request not sent!TryAgain")
+        }
         this.dialogRef.close("success");
       },
       error => {

@@ -19,4 +19,15 @@ body { margin: 0;
     filter: blur(5px);
     pointer-events: none;
   }
+  
+.success-snackbar {
+    background-color: green !important;
+    color: white !important;
+  }
+  
+  .error-snackbar {
+    background-color: red !important;
+    color: white !important;
+  }
+  
 
