@@ -34,7 +34,6 @@ export class DashboardComponent implements OnInit {
   textMessage: string | null = null;
   showCommentBox: boolean[] = [];
   hideDate: Date | null = null;
-
   workFromHomeList: any;
   onLeaveToday: any[] = [];
   holidayList: any;
@@ -66,10 +65,13 @@ export class DashboardComponent implements OnInit {
     postEmployee: this.service.getEmpId()
   }
 
+
   constructor(private service: DashbordService, private loginService: LoginService,private leavetypeService:LeavetypeService) {
+
     this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
   }
 
+  employeeId = this.loginService.getEmployeeData().employeeId;
   ngOnInit(): void {
     this.fetchworkFromHome();
     this.fethHoliday();
@@ -88,7 +90,7 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  employeeId=this.loginService.getEmployeeData().employeeId;
+
   imageSrcList: {
     base64Image: string,
     timeStamp: string,
@@ -201,17 +203,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  // fetchleaveData() {
-  //   this.service.getLeaveData().subscribe(
-  //     response => {
-  //       console.log("leave data:- ", response);
-  //       this.LeaveResponse = response;
-  //       this.LeaveResponse = this.LeaveResponse.result;
-  //       this.totalAvailableLeave = this.extractAvailablePaidLeave(this.totalAvailableLeave);
-  //       console.log("leaves available",this.totalAvailableLeave);
-  //     }
-  //   )
-  // }
 
   loadAllPosts(): void {
     this.service.getAllPosts().subscribe((response: any) => {

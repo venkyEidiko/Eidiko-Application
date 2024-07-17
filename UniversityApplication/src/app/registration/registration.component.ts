@@ -96,19 +96,15 @@ export class RegistrationComponent implements OnInit {
       (response: any) => {
         console.log("reg ",response);
         if(response.error == null && response.statusCode==201){
-          this.snackbarservice.showSuccess("Registration Successful!")
         this.router.navigate(['/'])
         }
         else{
           console.log(response.error);
-          
-            this.snackbarservice.showError("Registration Unsuccessful!Try Again")
-          
-        
         }
       },
       (error: any) => {
         console.error('Registration error, route to error page', error);
+        this.snackbarservice.showError("Registration Unsuccessful!Try Again")
       }
     );
   }

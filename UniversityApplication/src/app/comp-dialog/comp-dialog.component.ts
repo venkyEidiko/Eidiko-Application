@@ -24,6 +24,12 @@ export class CompDialogComponent {
     private loginService:LoginService,
     private snackbarservice:SnackbarService
   ) {}
+
+  dateFilter = (date: Date | null): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date ? date >= today : false;
+  }
   employeeId = this.loginService.getEmployeeData().employeeId;
   
 
@@ -36,6 +42,24 @@ export class CompDialogComponent {
     for (let i = 0; i < files.length; i++) {
       this.files.push(files[i]);
       console.log('Selected file:', files[i].name);
+    }
+  }
+
+  calculateDays(): number {
+    if (this.fromDate && this.toDate) {
+      const diffTime = this.toDate.getTime() - this.fromDate.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays+1;
+    }
+    return 0;
+  }
+  disableddata() {
+    console.log("inside  disabled button")
+    
+    if (this.calculateDays() <= 0) {
+      return true;
+    } else {
+      return false;
     }
   }
 

@@ -108,7 +108,8 @@
 .card-item2 {
   background-color: #333d4e;
   border: 0.1px solid #525455;
-  height: 25vh;
+  height: auto;
+  width: 450px;
   border-radius: 2px;
   padding: 10px;
   box-sizing: border-box;
@@ -287,6 +288,7 @@ mat-card-content {
 .member {
   width: 50px;
   height: 50px;
+
 }
 
 .member img {
@@ -298,7 +300,9 @@ mat-card-content {
 .members {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 15px;
+ 
 }
 
 .member small {

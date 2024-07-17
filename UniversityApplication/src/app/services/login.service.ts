@@ -27,6 +27,9 @@ export class LoginService {
     return this.isAuthenticated;
   }
 
+  setAuthanticationForRefresh(){
+    this.isAuthenticated = true;
+  }
 
   setUnAuthenticatedUser() {
     this.isAuthenticated = false;

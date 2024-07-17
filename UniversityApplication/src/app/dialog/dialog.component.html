@@ -11,7 +11,7 @@
         <span>From</span><br/>
         <div class="calen" style="display:block">
           <mat-form-field style="width:140px;">
-            <input matInput [(ngModel)]="fromDate" name="fromDate" #fromDateInput="ngModel" [matDatepicker]="picker1" class="customwidth" required>
+            <input matInput [(ngModel)]="fromDate" name="fromDate" #fromDateInput="ngModel" [matDatepicker]="picker1" [matDatepickerFilter]="dateFilter" class="customwidth" required>
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
@@ -25,7 +25,7 @@
         <span>To</span><br/>
         <div class="calen" style="display:block">
           <mat-form-field style="width:140px">
-            <input matInput [(ngModel)]="toDate" name="toDate" #toDateInput="ngModel" [matDatepicker]="picker2" class="customwidth" required>
+            <input matInput [(ngModel)]="toDate" name="toDate" #toDateInput="ngModel" [matDatepicker]="picker2" [matDatepickerFilter]="dateFilter" class="customwidth" required>
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2 color="primary"></mat-datepicker>
           </mat-form-field>
@@ -35,7 +35,7 @@
       </div>
     </div>
   </div>
-
+  <p style="font-size:11px;color:red" *ngIf = "calculateDays()<=0 && fromDateInput.touched && toDateInput.touched">From date should be less than To date</p>
     <div class="typeofleave">
       <p>Select type of leave you want to apply</p>
       <mat-form-field>
@@ -95,6 +95,6 @@
   </div>
   <div mat-dialog-actions class="custom-dialog-actions">
     <button mat-button (click)="closeDialog()">Cancel</button>
-    <button mat-button class="request" (click)="submitRequest()">Request</button>
+    <button  [disabled]=" disableddata()" mat-button class="request" (click)="submitRequest()">Request</button>
   </div>
 </div>

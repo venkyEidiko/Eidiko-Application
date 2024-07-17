@@ -58,7 +58,37 @@
             </mat-card-content>
         </mat-card>
     </div>
-
+    <h1 class="heading">Pending Work From Home Requests</h1>
+    <div class="cards">
+        <mat-card class="wfh-cards">
+            <mat-card-content>
+                <div class="pending-table">
+                    <table *ngIf="pendingWfh && pendingWfh.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Dates</th>
+                                <th>Apply Date</th>
+                                <th>Status</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let wfh of pendingWfh">
+                              <td>{{wfh.fromDate}} to {{wfh.toDate}}</td>
+                              <th>{{wfh.applyDate}}</th>
+                              <td>{{wfh.status}}</td>
+                              <td>{{wfh.reason}}</td>>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="image-content" *ngIf="pendingWfh?.length===0">
+                        <img class="elephantimg" src="../../assets/elephant.png" alt="elephantimage">
+                        <p>Nothing here!<br />Working hard yeah?? Request time off on right&gt;&gt;&gt;</p>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
     <div>
         <h2>My Leave Stats</h2>
         <div class="leave-cards">
