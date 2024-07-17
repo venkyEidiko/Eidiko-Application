@@ -18,11 +18,11 @@
                         </div>
                         <div>
                             <i class="fa-solid fa-phone"></i>
-                            <span>{{employee?.workNumber|| "-Not Set-"}}</span>
+                            <span>{{employee?.phoneNu|| "-Not Set-"}}</span>
                         </div>
                         <div>
                             <i class="fa-solid fa-location-dot"></i>
-                            <span>{{employee?.location|| "-Not Set-"}}</span>
+                            <span>{{employee?.addresses?.at(0)?.city}}</span>
                         </div>
                         <div>
                             <i class="fa-solid fa-hashtag"></i>
