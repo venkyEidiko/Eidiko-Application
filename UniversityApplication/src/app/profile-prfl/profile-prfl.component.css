@@ -1,0 +1,71 @@
+ .profile-container {
+    padding: 20px;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-container mat-card {
+    border-radius: 2px;
+    background-color: #333d4e;
+    border: 0.5px solid #4c4c5c;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.child {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+}
+
+mat-card-content {
+    padding: 0; 
+
+}
+
+.headings {
+    height: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; 
+    border-bottom: 1px solid #4c4c5c;
+    box-sizing: border-box; 
+
+    
+}
+.headings h3{
+    font-size: 15px;
+    color: #e9e4e4;
+}
+.headings p{
+    font-size: 12px;
+    color: #8b5fb3;
+    cursor: pointer;
+}
+
+.headings h3,
+.headings p {
+    margin-right: 30px; 
+    margin-left: 30px;
+    padding: 0; 
+}
+.contact-details{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    column-gap: 50px; 
+    row-gap: 10px; 
+    padding: 20px;
+}
+.contact-details span{
+    font-size: 10px;
+}
+.contact-details p  {
+    font-size: 14px;
+    font-weight: 100;
+    color: #ebe8ed;
+}

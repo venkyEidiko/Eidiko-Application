@@ -1,0 +1,11 @@
+
+    
+      <div class="chart-container">
+        <div *ngFor="let dataItem of chartData" 
+        [ngClass]="{'bar': true, 'bar-zero': dataItem.value === 0}"
+        [style.height.%]="dataItem.value">
+   </div>
+      </div>
+      <div class="x-axis-labels">
+        <span *ngFor="let dataItem of chartData" class="x-axis-label">{{ dataItem.label }}</span>
+      </div>

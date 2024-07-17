@@ -1,0 +1,59 @@
+<div class="custom-dialog-container" [ngClass]="{'open': isOpen}">
+  <div class="req">
+    <p mat-dialog-title>Request Credit for Compensatory Off</p>
+    <div class="close-icon">
+      <mat-icon (click)="closeDialog()">close</mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content class="custom-dialog-content">
+    <div class="compoff-data">
+      Choose the date on which you have worked for to avail Compensatory Off
+    </div>
+    <div class="icons" style="display:flex; gap:50px;">  
+      <div>
+        <mat-form-field>
+          <mat-label>From Date</mat-label>
+          <input matInput [(ngModel)]="fromDate" name="fromDate"  #fromDateIn="ngModel" [matDatepicker]="picker" [matDatepickerFilter]="dateFilter" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="fromDateIn.invalid && (fromDateIn.dirty || fromDateIn.touched)">
+            Please enter the date.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>To Date</mat-label>
+          <input matInput [(ngModel)]="toDate" name="toDate" [matDatepicker]="picker2" #toDateIn="ngModel" [matDatepickerFilter]="dateFilter" class="customwidth" required>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2 color="primary"></mat-datepicker>
+          <mat-error *ngIf="toDateIn.invalid && (toDateIn.dirty || toDateIn.touched)">
+            Please enter the date.
+          </mat-error>
+        </mat-form-field>
+        
+      </div>
+    </div>
+    <p style="font-size:11px;color:red" *ngIf = "calculateDays()<=0 && fromDateIn.touched && toDateIn.touched">From date should be less than To date</p>
+    <div class="notelabel">
+      Note
+    </div>
+    <div>
+      <mat-form-field style="width:800px">
+        <input matInput [(ngModel)]="note" name="note" #note1="ngModel" class="note2" required>
+        <mat-error *ngIf="note1.invalid && (note1.dirty || note1.touched)">
+          Note is required.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="att">
+      <mat-icon>attachment</mat-icon>
+      <input class="files" type="file" #fileInput (change)="onFileSelected($event)">
+    </div>
+  </div>
+  
+  <div mat-dialog-actions class="custom-dialog-actions">
+    <button mat-button (click)="closeDialog()">Cancel</button>
+    <button mat-button class="confirm" (click)="onSubmit()">Confirm</button>
+  </div>
+</div>

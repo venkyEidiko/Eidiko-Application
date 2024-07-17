@@ -1,0 +1,148 @@
+
+
+.custom-dialog-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+
+  width: 450px;
+
+  height: 100%; 
+  background-color:rgb(51, 61, 78);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  
+}
+
+.customwidth
+{
+width:70px;
+font-size: 10px;
+}
+.calen 
+{
+display: flex;
+}
+
+
+
+
+.mat-dialog-title
+{
+  font-size: small;
+}
+.firstrow
+{
+  display:flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 300;
+  border:2px solid #ada7a6;
+  padding:5px;
+}
+.custom-dialog-container.open {
+  transform: translateX(0);
+}
+.days
+{
+  margin-top:10px;
+
+
+ padding:30px;
+}
+.typeofleave
+{
+  font-size:10px;
+  font-weight:500;
+}
+mat-form-field
+{
+  width:100%
+}
+mat-label
+{
+  font-size: 11px;
+}
+mat-option,mat-select
+{
+font-size: 10px;
+}
+
+.req {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  
+}
+
+.req p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.close-icon {
+  cursor: pointer;
+}
+
+
+.custom-dialog-content {
+  padding: 20px;
+  height:1200px
+}
+input
+{
+  width:100%;
+  height:60px;
+}
+.input1
+{
+  height:30px;
+  background-color:rgb(51, 61, 78);
+  border: none;
+}
+.input1:active
+{
+  border: 0.5px solid gray;
+}
+.custom-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px;
+ margin-top:30px;
+ margin-bottom:10px;
+ height:40px;
+
+ 
+}
+
+.note,.note1 
+{
+  font-size:12px;
+ 
+}
+.note1{
+  padding:7px;
+  margin-top:6px;
+}
+.request
+{
+  background-color: deepskyblue;
+}
+.mat-dialog-actions
+{
+  height:50px;
+}
+.search-results li{
+  list-style-type: none;
+}
+.searchdata{
+  background-color:rgb(51, 61, 78);
+    cursor: pointer; 
+    width: 100%;
+    padding: 5px 20px;
+    
+}
+.searchdata:hover{
+background-color: #3d3c3b;
+}

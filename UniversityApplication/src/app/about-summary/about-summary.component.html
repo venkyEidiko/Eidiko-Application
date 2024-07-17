@@ -1,0 +1,68 @@
+<div class="summary-container" >
+    <div>
+        <mat-card>
+            <mat-card-content>
+                <div>
+                    <h3>About</h3>
+                    <button>Add your response</button>
+                </div>
+                <div>
+                    <h3>What I love about my job?</h3>
+                    <button>Add your response</button>
+                </div>
+                <div>
+                    <h3>My interests and hobbies</h3>
+                    <button>Add your response</button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+    <div>
+        <mat-card>
+            <mat-card-content>
+                <h3>Primary Details</h3>
+                <div class="primary-details">
+                    <div>
+                        <span>FIRST NAME</span>
+                        <p>{{employee?.firstName}}</p>
+                        <span>GENDER</span>
+                        <p>{{employee?.gender}}</p>
+                        <span>MARITAL STATUS</span>
+                        <p>{{employee?.maritalStatus}}</p>
+                        <span>PHYSICALLY HANDICAPPED</span>
+                        <p>{{employee?.physicallyHandicapped}}</p>
+                    </div>
+                    <div>
+                        <span>LAST NAME</span>
+                        <p>{{employee?.lastName}}</p>
+                        <span>DATE OF BIRTH</span>
+                        <p>{{employee?.dateOfBirth}}</p>
+                        <span>BLOOD GROUP</span>
+                        <p>{{employee?.bloodGroup}}</p>
+                    </div>
+                </div>
+                <h3>Contact Details</h3>
+                <div class="contact-details">
+                    <div>
+                        <span>PERSONAL EMAIL</span>
+                        <p>{{employee?.personalEmail}}</p>
+                    </div>
+                </div>
+                <h3>Relations</h3>
+                <div class="relation-details">
+                    <div>
+                        <span>FATHER</span>
+                        <p>-Not Set-</p>
+                        
+                    </div>
+                    <div>
+                        <span>MOTHER</span>
+                        <p>-Not Set-</p>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    
+</div>

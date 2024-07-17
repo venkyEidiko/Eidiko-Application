@@ -1,0 +1,7 @@
+.timeline-container{
+    padding: 20px;
+    height:100%;
+}
+.timeline-container mat-card{
+    background-color: #333d4e;
+}

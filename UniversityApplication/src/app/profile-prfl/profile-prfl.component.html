@@ -1,0 +1,199 @@
+<div class="profile-container">
+    <div class="child">
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Primary Details</h3>
+                    <p (click)="openDialog1()">Edit </p>
+                </div>
+                <div class="contact-details">
+                    <div>
+                        <span>FIRST NAME</span>
+                        <p>{{employee?.firstName|| "-Not Set-"}}</p>
+                        <span>LAST NAME</span>
+                        <p>{{employee?.lastName|| "-Not Set-"}}</p>
+                        <span>GENDER</span>
+                        <p>{{employee?.gender|| "-Not Set-"}}</p>
+                        <span>MARITAL STATUS</span>
+                        <p>{{employee?.maritalStatus|| "-Not Set-"}}</p>
+                        <span>PHYSICALLY HANDICAPPED</span>
+                        <p>{{employee?.physicallyHandicapped|| "-Not Set-"}}</p>
+                        <span>NATIONALITY</span>
+                        <p>{{employee?.nationality|| "-Not Set-"}}</p>
+                    </div>
+                    <div>
+                        <span>MIDDLE NAME</span>
+                        <p>{{null|| "-Not Set-"}}</p>
+                        <span>DISPLAY NAME</span>
+                        <p>{{employee?.firstName+" "+employee?.lastName|| "-Not Set-"}}</p>
+                        <span>DATE OF BIRTH</span>
+                        <p>{{employee?.dateOfBirth|| "-Not Set-"}}</p>
+                        <span>BLOOD GROUP</span>
+                        <p>{{employee?.bloodGroup|| "-Not Set-"}}</p>
+                    </div>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Contact Details</h3>
+                    <p (click)="openDialog2()">Edit</p>
+                </div>
+                <div class="contact-details">
+                    <div>
+                        <span>WORK EMAIL</span>
+                        <p>{{employee?.workEmail|| "-Not Set-"}}</p>
+                        <span>MOBILE NUMBER</span>
+                        <p>{{employee?.workNumber|| "-Not Set-"}}</p>
+                        <span>RESIDENCE NUMBER</span>
+                        <p>{{employee?.residenceNumber|| "-Not Set-"}}</p>
+                        <span>EMERGENCY NUMBER</span>
+                        <p>{{employee?.emergencyContactNumber|| "-Not Set-"}}</p>
+                    </div>
+                    <div>
+                        <span>PERSONAL EMAIL</span>
+                        <p>{{employee?.personalEmail|| "-Not Set-"}}</p>
+                        <span>WORK NUMBER</span>
+                        <p>{{employee?.workNumber|| "-Not Set-"}}</p>
+                        <span>SKYPE</span>
+                        <p>{{employee?.skype|| "-Not Set-"}}</p>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="child">
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Addresses</h3>
+                    <p (click)="openDialog3()">Edit</p>
+                </div>
+                <div class="contact-details">
+                    <div>
+                        <h5>CURRENT ADDRESS</h5>
+                        <div>
+                            <span>HOUSE NO/FLAT NO.</span>
+                            <p>{{currentAddress?.doorNumber|| "-Not Set-"}}</p>
+                            <span>AREA</span>
+                            <p>{{currentAddress?.area|| "-Not Set-"}}</p>
+                            <span>LANDMARK</span>
+                            <p>{{currentAddress?.landmark|| "-Not Set-"}}</p>
+                            <span>CITY</span>
+                            <p>{{currentAddress?.city|| "-Not Set-"}}</p>
+                            <span>STREAT NAME</span>
+                            <p>{{currentAddress?.streetName|| "-Not Set-"}}</p>
+                            <span>PINCODE</span>
+                            <p>{{currentAddress?.pincode|| "-Not Set-"}}</p>
+                            <span>STATE</span>
+                            <p>{{currentAddress?.state|| "-Not Set-"}}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h5>PERMANENT ADDRESS</h5>
+                        <div>
+                            <span>HOUSE NO/FLAT NO.</span>
+                            <p>{{permanentAddress?.doorNumber || "-Not Set-"}}</p>
+                            <span>AREA</span>
+                            <p>{{permanentAddress?.area || "-Not Set-"}}</p>
+                            <span>LANDMARK</span>
+                            <p>{{permanentAddress?.landmark|| "-Not Set-"}}</p>
+                            <span>CITY</span>
+                            <p>{{permanentAddress?.city|| "-Not Set-"}}</p>
+                            <span>STREAT NAME</span>
+                            <p>{{permanentAddress?.streetName|| "-Not Set-"}}</p>
+                            <span>PINCODE</span>
+                            <p>{{permanentAddress?.pincode|| "-Not Set-"}}</p>
+                            <span>STATE</span>
+                            <p>{{permanentAddress?.state|| "-Not Set-"}}</p>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Relations</h3>
+                    <p (click)="openDialog4()">Edit</p>
+                </div>
+                <div class="contact-details">
+                    <div>
+                        <span>FATHER</span>
+                        <p>xxxxxxxx</p>
+                    </div>
+                    <div>
+                        <span>MOTHER</span>
+                        <p>xxxxxx</p>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="child">
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Experience</h3>
+                    <p>Edit</p>
+                </div>
+                <div class="contact-details">
+                    <div>
+                        <p>No data available</p>
+
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Education</h3>
+                    <p>Edit</p>
+                </div>
+                <div class="contact-details">
+                    <div>
+                        <p>No data available</p>
+
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="child">
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Identity Information</h3>
+
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-content>
+                <div class="headings">
+                    <h3>Professional Summary</h3>
+                    <p>Edit</p>
+                </div>
+                <div class="contact-details">
+                    <div>
+                        <span>PROFESSIONAL SUMMARY</span>
+                        <p>-Not set-</p>
+
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
