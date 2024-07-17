@@ -16,25 +16,15 @@ export class InterceptorService implements HttpInterceptor {
     private loginService: LoginService,
     private emailCheckService: EmailCheckService,
     private otpService: OtpService,
-    private authService: AuthService, private router: Router
-  ) { 
-    // this.initialize();
-  }
-  // private initialize() {
-  //   this.router.events.subscribe(event => {
-  //     if (event instanceof NavigationStart) {
-  //       this.loaderService.showLoading();
-  //     } else if (event instanceof NavigationEnd) {
-  //       this.loaderService.hideLoading();
-  //     }
-  //   });
-  // }
-  
+    private authService: AuthService, 
+    private router: Router
+  ) { }
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    
     if (
       this.loginService.isAuthenticatedUser() ||
       this.emailCheckService.isAuthenticatedUser() ||

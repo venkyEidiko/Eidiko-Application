@@ -47,7 +47,7 @@ public class LoginJwtController {
 	}
 	
 
-	@PostMapping("/refresh/{token}")
+	@GetMapping("/refresh/{token}")
     public ResponseEntity<ResponseModel<String>> refresh(@PathVariable String token) {
         try {
             String accessToken = loginJwtService.refreshTokenMethod(token);
