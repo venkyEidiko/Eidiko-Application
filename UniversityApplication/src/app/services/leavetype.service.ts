@@ -17,13 +17,16 @@ interface LeaveStats {
 export class LeavetypeService {
 
   private apiUrl = 'http://localhost:8082/leave/'
-
+  private wfhUrl = 'http://localhost:8082/api/findPendingRequestByEmpId/'     
   constructor(private http: HttpClient, private loginService: LoginService) { }
    employee = this.loginService.getEmployeeData();
    employeeId=this.employee.employeeId;
   fetchLeaveBalance(employeeId: number): Observable<LeaveStats> {
    console.log("fetch leave balance",employeeId)
     return this.http.get<LeaveStats>(`${this.apiUrl}getEmpLeaveSummaryByEmpId/${this.employeeId}`);
+  }
+  fetchWfhrequest():Observable<any>{
+    return this.http.get<any>(`${this.wfhUrl}${this.employeeId}`)
   }
   fetchMonthlyLeaveData(employeeId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}getEmpLeaveSummaryByEmpId/${this.employeeId}`);

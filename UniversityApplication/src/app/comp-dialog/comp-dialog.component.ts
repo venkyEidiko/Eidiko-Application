@@ -25,12 +25,6 @@ export class CompDialogComponent {
     private snackbarservice:SnackbarService
   ) {}
   employeeId = this.loginService.getEmployeeData().employeeId;
-
-  dateFilter = (date: Date | null): boolean => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return date ? date >= today : false;
-  }
   
 
   closeDialog(): void {
@@ -63,23 +57,15 @@ export class CompDialogComponent {
         {
           this.snackbarservice.showSuccess("Request for Compoff is Successful!")
         }
-        
+        else{
+          this.snackbarservice.showError("Request not sent!TryAgain")
+        }
         this.dialogRef.close("success");
       },
       error => {
         console.error('Error in POST request:', error);
-        this.snackbarservice.showError("Request not sent!TryAgain")
      
       }
     );
-  }
-
-  calculateDays(): number {
-    if (this.fromDate && this.toDate) {
-      const diffTime = this.toDate.getTime() - this.fromDate.getTime();
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      return diffDays+1;
-    }
-    return 0;
   }
 }

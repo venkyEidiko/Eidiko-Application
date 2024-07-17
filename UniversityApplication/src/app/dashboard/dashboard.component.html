@@ -103,13 +103,11 @@
           <span>Leave Balances</span>
           <div class="charts">
             <div class="donut-container">
-
-              <div class="donut-text">{{this.availablePaidLeave}} Days Available</div>
-              <app-donut1 [chartOptions]="chartOptions1">
-
-
-              </app-donut1>
-          </div>
+              <div class="donut-text">
+                {{totalAvailableLeave}} Days Available</div>
+              <app-donutchart [chartOptions]="chartOptions1">
+              </app-donutchart>
+            </div>
           </div>
         </mat-card-content>
       </mat-card>

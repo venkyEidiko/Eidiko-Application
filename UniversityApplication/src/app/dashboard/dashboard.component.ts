@@ -21,7 +21,6 @@ export class DashboardComponent implements OnInit {
   showEmoticonPicker = false;
   LeaveResponse: any;
   totalAvailableLeave = 12;
-  
   selectedTab: string = 'organization';
   selectedContent: string = 'post';
   option1Checked: boolean = true;
@@ -33,7 +32,6 @@ export class DashboardComponent implements OnInit {
   textMessage: string | null = null;
   showCommentBox: boolean[] = [];
   hideDate: Date | null = null;
-  
   workFromHomeList: any;
   onLeaveToday: any[] = [];
   holidayList: any;
@@ -66,16 +64,15 @@ export class DashboardComponent implements OnInit {
   }
   availablePaidLeave: any='';
   leavetypeService: any;
-
   constructor(private service: DashbordService, private loginService: LoginService) {
     this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
   }
-  employeeId = this.loginService.getEmployeeData().employeeId;
 
+  employeeId = this.loginService.getEmployeeData().employeeId;
   ngOnInit(): void {
     this.fetchworkFromHome();
     this.fethHoliday();
-   
+    this.fetchleaveData();
     this.getAnniversaryAndAfterSevenDaysList();
     this.getBirthdayAndAfterSevenDaysList();
     this.loadAllPosts();
@@ -89,11 +86,6 @@ export class DashboardComponent implements OnInit {
 
 
   }
-  // employeeId(employeeId: any) {
-  //   throw new Error('Method not implemented.');
-  // }
-
-  // employeeId=this.loginService.getEmployeeData().employeeId;
   imageSrcList: {
     base64Image: string,
     timeStamp: string,
@@ -206,10 +198,16 @@ export class DashboardComponent implements OnInit {
     }
   }
 
- 
-     
-      
-
+  fetchleaveData() {
+    this.service.getLeaveData().subscribe(
+      response => {
+        console.log("leave data:- ", response);
+        this.LeaveResponse = response;
+        this.LeaveResponse = this.LeaveResponse.result;
+        this.totalAvailableLeave = this.extractAvailablePaidLeave(this.totalAvailableLeave);
+      }
+    )
+  }
   loadAllPosts(): void {
     this.service.getAllPosts().subscribe((response: any) => {
 
@@ -362,13 +360,13 @@ export class DashboardComponent implements OnInit {
   }
 
   public chartOptions1 = {
-    series: [this.totalAvailableLeave,this.availablePaidLeave],
+    series: [12 - this.totalAvailableLeave, 12],
     chart: {
       type: 'donut',
       width: 150,
       height: 220
     },
-    labels: ['Consumed Leaves'],
+    labels: ['Consumed Leaves', 'Available Leaves'],
     colors: ['#cdfaf6', '#1eebe7'],
     fill: {
       type: 'solid',

@@ -1,16 +1,16 @@
 
 
 .custom-dialog-container {
-  position: fixed;
-  top: 0;
-  right: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
 
-  width: 450px;
+    width: 450px;
 
-  height: 100%; 
-  background-color:rgb(51, 61, 78);
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  
+    height: 100%; 
+    background-color:rgb(51, 61, 78);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    
 }
 
 .customwidth

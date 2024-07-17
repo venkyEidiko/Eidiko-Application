@@ -45,7 +45,6 @@
         <button mat-button>Full Day</button>
         <button mat-button (click)="toggleCustomDropdown()">Custom</button>
       </div>
-
       <div *ngIf="showCustomDropdown">
         <mat-form-field>
           <mat-label>Select Half Day</mat-label>
@@ -66,7 +65,6 @@
         <div *ngIf="note2.errors?.['required']" style="color:red;font-size: 11px;">Please enter the reason.</div>
       </div>
     </div>
-
     <div>
       <p class="note1">Notify</p>
       <input matInput [formControl]="notifyTo" class="input1" placeholder="Search Employee">

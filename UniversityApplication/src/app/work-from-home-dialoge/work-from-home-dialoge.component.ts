@@ -35,7 +35,7 @@ export class WorkFromHomeDialogeComponent {
   showCustomDropdown: boolean = false;
   selectedHalfDay: string = 'fullDay';
   searchResults: Employee[] = [];
-
+employeeName:string='';
   constructor(
     private dialogRef: MatDialogRef<WorkFromHomeDialogeComponent>,
     private leaveRequestService: LeavereqService,
@@ -48,6 +48,7 @@ export class WorkFromHomeDialogeComponent {
   ngOnInit(): void {
     
 const employee=this.loginService.getEmployeeData();
+this.employeeName=employee.firstName+" "+employee.lastName
    this.employeeId=employee.employeeId;
     this.notifyTo.valueChanges.pipe(
       debounceTime(300), 
@@ -82,12 +83,13 @@ const employee=this.loginService.getEmployeeData();
     console.log("date - ",this.fromDate );
     
     const leave: WorkFromHomeRequest = {
-      fromDate: this.datePipe.transform(this.fromDate,"yyyy-MM-dd"),
-      toDate: this.datePipe.transform(this.toDate,"yyyy-MM-dd"),
+      fromDate: this.fromDate,
+      toDate: this.toDate,
+      employeeName:this.employeeName,
       requestType: "WORK FROM HOME",
       notify: this.notifyTo.value,
       reason: this.leaveNote,
-      employeeId: this.employeeId,
+      employeeID: this.employeeId,
       fromHalf: fromhalfRequest,
       toHalf: toHalfrequest
     };
@@ -97,6 +99,7 @@ const employee=this.loginService.getEmployeeData();
 
     this.leaveRequestService.workfromHomeRequest(leave).subscribe(
       (response) => {
+        console.log("EmpId in wfh : ",this.employeeId);
 
         console.log('Wfh  submitted successfully', response);
         if (response.error == null && response.statusCode == 201)
@@ -157,17 +160,23 @@ const employee=this.loginService.getEmployeeData();
   }
 
   selectEmployee(employee: Employee): void {
-    this.notifyTo.setValue(`${employee.firstName} ${employee.lastName}`);
+    this.notifyTo.setValue(`${employee.employeeId}`);
     this.searchResults = [];
   }
 }
 export interface WorkFromHomeRequest {
-    "fromDate": any,
-    "toDate": any,
-    "requestType": string,
-    "notify": any,
-    "fromHalf":any,
-    "toHalf":any,
-    "reason": any,
-    "employeeId": any
+
+  employeeName?: string;
+  employeeID?: number;
+  fromDate: Date; 
+  toDate: Date; 
+  fromHalf?: string; 
+  toHalf?: string; 
+  applyDate?: Date; 
+  reason: string;
+  notify: string;
+  status?: string; 
+  requestType: string;
+  rejectReason?: string;
+  actionTakenBy?: string; 
 }

@@ -12,7 +12,6 @@ import { SnackbarService } from '../snackbar.service';
 })
 export class LoginComponent implements OnInit {
 
-
   constructor(
     private snackbarservice: SnackbarService,
     private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) { }
@@ -77,7 +76,6 @@ export class LoginComponent implements OnInit {
         else{
           console.log(response.error);
           this.snackbarservice.showError("Login Unsuccessful!Try Again")
-          
         }
 
       },

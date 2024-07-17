@@ -2,8 +2,6 @@ package com.eidiko.serviceimplementation;
 
 import com.eidiko.entity.Employee;
 import com.eidiko.entity.WorkFromHomeRequest;
-import com.eidiko.exception_handler.BadRequestException;
-import com.eidiko.exception_handler.UserNotFoundException;
 import com.eidiko.repository.EmployeeRepo;
 import com.eidiko.repository.WorkFromHomeRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +32,13 @@ public class WorkFromHomeRequestService {
 
     //this method is for the notify field
     public WorkFromHomeRequest createRequest(WorkFromHomeRequest request) {
-        request.setStatus("PENDING");
-        Employee byEmployeeId = employeeRepo.findByEmployeeId(request.getEmployeeID())
-                .orElseThrow(() -> new BadRequestException("user not found"));
+        request.setStatus("Pending");
 
-        String fullName = byEmployeeId.getFirstName() + " " + byEmployeeId.getLastName();
-
-        request.setEmployeeName(fullName);
-        Employee employee = fetchEmployeeDetails(request.getNotify());
-        if (employee != null) {
-            request.setNotify(employee.toString()); // Set the notify field with employee details
-        }
+        // Fetch employee details based on notify field
+//        Employee employee = fetchEmployeeDetails(request.getNotify());
+//        if (employee != null) {
+//            request.setNotify(employee.toString()); // Set the notify field with employee details
+//        }
 
         return repository.save(request);
     }
@@ -90,5 +84,26 @@ public class WorkFromHomeRequestService {
             }
             return "unknown";
         }
+    }
+
+    public List<WorkFromHomeRequest> findPendingRequestByNotify(String notify){
+        List<WorkFromHomeRequest> request=repository.findAllByNotifyAndStatus(notify,"Pending");
+        return request;
+    }
+    public List<WorkFromHomeRequest> findPendingRequestByEmpId(Long empId){
+        List<WorkFromHomeRequest> request=repository.findAllByEmployeeIDAndStatus(empId,"Pending");
+        return request;
+    }
+
+    public WorkFromHomeRequest updateWFHBywfhId(long id, WorkFromHomeRequest wfhRequest) {
+        WorkFromHomeRequest request=repository.findById(id).orElseThrow(null);
+
+        if(request!=null){
+            request.setStatus(wfhRequest.getStatus());
+            request.setRejectReason(wfhRequest.getRejectReason());
+
+        }
+        WorkFromHomeRequest updateRequest= repository.save(request);
+        return updateRequest;
     }
 }

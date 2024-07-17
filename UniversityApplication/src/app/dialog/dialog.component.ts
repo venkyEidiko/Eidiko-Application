@@ -48,14 +48,11 @@ fromDateInput: any;
     private snackbarservice:SnackbarService
   
   ) {}
-
-
   dateFilter = (date: Date | null): boolean => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return date ? date >= today : false;
   }
-
 employee:any='';
   ngOnInit(): void {
     
@@ -103,7 +100,6 @@ employee:any='';
         if(response.error == null && response.statusCode==201){
          this.snackbarservice.showSuccess("Request sent Successfully!")
         }
-        
         this.dialogRef.close("sucess");
         
         console.log("after calling  this.leaveComponent.fetchLeaveBalance(this.employeeId) ", this.employeeId);

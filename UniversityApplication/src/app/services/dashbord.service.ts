@@ -29,20 +29,17 @@ export class DashbordService {
   }
 
   getOnLeaveToday(): Observable<any> {
-    return this.http.get<any>(this.apiUrl1+'leave/empOnLeaveToday');
+    return this.http.get<any>(this.apiUrl1 + 'leave/empOnLeaveToday');
   }
 
   getHolidays(): Observable<any[]> {
-    return this.http.get<any>(this.apiUrl1+"api/getAllHolidays");
-
+    return this.http.get<any>(this.apiUrl1 + "api/getAllHolidays");
   }
   getLeaveData(): Observable<any[]> {
     const empId = this.getEmpId();
 
     console.log("employeeid - ", empId);
-
-
-    return this.http.get<any>(this.apiUrl1+"leave/getEmpLeaveSummaryByEmpId/" + empId);
+    return this.http.get<any>(this.apiUrl1 + "leave/getEmpLeaveSummaryByEmpId/" + empId);
   }
 
   getEmpId() {
@@ -64,21 +61,19 @@ export class DashbordService {
       formData.append('file', file, file.name);
     }
     console.log("submitPostRequestData requestData : ", requestData)
-    return this.http.post<any>(this.url+`posts/saveimage`, formData);
+    return this.http.post<any>(this.url + `posts/saveimage`, formData);
+
   }
 
 
   getBirthdays(): Observable<any> {
-
-
-    return this.http.get<any[]>(this.url+"api/todayAndNextSevenDaysBirthdaysList");
-
+    return this.http.get<any[]>(this.url + "api/todayAndNextSevenDaysBirthdaysList");
   }
 
 
 
   getAnniversary(): Observable<any> {
-    return this.http.get<any>(this.url+"api/todayAndNextSevenDaysAnniversaryList");
+    return this.http.get<any>(this.url + "api/todayAndNextSevenDaysAnniversaryList");
   }
 
   openDialog(): void {
@@ -96,9 +91,7 @@ export class DashbordService {
   getAllPosts(): Observable<any[]> {
     return this.http.get<any>("http://localhost:8082/posts/getAllPostByTime")
   }
-  
   saveLike(postId: number, emojiId: number, empId: number): Observable<any> {
-  
     const body = {
       emoji: emojiId,
       empId: empId
@@ -123,30 +116,39 @@ export class DashbordService {
     return this.http.post<any>(this.apiUrl3, formData1)
   }
 
+  //for pending leave
+  pendingRequest(): Observable<any> {
+    return this.http.get<any>(`${this.url}leave/getPendingLeaveByNotifiedEmployee/${this.getEmpId()}`)
+  }
+  //for updating leave 
+  updateLeaveByApprover(leaveId: number, empLeaveDto: any): Observable<any> {
+    const actionTakenBy = this.loginService.getEmployeeData().firstName + " " + this.loginService.getEmployeeData().lastName
+    return this.http.put<any>(
+      `${this.url}leave/updateLeaveByApprover/${leaveId}/${actionTakenBy}`,
+      empLeaveDto
+    );
+  }
 
-pendingRequest():Observable<any>{
-return this.http.get<any>(`${this.url}leave/getPendingLeaveByNotifiedEmployee/${this.getEmpId()}`)
-}
+  //for pending work Form home request
+  getPendingWFHRequest() {
+    return this.http.get<any>(`${this.url}api/findPendingRequestByNotify/${this.getEmpId()}`)
+  }
 
-updateLeaveByApprover(leaveId: number, empLeaveDto: any): Observable<any> {
-  const actionTakenBy=this.loginService.getEmployeeData().firstName+" "+this.loginService.getEmployeeData().lastName
-  return this.http.put<any>(
-    `${this.url}leave/updateLeaveByApprover/${leaveId}/${actionTakenBy}`,
-    empLeaveDto
-  );
-}
+  //update work from home request
+  updateWFHRequest(wfhId:number, wfhRequest:any ){
+    
+    return this.http.put<any>(
+      `${this.url}api/updateStatusByWfhId/${wfhId}`,
+      wfhRequest
+    );
+  }
 
   getPostsAndLikes(): Observable<any> {
     console.log("inside service")
-    return this.http.get<any>(this.url+'posts/getAllPostByTime');
-
+    return this.http.get<any>(this.url + 'posts/getAllPostByTime');
   }
-
-
-
   getNewJoinees(): Observable<any> {
-    
-    return this.http.get<any>(this.apiUrl1+"api/newJoineesAndLast7Days");
+    return this.http.get<any>(this.apiUrl1 + "api/newJoineesAndLast7Days");
   }
 }
 
