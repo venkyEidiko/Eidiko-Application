@@ -7,6 +7,7 @@ import { Employee } from '../services/employee';
 import { timestamp } from 'rxjs';
 
 import { LoginService } from '../services/login.service';
+import { LeavetypeService } from '../services/leavetype.service';
 
 
 @Component({
@@ -17,7 +18,8 @@ import { LoginService } from '../services/login.service';
 
 export class DashboardComponent implements OnInit {
 
-
+  consumedPaidLeave = 0;
+  availablePaidLeave = 0;
   showEmoticonPicker = false;
   LeaveResponse: any;
   totalAvailableLeave = 12;
@@ -62,9 +64,10 @@ export class DashboardComponent implements OnInit {
     mentionEmployee: [],
     postEmployee: this.service.getEmpId()
   }
-  availablePaidLeave: any='';
-  leavetypeService: any;
-  constructor(private service: DashbordService, private loginService: LoginService) {
+
+
+  constructor(private service: DashbordService, private loginService: LoginService,private leavetypeService:LeavetypeService) {
+
     this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
   }
 
@@ -72,11 +75,11 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.fetchworkFromHome();
     this.fethHoliday();
-    this.fetchleaveData();
+    // this.fetchleaveData();
     this.getAnniversaryAndAfterSevenDaysList();
     this.getBirthdayAndAfterSevenDaysList();
     this.loadAllPosts();
-    
+    this.fetchLeaveBalance(this.employeeId);
     this.fetchPendingLeaves()
     this.fetchOnLeaveToday();
     this.workFromHomeList();
@@ -86,6 +89,8 @@ export class DashboardComponent implements OnInit {
 
 
   }
+
+
   imageSrcList: {
     base64Image: string,
     timeStamp: string,
@@ -198,16 +203,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  fetchleaveData() {
-    this.service.getLeaveData().subscribe(
-      response => {
-        console.log("leave data:- ", response);
-        this.LeaveResponse = response;
-        this.LeaveResponse = this.LeaveResponse.result;
-        this.totalAvailableLeave = this.extractAvailablePaidLeave(this.totalAvailableLeave);
-      }
-    )
-  }
+
   loadAllPosts(): void {
     this.service.getAllPosts().subscribe((response: any) => {
 
@@ -258,15 +254,16 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  extractAvailablePaidLeave(data: any) {
-    for (let leaveData of data) {
-      if (leaveData.leaveType === "Paid Leave") {
-        return leaveData.availableLeave;
-      } else {
-        console.error('No result found in the response');
-      }
-    }
-  }
+  // extractAvailablePaidLeave(data: any) {
+  //   for (let leaveData of data) {
+  //     if (leaveData.leaveType === "Paid Leave") {
+  //       console.log("shdgf",leaveData.availableLeave);
+  //       return leaveData.availableLeave;
+  //     } else {
+  //       console.error('No result found in the response');
+  //     }
+  //   }
+  // }
 
   formatTime(timestamp: string): string {
     const date = new Date(timestamp);
@@ -360,7 +357,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public chartOptions1 = {
-    series: [12 - this.totalAvailableLeave, 12],
+    series: [0,0],
     chart: {
       type: 'donut',
       width: 150,
@@ -417,6 +414,30 @@ export class DashboardComponent implements OnInit {
       }
     }
   };
+  fetchLeaveBalance(employeeId: number): void {
+    this.leavetypeService.fetchLeaveBalance(employeeId).subscribe(
+      (response: any) => {
+        console.log("leaveresponseeee",response)
+        
+  
+        if (response.status === 'SUCCESS' && response.result.length > 0) {
+          response.result.forEach((leave: any) => {
+           
+  
+            if (leave.leaveType === 'Paid Leave') {
+              this.consumedPaidLeave = leave.consumedLeave;
+              this.availablePaidLeave = leave.totalLeave - leave.consumedLeave;
+             
+              this.updateChartOptions();
+            }
+          }
+  
+    );
+  }})}
+  updateChartOptions(): void {
+    this.chartOptions1.series = [this.availablePaidLeave, this.consumedPaidLeave];
+    this.chartOptions1 = { ...this.chartOptions1 };
+  }
 
   selectResult(result: any, textarea: HTMLTextAreaElement): void {
     let name: string = result.firstName + " " + result.lastName;
