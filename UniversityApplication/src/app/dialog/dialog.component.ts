@@ -48,6 +48,11 @@ fromDateInput: any;
     private snackbarservice:SnackbarService
   
   ) {}
+  dateFilter = (date: Date | null): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date ? date >= today : false;
+  }
 employee:any='';
   ngOnInit(): void {
     
@@ -95,27 +100,36 @@ employee:any='';
         if(response.error == null && response.statusCode==201){
          this.snackbarservice.showSuccess("Request sent Successfully!")
         }
-        else{
-          this.snackbarservice.showError("Request not sent!")
-        }
         this.dialogRef.close("sucess");
         
         console.log("after calling  this.leaveComponent.fetchLeaveBalance(this.employeeId) ", this.employeeId);
       },
       (error) => {
         console.error('Error submitting request', error);
+        this.snackbarservice.showError("Request not sent!")
       }
     );
   }
 
   calculateDays(): number {
     if (this.fromDate && this.toDate) {
-      const diffTime = Math.abs(this.toDate.getTime() - this.fromDate.getTime());
+      const diffTime = this.toDate.getTime() - this.fromDate.getTime();
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       return diffDays+1;
     }
     return 0;
   }
+  disableddata() {
+    console.log("inside  disabled button")
+    
+    if (this.calculateDays() <= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  
 
   searchEmployees(keyword: string): Observable<Employee[]> {
     if (!keyword.trim()) {

@@ -34,14 +34,11 @@ export class DashbordService {
 
   getHolidays(): Observable<any[]> {
     return this.http.get<any>(this.apiUrl1 + "api/getAllHolidays");
-
   }
   getLeaveData(): Observable<any[]> {
     const empId = this.getEmpId();
 
     console.log("employeeid - ", empId);
-
-
     return this.http.get<any>(this.apiUrl1 + "leave/getEmpLeaveSummaryByEmpId/" + empId);
   }
 
@@ -65,14 +62,12 @@ export class DashbordService {
     }
     console.log("submitPostRequestData requestData : ", requestData)
     return this.http.post<any>(this.url + `posts/saveimage`, formData);
+
   }
 
 
   getBirthdays(): Observable<any> {
-
-
     return this.http.get<any[]>(this.url + "api/todayAndNextSevenDaysBirthdaysList");
-
   }
 
 
@@ -96,9 +91,7 @@ export class DashbordService {
   getAllPosts(): Observable<any[]> {
     return this.http.get<any>("http://localhost:8082/posts/getAllPostByTime")
   }
-
   saveLike(postId: number, emojiId: number, empId: number): Observable<any> {
-
     const body = {
       emoji: emojiId,
       empId: empId
@@ -153,13 +146,8 @@ export class DashbordService {
   getPostsAndLikes(): Observable<any> {
     console.log("inside service")
     return this.http.get<any>(this.url + 'posts/getAllPostByTime');
-
   }
-
-
-
   getNewJoinees(): Observable<any> {
-
     return this.http.get<any>(this.apiUrl1 + "api/newJoineesAndLast7Days");
   }
 }

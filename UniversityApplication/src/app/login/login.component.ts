@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 import { loginRequest } from '../loginrequest';
+import { SnackbarService } from '../snackbar.service';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +12,9 @@ import { loginRequest } from '../loginrequest';
 })
 export class LoginComponent implements OnInit {
 
-
-  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) { }
+  constructor(
+    private snackbarservice: SnackbarService,
+    private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) { }
 
   loginForm: FormGroup = new FormGroup({});
 
@@ -73,12 +75,12 @@ export class LoginComponent implements OnInit {
         }
         else{
           console.log(response.error);
-          
+          this.snackbarservice.showError("Login Unsuccessful!Try Again")
         }
 
       },
       (error: any) => {
-        
+        this.snackbarservice.showError("Login Unsuccessful! Try Again")
       }
     );
   }

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DashbordService } from './dashbord.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -10,9 +9,7 @@ export class LeavereqService {
   private apiUrl = 'http://localhost:8082/leave/saveEmpLeave';
   private apiUrl1 = 'http://localhost:8082/api/leave/requestCompensatory';
   private baseUrl = 'http://localhost:8082/';
-
   constructor(private http: HttpClient,private dashboardService:DashbordService) {}
-
   submitLeaveRequest(requestData: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, requestData);
   }

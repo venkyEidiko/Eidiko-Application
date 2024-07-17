@@ -98,6 +98,13 @@
   .input1
   {
     height:30px;
+
+    background-color:rgb(51, 61, 78);
+    border: none;
+  }
+  .input1:active
+  {
+    border: 0.5px solid gray;
   }
   .custom-dialog-actions {
     display: flex;

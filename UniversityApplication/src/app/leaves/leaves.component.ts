@@ -38,8 +38,6 @@ export interface LeaveRequest {
   toDate: Date;
 }
 
-
-
 interface MonthlyLeaveData {
   totalLeaveTaken: number;
   leaveDays: string[];
@@ -144,8 +142,7 @@ export class LeavesComponent implements OnInit {
     private compdialogService: CompdialogService,
     private leavetypeService: LeavetypeService,
     private tableService:TableService,
-    private dialog: MatDialog,
-    // private wfh: WorkFromHomeRequest
+    private dialog: MatDialog
 
    
   ) {}

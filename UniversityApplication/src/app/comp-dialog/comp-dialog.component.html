@@ -13,7 +13,7 @@
       <div>
         <mat-form-field>
           <mat-label>From Date</mat-label>
-          <input matInput [(ngModel)]="fromDate" name="fromDate"  #fromDateIn="ngModel" [matDatepicker]="picker" required>
+          <input matInput [(ngModel)]="fromDate" name="fromDate" [matDatepickerFilter]="dateFilter"  #fromDateIn="ngModel" [matDatepicker]="picker" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error *ngIf="fromDateIn.invalid && (fromDateIn.dirty || fromDateIn.touched)">
@@ -24,7 +24,7 @@
       <div>
         <mat-form-field>
           <mat-label>To Date</mat-label>
-          <input matInput [(ngModel)]="toDate" name="toDate" [matDatepicker]="picker2" #toDateIn="ngModel" class="customwidth" required>
+          <input matInput [(ngModel)]="toDate" [matDatepickerFilter]="dateFilter" name="toDate" [matDatepicker]="picker2" #toDateIn="ngModel" class="customwidth" required>
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2 color="primary"></mat-datepicker>
           <mat-error *ngIf="toDateIn.invalid && (toDateIn.dirty || toDateIn.touched)">

@@ -102,7 +102,6 @@ this.service.updateWFHRequest(wfhId,this.wfhRequest).subscribe(res=>{
   this.getWorkfromHomeRequest();
 });
   }
-    
 }
 interface EmpLeaveDto {
   leaveId: number; // Add this property as it was in the Java DTO
@@ -124,6 +123,7 @@ interface EmpLeaveDto {
 
 interface Attachment {
   // Define properties of Attachment interface based on your Java class
+
 }
 
 interface WfhRequest {
