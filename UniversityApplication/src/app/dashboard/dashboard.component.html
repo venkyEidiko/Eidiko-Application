@@ -94,23 +94,37 @@
       </mat-card>
       <mat-card class="card-item1">
         <mat-card-content>
-          <span>Time Today - <span>{{currentDate | date}} </span></span>
+          <span class="clock-span" style="color: white;">Time Today - <span class="clock-class">{{currentDate | date}} </span></span>
           <app-clock></app-clock>
         </mat-card-content>
       </mat-card>
+
+
       <mat-card class="card-item2">
         <mat-card-content>
-          <span>Leave Balances</span>
-          <div class="charts">
-            <div class="donut-container">
-              <div class="donut-text">
-                {{totalAvailableLeave}} Days Available</div>
-              <app-donutchart [chartOptions]="chartOptions1">
-              </app-donutchart>
+          <div class="leave-chart">
+            <div>
+              <p style="color: white;">Leave Balances</p>
             </div>
+            <div class="children">
+              <div class="donut-container">
+                <app-donutchart [chartOptions]="chartOptions1"></app-donutchart>
+                <div class="donut-text">
+                  {{totalAvailableLeave}} Days 
+                </div>
+              </div>
+              <div class="leave-links">
+                <a style="color:#9275c9 ;" >Request Leave</a>
+                <a style="color: #9275c9;" routerLink="/layout/me/leaves">View All Balances</a>
+              </div>
+              
+            </div>
+            
+          
           </div>
         </mat-card-content>
       </mat-card>
+      
     </div>
   </div>
   <div class="org-div">
