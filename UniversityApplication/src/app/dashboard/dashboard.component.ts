@@ -1,11 +1,13 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DashbordService } from '../services/dashbord.service';
 import { Holiday } from '../holiday';
+
 import { Employee } from '../services/employee';
+
+import { timestamp } from 'rxjs';
+
 import { LoginService } from '../services/login.service';
-import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
+import { LeavetypeService } from '../services/leavetype.service';
 
 
 @Component({
@@ -16,7 +18,8 @@ import { DialogComponent } from '../dialog/dialog.component';
 
 export class DashboardComponent implements OnInit {
 
-
+  consumedPaidLeave = 0;
+  availablePaidLeave = 0;
   showEmoticonPicker = false;
   LeaveResponse: any;
   totalAvailableLeave = 12;
@@ -61,10 +64,10 @@ export class DashboardComponent implements OnInit {
     mentionEmployee: [],
     postEmployee: this.service.getEmpId()
   }
-  availablePaidLeave: any='';
-  leavetypeService: any;
-  constructor(private service: DashbordService,private router:Router,
-    private dialog : MatDialog,private loginService: LoginService) {
+
+
+  constructor(private service: DashbordService, private loginService: LoginService,private leavetypeService:LeavetypeService) {
+
     this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
   }
 
@@ -72,20 +75,22 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.fetchworkFromHome();
     this.fethHoliday();
-    this.fetchleaveData();
+    // this.fetchleaveData();
     this.getAnniversaryAndAfterSevenDaysList();
     this.getBirthdayAndAfterSevenDaysList();
     this.loadAllPosts();
-    
+    this.fetchLeaveBalance(this.employeeId);
     this.fetchPendingLeaves()
     this.fetchOnLeaveToday();
     this.workFromHomeList();
-
+    //this.fetchPostsAndLikes();
     this.fetchOnLeaveToday();
     this.fetchNewJoinees();
 
 
   }
+
+
   imageSrcList: {
     base64Image: string,
     timeStamp: string,
@@ -102,9 +107,7 @@ export class DashboardComponent implements OnInit {
 
 
 
-onRequest(){
-  this.dialog.open(DialogComponent)
-}
+
   insertSymbol(symbol: string) {
     this.insertedSymbol = symbol;
   }
@@ -178,11 +181,11 @@ onRequest(){
       canvas.width = img.width;
       canvas.height = img.height;
       const ctx = canvas.getContext('2d');
-      ctx?.drawImage(img, 0, 0); 
-      
+      ctx?.drawImage(img, 0, 0); // Draw the entire image starting from (0, 0)
+      // Convert canvas content to base64 URL and assign to base64Image
       this.base64Image = canvas.toDataURL('image/jpeg');
     };
-  
+    // Set src attribute of the image to load from the base64 string directly
     img.src = 'data:image/jpeg;base64,' + imagePath;
   }
 
@@ -200,16 +203,7 @@ onRequest(){
     }
   }
 
-  fetchleaveData() {
-    this.service.getLeaveData().subscribe(
-      response => {
-        console.log("leave data:- ", response);
-        this.LeaveResponse = response;
-        this.LeaveResponse = this.LeaveResponse.result;
-        this.totalAvailableLeave = this.extractAvailablePaidLeave(this.totalAvailableLeave);
-      }
-    )
-  }
+
   loadAllPosts(): void {
     this.service.getAllPosts().subscribe((response: any) => {
 
@@ -248,7 +242,7 @@ onRequest(){
           };
         });
 
-      
+        // Log the entire imageSrcList for verification
         console.log('Modified imageSrcList:', this.imageSrcList);
 
 
@@ -260,15 +254,16 @@ onRequest(){
   }
 
 
-  extractAvailablePaidLeave(data: any) {
-    for (let leaveData of data) {
-      if (leaveData.leaveType === "Paid Leave") {
-        return leaveData.availableLeave;
-      } else {
-        console.error('No result found in the response');
-      }
-    }
-  }
+  // extractAvailablePaidLeave(data: any) {
+  //   for (let leaveData of data) {
+  //     if (leaveData.leaveType === "Paid Leave") {
+  //       console.log("shdgf",leaveData.availableLeave);
+  //       return leaveData.availableLeave;
+  //     } else {
+  //       console.error('No result found in the response');
+  //     }
+  //   }
+  // }
 
   formatTime(timestamp: string): string {
     const date = new Date(timestamp);
@@ -362,7 +357,7 @@ onRequest(){
   }
 
   public chartOptions1 = {
-    series: [12 - this.totalAvailableLeave, 12],
+    series: [0,0],
     chart: {
       type: 'donut',
       width: 150,
@@ -419,6 +414,30 @@ onRequest(){
       }
     }
   };
+  fetchLeaveBalance(employeeId: number): void {
+    this.leavetypeService.fetchLeaveBalance(employeeId).subscribe(
+      (response: any) => {
+        console.log("leaveresponseeee",response)
+        
+  
+        if (response.status === 'SUCCESS' && response.result.length > 0) {
+          response.result.forEach((leave: any) => {
+           
+  
+            if (leave.leaveType === 'Paid Leave') {
+              this.consumedPaidLeave = leave.consumedLeave;
+              this.availablePaidLeave = leave.totalLeave - leave.consumedLeave;
+             
+              this.updateChartOptions();
+            }
+          }
+  
+    );
+  }})}
+  updateChartOptions(): void {
+    this.chartOptions1.series = [this.availablePaidLeave, this.consumedPaidLeave];
+    this.chartOptions1 = { ...this.chartOptions1 };
+  }
 
   selectResult(result: any, textarea: HTMLTextAreaElement): void {
     let name: string = result.firstName + " " + result.lastName;
