@@ -1,12 +1,11 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { DashbordService } from '../services/dashbord.service';
 import { Holiday } from '../holiday';
-
 import { Employee } from '../services/employee';
-
-import { timestamp } from 'rxjs';
-
 import { LoginService } from '../services/login.service';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 
 @Component({
@@ -64,7 +63,8 @@ export class DashboardComponent implements OnInit {
   }
   availablePaidLeave: any='';
   leavetypeService: any;
-  constructor(private service: DashbordService, private loginService: LoginService) {
+  constructor(private service: DashbordService,private router:Router,
+    private dialog : MatDialog,private loginService: LoginService) {
     this.showCommentBox = new Array(this.imageSrcList.length).fill(false);
   }
 
@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit {
     this.fetchPendingLeaves()
     this.fetchOnLeaveToday();
     this.workFromHomeList();
-    //this.fetchPostsAndLikes();
+
     this.fetchOnLeaveToday();
     this.fetchNewJoinees();
 
@@ -102,7 +102,9 @@ export class DashboardComponent implements OnInit {
 
 
 
-
+onRequest(){
+  this.dialog.open(DialogComponent)
+}
   insertSymbol(symbol: string) {
     this.insertedSymbol = symbol;
   }
@@ -176,11 +178,11 @@ export class DashboardComponent implements OnInit {
       canvas.width = img.width;
       canvas.height = img.height;
       const ctx = canvas.getContext('2d');
-      ctx?.drawImage(img, 0, 0); // Draw the entire image starting from (0, 0)
-      // Convert canvas content to base64 URL and assign to base64Image
+      ctx?.drawImage(img, 0, 0); 
+      
       this.base64Image = canvas.toDataURL('image/jpeg');
     };
-    // Set src attribute of the image to load from the base64 string directly
+  
     img.src = 'data:image/jpeg;base64,' + imagePath;
   }
 
@@ -246,7 +248,7 @@ export class DashboardComponent implements OnInit {
           };
         });
 
-        // Log the entire imageSrcList for verification
+      
         console.log('Modified imageSrcList:', this.imageSrcList);
 
 

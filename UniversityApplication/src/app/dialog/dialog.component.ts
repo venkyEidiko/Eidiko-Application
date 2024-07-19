@@ -9,8 +9,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LoginService } from '../services/login.service';
-import { LeavesComponent } from '../leaves/leaves.component';
-import { Router } from '@angular/router';
 import { SnackbarService } from '../snackbar.service';
 
 interface Employee {

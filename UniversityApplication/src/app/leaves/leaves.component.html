@@ -6,44 +6,46 @@
         </select>
     </div>
 
-    <div class="cards">
+    <div class="cards"> 
         <mat-card class="card1">
             <mat-card-content>
                 <div class="pending-table">
-                    <table *ngIf="pendingLeave && pendingLeave.length > 0">
-                        <thead>
-                            <tr>
-                                <th>Leave Type</th>
-                                <th>Dates</th>
-                                <th>Total Days</th>
-                                <th>Day Type</th>
-                                <!-- <th>Reason</th> -->
-                                <th>Apply Date</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let leave of pendingLeave">
-                                <td>{{ leave.leaveType || "-Not Set-" }}</td>
-                                <td>{{ leave.fromDate }} to <br>{{ leave.toDate }}</td>
-                                <td>{{ leave.durationInDays }}</td>
-                                <td>{{ leave.customDayStatus }}</td>
-                                <!-- <td>{{ leave.leaveNote }}</td>  -->
-                                <td>{{ leave.leaveDates }}</td>
-                                <td>{{ leave.status }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
+                    <div class="table-container">
+                        <table *ngIf="pendingLeave && pendingLeave.length > 0">
+                            <thead>
+                                <tr>
+                                    <th>Leave Type</th>
+                                    <th>Dates</th>
+                                    <th>Total Days</th>
+                                    <th>Day Type</th>
+                                    <th>Apply Date</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let leave of pendingLeave">
+                                    <td>{{ leave.leaveType || "-Not Set-" }}</td>
+                                    <td>{{ leave.fromDate }} <strong>To</strong> {{ leave.toDate }}</td>
+                                    <td>{{ leave.durationInDays }}</td>
+                                    <td>{{ leave.customDayStatus }}</td>
+                                    <td>{{ leave.leaveDates }}</td>
+                                    <td>{{leave.leaveNote}}</td>
+                                    <td>{{ leave.status }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+        
                     <div class="image-content" *ngIf="pendingLeave?.length===0">
                         <img class="elephantimg" src="../../assets/elephant.png" alt="elephantimage">
                         <p>Nothing here!<br />Working hard yeah?? Request time off on right&gt;&gt;&gt;</p>
                     </div>
                 </div>
-
-
             </mat-card-content>
         </mat-card>
+      
+        
         <mat-card class="card2">
             <mat-card-content>
 
@@ -63,6 +65,7 @@
         <mat-card class="wfh-cards">
             <mat-card-content>
                 <div class="pending-table">
+                    <div class="table-container">
                     <table *ngIf="pendingWfh && pendingWfh.length > 0">
                         <thead>
                             <tr>
@@ -81,6 +84,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    </div>
                     <div class="image-content" *ngIf="pendingWfh?.length===0">
                         <img class="elephantimg" src="../../assets/elephant.png" alt="elephantimage">
                         <p>Nothing here!<br />Working hard yeah?? Request time off on right&gt;&gt;&gt;</p>
