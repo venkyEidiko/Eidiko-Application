@@ -84,7 +84,8 @@ import { InterceptorService } from './services/interceptor.service';
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 import { WorkFromHomeDialogeComponent } from './work-from-home-dialoge/work-from-home-dialoge.component';
 import {  MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { Truncate1Pipe } from 'src/pipes/truncate1.pipe';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -140,7 +141,8 @@ import {  MatSnackBarModule } from '@angular/material/snack-bar';
     SummaryComponent,
     CapatlizePipe,
     FirstletterPipe,
-    WorkFromHomeDialogeComponent
+    WorkFromHomeDialogeComponent,
+    Truncate1Pipe
 
   ],
   imports: [
@@ -188,6 +190,7 @@ import {  MatSnackBarModule } from '@angular/material/snack-bar';
     MatDatepickerModule,
     MatCardModule,
     NgxUiLoaderModule,
+    MatTooltipModule,
     NgxUiLoaderHttpModule.forRoot({
       showForeground: true,
       exclude: ["http://10.0.0.60:8080/api/searchByKeyword/"]

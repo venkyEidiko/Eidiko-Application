@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, NgModule, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { LeaveService } from '../services/leave.service';
@@ -13,6 +13,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CompDialogComponent } from '../comp-dialog/comp-dialog.component';
 import { WorkFromHomeRequest } from '../work-from-home-dialoge/work-from-home-dialoge.component';
+
 interface PendingLeave {
   leaveId: number;
   leaveDates: string;
