@@ -30,7 +30,9 @@
                                     <td>{{ leave.durationInDays }}</td>
                                     <td>{{ leave.customDayStatus }}</td>
                                     <td>{{ leave.leaveDates }}</td>
-                                    <td>{{leave.leaveNote}}</td>
+                                    <td matTooltip="{{leave.leaveNote}}" class="tool">
+                                            {{leave.leaveNote | truncate1 : 30}}
+                                    </td>
                                     <td>{{ leave.status }}</td>
                                 </tr>
                             </tbody>
@@ -82,7 +84,9 @@
                               <td>{{wfh.fromDate}} to {{wfh.toDate}}</td>
                               <th>{{wfh.applyDate}}</th>
                               <td>{{wfh.status}}</td>
-                              <td>{{wfh.reason}}</td>>
+                              <td class="tool" matTooltip="{{wfh.reason}}">
+                                {{wfh.reason | truncate1 : 30}}
+                             </td>>
                             </tr>
                         </tbody>
                     </table>

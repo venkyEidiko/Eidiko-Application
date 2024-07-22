@@ -56,6 +56,9 @@ th {
     font-size: 20px;
 
 }
+.tool{
+    cursor: pointer;
+}
 .image-content {
     display: flex;
    
@@ -75,10 +78,7 @@ table,th{
     height: 150px;
     background-color: #333d4e;
 }
-tr:hover{
-    background-color: rgb(58, 35, 61);
-    
-}
+
 .leave-cards {
     display: flex;
     flex-wrap: wrap;
